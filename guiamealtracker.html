@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Tracker · Guía interactiva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F4ED;
+      --surface: #FFFFFF;
+      --surface-2: #EFEBE0;
+      --border: #E2DECC;
+      --border-soft: #EEEBE0;
+      --text: #1F1F1F;
+      --text-muted: #6B6B6B;
+      --text-light: #9A9A9A;
+      --accent: #8A9558;
+      --accent-dark: #4A5238;
+      --accent-pastel: #D4DAB8;
+      --accent-light: #F1F3E5;
+      --c-protein: #D77A61;
+      --c-protein-pastel: #F2CBBE;
+      --c-carbs: #D4B581;
+      --c-carbs-pastel: #EDDCBC;
+      --c-fat: #6B7A8F;
+      --c-fat-pastel: #CDD2DB;
+      --success: #7A9579;
+      --warn: #B8732B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html, body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, -apple-system, sans-serif; min-height: 100vh; overscroll-behavior: none; }
+    body { padding-bottom: 100px; }
+    .num { font-variant-numeric: tabular-nums; }
+
+    /* ===== Top bar ===== */
+    .topbar { position: sticky; top: 0; z-index: 50; background: #1F1F1F; color: #FFF; padding: 12px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+    .topbar-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.05em; }
+    .brand-sub { font-size: 11px; color: var(--accent-pastel); margin-left: 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+    .step-indicator { font-size: 12px; color: rgba(255,255,255,0.6); font-variant-numeric: tabular-nums; }
+
+    /* ===== Progress bar ===== */
+    .progress-wrap { padding: 12px 20px 0; background: var(--bg); }
+    .progress-inner { max-width: 900px; margin: 0 auto; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .progress-bar { height: 100%; background: var(--accent); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
+
+    /* ===== Slide container ===== */
+    .slides { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+    .slide { display: none; animation: fadeUp 0.5s cubic-bezier(0.2, 0, 0, 1); }
+    .slide.active { display: block; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ===== Headings ===== */
+    .kicker { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; color: var(--accent-dark); margin-bottom: 8px; }
+    .step-title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; color: var(--text); line-height: 1.15; margin-bottom: 12px; }
+    .step-lead { font-size: 15px; color: var(--text-muted); line-height: 1.55; margin-bottom: 24px; max-width: 620px; }
+    .accent-line { height: 2px; width: 48px; background: var(--accent); border-radius: 2px; margin-bottom: 16px; }
+
+    /* ===== Tip card ===== */
+    .tip {
+      background: var(--accent-pastel);
+      border: 1px solid var(--accent-pastel);
+      padding: 12px 14px; border-radius: 12px;
+      font-size: 13px; color: var(--accent-dark); line-height: 1.55;
+      margin: 16px 0;
+    }
+    .tip strong { color: var(--accent-dark); }
+
+    /* ===== Phone frame ===== */
+    .phone-row {
+      display: flex; gap: 24px; align-items: flex-start; justify-content: center;
+      margin: 20px 0; flex-wrap: wrap;
+    }
+    .phone-col { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; max-width: 340px; width: 100%; }
+    .phone-caption {
+      font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      font-weight: 700; color: var(--accent-dark); margin-bottom: 10px;
+      text-align: center;
+    }
+    .phone {
+      background: var(--bg);
+      border: 8px solid #1F1F1F;
+      border-radius: 36px;
+      padding: 0;
+      width: 100%;
+      max-width: 340px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18), 0 4px 10px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .phone-notch {
+      background: #1F1F1F; height: 22px;
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+    .phone-notch::before {
+      content: ''; width: 60px; height: 16px; background: #000; border-radius: 0 0 12px 12px;
+    }
+    .phone-screen { background: var(--bg); padding: 0; min-height: 540px; position: relative; overflow: hidden; }
+
+    /* App header inside phone */
+    .app-header {
+      background: #1F1F1F; color: #FFF;
+      padding: 10px 16px;
+      position: relative; overflow: hidden;
+    }
+    .app-header::after {
+      content: ''; position: absolute; right: -20%; top: 0; width: 60%; height: 100%;
+      background: radial-gradient(circle, rgba(138, 149, 88, 0.4), transparent 60%);
+      pointer-events: none;
+    }
+    .app-header-inner { display: flex; align-items: center; gap: 8px; position: relative; z-index: 1; }
+    .app-header-brand { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.05em; }
+    .app-header-tag { font-size: 9px; color: var(--accent-pastel); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+
+    /* App body inside phone */
+    .app-body { padding: 12px; position: relative; }
+
+    /* Goals card */
+    .goals-sticky {
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.7);
+      padding: 12px;
+      border-radius: 18px;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 4px 16px rgba(0,0,0,0.05);
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .goals-changemeta {
+      position: absolute; top: 8px; right: 8px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 8px; font-weight: 600; color: var(--text-muted);
+      display: flex; gap: 3px; align-items: center;
+    }
+    .day-label {
+      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-light); font-weight: 600; text-align: center; margin-bottom: 8px;
+    }
+    .day-label strong { color: var(--text-muted); font-weight: 600; }
+    .streak-tag { color: var(--accent-dark); font-weight: 700; }
+    .streak-dot { color: var(--accent); margin-left: 2px; }
+
+    .goals-rings {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+    }
+    .ring-cell { display: flex; flex-direction: column; align-items: center; }
+    .ring-svg-wrap { position: relative; width: 56px; height: 56px; }
+    .ring-num-wrap {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .ring-num { font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; line-height: 1; }
+    .ring-goal { font-size: 7px; color: var(--text-light); font-weight: 500; margin-top: 1px; font-variant-numeric: tabular-nums; }
+    .ring-label {
+      font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); font-weight: 700; margin-top: 5px;
+    }
+
+    /* Chat bubbles */
+    .chat { display: flex; flex-direction: column; gap: 10px; padding: 4px 0 10px; }
+    .bubble {
+      padding: 10px 12px; border-radius: 14px; font-size: 12px; line-height: 1.5;
+      max-width: 85%; word-wrap: break-word;
+    }
+    .bubble.user {
+      background: var(--accent-pastel); color: var(--text);
+      border-bottom-right-radius: 4px; margin-left: auto;
+    }
+    .bubble.assistant {
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(0,0,0,0.04);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 1px 0.5px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    /* Logged card (a meal entry) */
+    .logged {
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(0,0,0,0.04);
+      padding: 12px;
+      border-radius: 14px 14px 14px 4px;
+      box-shadow: 0 1px 0.5px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+      max-width: 95%;
+    }
+    .logged-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .logged-header-left { display: flex; align-items: center; gap: 6px; }
+    .logged-check {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent-pastel);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent-dark); font-size: 9px; font-weight: 900;
+    }
+    .logged-meal { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; color: var(--accent-dark); }
+    .logged-time { font-size: 9px; color: var(--text-light); }
+    .logged-actions { display: flex; gap: 2px; }
+    .logged-actions span {
+      width: 18px; height: 18px; display: flex; align-items: center; justify-content: center;
+      color: var(--text-light); font-size: 11px; cursor: pointer;
+    }
+    .logged-warning {
+      background: #FBF1E5; color: var(--warn);
+      padding: 8px 10px; border-radius: 10px;
+      font-size: 10.5px; line-height: 1.4; margin-bottom: 10px;
+      display: flex; gap: 5px;
+    }
+    .logged-warning::before { content: 'ⓘ'; flex-shrink: 0; }
+    .logged-items { display: flex; flex-direction: column; gap: 2px; margin-bottom: 10px; }
+    .logged-item { display: flex; justify-content: space-between; font-size: 11px; gap: 8px; }
+    .logged-item-name { color: var(--text); }
+    .logged-item-kcal { color: var(--text-light); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .logged-item.added { font-weight: 600; color: var(--accent-dark); }
+    .logged-total {
+      border-top: 1px solid var(--border-soft);
+      padding-top: 10px; margin-top: 4px;
+      display: flex; justify-content: space-between; font-size: 11px;
+    }
+    .total-label { color: var(--text-muted); }
+    .total-val { color: var(--accent-dark); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .logged-macros {
+      display: flex; gap: 10px; font-size: 9.5px; margin-top: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .mp { color: var(--c-protein); font-weight: 500; }
+    .mc { color: var(--c-carbs); font-weight: 500; }
+    .mg { color: var(--c-fat); font-weight: 500; }
+    .added-block {
+      background: rgba(212, 218, 184, 0.4);
+      padding: 8px 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .added-block-label {
+      font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 700; color: var(--accent-dark); margin-bottom: 5px;
+    }
+    .full-list-label {
+      font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 600; color: var(--text-light); margin-bottom: 5px;
+    }
+
+    /* Suggestion / option style */
+    .suggestion {
+      background: rgba(212, 218, 184, 0.35);
+      border: 1px solid var(--accent-pastel);
+      padding: 12px;
+      border-radius: 14px 14px 14px 4px;
+      max-width: 95%;
+    }
+    .suggestion-header {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+      font-weight: 700; color: var(--accent-dark); margin-bottom: 8px;
+    }
+    .suggestion-header .pie {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent-pastel);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent-dark); font-size: 9px;
+    }
+    .suggestion-text { font-size: 11.5px; color: var(--text); line-height: 1.5; margin-bottom: 10px; }
+    .option-card {
+      background: rgba(212, 218, 184, 0.2);
+      border: 1px solid rgba(212, 218, 184, 0.7);
+      padding: 9px 11px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+    .option-card:last-of-type { margin-bottom: 0; }
+    .option-label {
+      font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 700; color: var(--accent-dark); margin-bottom: 5px;
+    }
+    .option-subtotal {
+      border-top: 1px solid var(--border-soft);
+      padding-top: 4px; margin-top: 5px;
+      font-size: 9px; color: var(--text-muted);
+      display: flex; gap: 8px; font-variant-numeric: tabular-nums;
+    }
+    .disclaimer-note {
+      border-top: 1px solid var(--border-soft);
+      padding-top: 8px; margin-top: 8px;
+      font-size: 9px; color: var(--text-light); font-style: italic; line-height: 1.5;
+    }
+
+    /* Input bar */
+    .input-bar {
+      position: absolute; bottom: 16px; left: 12px; right: 12px;
+      background: var(--surface); padding: 6px;
+      border: 1px solid var(--border); border-radius: 16px;
+      display: flex; align-items: center; gap: 6px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    }
+    .input-bar.recording { border-color: var(--c-protein); box-shadow: 0 0 0 3px rgba(215, 122, 97, 0.18); }
+    .input-text { flex: 1; padding: 6px 8px; color: var(--text-light); font-size: 11.5px; }
+    .input-btn {
+      width: 28px; height: 28px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+    }
+    .input-btn.mic { background: var(--surface-2); color: var(--text-muted); }
+    .input-bar.recording .input-btn.mic { background: var(--c-protein); color: #fff; }
+    .input-btn.send { background: #1F1F1F; color: #fff; }
+    .waveform { display: flex; align-items: center; gap: 3px; height: 14px; flex: 1; padding: 0 6px; }
+    .waveform span {
+      width: 2px; height: 100%; background: var(--c-protein); border-radius: 1px;
+      animation: wave 0.9s ease-in-out infinite;
+    }
+    .waveform span:nth-child(1) { animation-delay: 0s; }
+    .waveform span:nth-child(2) { animation-delay: 0.08s; }
+    .waveform span:nth-child(3) { animation-delay: 0.16s; }
+    .waveform span:nth-child(4) { animation-delay: 0.24s; }
+    .waveform span:nth-child(5) { animation-delay: 0.32s; }
+    .waveform span:nth-child(6) { animation-delay: 0.4s; }
+    .waveform span:nth-child(7) { animation-delay: 0.48s; }
+    .waveform span:nth-child(8) { animation-delay: 0.56s; }
+    @keyframes wave { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1.4); } }
+
+    /* FAB pill (Herramientas) */
+    .fab-pill {
+      position: absolute; bottom: 70px; right: 14px;
+      background: #1F1F1F; color: #fff;
+      padding: 8px 14px 8px 12px; border-radius: 22px;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11.5px; font-weight: 600;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.22), 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 5;
+    }
+    .fab-pill .sparkle { color: var(--accent-pastel); font-size: 14px; }
+
+    /* Indicator (red circle for "tap here") */
+    .tap-indicator {
+      position: absolute; z-index: 10;
+      border: 3px solid #E84A4A; border-radius: 999px;
+      box-shadow: 0 0 0 4px rgba(232, 74, 74, 0.18);
+      animation: pulse 1.4s ease-out infinite;
+      pointer-events: none;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(232, 74, 74, 0.18); transform: scale(1); }
+      50% { box-shadow: 0 0 0 10px rgba(232, 74, 74, 0); transform: scale(1.04); }
+    }
+    .tap-arrow {
+      position: absolute; z-index: 10; color: #E84A4A;
+      font-size: 22px; font-weight: 700;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+    }
+
+    /* Bottom sheet (Tools modal) */
+    .bottom-sheet {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: var(--bg);
+      border-radius: 22px 22px 0 0;
+      padding: 12px 12px 16px;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+      z-index: 8;
+    }
+    .sheet-grabber {
+      width: 32px; height: 3px; background: var(--border); border-radius: 2px;
+      margin: 0 auto 10px;
+    }
+    .sheet-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .sheet-kicker { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--accent); }
+    .sheet-title { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 2px; }
+    .sheet-close {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--surface-2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: 12px;
+    }
+    .tools-section-label {
+      font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+      font-weight: 700; color: var(--text-muted);
+      margin: 8px 4px 4px;
+    }
+    .tools-section-label:first-of-type { margin-top: 0; }
+    .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+    .tool-chip {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding: 8px 10px; border-radius: 10px;
+      display: flex; align-items: center; gap: 7px;
+      font-size: 10px; font-weight: 500; color: var(--text);
+    }
+    .tool-chip .ic { font-size: 14px; line-height: 1; }
+
+    /* Modal (centered card style for inside-modal screens) */
+    .modal-screen {
+      padding: 14px; background: var(--bg);
+      min-height: 540px;
+    }
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .modal-kicker { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-dark); font-weight: 700; margin-bottom: 4px; }
+    .modal-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .modal-body-text { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 14px; }
+
+    /* Ingredient chips */
+    .chips-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+    .ing-chip {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 4px 9px; border-radius: 999px;
+      font-size: 10px; color: var(--text);
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .ing-chip .x { color: var(--text-light); font-size: 9px; }
+    .input-line {
+      display: flex; gap: 5px; margin-bottom: 14px;
+    }
+    .input-line .fake-input {
+      flex: 1; border: 1px solid var(--border); border-radius: 10px;
+      padding: 8px 10px; font-size: 11px; color: var(--text-light);
+    }
+    .input-line .fake-btn {
+      background: #1F1F1F; color: #fff; padding: 8px 12px;
+      border-radius: 10px; font-size: 11px; font-weight: 600;
+    }
+    .primary-btn {
+      background: #1F1F1F; color: #fff;
+      padding: 11px; border-radius: 14px;
+      font-size: 12.5px; font-weight: 600; text-align: center;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .secondary-btn {
+      background: var(--surface-2); color: var(--text);
+      border: 1px solid var(--border);
+      padding: 11px; border-radius: 14px;
+      font-size: 12.5px; font-weight: 600; text-align: center;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+
+    /* Welcome screen mockup */
+    .welcome-screen {
+      background: var(--bg);
+      min-height: 540px;
+      padding: 28px 20px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .welcome-avocado {
+      position: absolute;
+      top: 28%; right: -10%;
+      width: 60%; height: 220px;
+      background: radial-gradient(ellipse at center, rgba(138, 149, 88, 0.35) 0%, rgba(138, 149, 88, 0.15) 30%, transparent 60%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .welcome-step {
+      font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-muted); font-weight: 700;
+    }
+    .welcome-bars { display: flex; gap: 4px; margin-top: 6px; }
+    .welcome-bars span { flex: 1; height: 2px; border-radius: 2px; background: var(--border); }
+    .welcome-bars span.active { background: var(--text); }
+    .welcome-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 44px; line-height: 0.9;
+      letter-spacing: 0.01em; margin-top: 28px; color: var(--text);
+    }
+    .welcome-accent { height: 2px; width: 40px; background: var(--accent); margin-top: 14px; }
+    .welcome-tag { font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-top: 10px; }
+    .welcome-frase {
+      font-size: 17px; font-weight: 700; color: var(--text);
+      margin-top: 24px; letter-spacing: -0.015em; line-height: 1.2;
+    }
+    .welcome-frase .muted { color: var(--text-muted); }
+    .welcome-coach {
+      font-size: 11px; color: var(--text-muted); margin-top: 10px;
+    }
+    .welcome-coach strong { color: var(--text); font-weight: 600; }
+    .welcome-buttons {
+      position: absolute; bottom: 24px; left: 20px; right: 20px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .welcome-btn-secondary {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--border);
+      padding: 10px; border-radius: 14px;
+      font-size: 12px; font-weight: 600; color: var(--text);
+      text-align: center;
+    }
+    .welcome-btn-primary {
+      background: #1F1F1F; color: #fff;
+      padding: 12px; border-radius: 14px;
+      font-size: 13px; font-weight: 600;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    }
+
+    /* Onboarding (step 3 — sliders) */
+    .onb-card {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 22px;
+      padding: 18px;
+      margin-top: 12px;
+    }
+    .onb-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px; letter-spacing: 0.01em; color: var(--text);
+      text-transform: uppercase; line-height: 0.95;
+    }
+    .onb-accent { height: 2px; width: 40px; background: var(--accent); margin: 8px 0 12px; }
+    .onb-row { margin-bottom: 14px; }
+    .onb-row-label { font-size: 11px; font-weight: 600; color: var(--text); margin-bottom: 4px; display: flex; justify-content: space-between; }
+    .onb-row-val { font-weight: 700; font-variant-numeric: tabular-nums; }
+    .onb-slider {
+      height: 5px; background: var(--border); border-radius: 3px; position: relative;
+    }
+    .onb-slider .fill { position: absolute; height: 100%; background: var(--text); border-radius: 3px; }
+    .onb-slider .knob {
+      position: absolute; top: 50%; transform: translate(-50%, -50%);
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #fff; border: 2px solid var(--text);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .onb-bar-stack {
+      height: 10px; border-radius: 5px; overflow: hidden; display: flex;
+      background: var(--border-soft); margin: 12px 0;
+    }
+    .onb-bar-stack .seg-p { background: var(--c-protein); }
+    .onb-bar-stack .seg-c { background: var(--c-carbs); }
+    .onb-bar-stack .seg-g { background: var(--c-fat); }
+
+    /* Wellbeing modal */
+    .wb-row { margin-bottom: 12px; }
+    .wb-label { font-size: 11px; font-weight: 600; color: var(--text); margin-bottom: 4px; display: flex; justify-content: space-between; }
+    .wb-hint { color: var(--text-light); font-weight: 400; font-size: 9px; }
+    .wb-scale { display: flex; gap: 4px; }
+    .wb-scale .step {
+      flex: 1; padding: 8px 0; border-radius: 8px;
+      text-align: center; font-size: 11px; font-weight: 600;
+      background: var(--surface-2); color: var(--text-muted);
+      border: 1px solid var(--border-soft);
+    }
+    .wb-scale .step.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .wb-scale.protein .step.active { background: var(--c-protein); border-color: var(--c-protein); }
+    .wb-scale.fat .step.active { background: var(--c-fat); border-color: var(--c-fat); }
+
+    /* Final warn */
+    .final-warn {
+      background: rgba(184, 115, 43, 0.08);
+      border: 1px solid rgba(184, 115, 43, 0.3);
+      padding: 16px; border-radius: 14px;
+      margin: 16px 0;
+    }
+    .final-warn h3 { color: var(--warn); margin-bottom: 8px; font-size: 14px; }
+    .final-warn ul { padding-left: 18px; }
+    .final-warn li { font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 4px; }
+
+    /* Helpers */
+    .small { font-size: 12px; color: var(--text-light); }
+    .center { text-align: center; }
+    .arrow-step {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: var(--accent); margin: -8px 0;
+    }
+
+    /* Nav footer */
+    .nav-footer {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(247, 244, 237, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 14px 20px;
+      z-index: 100;
+    }
+    .nav-inner { max-width: 900px; margin: 0 auto; display: flex; gap: 10px; align-items: center; }
+    .nav-btn {
+      flex: 1; padding: 14px;
+      border-radius: 14px; font-weight: 600; font-size: 14px;
+      cursor: pointer; border: none; transition: transform 0.08s, background 0.15s;
+      font-family: inherit;
+    }
+    .nav-btn:active { transform: scale(0.97); }
+    .nav-btn.primary { background: #1F1F1F; color: #fff; }
+    .nav-btn.secondary { background: rgba(255,255,255,0.7); color: var(--text); border: 1px solid var(--border); }
+    .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .nav-counter { font-size: 12px; color: var(--text-muted); text-align: center; min-width: 60px; font-variant-numeric: tabular-nums; }
+
+    /* Hero (slide 0) */
+    .hero {
+      text-align: center;
+      padding: 30px 20px 24px;
+    }
+    .hero-brand { font-family: 'Bebas Neue', sans-serif; font-size: 56px; letter-spacing: 0.02em; line-height: 0.9; margin-bottom: 8px; }
+    .hero-tag { font-size: 13px; color: var(--accent-dark); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 24px; }
+    .hero-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; max-width: 520px; margin: 0 auto 24px; }
+    .hero-persona {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      max-width: 420px; margin: 0 auto 24px;
+      text-align: left;
+    }
+    .hero-persona-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-dark); font-weight: 700; margin-bottom: 6px; }
+    .hero-persona-name { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .hero-persona-detail { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .phone-row { gap: 16px; }
+      .arrow-step { transform: rotate(90deg); margin: -10px 0; }
+      .step-title { font-size: 24px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <span class="brand">MEAL TRACKER</span>
+        <span class="brand-sub">Guía interactiva</span>
+      </div>
+      <div class="step-indicator" id="stepIndicator">0 / 12</div>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-inner">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+
+  <div class="slides" id="slides">
+
+    <!-- ============================================ -->
+    <!-- Slide 0: Hero -->
+    <!-- ============================================ -->
+    <div class="slide active" data-step="0">
+      <div class="hero">
+        <div class="hero-brand">Meal<br>Tracker</div>
+        <div class="accent-line" style="margin: 0 auto 16px"></div>
+        <div class="hero-tag">Entrena con Método</div>
+        <div class="hero-desc">
+          Guía interactiva paso a paso. Acompañamos a <strong>Ana</strong> en su día completo usando todas las funciones de la app.
+        </div>
+        <div class="hero-persona">
+          <div class="hero-persona-label">Caso ejemplo</div>
+          <div class="hero-persona-name">Ana, clienta de Mauro</div>
+          <div class="hero-persona-detail">
+            Meta diaria: 2200 kcal · 150g proteína · 220g carbohidratos · 70g grasas.
+            Quiere registrar sin esfuerzo y mantener a su coach informado.
+          </div>
+        </div>
+        <div class="small">Toca <strong>Siguiente</strong> abajo (o usa la flecha derecha del teclado).</div>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 1: Primer acceso (Welcome + Onboarding) -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="1">
+      <div class="kicker">Paso 1 · Tu primer acceso</div>
+      <h1 class="step-title">Entrar a la app</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Ana abre el link que Mauro le compartió. Ve la pantalla de bienvenida, escribe su nombre y configura su meta diaria.
+      </p>
+
+      <div class="phone-row">
+        <!-- Welcome screen -->
+        <div class="phone-col">
+          <div class="phone-caption">Vista 1 — Bienvenida</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="welcome-screen">
+              <div class="welcome-avocado"></div>
+              <div class="welcome-step">Paso 1 de 3</div>
+              <div class="welcome-bars"><span class="active"></span><span></span><span></span></div>
+              <div class="welcome-brand">Meal<br>Tracker</div>
+              <div class="welcome-accent"></div>
+              <div class="welcome-tag">Entrena con Método</div>
+              <div class="welcome-frase">Registra natural.<br><span class="muted">Recibe criterio.</span></div>
+              <div class="welcome-coach"><strong>Mauro Morón</strong> · ISSA Certified Coach</div>
+              <div class="welcome-buttons">
+                <div class="welcome-btn-secondary">ⓘ ¿Cómo funciona? · 2 min</div>
+                <div class="welcome-btn-primary">Empezar ↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-step">→</div>
+
+        <!-- Onboarding step 3 -->
+        <div class="phone-col">
+          <div class="phone-caption">Vista 2 — Tu meta diaria</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="modal-screen">
+              <div class="welcome-step" style="margin-bottom: 16px;">
+                Paso 3 de 3
+                <div class="welcome-bars"><span class="active"></span><span class="active"></span><span class="active"></span></div>
+              </div>
+              <div class="onb-card">
+                <div class="onb-title">Tu meta</div>
+                <div class="onb-accent"></div>
+                <div class="onb-row">
+                  <div class="onb-row-label">Calorías diarias <span class="onb-row-val">2200 kcal</span></div>
+                  <div class="onb-slider"><div class="fill" style="width: 55%"></div><div class="knob" style="left: 55%"></div></div>
+                </div>
+                <div class="onb-bar-stack">
+                  <div class="seg-p" style="width: 27%"></div>
+                  <div class="seg-c" style="width: 40%"></div>
+                  <div class="seg-g" style="width: 33%"></div>
+                </div>
+                <div class="onb-row">
+                  <div class="onb-row-label" style="color: var(--c-protein)">Proteína <span class="onb-row-val">150g · 27%</span></div>
+                  <div class="onb-slider"><div class="fill" style="background: var(--c-protein); width: 27%"></div><div class="knob" style="border-color: var(--c-protein); left: 27%"></div></div>
+                </div>
+                <div class="onb-row">
+                  <div class="onb-row-label" style="color: var(--c-carbs)">Carbohidratos <span class="onb-row-val">220g · 40%</span></div>
+                  <div class="onb-slider"><div class="fill" style="background: var(--c-carbs); width: 40%"></div><div class="knob" style="border-color: var(--c-carbs); left: 40%"></div></div>
+                </div>
+                <div class="onb-row">
+                  <div class="onb-row-label" style="color: var(--c-fat)">Grasas <span class="onb-row-val">70g · 33%</span></div>
+                  <div class="onb-slider"><div class="fill" style="background: var(--c-fat); width: 33%"></div><div class="knob" style="border-color: var(--c-fat); left: 33%"></div></div>
+                </div>
+                <div class="primary-btn" style="margin-top: 12px;">Empezar ↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Tip:</strong> Si no estás seguro de tus metas, deja los valores por defecto. Después las afinas con Mauro. <strong>Guarda la app:</strong> en iPhone, Compartir → Añadir a inicio. En Android: menú → Añadir a pantalla de inicio.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 2: Registrar comida natural -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="2">
+      <div class="kicker">Paso 2 · Lo más importante</div>
+      <h1 class="step-title">Registra en lenguaje natural</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Ana escribe su desayuno como se lo contaría a un amigo. La app interpreta y calcula con valores reales (USDA).
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Vista 1 — Ana escribe</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                  <div class="app-header-tag">Entrena con Método</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding-bottom: 90px;">
+              <div class="goals-sticky">
+                <div class="goals-changemeta">⚙ Cambiar meta</div>
+                <div class="day-label">Hoy · <strong>Lunes 26 de Mayo</strong></div>
+                <div class="goals-rings">
+                  <div class="ring-cell">
+                    <div class="ring-svg-wrap">
+                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#8A9558" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#8A9558" stroke-width="5" stroke-linecap="round" stroke-dasharray="0 157" transform="rotate(-90 28 28)"/></svg>
+                      <div class="ring-num-wrap"><div class="ring-num">0</div><div class="ring-goal">/2200</div></div>
+                    </div>
+                    <div class="ring-label">Cal</div>
+                  </div>
+                  <div class="ring-cell">
+                    <div class="ring-svg-wrap">
+                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#D77A61" stroke-opacity="0.14" stroke-width="5"/></svg>
+                      <div class="ring-num-wrap"><div class="ring-num">0</div><div class="ring-goal">/150g</div></div>
+                    </div>
+                    <div class="ring-label">Prot</div>
+                  </div>
+                  <div class="ring-cell">
+                    <div class="ring-svg-wrap">
+                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#D4B581" stroke-opacity="0.14" stroke-width="5"/></svg>
+                      <div class="ring-num-wrap"><div class="ring-num">0</div><div class="ring-goal">/220g</div></div>
+                    </div>
+                    <div class="ring-label">Carb</div>
+                  </div>
+                  <div class="ring-cell">
+                    <div class="ring-svg-wrap">
+                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#6B7A8F" stroke-opacity="0.14" stroke-width="5"/></svg>
+                      <div class="ring-num-wrap"><div class="ring-num">0</div><div class="ring-goal">/70g</div></div>
+                    </div>
+                    <div class="ring-label">Gras</div>
+                  </div>
+                </div>
+              </div>
+              <div class="chat">
+                <div class="bubble user">Desayuno: 2 huevos revueltos, avena con plátano y café con leche</div>
+              </div>
+              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
+              <div class="input-bar">
+                <span class="input-text">2 huevos revueltos, avena con plátano…</span>
+                <div class="input-btn mic">🎤</div>
+                <div class="input-btn send">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">Vista 2 — Lo que registra</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                  <div class="app-header-tag">Entrena con Método</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding-bottom: 90px;">
+              <div class="goals-sticky">
+                <div class="goals-changemeta">⚙ Cambiar meta</div>
+                <div class="day-label">Hoy · <strong>Lunes 26 de Mayo</strong></div>
+                <div class="goals-rings">
+                  <div class="ring-cell">
+                    <div class="ring-svg-wrap">
+                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#8A9558" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#8A9558" stroke-width="5" stroke-linecap="round" stroke-dasharray="36 157" transform="rotate(-90 28 28)"/></svg>
+                      <div class="ring-num-wrap"><div class="ring-num">505</div><div class="ring-goal">/2200</div></div>
+                    </div>
+                    <div class="ring-label">Cal</div>
+                  </div>
+                  <div class="ring-cell">
+                    <div class="ring-svg-wrap">
+                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#D77A61" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#D77A61" stroke-width="5" stroke-linecap="round" stroke-dasharray="23 157" transform="rotate(-90 28 28)"/></svg>
+                      <div class="ring-num-wrap"><div class="ring-num">22</div><div class="ring-goal">/150g</div></div>
+                    </div>
+                    <div class="ring-label">Prot</div>
+                  </div>
+                  <div class="ring-cell">
+                    <div class="ring-svg-wrap">
+                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#D4B581" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#D4B581" stroke-width="5" stroke-linecap="round" stroke-dasharray="43 157" transform="rotate(-90 28 28)"/></svg>
+                      <div class="ring-num-wrap"><div class="ring-num">60</div><div class="ring-goal">/220g</div></div>
+                    </div>
+                    <div class="ring-label">Carb</div>
+                  </div>
+                  <div class="ring-cell">
+                    <div class="ring-svg-wrap">
+                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#6B7A8F" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#6B7A8F" stroke-width="5" stroke-linecap="round" stroke-dasharray="40 157" transform="rotate(-90 28 28)"/></svg>
+                      <div class="ring-num-wrap"><div class="ring-num">18</div><div class="ring-goal">/70g</div></div>
+                    </div>
+                    <div class="ring-label">Gras</div>
+                  </div>
+                </div>
+              </div>
+              <div class="chat">
+                <div class="logged">
+                  <div class="logged-header">
+                    <div class="logged-header-left">
+                      <div class="logged-check">✓</div>
+                      <span class="logged-meal">Desayuno</span>
+                      <span class="logged-time">08:45 a.m.</span>
+                    </div>
+                    <div class="logged-actions"><span>★</span><span>✎</span><span>🗑</span></div>
+                  </div>
+                  <div class="logged-items">
+                    <div class="logged-item"><span class="logged-item-name">Huevo grande revuelto · 2 ud</span><span class="logged-item-kcal">180 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Avena cocida · 50g (1 taza)</span><span class="logged-item-kcal">160 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Plátano · 1 ud mediana</span><span class="logged-item-kcal">105 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Café con leche · 1 taza</span><span class="logged-item-kcal">60 kcal</span></div>
+                  </div>
+                  <div class="logged-total">
+                    <span class="total-label">Total comida</span>
+                    <span class="total-val">505 kcal</span>
+                  </div>
+                  <div class="logged-macros"><span class="mp">P 22g</span><span class="mc">C 60g</span><span class="mg">G 18g</span></div>
+                </div>
+              </div>
+              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
+              <div class="input-bar">
+                <span class="input-text">Escribe o dicta lo que comiste…</span>
+                <div class="input-btn mic">🎤</div>
+                <div class="input-btn send" style="opacity: 0.3">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Tip:</strong> No necesitas decir gramos exactos. Si la app estima algo, te lo avisa con una nota amarilla y puedes ajustar tocando el lápiz ✎ del card.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 3: Dictar por voz -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="3">
+      <div class="kicker">Paso 3 · Cuando estás cocinando</div>
+      <h1 class="step-title">Dicta por voz</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Ana toca el micrófono y dicta lo que comió. La app entiende incluso si las palabras vienen pegadas sin puntuación.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Vista 1 — Toca el micrófono</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                  <div class="app-header-tag">Entrena con Método</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding-bottom: 90px; min-height: 480px;">
+              <div class="chat" style="margin-top: 200px;"></div>
+              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
+              <div class="input-bar">
+                <span class="input-text">Escribe o dicta lo que comiste…</span>
+                <div class="input-btn mic" style="position: relative;">🎤
+                  <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
+                </div>
+                <div class="input-btn send" style="opacity: 0.3">↑</div>
+              </div>
+              <div class="tap-arrow" style="bottom: 50px; right: 70px;">↘</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">Vista 2 — Dictando y resultado</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                  <div class="app-header-tag">Entrena con Método</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding-bottom: 90px;">
+              <div class="chat">
+                <div class="bubble user">tres arepas dos huevos un café con leche</div>
+                <div class="logged">
+                  <div class="logged-header">
+                    <div class="logged-header-left">
+                      <div class="logged-check">✓</div>
+                      <span class="logged-meal">Desayuno</span>
+                      <span class="logged-time">07:30 a.m.</span>
+                    </div>
+                    <div class="logged-actions"><span>★</span><span>✎</span><span>🗑</span></div>
+                  </div>
+                  <div class="logged-warning">Asumí 3 arepas medianas de maíz blanco (~80g c/u) y 2 huevos grandes. Ajusta si difiere.</div>
+                  <div class="logged-items">
+                    <div class="logged-item"><span class="logged-item-name">Arepa de maíz · 3 ud (~240g)</span><span class="logged-item-kcal">450 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Huevo grande · 2 ud</span><span class="logged-item-kcal">150 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Café con leche · 1 taza</span><span class="logged-item-kcal">60 kcal</span></div>
+                  </div>
+                  <div class="logged-total"><span class="total-label">Total comida</span><span class="total-val">660 kcal</span></div>
+                  <div class="logged-macros"><span class="mp">P 25g</span><span class="mc">C 95g</span><span class="mg">G 20g</span></div>
+                </div>
+              </div>
+              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
+              <div class="input-bar recording">
+                <div class="waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="input-btn mic">⬛</div>
+                <div class="input-btn send" style="opacity: 0.3">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Mientras dictas</strong> ves una onda animada que confirma que te escucha. Toca el micrófono de nuevo para detener.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 4: Sumar a la última comida -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="4">
+      <div class="kicker">Paso 4 · Se te olvidó algo</div>
+      <h1 class="step-title">Suma a tu última comida</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Ana se acuerda que también comió mantequilla de maní. Lo escribe y la app lo <strong>suma a su desayuno</strong>, no crea una comida nueva.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Resultado: Desayuno actualizado</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                  <div class="app-header-tag">Entrena con Método</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding-bottom: 90px;">
+              <div class="chat">
+                <div class="bubble user">olvidé decir que también puse una cucharada de mantequilla de maní a la avena</div>
+                <div class="logged">
+                  <div class="logged-header">
+                    <div class="logged-header-left">
+                      <div class="logged-check">✓</div>
+                      <span class="logged-meal">Desayuno actualizado</span>
+                      <span class="logged-time">08:45 a.m.</span>
+                    </div>
+                    <div class="logged-actions"><span>★</span><span>✎</span><span>🗑</span></div>
+                  </div>
+                  <div class="added-block">
+                    <div class="added-block-label">Sumé este ítem</div>
+                    <div class="logged-item"><span class="logged-item-name">+ Mantequilla de maní · 1 cda (~16g)</span><span class="logged-item-kcal">95 kcal</span></div>
+                  </div>
+                  <div class="full-list-label">Comida completa</div>
+                  <div class="logged-items">
+                    <div class="logged-item"><span class="logged-item-name">Huevo grande revuelto · 2 ud</span><span class="logged-item-kcal">180 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Avena cocida · 50g</span><span class="logged-item-kcal">160 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Plátano · 1 ud mediana</span><span class="logged-item-kcal">105 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Café con leche · 1 taza</span><span class="logged-item-kcal">60 kcal</span></div>
+                    <div class="logged-item added"><span class="logged-item-name">Mantequilla de maní · 1 cda</span><span class="logged-item-kcal">95 kcal</span></div>
+                  </div>
+                  <div class="logged-total"><span class="total-label">Nuevo total comida</span><span class="total-val">600 kcal</span></div>
+                  <div class="logged-macros"><span class="mp">P 26g</span><span class="mc">C 63g</span><span class="mg">G 26g</span></div>
+                </div>
+              </div>
+              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
+              <div class="input-bar">
+                <span class="input-text">Escribe o dicta lo que comiste…</span>
+                <div class="input-btn mic">🎤</div>
+                <div class="input-btn send" style="opacity: 0.3">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Frases que la app detecta para sumar:</strong> "me faltó", "olvidé", "también comí", "agrégale", "súmale", "no te dije que también". Siempre se suma a la última comida del día.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 5: Pregunta sin registrar -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="5">
+      <div class="kicker">Paso 5 · Antes de comer</div>
+      <h1 class="step-title">Consulta sin registrar</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Ana quiere saber cuántas calorías tiene una manzana antes de servirse. Pregunta directo. La app responde <strong>sin registrar nada</strong>.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Consulta y respuesta</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                  <div class="app-header-tag">Entrena con Método</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding-bottom: 90px;">
+              <div class="chat">
+                <div class="bubble user">¿cuántas calorías tiene una manzana?</div>
+                <div class="logged">
+                  <div class="logged-header">
+                    <div class="logged-header-left">
+                      <div class="logged-check" style="background: var(--accent-light); color: var(--accent);">ⓘ</div>
+                      <span class="logged-meal" style="color: var(--accent)">Consulta nutricional</span>
+                    </div>
+                  </div>
+                  <div style="font-size: 13px; color: var(--text); margin-bottom: 10px;">
+                    <strong>Manzana</strong> · 1 ud mediana (~180g)
+                  </div>
+                  <div class="logged-total"><span class="total-label">Calorías</span><span class="total-val">95 kcal</span></div>
+                  <div class="logged-macros"><span class="mp">P 0.5g</span><span class="mc">C 25g</span><span class="mg">G 0.3g</span></div>
+                  <div style="font-size: 9px; color: var(--text-light); font-style: italic; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-soft);">
+                    No se registró como comida del día.
+                  </div>
+                </div>
+              </div>
+              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
+              <div class="input-bar">
+                <span class="input-text">Escribe o dicta lo que comiste…</span>
+                <div class="input-btn mic">🎤</div>
+                <div class="input-btn send" style="opacity: 0.3">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Ejemplos que funcionan:</strong> <em>"¿macros de un yogur griego de 200g?"</em>, <em>"¿cuántas proteínas tiene 100g de salmón?"</em>, <em>"¿calorías de un café con leche?"</em>.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 6: Mis ingredientes -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="6">
+      <div class="kicker">Paso 6 · Configura una vez, beneficia todo</div>
+      <h1 class="step-title">Mis ingredientes favoritos</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Ana abre <strong>Herramientas</strong> (botón flotante abajo a la derecha), entra a <strong>Mis ingredientes</strong> y agrega los alimentos que suele comprar.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">1. Toca "Herramientas"</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                  <div class="app-header-tag">Entrena con Método</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding-bottom: 90px; min-height: 480px;">
+              <div class="chat"></div>
+              <div class="fab-pill" style="position: relative;">
+                <span class="sparkle">✦</span> Herramientas
+                <div class="tap-indicator" style="inset: -10px; border-radius: 30px;"></div>
+              </div>
+              <div class="tap-arrow" style="bottom: 110px; right: 144px;">↘</div>
+              <div class="input-bar">
+                <span class="input-text">Escribe o dicta lo que comiste…</span>
+                <div class="input-btn mic">🎤</div>
+                <div class="input-btn send" style="opacity: 0.3">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">2. Selecciona "Mis ingredientes"</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding: 0; min-height: 540px; background: rgba(0,0,0,0.32); position: relative;">
+              <div class="bottom-sheet">
+                <div class="sheet-grabber"></div>
+                <div class="sheet-header">
+                  <div>
+                    <div class="sheet-kicker">Acciones</div>
+                    <div class="sheet-title">¿Qué quieres hacer?</div>
+                  </div>
+                  <div class="sheet-close">×</div>
+                </div>
+
+                <div class="tools-section-label">Día a día</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">🍳</span> Arma mi día</div>
+                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
+                  <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
+                  <div class="tool-chip" style="position: relative; background: var(--accent-pastel);"><span class="ic">🍴</span> Mis ingredientes
+                    <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
+                  </div>
+                </div>
+
+                <div class="tools-section-label">Tu progreso</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
+                  <div class="tool-chip"><span class="ic">✨</span> Check-in del día</div>
+                  <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
+                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
+                </div>
+
+                <div class="tools-section-label">Coach y configuración</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📄</span> Reporte al coach</div>
+                  <div class="tool-chip"><span class="ic">ⓘ</span> ¿Qué puedo hacer?</div>
+                  <div class="tool-chip"><span class="ic">↺</span> Reiniciar día</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">3. Agrega tus ingredientes</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="modal-screen">
+              <div class="modal-card">
+                <div class="modal-kicker">Favoritos</div>
+                <div class="modal-title">Mis ingredientes</div>
+                <div class="modal-body-text">
+                  Tu lista de alimentos que sueles comprar y comer. La uso cuando me pides "arma mi día".
+                </div>
+                <div class="input-line">
+                  <div class="fake-input">pollo</div>
+                  <div class="fake-btn">Añadir</div>
+                </div>
+                <div class="chips-list">
+                  <span class="ing-chip">arroz <span class="x">×</span></span>
+                  <span class="ing-chip">huevos <span class="x">×</span></span>
+                  <span class="ing-chip">avena <span class="x">×</span></span>
+                  <span class="ing-chip">palta <span class="x">×</span></span>
+                  <span class="ing-chip">yogur griego <span class="x">×</span></span>
+                  <span class="ing-chip">banana <span class="x">×</span></span>
+                  <span class="ing-chip">almendras <span class="x">×</span></span>
+                  <span class="ing-chip">atún <span class="x">×</span></span>
+                  <span class="ing-chip">pan integral <span class="x">×</span></span>
+                  <span class="ing-chip">mantequilla maní <span class="x">×</span></span>
+                  <span class="ing-chip">aceite oliva <span class="x">×</span></span>
+                </div>
+                <div class="primary-btn">✓ Guardar lista</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Bonus automático:</strong> Si la app nota que registras el mismo alimento 3+ veces, te pregunta si lo agrega solo. Solo respondes "Sí" y queda en la lista.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 7: Arma mi día -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="7">
+      <div class="kicker">Paso 7 · Cuando no sabes qué cocinar</div>
+      <h1 class="step-title">Arma mi día</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        En <strong>Herramientas → Arma mi día</strong>, la app distribuye tus ingredientes favoritos en 4 comidas que cuadran con tu meta diaria.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Toca "Arma mi día"</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding: 0; min-height: 540px; background: rgba(0,0,0,0.32); position: relative;">
+              <div class="bottom-sheet">
+                <div class="sheet-grabber"></div>
+                <div class="sheet-header">
+                  <div>
+                    <div class="sheet-kicker">Acciones</div>
+                    <div class="sheet-title">¿Qué quieres hacer?</div>
+                  </div>
+                  <div class="sheet-close">×</div>
+                </div>
+                <div class="tools-section-label">Día a día</div>
+                <div class="tools-grid">
+                  <div class="tool-chip" style="position: relative; background: var(--accent-pastel);"><span class="ic">🍳</span> Arma mi día
+                    <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
+                  </div>
+                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
+                  <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
+                  <div class="tool-chip"><span class="ic">🍴</span> Mis ingredientes</div>
+                </div>
+                <div class="tools-section-label">Tu progreso</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
+                  <div class="tool-chip"><span class="ic">✨</span> Check-in del día</div>
+                  <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
+                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">Recibe tu propuesta del día</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="modal-screen">
+              <div class="modal-card">
+                <div class="modal-kicker">Planificador</div>
+                <div class="modal-title">Arma mi día</div>
+                <div class="modal-body-text">
+                  Entendiendo que estos son los ingredientes que te gustan y compras, la distribución podría ser esta.
+                </div>
+
+                <div class="option-card">
+                  <div class="option-label">Desayuno</div>
+                  <div class="logged-item"><span class="logged-item-name">Huevo · 3 ud</span><span class="logged-item-kcal">225 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Avena · 60g</span><span class="logged-item-kcal">228 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Banana · 1 ud</span><span class="logged-item-kcal">105 kcal</span></div>
+                  <div class="option-subtotal"><span>558 kcal</span><span class="mp">P 25g</span><span class="mc">C 75g</span><span class="mg">G 16g</span></div>
+                </div>
+
+                <div class="option-card">
+                  <div class="option-label">Almuerzo</div>
+                  <div class="logged-item"><span class="logged-item-name">Pollo · 180g</span><span class="logged-item-kcal">295 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Arroz · 180g</span><span class="logged-item-kcal">235 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Palta · 80g</span><span class="logged-item-kcal">128 kcal</span></div>
+                  <div class="option-subtotal"><span>658 kcal</span><span class="mp">P 50g</span><span class="mc">C 55g</span><span class="mg">G 25g</span></div>
+                </div>
+
+                <div class="option-card">
+                  <div class="option-label">Snack</div>
+                  <div class="logged-item"><span class="logged-item-name">Yogur griego · 200g</span><span class="logged-item-kcal">130 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Almendras · 25g</span><span class="logged-item-kcal">145 kcal</span></div>
+                  <div class="option-subtotal"><span>275 kcal</span><span class="mp">P 24g</span><span class="mc">C 14g</span><span class="mg">G 14g</span></div>
+                </div>
+
+                <div class="option-card">
+                  <div class="option-label">Cena</div>
+                  <div class="logged-item"><span class="logged-item-name">Atún · 1 lata</span><span class="logged-item-kcal">110 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Pan integral · 60g</span><span class="logged-item-kcal">160 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Aceite oliva · 1 cda</span><span class="logged-item-kcal">120 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Palta · 50g</span><span class="logged-item-kcal">80 kcal</span></div>
+                  <div class="option-subtotal"><span>470 kcal</span><span class="mp">P 35g</span><span class="mc">C 32g</span><span class="mg">G 18g</span></div>
+                </div>
+
+                <div style="background: var(--accent-pastel); padding: 10px 12px; border-radius: 12px; margin-bottom: 12px;">
+                  <div class="option-label" style="margin-bottom: 4px;">Total del día</div>
+                  <div style="font-size: 11px; font-weight: 700; color: var(--text);">1961 kcal · P 134g · C 176g · G 73g</div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                  <div class="primary-btn">✓ Registrar como comidas</div>
+                  <div class="secondary-btn">★ Guardar como favorito</div>
+                  <div class="secondary-btn">↻ Regenerar variante</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Importante:</strong> Son cantidades y macros, no recetas. Para recetas usa el módulo Meals de Trainerize. Decides tú si registras, guardas o pides otra variante.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 8: Qué puedo cenar -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="8">
+      <div class="kicker">Paso 8 · Sin abrir menú</div>
+      <h1 class="step-title">"¿Qué puedo cenar?"</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Ana pregunta directo en el chat. La app le propone <strong>2 o 3 combinaciones</strong> usando sus ingredientes favoritos.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Pregunta y respuesta</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                  <div class="app-header-tag">Entrena con Método</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding-bottom: 90px;">
+              <div class="chat">
+                <div class="bubble user">¿qué puedo cenar?</div>
+                <div class="suggestion">
+                  <div class="suggestion-header">
+                    <div class="pie">🍳</div>
+                    Cena · opciones
+                  </div>
+                  <div class="suggestion-text">
+                    Basándome en los ingredientes que sueles tener, podrías combinar:
+                  </div>
+
+                  <div class="option-card">
+                    <div class="option-label">Opción 1</div>
+                    <div class="logged-item"><span class="logged-item-name">Pollo · 120g</span><span class="logged-item-kcal">195 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Arroz cocido · 100g</span><span class="logged-item-kcal">130 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Palta · 50g</span><span class="logged-item-kcal">80 kcal</span></div>
+                    <div class="option-subtotal"><span>≈ 405 kcal</span><span class="mp">P 32g</span><span class="mc">C 30g</span><span class="mg">G 18g</span></div>
+                  </div>
+
+                  <div class="option-card">
+                    <div class="option-label">Opción 2</div>
+                    <div class="logged-item"><span class="logged-item-name">Atún · 1 lata</span><span class="logged-item-kcal">110 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Pan integral · 50g</span><span class="logged-item-kcal">130 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Palta · 60g</span><span class="logged-item-kcal">95 kcal</span></div>
+                    <div class="option-subtotal"><span>≈ 335 kcal</span><span class="mp">P 28g</span><span class="mc">C 28g</span><span class="mg">G 14g</span></div>
+                  </div>
+
+                  <div class="option-card">
+                    <div class="option-label">Opción 3</div>
+                    <div class="logged-item"><span class="logged-item-name">Huevo · 3 ud</span><span class="logged-item-kcal">225 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Pan integral · 40g</span><span class="logged-item-kcal">105 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Palta · 40g</span><span class="logged-item-kcal">65 kcal</span></div>
+                    <div class="option-subtotal"><span>≈ 395 kcal</span><span class="mp">P 24g</span><span class="mc">C 22g</span><span class="mg">G 23g</span></div>
+                  </div>
+
+                  <div class="disclaimer-note">
+                    Cálculo organizativo basado en tus ingredientes habituales. No constituye consejo nutricional. Para criterio personalizado, consulta con tu coach.
+                  </div>
+                </div>
+              </div>
+              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
+              <div class="input-bar">
+                <span class="input-text">Escribe o dicta lo que comiste…</span>
+                <div class="input-btn mic">🎤</div>
+                <div class="input-btn send" style="opacity: 0.3">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Si tu lista de ingredientes está vacía o es muy corta:</strong> la app te pide configurarla primero. Cuanto más completa, mejores opciones.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 9: Cómo voy hoy + gap -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="9">
+      <div class="kicker">Paso 9 · Ver tu progreso</div>
+      <h1 class="step-title">"¿Cómo voy hoy?"</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Ana pregunta. La app muestra el resumen, y si le faltan macros importantes, le ofrece equivalencias con sus ingredientes.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Resumen + Gap nutricional</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div>
+                  <div class="app-header-brand">MEAL TRACKER</div>
+                  <div class="app-header-tag">Entrena con Método</div>
+                </div>
+              </div>
+            </div>
+            <div class="app-body" style="padding-bottom: 90px;">
+              <div class="chat">
+                <div class="bubble user">¿cómo voy hoy?</div>
+                <div class="logged">
+                  <div class="logged-header">
+                    <div class="logged-header-left">
+                      <div class="logged-check" style="background: var(--c-fat-pastel); color: var(--c-fat);">📈</div>
+                      <span class="logged-meal" style="color: var(--c-fat)">Resumen del día</span>
+                    </div>
+                  </div>
+                  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 4px;">
+                    <div style="text-align: center; padding: 6px; background: var(--surface-2); border-radius: 8px;">
+                      <div style="font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); font-weight: 700;">Kcal</div>
+                      <div style="font-size: 13px; font-weight: 700; color: var(--accent-dark);">1505</div>
+                      <div style="font-size: 7px; color: var(--text-light);">/2200</div>
+                    </div>
+                    <div style="text-align: center; padding: 6px; background: var(--surface-2); border-radius: 8px;">
+                      <div style="font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); font-weight: 700;">P</div>
+                      <div style="font-size: 13px; font-weight: 700; color: var(--c-protein);">85g</div>
+                      <div style="font-size: 7px; color: var(--text-light);">/150g</div>
+                    </div>
+                    <div style="text-align: center; padding: 6px; background: var(--surface-2); border-radius: 8px;">
+                      <div style="font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); font-weight: 700;">C</div>
+                      <div style="font-size: 13px; font-weight: 700; color: var(--c-carbs);">155g</div>
+                      <div style="font-size: 7px; color: var(--text-light);">/220g</div>
+                    </div>
+                    <div style="text-align: center; padding: 6px; background: var(--surface-2); border-radius: 8px;">
+                      <div style="font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); font-weight: 700;">G</div>
+                      <div style="font-size: 13px; font-weight: 700; color: var(--c-fat);">52g</div>
+                      <div style="font-size: 7px; color: var(--text-light);">/70g</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="suggestion">
+                  <div class="suggestion-header">
+                    <div class="pie">🥧</div>
+                    Lo que falta hoy
+                  </div>
+                  <div style="font-size: 11px; line-height: 1.5; margin-bottom: 8px;">
+                    Faltan <strong>65g de proteína</strong> · meta 150g<br>
+                    Faltan <strong>65g de carbohidratos</strong> · meta 220g
+                  </div>
+                  <div style="font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); font-weight: 600; margin-bottom: 6px;">
+                    De tus ingredientes, equivalencias para cubrirlo
+                  </div>
+                  <div class="option-card">
+                    <div class="option-label">Opción 1</div>
+                    <div class="logged-item"><span>Pollo · 180g</span><span class="logged-item-kcal">295 kcal</span></div>
+                    <div class="logged-item"><span>Arroz cocido · 150g</span><span class="logged-item-kcal">195 kcal</span></div>
+                    <div class="option-subtotal"><span>≈ 490 kcal</span><span class="mp">P 50g</span><span class="mc">C 45g</span></div>
+                  </div>
+                  <div class="option-card">
+                    <div class="option-label">Opción 2</div>
+                    <div class="logged-item"><span>Yogur griego · 250g</span><span class="logged-item-kcal">160 kcal</span></div>
+                    <div class="logged-item"><span>Avena · 50g</span><span class="logged-item-kcal">190 kcal</span></div>
+                    <div class="logged-item"><span>Banana · 1 ud</span><span class="logged-item-kcal">105 kcal</span></div>
+                    <div class="option-subtotal"><span>≈ 455 kcal</span><span class="mp">P 28g</span><span class="mc">C 65g</span></div>
+                  </div>
+                  <div class="disclaimer-note">
+                    Cálculo organizativo. No constituye consejo nutricional ni reemplaza la valoración de un profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
+              <div class="input-bar">
+                <span class="input-text">Escribe o dicta lo que comiste…</span>
+                <div class="input-btn mic">🎤</div>
+                <div class="input-btn send" style="opacity: 0.3">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Esto aparece automáticamente</strong> cuando te falta más del 25% en algún macro. También se dispara en la narrativa del cierre del día (21:30).
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 10: Check-in del día -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="10">
+      <div class="kicker">Paso 10 · Oro para tu coach</div>
+      <h1 class="step-title">Check-in en 3 toques</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Antes de dormir, Ana abre <strong>Herramientas → Check-in del día</strong> y responde 3 escalas rápidas. Esto le sirve a Mauro para entender el contexto.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">1. En Herramientas, "Check-in"</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div><div class="app-header-brand">MEAL TRACKER</div></div>
+              </div>
+            </div>
+            <div class="app-body" style="padding: 0; min-height: 540px; background: rgba(0,0,0,0.32); position: relative;">
+              <div class="bottom-sheet">
+                <div class="sheet-grabber"></div>
+                <div class="sheet-header">
+                  <div>
+                    <div class="sheet-kicker">Acciones</div>
+                    <div class="sheet-title">¿Qué quieres hacer?</div>
+                  </div>
+                  <div class="sheet-close">×</div>
+                </div>
+                <div class="tools-section-label">Día a día</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">🍳</span> Arma mi día</div>
+                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
+                  <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
+                  <div class="tool-chip"><span class="ic">🍴</span> Mis ingredientes</div>
+                </div>
+                <div class="tools-section-label">Tu progreso</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
+                  <div class="tool-chip" style="position: relative; background: var(--accent-pastel);"><span class="ic">✨</span> Check-in del día
+                    <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
+                  </div>
+                  <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
+                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">2. Responde 3 escalas</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="modal-screen">
+              <div class="modal-card">
+                <div class="modal-kicker">Check-in</div>
+                <div class="modal-title">¿Cómo te fue, Ana?</div>
+                <div class="modal-body-text">
+                  3 toques rápidos. Ayuda a Mauro a entender cómo te sentiste, más allá de los macros.
+                </div>
+
+                <div class="wb-row">
+                  <div class="wb-label">Energía <span class="wb-hint">1 bajón · 5 con todo</span></div>
+                  <div class="wb-scale">
+                    <div class="step">1</div><div class="step">2</div><div class="step">3</div><div class="step active">4</div><div class="step">5</div>
+                  </div>
+                </div>
+
+                <div class="wb-row">
+                  <div class="wb-label">Hambre <span class="wb-hint">1 saciado · 5 con mucha</span></div>
+                  <div class="wb-scale protein">
+                    <div class="step">1</div><div class="step active">2</div><div class="step">3</div><div class="step">4</div><div class="step">5</div>
+                  </div>
+                </div>
+
+                <div class="wb-row">
+                  <div class="wb-label">Ánimo <span class="wb-hint">1 mal · 5 muy bien</span></div>
+                  <div class="wb-scale fat">
+                    <div class="step">1</div><div class="step">2</div><div class="step">3</div><div class="step">4</div><div class="step active">5</div>
+                  </div>
+                </div>
+
+                <div class="primary-btn" style="margin-top: 8px;">✓ Guardar check-in</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Por qué importa:</strong> Si Ana cumple macros pero su energía está en 2/5, algo no encaja. Mauro lo ve en el reporte y ajusta. Sin esto, los números no cuentan toda la historia.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 11: Reporte al coach -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="11">
+      <div class="kicker">Paso 11 · Tu coach informado</div>
+      <h1 class="step-title">Reporte al coach</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Cada lunes la app envía automáticamente un reporte a Mauro. Ana también puede mandarlo manual cuando quiera desde <strong>Herramientas → Reporte al coach</strong>.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Selecciona "Reporte al coach"</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div><div class="app-header-brand">MEAL TRACKER</div></div>
+              </div>
+            </div>
+            <div class="app-body" style="padding: 0; min-height: 540px; background: rgba(0,0,0,0.32); position: relative;">
+              <div class="bottom-sheet">
+                <div class="sheet-grabber"></div>
+                <div class="sheet-header">
+                  <div>
+                    <div class="sheet-kicker">Acciones</div>
+                    <div class="sheet-title">¿Qué quieres hacer?</div>
+                  </div>
+                  <div class="sheet-close">×</div>
+                </div>
+                <div class="tools-section-label">Día a día</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">🍳</span> Arma mi día</div>
+                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
+                  <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
+                  <div class="tool-chip"><span class="ic">🍴</span> Mis ingredientes</div>
+                </div>
+                <div class="tools-section-label">Tu progreso</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
+                  <div class="tool-chip"><span class="ic">✨</span> Check-in del día</div>
+                  <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
+                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
+                </div>
+                <div class="tools-section-label">Coach y configuración</div>
+                <div class="tools-grid">
+                  <div class="tool-chip" style="position: relative; background: var(--accent-pastel);"><span class="ic">📄</span> Reporte al coach
+                    <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
+                  </div>
+                  <div class="tool-chip"><span class="ic">ⓘ</span> ¿Qué puedo hacer?</div>
+                  <div class="tool-chip"><span class="ic">↺</span> Reiniciar día</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">Descarga o envía el reporte</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="modal-screen">
+              <div class="modal-card">
+                <div class="modal-kicker">Exportar</div>
+                <div class="modal-title">Reporte al coach</div>
+
+                <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Periodo</div>
+                <div style="display: flex; gap: 5px; margin-bottom: 14px;">
+                  <div style="flex: 1; background: #1F1F1F; color: #fff; padding: 9px; border-radius: 11px; font-size: 11px; font-weight: 600; text-align: center;">Últimos 7 días</div>
+                  <div style="flex: 1; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-muted); padding: 9px; border-radius: 11px; font-size: 11px; font-weight: 600; text-align: center;">Últimos 14 días</div>
+                </div>
+
+                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px; border-radius: 12px; font-size: 11px; color: var(--text); line-height: 1.5; margin-bottom: 12px;">
+                  Genera un PDF con tu data del periodo. Puedes enviárselo al coach por WhatsApp o correo directamente desde tu celular.
+                </div>
+
+                <div class="primary-btn" style="margin-bottom: 6px;">📄 Descargar PDF</div>
+                <div class="secondary-btn">✉ Enviar al coach por email</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Auto-envío semanal:</strong> Cada lunes, Mauro recibe el reporte de tu semana sin tocar nada. El botón es por si quieres mandarlo extra (ajuste de metas, semana especial, etc).
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 12: Cierre -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="12">
+      <div class="kicker">Paso 12 · Para cerrar</div>
+      <h1 class="step-title">Todo en Herramientas</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        El botón <strong>Herramientas</strong> abajo a la derecha es siempre visible. Desde ahí accedes a todo, organizado en 3 secciones.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Tu menú completo</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-inner">
+                <div><div class="app-header-brand">MEAL TRACKER</div></div>
+              </div>
+            </div>
+            <div class="app-body" style="padding: 0; min-height: 540px; background: rgba(0,0,0,0.32); position: relative;">
+              <div class="bottom-sheet">
+                <div class="sheet-grabber"></div>
+                <div class="sheet-header">
+                  <div>
+                    <div class="sheet-kicker">Acciones</div>
+                    <div class="sheet-title">¿Qué quieres hacer?</div>
+                  </div>
+                  <div class="sheet-close">×</div>
+                </div>
+                <div class="tools-section-label">Día a día</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">🍳</span> Arma mi día</div>
+                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
+                  <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
+                  <div class="tool-chip"><span class="ic">🍴</span> Mis ingredientes</div>
+                </div>
+                <div class="tools-section-label">Tu progreso</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
+                  <div class="tool-chip"><span class="ic">✨</span> Check-in del día</div>
+                  <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
+                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
+                </div>
+                <div class="tools-section-label">Coach y configuración</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📄</span> Reporte al coach</div>
+                  <div class="tool-chip"><span class="ic">ⓘ</span> ¿Qué puedo hacer?</div>
+                  <div class="tool-chip"><span class="ic">↺</span> Reiniciar día</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="final-warn">
+        <h3>⚠ Lo que esta app NO hace</h3>
+        <ul>
+          <li><strong>No te da recetas.</strong> Si quieres recetas, usa el módulo Meals de Trainerize.</li>
+          <li><strong>No reemplaza la valoración de un profesional de salud.</strong></li>
+          <li><strong>Si preguntas "¿qué dieta hago?", te remite al coach.</strong> No improvisa.</li>
+        </ul>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.55;">
+          Esta app es una <strong style="color: var(--text)">herramienta de registro y organización</strong>. El criterio personalizado lo aporta tu coach Mauro.
+        </p>
+      </div>
+
+      <div style="text-align: center; padding: 28px 20px; background: var(--surface); border-radius: 16px; border: 1px solid var(--border); margin-top: 16px;">
+        <div style="font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 0.95; margin-bottom: 4px;">¡Listo!</div>
+        <div class="accent-line" style="margin: 8px auto 12px;"></div>
+        <div style="font-size: 14px; color: var(--text-muted); line-height: 1.55;">
+          Ya sabes todo lo que puedes hacer.<br>
+          Cualquier duda o sugerencia, escríbele a Mauro directamente.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-footer">
+    <div class="nav-inner">
+      <button class="nav-btn secondary" id="prevBtn" disabled>← Anterior</button>
+      <div class="nav-counter" id="navCounter">1 / 13</div>
+      <button class="nav-btn primary" id="nextBtn">Siguiente →</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const slides = document.querySelectorAll('.slide');
+      const total = slides.length;
+      let current = 0;
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const counter = document.getElementById('navCounter');
+      const indicator = document.getElementById('stepIndicator');
+      const progressBar = document.getElementById('progressBar');
+
+      function render() {
+        slides.forEach((s, i) => s.classList.toggle('active', i === current));
+        prevBtn.disabled = current === 0;
+        nextBtn.textContent = current === total - 1 ? 'Volver al inicio ↺' : 'Siguiente →';
+        counter.textContent = (current + 1) + ' / ' + total;
+        indicator.textContent = current + ' / ' + (total - 1);
+        progressBar.style.width = ((current) / (total - 1) * 100) + '%';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      prevBtn.addEventListener('click', () => { if (current > 0) { current--; render(); } });
+      nextBtn.addEventListener('click', () => {
+        if (current < total - 1) { current++; }
+        else { current = 0; }
+        render();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { if (current < total - 1) { current++; render(); } }
+        if (e.key === 'ArrowLeft') { if (current > 0) { current--; render(); } }
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>

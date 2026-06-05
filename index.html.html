@@ -234,6 +234,75 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
   padding:1.5rem 1.4rem 1.4rem;
   margin-bottom:1.25rem;
 }
+
+/* ============ HERO EDITORIAL (claro, kettlebell al costado) ============ */
+.hero-editorial{
+  position:relative;
+  background:var(--bg-card);
+  border:.5px solid var(--border-soft);
+  border-radius:var(--radius-card);
+  padding:1.4rem 1.3rem;
+  margin-bottom:1.25rem;
+  box-shadow:var(--shadow-md);
+  display:flex;align-items:center;gap:.5rem;
+  overflow:hidden;
+  min-height:200px;
+}
+.hero-editorial-text{
+  flex:1;min-width:0;position:relative;z-index:2;
+}
+.hero-editorial-eyebrow{
+  font-size:10px;letter-spacing:2.3px;text-transform:uppercase;
+  color:var(--olive);font-weight:700;margin-bottom:.5rem;
+}
+.hero-editorial-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:40px;line-height:.92;letter-spacing:1.5px;
+  color:var(--text);margin-bottom:.55rem;
+}
+.hero-editorial-line{
+  width:42px;height:2px;background:var(--olive);
+  border-radius:2px;margin-bottom:.7rem;
+}
+.hero-editorial-sub{
+  font-size:13px;line-height:1.45;color:var(--text-soft);font-weight:500;
+}
+.hero-editorial-sub strong{color:var(--text);font-weight:700;}
+.hero-editorial-visual{
+  flex:0 0 38%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  height:170px;
+}
+.hero-kettlebell{
+  width:auto;height:100%;max-height:170px;
+  object-fit:contain;
+  filter:drop-shadow(0 14px 22px rgba(0,0,0,.22));
+  mix-blend-mode:multiply; /* hace que el blanco del PNG se confunda con el fondo claro */
+}
+@media (max-width:380px){
+  .hero-editorial{padding:1.2rem 1.1rem;}
+  .hero-editorial-title{font-size:34px;}
+  .hero-editorial-visual{flex:0 0 34%;height:150px;}
+  .hero-kettlebell{max-height:150px;}
+}
+
+/* ============ TRANSICIÓN login → home (kettlebell viaja) ============ */
+.kt-flying{
+  position:fixed;left:0;top:0;
+  z-index:9999;
+  pointer-events:none;
+  transform-origin:top left;
+  transition:transform .85s cubic-bezier(.7,0,.2,1),
+             filter .85s ease,
+             opacity .25s ease .6s;
+  filter:drop-shadow(0 25px 45px rgba(0,0,0,.28));
+}
+.kt-flying.landed{
+  filter:drop-shadow(0 14px 22px rgba(0,0,0,.22));
+}
+body.kt-transitioning .login-kettlebell,
+body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 .hero-card-dark .hero-bg{
   position:absolute;inset:0;
   background-image:url('img/home-hero-bg.jpg');
@@ -4925,7 +4994,10 @@ body:not(.locked) .login-screen{display:none !important;}
       <div class="login-foot">Mauro Morón · ISSA Training and Nutrition Coach</div>
     </div>
 
-    
+    <!-- Lado derecho: kettlebell editorial -->
+    <div class="login-visual" id="login-kettlebell-wrap">
+      <img src="img/kettlebell.png" alt="" class="login-kettlebell" id="login-kettlebell">
+    </div>
 
   </div>
 </div>
@@ -4942,18 +5014,16 @@ body:not(.locked) .login-screen{display:none !important;}
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <!-- HERO CARD inline (sin pantalla aparte) -->
-    <div class="hero-card-dark reveal">
-      <div class="hero-bg"></div>
-      <div class="hero-content">
-        <div class="hero-top">
-          <div class="hero-badge">Mauro Morón · ISSA Certified Coach</div>
-        </div>
-        <div class="hero-bottom">
-          <div class="hero-title">CENTRO DE<br>RECURSOS</div>
-          <div class="hero-tagline">CRITERIO. ESTRUCTURA. RESULTADOS.</div>
-          <div class="hero-sub">Bienvenido <strong id="welcome-name">al programa</strong>. Acá tienes todo el método organizado.</div>
-        </div>
+    <!-- HERO editorial: texto + kettlebell al costado -->
+    <div class="hero-editorial reveal">
+      <div class="hero-editorial-text">
+        <div class="hero-editorial-eyebrow">Mauro Morón · ISSA Coach</div>
+        <div class="hero-editorial-title">CENTRO DE<br>RECURSOS</div>
+        <div class="hero-editorial-line"></div>
+        <div class="hero-editorial-sub">Bienvenido <strong id="welcome-name">al programa</strong>. Todo el método, organizado.</div>
+      </div>
+      <div class="hero-editorial-visual">
+        <img src="img/kettlebell.png" alt="" class="hero-kettlebell" id="hero-kettlebell">
       </div>
     </div>
 
@@ -6758,7 +6828,7 @@ body:not(.locked) .login-screen{display:none !important;}
       </div>
 
       <!-- 04 · Meal Tracker -->
-      <div class="hub-card hub-anim" style="--d:.30s;" data-section="meal-tracker" onclick="goSection('s-meal-tracker','meal-tracker')">
+      <div class="hub-card hub-anim" style="--d:.30s;" data-section="meal-tracker" onclick="openMealTrackerGuide()">
         <div class="hub-card-wm">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -7006,7 +7076,9 @@ const AUTHORIZED_USERS = [
   "Mar Alzate",
   "Mateo Bermudez",
   "Sergio Cuellar",
-  "Amalia Rodriguez"
+  "Amalia Rodriguez",
+  "Natalia Samper",
+  "Maria Alejandra Gonzales"
 ];
 const CLIENT_KEY = 'em_client';
 const FTB_KEY = 'em_ftb_dismissed';
@@ -7037,12 +7109,58 @@ function doLogin() {
   const found = AUTHORIZED_USERS.find(u => normalize(u) === nameN);
   if (found) {
     try { localStorage.setItem(CLIENT_KEY, JSON.stringify({name: found, t: Date.now()})); } catch(e) {}
-    document.body.classList.remove('locked');
     setWelcomeName(found);
-    checkFirstTimeBanner();
+    runLoginToHomeTransition(() => {
+      document.body.classList.remove('locked');
+      checkFirstTimeBanner();
+    });
   } else {
     err.classList.add('show');
   }
+}
+
+// Transición: la kettlebell del login "viaja" hasta su posición en el hero del home.
+// Usa técnica FLIP: clona la kettlebell, mide origen y destino, anima con transform.
+function runLoginToHomeTransition(onDone) {
+  const origin = document.getElementById('login-kettlebell');
+  const target = document.getElementById('hero-kettlebell');
+  // Fallback si algo no está listo: hacer el cambio directo
+  if (!origin || !target || !origin.complete) {
+    document.body.classList.remove('locked');
+    if (onDone) onDone();
+    return;
+  }
+  const oRect = origin.getBoundingClientRect();
+
+  // Crear un clon flotante en la posición de origen
+  const ghost = origin.cloneNode(true);
+  ghost.removeAttribute('id');
+  ghost.className = 'kt-flying';
+  ghost.style.width  = oRect.width + 'px';
+  ghost.style.height = oRect.height + 'px';
+  ghost.style.transform = 'translate(' + oRect.left + 'px,' + oRect.top + 'px)';
+  document.body.appendChild(ghost);
+  document.body.classList.add('kt-transitioning');
+
+  // Forzar pintado del estado inicial, luego revelar el home y animar al destino
+  requestAnimationFrame(() => {
+    // Revelar el home detrás para poder medir el destino
+    document.body.classList.remove('locked');
+    requestAnimationFrame(() => {
+      const tRect = target.getBoundingClientRect();
+      const scale = tRect.width / oRect.width;
+      ghost.style.transform =
+        'translate(' + tRect.left + 'px,' + tRect.top + 'px) scale(' + scale + ')';
+      ghost.classList.add('landed');
+      // Cuando termina, limpiar el clon y revelar la kettlebell real del hero
+      setTimeout(() => {
+        document.body.classList.remove('kt-transitioning');
+        ghost.style.opacity = '0';
+        setTimeout(() => ghost.remove(), 280);
+        if (onDone) onDone();
+      }, 880);
+    });
+  });
 }
 
 function setWelcomeName(name) {
@@ -7233,6 +7351,13 @@ function hubApplyReadStates() {
   // Banner de bienvenida: solo si aún no ha leído ninguna sección
   const ft = document.getElementById('hub-firsttime');
   if (ft) ft.style.display = (read.length === 0) ? 'flex' : 'none';
+}
+
+// Abrir la guía interactiva del Meal Tracker (archivo separado en el repo)
+function openMealTrackerGuide() {
+  hubMarkRead('meal-tracker');
+  hubApplyReadStates();
+  window.open('guia-meal-tracker.html', '_blank', 'noopener');
 }
 
 // Navegar a una sección y marcarla como leída
