@@ -1421,6 +1421,65 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 .hub-card:hover .hub-card-arr { transform: translateX(3px); }
 
+/* ====== Onboarding: tarjeta "siguiente" + banner primera vez ====== */
+.hub-card-next {
+  border-color: var(--olive);
+  box-shadow: 0 0 0 1.5px var(--olive), 0 8px 24px rgba(122,140,90,.18);
+}
+.hub-card-next .hub-card-arr::before {
+  content: 'Empieza aquí';
+  display: inline-block;
+  margin-right: 8px;
+  padding: 3px 9px;
+  background: var(--olive);
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  border-radius: 100px;
+  vertical-align: middle;
+  font-family: 'Inter', sans-serif;
+}
+/* Una vez leídas todas, ninguna tarjeta queda resaltada */
+.hub-card.read.hub-card-next { box-shadow: var(--shadow); border-color: var(--border-soft); }
+
+/* Banner cálido solo para primera vez */
+.hub-firsttime {
+  display: none;            /* JS lo muestra solo si no ha leído nada */
+  align-items: center;
+  gap: 10px;
+  background: var(--olive-soft);
+  border: .5px solid rgba(122,140,90,.25);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 1rem;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--olive-dark);
+  font-weight: 500;
+  animation: slideUp .4s ease;
+}
+.hub-firsttime .hub-ft-emoji { font-size: 18px; flex-shrink: 0; }
+.hub-firsttime strong { color: var(--text); font-weight: 700; }
+
+/* Botón abrir Meal Tracker (pantalla s-meal-tracker) */
+.mt-open-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%;
+  background: var(--text); color: #fff;
+  text-decoration: none;
+  padding: 16px; border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600; letter-spacing: .3px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  transition: transform .15s, background .2s;
+  margin-bottom: .9rem;
+}
+.mt-open-btn:active { transform: scale(.98); }
+.mt-open-btn .mt-open-arr { font-size: 16px; transition: transform .2s; }
+.mt-open-btn:hover .mt-open-arr { transform: translateX(3px); }
+
 /* ============================================================ */
 /* ============ GUÍA RÁPIDA — flow editorial =================== */
 /* ============================================================ */
@@ -5546,6 +5605,11 @@ body:not(.locked) .login-screen{display:none !important;}
       <p class="accent">Si decides usarlo, sé honesto en lo que registras. Los datos limpios son los únicos que sirven para tomar decisiones.</p>
     </div>
 
+    <a href="https://mealtrackermauromoron.vercel.app/" target="_blank" rel="noopener" class="mt-open-btn reveal">
+      <span>Abrir Meal Tracker</span>
+      <span class="mt-open-arr">→</span>
+    </a>
+
     <button class="mark-read-btn reveal" onclick="markRead('meal-tracker', this)">
       <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span>Marcar como leído</span>
@@ -6604,21 +6668,27 @@ body:not(.locked) .login-screen{display:none !important;}
       <div class="hub-title">EL MÉTODO</div>
       <div class="hub-title-line"></div>
       <div class="hub-intro">
-        Conoce cómo funciona tu programa, la app de entrenamiento y el camino que vas a recorrer. <strong>Tres piezas que te dan el panorama completo.</strong>
+        Conoce cómo funciona tu programa, la app de entrenamiento y el camino que vas a recorrer. <strong>Cuatro piezas que te dan el panorama completo.</strong>
       </div>
     </div>
 
     <div class="hub-progress-bar hub-anim" style="--d:.05s;">
       <div class="hub-progress-label">
         <span class="hub-progress-eyebrow">Tu avance</span>
-        <span class="hub-progress-count"><strong id="hub-progress-done">0</strong> <span style="opacity:.5;">/</span> 3 secciones leídas</span>
+        <span class="hub-progress-count"><strong id="hub-progress-done">0</strong> <span style="opacity:.5;">/</span> 4 secciones leídas</span>
       </div>
       <div class="hub-progress-track">
         <div class="hub-progress-fill" id="hub-progress-fill"></div>
       </div>
     </div>
 
-    <!-- 3 SECCIONES -->
+    <!-- Banner cálido para recién llegados (JS lo muestra solo si no ha leído nada) -->
+    <div class="hub-firsttime hub-anim" id="hub-firsttime" style="--d:.08s;">
+      <span class="hub-ft-emoji">👋</span>
+      <span>¿Primera vez? <strong>Sigue el orden 1 → 2 → 3 → 4.</strong> Toma menos de 15 min y vas a entenderlo todo.</span>
+    </div>
+
+    <!-- 4 SECCIONES -->
     <div class="hub-cards">
 
       <!-- 01 · Programa -->
@@ -6683,6 +6753,28 @@ body:not(.locked) .login-screen{display:none !important;}
           <span class="hub-card-time">3 min</span>
           <span class="hub-card-dot">·</span>
           <span>6 fases</span>
+          <span class="hub-card-arr">→</span>
+        </div>
+      </div>
+
+      <!-- 04 · Meal Tracker -->
+      <div class="hub-card hub-anim" style="--d:.30s;" data-section="meal-tracker" onclick="goSection('s-meal-tracker','meal-tracker')">
+        <div class="hub-card-wm">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4 2.5-1 2.5-4-1-5-2.5-5zM17 12v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="hub-card-status" data-status-for="meal-tracker">
+          <div class="hub-status-circle"></div>
+        </div>
+        <div class="hub-card-eyebrow">04 · Meal Tracker</div>
+        <div class="hub-card-title">Cómo usar el Meal Tracker</div>
+        <div class="hub-card-desc">La herramienta de IA para registrar tus comidas y estimar porciones según tu meta diaria. Opcional, pero te facilita la vida.</div>
+        <div class="hub-card-foot">
+          <span class="hub-card-time">3 min</span>
+          <span class="hub-card-dot">·</span>
+          <span>Herramienta</span>
           <span class="hub-card-arr">→</span>
         </div>
       </div>
@@ -7119,19 +7211,28 @@ function hubMarkRead(section) {
 }
 function hubApplyReadStates() {
   // Secciones válidas actuales (FAQ ya no está en El Método)
-  const validSections = ['programa', 'app', 'journey'];
+  const validSections = ['programa', 'app', 'journey', 'meal-tracker'];
   let read = hubGetRead().filter(s => validSections.includes(s));
   // Persistir limpieza (quita 'faq' u otros huérfanos)
   try { localStorage.setItem(HUB_READ_KEY, JSON.stringify(read)); } catch(e) {}
 
+  // Marca leídas/no leídas y resalta la PRIMERA no leída como "siguiente"
+  let nextMarked = false;
   document.querySelectorAll('.hub-card[data-section]').forEach(card => {
-    if (read.includes(card.dataset.section)) card.classList.add('read');
-    else card.classList.remove('read');
+    const isRead = read.includes(card.dataset.section);
+    card.classList.toggle('read', isRead);
+    if (!isRead && !nextMarked) { card.classList.add('hub-card-next'); nextMarked = true; }
+    else { card.classList.remove('hub-card-next'); }
   });
+
   const doneEl = document.getElementById('hub-progress-done');
   const fillEl = document.getElementById('hub-progress-fill');
   if (doneEl) doneEl.textContent = read.length;
   if (fillEl) fillEl.style.width = (read.length / validSections.length * 100) + '%';
+
+  // Banner de bienvenida: solo si aún no ha leído ninguna sección
+  const ft = document.getElementById('hub-firsttime');
+  if (ft) ft.style.display = (read.length === 0) ? 'flex' : 'none';
 }
 
 // Navegar a una sección y marcarla como leída
