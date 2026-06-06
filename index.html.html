@@ -191,36 +191,37 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 }
 
 /* RESPONSIVE */
+/* MÓVIL: mantenemos 2 columnas (kettlebell al lado, no apilada) */
 @media (max-width: 720px) {
+  .login-screen{padding:1.25rem .9rem;}
   .login-shell{
-    grid-template-columns:1fr;
-    gap:1rem;
-    max-width:480px;
+    grid-template-columns:1.05fr .95fr;  /* texto un poco mayor, pesa al lado */
+    gap:.5rem;
+    max-width:100%;
+    align-items:center;
   }
-  .login-text{order:1;padding:0;max-width:100%;}
+  .login-text{padding:.5rem 0;max-width:100%;}
   .login-visual{
-    order:0;
-    min-height:300px;
-    height:auto;
-    padding-left:0;
+    min-height:auto;height:auto;
+    overflow:hidden;align-items:center;justify-content:flex-end;
   }
-  .login-visual{overflow:hidden;justify-content:flex-end;align-items:flex-start;min-height:300px;}
   .login-kettlebell{
-    max-height:95vh;
+    max-height:88vh;
     width:auto;
-    max-width:200%;
-    transform:translate(26%, -6%);
+    max-width:240%;
+    transform:translate(38%, 0);   /* sangra fuerte hacia el borde derecho */
   }
-  .login-headline{font-size:48px;}
-  .login-welcome{font-size:22px;}
-  .login-tagline{font-size:15px;margin-bottom:1.75rem;}
+  .login-headline{font-size:42px;}
+  .login-welcome{font-size:20px;}
+  .login-tagline{font-size:14.5px;margin-bottom:1.4rem;}
   .login-foot{white-space:normal;font-size:10.5px;}
 }
 
 @media (max-width: 420px) {
-  .login-headline{font-size:42px;}
-  .login-visual{height:auto;min-height:280px;justify-content:flex-end;align-items:flex-start;}
-  .login-kettlebell{max-height:80vh;max-width:190%;transform:translate(28%, -6%);}
+  .login-shell{grid-template-columns:1.15fr .85fr;gap:.4rem;}
+  .login-headline{font-size:36px;}
+  .login-welcome{font-size:18px;}
+  .login-kettlebell{max-height:70vh;max-width:240%;transform:translate(38%, 0);}
 }
 
 
@@ -1303,7 +1304,7 @@ body:not(.locked) .login-screen{display:none !important;}
   min-height: 100vh;
   padding: 1.25rem 1rem 2rem;
   position: relative;
-  overflow: hidden;
+  overflow: clip;            /* clip en vez de hidden para no romper position:sticky */
 }
 .hub-area > *:not(.bg-halo) { position: relative; z-index: 1; }
 
@@ -5366,7 +5367,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-back" data-go="s-onboarding">
       <span class="sub-back-arr">←</span>
-      <span>El método</span>
+      <span>Volver atrás</span>
     </div>
 
     <div class="sub-header">
@@ -5472,7 +5473,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-back" data-go="s-onboarding">
       <span class="sub-back-arr">←</span>
-      <span>El método</span>
+      <span>Volver atrás</span>
     </div>
 
     <div class="sub-header jrn-anim" style="--d:0s;">
@@ -5644,7 +5645,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-back" data-go="s-onboarding">
       <span class="sub-back-arr">←</span>
-      <span>El método</span>
+      <span>Volver atrás</span>
     </div>
 
     <div class="sub-header">
@@ -5679,7 +5680,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-back" data-go="s-onboarding">
       <span class="sub-back-arr">←</span>
-      <span>El método</span>
+      <span>Volver atrás</span>
     </div>
 
     <div class="sub-header sub-anim" style="--d:0s;">
@@ -5814,7 +5815,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 <div id="s-meal-guide" class="screen">
   <div class="sub-back mg-back" data-go="s-onboarding">
     <span class="sub-back-arr">←</span>
-    <span>El método</span>
+    <span>Volver atrás</span>
   </div>
   <iframe id="meal-guide-frame" class="mg-frame" title="Guía de la app de Meal Tracking"></iframe>
 </div>
@@ -5831,7 +5832,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-back" data-go="s-home">
       <span class="sub-back-arr">←</span>
-      <span>Centro de Recursos</span>
+      <span>Volver a Home</span>
     </div>
 
     <div class="sub-header sub-anim" style="--d:0s;">
@@ -6860,7 +6861,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="hub-back-link" data-go="s-home">
       <span class="hub-back-arr">←</span>
-      <span>Centro de Recursos</span>
+      <span>Volver a Home</span>
     </div>
 
     <div class="hub-header-block hub-anim" style="--d:0s;">
@@ -8566,7 +8567,7 @@ function initBlurCarousel(scroller){
   window.addEventListener('resize', function(){ slides.forEach(function(s){ cueUpd(s); }); }, {passive:true});
 }
 
-// Navegación robusta por delegación — fase de captura + fallback directo
+// Navegación a prueba de bombas: asignación DIRECTA de click a cada [data-go]
 function _navTo(id){
   if (!id) return;
   try { window.go(id); }
@@ -8576,10 +8577,31 @@ function _navTo(id){
     if (t){ t.classList.add('active'); window.scrollTo(0,0); }
   }
 }
-document.addEventListener('click', function(e){
-  const el = e.target.closest('[data-go]');
-  if (el){ e.preventDefault(); _navTo(el.getAttribute('data-go')); }
-}, true);
+function _bindDataGo(){
+  document.querySelectorAll('[data-go]').forEach(function(el){
+    if (el._dataGoBound) return;
+    el._dataGoBound = true;
+    el.style.cursor = 'pointer';
+    el.setAttribute('role','button');
+    el.setAttribute('tabindex','0');
+    el.addEventListener('click', function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      _navTo(el.getAttribute('data-go'));
+    });
+    el.addEventListener('keydown', function(ev){
+      if (ev.key === 'Enter' || ev.key === ' '){
+        ev.preventDefault();
+        _navTo(el.getAttribute('data-go'));
+      }
+    });
+  });
+}
+if (document.readyState !== 'loading') _bindDataGo();
+else document.addEventListener('DOMContentLoaded', _bindDataGo);
+// Re-bindear por si el DOM cambia
+setTimeout(_bindDataGo, 200);
+setTimeout(_bindDataGo, 1000);
 
 // Hook en go()
 (function() {
