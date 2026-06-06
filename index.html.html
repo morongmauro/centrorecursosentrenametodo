@@ -4751,6 +4751,7 @@ body:not(.locked) .login-screen{display:none !important;}
 /* ============ CARRUSEL CON BLUR (Programa + Journey) ============ */
 .progm-blocks, .jrn-timeline{
   display:flex; gap:14px;
+  align-items:flex-start;          /* cada card su propia altura (sin espacios en blanco) */
   overflow-x:auto; overflow-y:visible;
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
@@ -4783,8 +4784,11 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 .jrn-timeline > .jrn-phase .jrn-card{background:transparent;box-shadow:none;border-radius:0;padding:0;overflow:visible;}
 .jrn-timeline > .jrn-phase .jrn-result{
-  margin-top:1rem;padding:.9rem 0 0;border-left:none;border-top:.5px solid var(--border-soft);
+  margin-top:1rem;padding:.15rem 0 .15rem 12px;
+  border-left:2px solid var(--olive);border-top:none;
 }
+.jrn-timeline > .jrn-phase .jrn-result .jrn-result-label{color:var(--olive);}
+.jrn-timeline > .jrn-phase .jrn-result .jrn-result-text{color:var(--olive-dark);font-weight:600;}
 /* Hint de deslizar */
 .carousel-hint{
   display:flex;align-items:center;justify-content:center;gap:8px;
@@ -4793,8 +4797,9 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 .carousel-hint{text-transform:uppercase;letter-spacing:.3px;}
 /* Indicador de scroll interno en slides largos */
-.scroll-cue{position:sticky;bottom:8px;margin-left:auto;margin-right:2px;width:30px;height:30px;border-radius:50%;background:var(--text);color:#fff;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.22);pointer-events:none;}
-.has-more .scroll-cue{display:flex;}
+.scroll-cue{position:sticky;bottom:6px;margin-left:auto;margin-right:0;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--olive-dark);border:.5px solid var(--border-soft);display:none;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.08);pointer-events:none;opacity:0;transition:opacity .3s;}
+.has-more .scroll-cue{display:flex;opacity:.9;}
+.scroll-cue svg{width:13px;height:13px;}
 .scroll-cue svg{width:16px;height:16px;animation:cueBounce 1.4s ease-in-out infinite;}
 @keyframes cueBounce{0%,100%{transform:translateY(-2px)}50%{transform:translateY(2px)}}
 /* Cards "Cómo funciona la app": títulos legibles (no Bebas) + imagen glass */
@@ -4857,6 +4862,12 @@ body:not(.locked) .login-screen{display:none !important;}
 .progm-block-text {
   position: relative;
 }
+.progm-note-soft{
+  font-size:13px !important;line-height:1.5 !important;
+  color:var(--text-soft) !important;
+  background:var(--bg-soft);border:.5px solid var(--border-soft);
+  border-radius:10px;padding:.7rem .85rem;margin:.2rem 0 1rem !important;
+}
 .progm-welcome{
   font-size:14.5px !important;
   font-weight:600;color:var(--olive-dark) !important;
@@ -4877,13 +4888,16 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 
 .progm-note {
-  background: #f4f5f0;
-  border-left: 3px solid var(--olive-dark);
-  padding: .85rem 1rem !important;
-  border-radius: 4px 10px 10px 4px;
-  font-size: 13.5px !important;
-  margin-top: 1rem !important;
+  background: transparent;
+  border-left: 2px solid var(--olive);
+  padding: 0 0 0 12px !important;
+  font-size: 14.5px !important;
+  font-weight: 600;
+  color: var(--olive-dark) !important;
+  margin-top: 1.1rem !important;
+  line-height: 1.5 !important;
 }
+.progm-note strong{ color: var(--olive-dark); }
 
 .progm-list {
   list-style: none;
@@ -5286,7 +5300,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
       <div class="zone-eyebrow" style="padding:0 .15rem;margin-bottom:.85rem;">Explora</div>
       <div class="home-tiles">
 
-        <div class="home-tile" onclick="go('s-biblioteca')">
+        <div class="home-tile" data-go="s-biblioteca">
           <div class="home-tile-ico">
             <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5V5.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5A1.5 1.5 0 0 1 20 20.5V5.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
           </div>
@@ -5294,7 +5308,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
           <div class="home-tile-desc">Biblioteca de contenidos</div>
         </div>
 
-        <div class="home-tile" onclick="go('s-onboarding')">
+        <div class="home-tile" data-go="s-onboarding">
           <div class="home-tile-ico">
             <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
@@ -5302,7 +5316,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
           <div class="home-tile-desc">El método paso a paso</div>
         </div>
 
-        <div class="home-tile" onclick="go('s-faq')">
+        <div class="home-tile" data-go="s-faq">
           <div class="home-tile-ico">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.7M12 17.5v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           </div>
@@ -5349,7 +5363,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <div class="sub-back" onclick="go('s-onboarding')">
+    <div class="sub-back" data-go="s-onboarding">
       <span class="sub-back-arr">←</span>
       <span>El método</span>
     </div>
@@ -5414,9 +5428,14 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7 14l3.5-4 3 2.5L20 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="progm-block-eyebrow">Pilar 4 · Seguimiento</div>
         <div class="progm-block-title">SEGUIMIENTO<br>Y EVOLUCIÓN</div>
-        <div class="progm-block-text"><p>Lo que no se mide, no se puede optimizar. Por eso necesitamos datos: <strong>registra tus entrenamientos</strong> para entender cómo avanzas.</p>
-<p>Haremos <strong>seguimientos periódicos</strong> para evaluar tu progreso y consistencia. El nivel de contexto que compartas define la calidad de los ajustes.</p>
-<p>Actualizaremos de forma mensual tu <strong>peso, composición corporal y fotos</strong>.</p></div>
+        <div class="progm-block-text"><p>Lo que no se mide, no se puede optimizar. Por eso registras tres cosas, cada una en su lugar:</p>
+<ul class="progm-list">
+<li><strong>Tus entrenamientos</strong> en la app de entrenamiento: pesos, repeticiones y percepción de esfuerzo.</li>
+<li><strong>Tus comidas</strong> en la app de registro de comidas (no en la app de entrenamiento).</li>
+<li><strong>Tu avance de lectura</strong> de la guía, aquí en el Centro de Recursos.</li>
+</ul>
+<p class="progm-note-soft">Nota: la app de entrenamiento muestra una sección de comidas/recetas, pero <strong>el registro de lo que comes NO se hace ahí</strong> — eso va en la app de registro de comidas.</p>
+<p>Y una vez al <strong>mes</strong>, actualizas tu <strong>registro corporal: peso y % de grasa</strong>, más un <strong>registro fotográfico</strong> (opcional, pero muy recomendado).</p></div>
       </div>
       <div class="progm-block">
         <div class="progm-block-num">05</div>
@@ -5450,7 +5469,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <div class="sub-back" onclick="go('s-onboarding')">
+    <div class="sub-back" data-go="s-onboarding">
       <span class="sub-back-arr">←</span>
       <span>El método</span>
     </div>
@@ -5622,7 +5641,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <div class="sub-back" onclick="go('s-onboarding')">
+    <div class="sub-back" data-go="s-onboarding">
       <span class="sub-back-arr">←</span>
       <span>El método</span>
     </div>
@@ -5657,7 +5676,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <div class="sub-back" onclick="go('s-onboarding')">
+    <div class="sub-back" data-go="s-onboarding">
       <span class="sub-back-arr">←</span>
       <span>El método</span>
     </div>
@@ -5792,7 +5811,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
 <!-- ============ GUÍA MEAL TRACKING (inline, sin pestaña nueva) ============ -->
 <div id="s-meal-guide" class="screen">
-  <div class="sub-back mg-back" onclick="go('s-onboarding')">
+  <div class="sub-back mg-back" data-go="s-onboarding">
     <span class="sub-back-arr">←</span>
     <span>El método</span>
   </div>
@@ -5809,7 +5828,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <div class="sub-back" onclick="go('s-home')">
+    <div class="sub-back" data-go="s-home">
       <span class="sub-back-arr">←</span>
       <span>Centro de Recursos</span>
     </div>
@@ -6838,7 +6857,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <div class="hub-back-link" onclick="go('s-home')">
+    <div class="hub-back-link" data-go="s-home">
       <span class="hub-back-arr">←</span>
       <span>Centro de Recursos</span>
     </div>
@@ -8532,15 +8551,25 @@ function initBlurCarousel(scroller){
       cue.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
       s.appendChild(cue);
       s.addEventListener('scroll', function(){ window.requestAnimationFrame(function(){ cueUpd(s); }); }, {passive:true});
+      // imágenes dentro de la card pueden cambiar la altura → recalcular al cargar
+      s.querySelectorAll('img').forEach(function(im){ im.addEventListener('load', function(){ cueUpd(s); }); });
     }
-    setTimeout(function(){ cueUpd(s); }, 140);
+    // recalcular en varios momentos para que aparezca de inmediato
+    [60, 200, 500, 1000].forEach(function(t){ setTimeout(function(){ cueUpd(s); }, t); });
   });
   function cueUpd(s){
     const scrollable = s.scrollHeight > s.clientHeight + 12;
     const atBottom = s.scrollHeight - s.clientHeight - s.scrollTop <= 16;
     s.classList.toggle('has-more', scrollable && !atBottom);
   }
+  window.addEventListener('resize', function(){ slides.forEach(function(s){ cueUpd(s); }); }, {passive:true});
 }
+
+// Navegación robusta por delegación (independiente de onclick inline)
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[data-go]');
+  if (el){ e.preventDefault(); window.go(el.getAttribute('data-go')); }
+});
 
 // Hook en go()
 (function() {
