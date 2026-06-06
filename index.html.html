@@ -174,21 +174,20 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 
 /* Lado derecho: kettlebell GRANDE estilo editorial */
 .login-visual{
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:flex-end;
   position:relative;
   height:100%;min-height:640px;
-  overflow:visible;
+  overflow:hidden;                 /* recorta un pedacito de la sombra en el borde */
 }
 .login-kettlebell{
   width:auto;
   height:auto;
-  max-height:700px;
-  max-width:115%;            /* permite que respire/sangre como la referencia */
-  transform:none;
+  max-height:120vh;                /* mucho más grande, editorial */
+  max-width:135%;
+  transform:translateX(8%);        /* sangra hacia el borde derecho */
   display:block;
-  margin:0 auto;
   object-fit:contain;
-  filter:drop-shadow(0 26px 46px rgba(0,0,0,.28));
+  filter:drop-shadow(0 30px 55px rgba(0,0,0,.32));
 }
 
 /* RESPONSIVE */
@@ -205,10 +204,12 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
     height:auto;
     padding-left:0;
   }
+  .login-visual{overflow:hidden;justify-content:center;}
   .login-kettlebell{
-    max-height:440px;
+    max-height:62vh;
     width:auto;
-    max-width:108%;
+    max-width:120%;
+    transform:none;
   }
   .login-headline{font-size:48px;}
   .login-welcome{font-size:22px;}
@@ -973,6 +974,15 @@ body:not(.locked) .login-screen{display:none !important;}
   top:560px;left:-120px;
 }
 .content-area > *:not(.bg-halo){position:relative;z-index:1;}
+
+/* Carruseles: halos más oscuros para más contraste sobre los slides difuminados */
+#s-programa .bg-halo, #s-journey .bg-halo, #s-app-train .bg-halo{opacity:.85;filter:blur(70px);}
+#s-programa .bg-halo-1, #s-journey .bg-halo-1, #s-app-train .bg-halo-1{
+  background:radial-gradient(circle, rgba(60,55,40,.42) 0%, transparent 70%);
+}
+#s-programa .bg-halo-2, #s-journey .bg-halo-2, #s-app-train .bg-halo-2{
+  background:radial-gradient(circle, rgba(74,86,53,.36) 0%, transparent 70%);
+}
 
 /* ============ CTA BIG (Biblioteca - hero protagonista) ============ */
 .cta-big{
@@ -2001,15 +2011,25 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 
 /* Back link */
-.sub-back {
+.sub-back, .hub-back-link {
+  position: sticky; top: 44px; z-index: 40;
   display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12.5px; font-weight: 500;
-  color: var(--text-mute);
-  cursor: pointer; padding: .5rem .25rem;
-  margin-bottom: 1rem;
-  transition: color .2s;
+  font-size: 12.5px; font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  padding: 8px 14px;
+  margin: 8px 0 1rem;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: .5px solid var(--border-soft);
+  border-radius: 100px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  width: auto; align-self: flex-start;
+  transition: color .2s, transform .15s;
 }
-.sub-back:hover { color: var(--text); }
+.sub-back:active, .hub-back-link:active { transform: scale(.97); }
+.sub-back:hover, .hub-back-link:hover { color: var(--olive-dark); }
 .sub-back-arr { font-size: 16px; line-height: 1; }
 
 /* Header editorial */
@@ -4784,32 +4804,18 @@ body:not(.locked) .login-screen{display:none !important;}
 /* Número grande marca de agua */
 .progm-block-num {
   position: absolute;
-  top: -12px;
-  right: 8px;
+  top: 6px;
+  right: 14px;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 86px;
-  line-height: 1;
-  color: rgba(122,140,90,.1);
+  font-size: 130px;
+  line-height: .8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(74,86,53,.16);
   pointer-events: none;
 }
 
-/* Icono temático */
-.progm-block-icon {
-  position: relative;
-  width: 52px;
-  height: 52px;
-  border-radius: 15px;
-  background: #eef0e6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--olive-dark);
-  margin-bottom: 1.1rem;
-}
-.progm-block-icon svg {
-  width: 26px;
-  height: 26px;
-}
+/* Icono temático retirado (look editorial) */
+.progm-block-icon { display: none; }
 
 .progm-block-eyebrow {
   position: relative;
@@ -4973,31 +4979,23 @@ body:not(.locked) .login-screen{display:none !important;}
 /* Número de fase grande como marca de agua dentro de la card */
 .jrn-card-num {
   position: absolute;
-  top: -10px;
-  right: 6px;
+  top: 4px;
+  right: 12px;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 84px;
-  line-height: 1;
+  font-size: 120px;
+  line-height: .8;
   letter-spacing: 1px;
-  color: rgba(122,140,90,.1);
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(74,86,53,.16);
   pointer-events: none;
   z-index: 0;
 }
 .jrn-phase-final .jrn-card-num {
-  color: rgba(122,140,90,.16);
+  -webkit-text-stroke-color: rgba(74,86,53,.22);
 }
 
-/* Icono temático marca de agua — esquina inferior derecha */
-.jrn-card-wm {
-  position: absolute;
-  bottom: -18px;
-  right: -10px;
-  width: 110px;
-  height: 110px;
-  color: rgba(122,140,90,.07);
-  pointer-events: none;
-  z-index: 0;
-}
+/* Icono temático retirado (look editorial) */
+.jrn-card-wm { display: none; }
 .jrn-card-wm svg {
   width: 100%;
   height: 100%;
@@ -7578,20 +7576,30 @@ function homeApplyOrientation() {
   let gDone = 0;
   chapters.forEach(function(h){ if (readSet.has('ga:'+h.id)) gDone++; });
 
-  // Grupos colapsables (escalan cuando crezca el material)
+  // Onboarding (4 secciones) + Guía como UN material (no expandir capítulos)
   const metodoItems = [
     { label:'Cómo funciona el programa',         done:readSet.has('programa'),     go:function(){ goSection('s-programa','programa'); } },
     { label:'Cómo funciona la app',              done:readSet.has('app'),          go:function(){ goSection('s-app-train','app'); } },
     { label:'Cómo usar la app de Meal Tracking', done:readSet.has('meal-tracker'), go:function(){ openMealTrackerGuide(); } },
     { label:'Tu Journey en el método',           done:readSet.has('journey'),      go:function(){ goSection('s-journey','journey'); } }
   ];
-  const guideItems = [];
-  chapters.forEach(function(h){
-    guideItems.push({ label:(h.textContent||'Capítulo').trim(), done:readSet.has('ga:'+h.id), go:function(){ go('s-guia-alimentacion'); } });
-  });
+  // Próximo capítulo pendiente (para el CTA y el meta del row)
+  let nextChapterLabel = null;
+  for (let ci=0; ci<chapters.length; ci++) {
+    if (!readSet.has('ga:'+chapters[ci].id)) {
+      nextChapterLabel = (chapters[ci].textContent||'').trim();
+      break;
+    }
+  }
+  const guideRow = {
+    label:'Guía de alimentación',
+    done:(gDone>=gTotal && gTotal>0),
+    meta: gDone + '/' + gTotal + (nextChapterLabel ? ' · ' + nextChapterLabel : ''),
+    go:function(){ go('s-guia-alimentacion'); }
+  };
   const groups = [
     { id:'inicio', title:'Al empezar · onboarding', items:metodoItems },
-    { id:'guia',   title:'Guía de alimentación',    items:guideItems }
+    { id:'guia',   title:'Guía de alimentación',    items:[guideRow] }
   ];
 
   const total = 4 + gTotal;
@@ -7617,7 +7625,9 @@ function homeApplyOrientation() {
   card.classList.toggle('is-done', done >= total);
   if (nextItem) {
     if (eyebrow) eyebrow.textContent = 'TU MATERIAL';
-    if (ctaText) ctaText.textContent = (done === 0 ? 'Empezar: ' : 'Continuar: ') + nextItem.label;
+    // Si el siguiente es la guía, mostrar nombre del próximo capítulo
+    const ctaTarget = (nextItem === guideRow && nextChapterLabel) ? nextChapterLabel : nextItem.label;
+    if (ctaText) ctaText.textContent = (done === 0 ? 'Empezar: ' : 'Continuar: ') + ctaTarget;
   } else {
     if (eyebrow) eyebrow.textContent = 'TODO AL DÍA ✓';
     if (ctaText) ctaText.textContent = 'Repasar material';
@@ -7650,9 +7660,10 @@ function homeApplyOrientation() {
         row.className = 'orient-row' + (it.done ? ' done' : '') + (it === nextItem ? ' next' : '');
         row.onclick = it.go;
         const right = it.done ? '' : '<span class="orient-row-arr">→</span>';
+        const meta = it.meta ? '<span class="orient-row-meta">'+it.meta+'</span>' : '';
         row.innerHTML =
           '<span class="orient-row-ico">' + (it.done ? _CHECK_SVG : '') + '</span>' +
-          '<span class="orient-row-label">' + it.label + '</span>' + right;
+          '<span class="orient-row-label">' + it.label + '</span>' + meta + right;
         body.appendChild(row);
       });
       wrap.appendChild(body);
@@ -8510,27 +8521,33 @@ function initBlurCarousel(scroller){
     return c.classList.contains('progm-block') || c.classList.contains('jrn-phase');
   });
   if (!slides.length) return;
-  function update(){
-    const sc = scroller.getBoundingClientRect();
-    const center = sc.left + sc.width/2;
-    let best=null, bestD=Infinity;
-    slides.forEach(function(s){
-      const r = s.getBoundingClientRect();
-      const d = Math.abs((r.left + r.width/2) - center);
-      if (d < bestD){ bestD = d; best = s; }
-    });
-    slides.forEach(function(s){ s.classList.toggle('is-active', s === best); });
-  }
+  // Hint con contador (se crea una sola vez por scroller)
+  let counterEl = null;
   if (!scroller._blurInit){
     scroller.addEventListener('scroll', function(){ window.requestAnimationFrame(update); }, {passive:true});
-    // Inyectar hint de deslizar una vez
     if (!scroller.nextElementSibling || !scroller.nextElementSibling.classList.contains('carousel-hint')){
       const hint = document.createElement('div');
       hint.className = 'carousel-hint';
-      hint.innerHTML = '<span class="ch-arr">‹</span><span>Desliza para ver más</span><span class="ch-arr">›</span>';
+      hint.innerHTML =
+        '<span class="ch-arr">‹</span>' +
+        '<span class="ch-counter"><b class="ch-current">1</b>/' + slides.length + '</span>' +
+        '<span class="ch-arr">›</span>';
       scroller.parentNode.insertBefore(hint, scroller.nextSibling);
     }
     scroller._blurInit = true;
+  }
+  counterEl = scroller.parentNode.querySelector('.carousel-hint .ch-current');
+  function update(){
+    const sc = scroller.getBoundingClientRect();
+    const center = sc.left + sc.width/2;
+    let best=null, bestD=Infinity, bestIdx=0;
+    slides.forEach(function(s,i){
+      const r = s.getBoundingClientRect();
+      const d = Math.abs((r.left + r.width/2) - center);
+      if (d < bestD){ bestD = d; best = s; bestIdx = i; }
+    });
+    slides.forEach(function(s){ s.classList.toggle('is-active', s === best); });
+    if (counterEl) counterEl.textContent = (bestIdx+1);
   }
   scroller.scrollLeft = 0;
   update();
