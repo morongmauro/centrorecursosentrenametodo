@@ -187,7 +187,7 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
   display:block;
   margin:0 auto;
   object-fit:contain;
-  mix-blend-mode:multiply; /* funde el fondo blanco del PNG con el crema del login */
+  filter:drop-shadow(0 26px 46px rgba(0,0,0,.28));
 }
 
 /* RESPONSIVE */
@@ -284,7 +284,7 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 /* ============ Pantalla guía Meal Tracking (iframe inline) ============ */
 #s-meal-guide{padding:0;background:var(--bg);}
 .mg-topbar{
-  position:sticky;top:0;z-index:10;
+  position:sticky;top:44px;z-index:10;
   display:flex;align-items:center;gap:12px;
   background:var(--black);color:#fff;
   padding:12px 16px;
@@ -296,37 +296,38 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
   font-size:18px;cursor:pointer;flex-shrink:0;
 }
 .mg-topbar-title{font-size:14px;font-weight:600;letter-spacing:.2px;}
-.mg-frame{width:100%;height:calc(100vh - 56px);border:0;display:block;background:var(--bg);}
+.mg-frame{width:100%;height:calc(100vh - 100px);border:0;display:block;background:var(--bg);}
 
-/* ============ HEADER DE MARCA (tipo app de Meal Tracking) ============ */
+/* ============ HEADER DE MARCA GLOBAL (fino, sticky, en todas menos login) ============ */
 .cr-header{
-  position:relative;
-  margin:-1.5rem -1rem 1.1rem;       /* full-bleed dentro del content-area */
-  padding:1.7rem 1.3rem 1.5rem;
+  position:sticky;top:0;z-index:60;
+  height:44px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0 18px;
   background:var(--black);
   overflow:hidden;
 }
 .cr-header-blob{
   position:absolute;border-radius:50%;
-  width:280px;height:280px;
-  top:-110px;right:-80px;
+  width:200px;height:200px;
+  top:-120px;right:-40px;
   background:radial-gradient(circle, rgba(150,158,140,.30) 0%, rgba(150,158,140,0) 70%);
-  filter:blur(10px);pointer-events:none;
+  filter:blur(8px);pointer-events:none;
 }
-.cr-header-inner{position:relative;z-index:1;}
+.cr-header-inner{position:relative;z-index:1;display:flex;align-items:baseline;gap:9px;min-width:0;}
 .cr-header-title{
   font-family:'Bebas Neue',sans-serif;
-  font-size:32px;letter-spacing:1px;color:#fff;line-height:1;
+  font-size:18px;letter-spacing:.8px;color:#fff;line-height:1;
 }
 .cr-header-sub{
-  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
-  color:rgba(255,255,255,.55);font-weight:600;margin-top:.55rem;
+  font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;
+  color:rgba(255,255,255,.5);font-weight:600;
 }
 
 /* Bienvenida bajo el header */
 .home-welcome{
   font-size:13.5px;line-height:1.45;color:var(--text-soft);font-weight:500;
-  padding:0 .15rem;margin-bottom:1.1rem;
+  padding:0 .15rem;margin:.4rem 0 1.1rem;
 }
 .home-welcome strong{color:var(--text);font-weight:700;}
 
@@ -368,6 +369,28 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 .orient-chip b{color:var(--olive-dark);font-weight:700;}
 /* Estado completado */
 .orient-card.is-done .orient-fill{width:100%;}
+
+/* Lista gestora: qué falta / qué terminaste */
+.orient-list{margin-top:1.05rem;border-top:.5px solid var(--border-soft);}
+.orient-row{
+  display:flex;align-items:center;gap:11px;
+  padding:.7rem .1rem;cursor:pointer;
+  border-bottom:.5px solid var(--border-soft);
+}
+.orient-row:last-child{border-bottom:none;}
+.orient-row-ico{
+  width:20px;height:20px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid rgba(0,0,0,.16);background:#fff;
+  display:flex;align-items:center;justify-content:center;
+}
+.orient-row-ico svg{width:11px;height:11px;}
+.orient-row.done .orient-row-ico{background:var(--text);border-color:var(--text);}
+.orient-row.next .orient-row-ico{border-color:var(--olive);box-shadow:0 0 0 3px rgba(122,140,90,.14);}
+.orient-row-label{flex:1;min-width:0;font-size:13.5px;color:var(--text);font-weight:500;line-height:1.3;}
+.orient-row.done .orient-row-label{color:var(--text-soft);}
+.orient-row.next .orient-row-label{font-weight:700;}
+.orient-row-meta{font-size:11px;color:var(--text-mute);font-weight:700;flex-shrink:0;letter-spacing:.2px;}
+.orient-row-arr{color:var(--olive);font-size:15px;flex-shrink:0;opacity:.65;}
 
 /* ============ HERO EDITORIAL (limpio, sobre crema) ============ */
 .hero-editorial{
@@ -1631,7 +1654,7 @@ body:not(.locked) .login-screen{display:none !important;}
 .qs-top {
   display: flex; align-items: center; gap: 14px;
   padding: 1rem .25rem 1.25rem;
-  position: sticky; top: 0;
+  position: sticky; top: 44px;
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 80%, rgba(245,243,238,0) 100%);
   z-index: 10;
 }
@@ -3213,8 +3236,8 @@ body:not(.locked) .login-screen{display:none !important;}
 /* TOPBAR sticky — usando fixed + transform para evitar conflictos */
 #s-guia-alimentacion .ga-topbar {
   position: sticky !important;
-  top: 0 !important;
-  z-index: 100;
+  top: 44px !important;
+  z-index: 50;
   background: rgba(250,248,243,.96);
   backdrop-filter: saturate(180%) blur(16px);
   -webkit-backdrop-filter: saturate(180%) blur(16px);
@@ -5147,67 +5170,39 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 <!-- ============ APP ============ -->
 <div class="app-shell">
 
+<!-- HEADER DE MARCA GLOBAL (fino, sticky, visible en todas las pantallas menos login) -->
+<header class="cr-header" id="cr-topbar">
+  <div class="cr-header-blob"></div>
+  <div class="cr-header-inner">
+    <span class="cr-header-title">CENTRO DE RECURSOS</span>
+    <span class="cr-header-sub">Entrena con Método</span>
+  </div>
+</header>
+
 <!-- HOME (única pantalla principal) -->
 <div id="s-home" class="screen active">
   <div class="content-area">
 
-    <!-- ============ HEADER DE MARCA ============ -->
-    <div class="cr-header">
-      <div class="cr-header-blob"></div>
-      <div class="cr-header-inner">
-        <div class="cr-header-title">CENTRO DE RECURSOS</div>
-        <div class="cr-header-sub">Entrena con Método</div>
-      </div>
-    </div>
-
     <div class="home-welcome reveal">Bienvenido <strong id="welcome-name">al programa</strong>. Todo el método, organizado en un solo lugar.</div>
 
-    <!-- ============ TARJETA ÚNICA DE ORIENTACIÓN (todo el centro) ============ -->
+    <!-- ============ TARJETA GESTORA: tu material (qué falta / qué terminaste) ============ -->
     <div class="orient-card reveal" id="home-orient">
       <div class="orient-head">
         <span class="orient-eyebrow" id="orient-eyebrow">Tu material</span>
         <span class="orient-count"><strong id="orient-done">0</strong> <span class="orient-sep">/</span> <span id="orient-total">19</span> leído</span>
       </div>
       <div class="orient-bar"><div class="orient-fill" id="orient-fill"></div></div>
-      <div class="orient-next">
-        <div class="orient-next-label" id="orient-next-label">Sigue por aquí</div>
-        <div class="orient-next-title" id="orient-next-title">Cómo funciona el programa</div>
-      </div>
       <button class="orient-cta" id="orient-cta" onclick="orientContinue()">
         <span id="orient-cta-text">Continuar</span>
         <span class="cta-arrow">→</span>
       </button>
-      <div class="orient-breakdown">
-        <span class="orient-chip">Método <b id="orient-hub">0/4</b></span>
-        <span class="orient-chip">Guía <b id="orient-guide">0/15</b></span>
-      </div>
+      <div class="orient-list" id="orient-list"></div>
     </div>
 
-    <!-- ============ ZONA 01 · PRIMERA VEZ ============ -->
-    <div class="cta-onboarding reveal" onclick="go('s-onboarding')">
-      <div class="cta-onboarding-header">
-        <div class="zone-eyebrow">01 · Primera vez</div>
-      </div>
-      <div class="cta-onboarding-recommended">
-        <span class="recommended-dot"></span>
-        Empieza por aquí si es tu primera vez
-      </div>
-      <div class="cta-big-title-block">
-        <div class="cta-big-title">EMPIEZA AQUÍ</div>
-      </div>
-      <div class="cta-onboarding-desc-block">
-        Cómo funciona el programa, la app, el Meal Tracking y tu journey.
-      </div>
-      <div class="cta-onboarding-action">
-        <span>Empezar</span>
-        <span class="cta-arrow">→</span>
-      </div>
-    </div>
-
-    <!-- ============ ZONA 02 · BIBLIOTECA ============ -->
+    <!-- ============ ZONA 01 · BIBLIOTECA ============ -->
     <div class="cta-big reveal" onclick="go('s-biblioteca')">
       <div class="cta-eyebrow-row">
-        <div class="zone-eyebrow">02 · Biblioteca</div>
+        <div class="zone-eyebrow">01 · Biblioteca</div>
       </div>
       <div class="cta-title">PROFUNDIZA<br>EN EL MÉTODO</div>
       <div class="cta-title-line"></div>
@@ -5220,7 +5215,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <!-- ============ ZONA 03 · ACCESOS RÁPIDOS (carrusel) ============ -->
     <div class="quick-access reveal">
-      <div class="zone-eyebrow" style="padding:0 .25rem;margin-bottom:1rem;">03 · Accesos rápidos</div>
+      <div class="zone-eyebrow" style="padding:0 .25rem;margin-bottom:1rem;">02 · Accesos rápidos</div>
       <div class="quick-carousel">
         <div class="quick-item" onclick="go('s-faq')">
           <div class="quick-item-icon">
@@ -6941,8 +6936,30 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         </div>
       </div>
 
-      <!-- 03 · Journey -->
-      <div class="hub-card hub-anim" style="--d:.24s;" data-section="journey" onclick="goSection('s-journey','journey')">
+      <!-- 03 · Meal Tracking -->
+      <div class="hub-card hub-anim" style="--d:.24s;" data-section="meal-tracker" onclick="openMealTrackerGuide()">
+        <div class="hub-card-wm">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4 2.5-1 2.5-4-1-5-2.5-5zM17 12v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="hub-card-status" data-status-for="meal-tracker">
+          <div class="hub-status-circle"></div>
+        </div>
+        <div class="hub-card-eyebrow">03 · Meal Tracking</div>
+        <div class="hub-card-title">Cómo usar la app de Meal Tracking</div>
+        <div class="hub-card-desc">La herramienta de IA para registrar tus comidas y estimar porciones según tu meta diaria. Opcional, pero te facilita la vida.</div>
+        <div class="hub-card-foot">
+          <span class="hub-card-time">3 min</span>
+          <span class="hub-card-dot">·</span>
+          <span>Herramienta</span>
+          <span class="hub-card-arr">→</span>
+        </div>
+      </div>
+
+      <!-- 04 · Journey -->
+      <div class="hub-card hub-anim" style="--d:.30s;" data-section="journey" onclick="goSection('s-journey','journey')">
         <div class="hub-card-wm">
           <svg viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
@@ -6953,35 +6970,13 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="hub-card-status" data-status-for="journey">
           <div class="hub-status-circle"></div>
         </div>
-        <div class="hub-card-eyebrow">03 · Trayecto</div>
+        <div class="hub-card-eyebrow">04 · Trayecto</div>
         <div class="hub-card-title">Tu Journey en el método</div>
         <div class="hub-card-desc">Las 6 fases que recorrerás: diagnóstico, activación, aprendizaje, ejecución, criterio y dominio.</div>
         <div class="hub-card-foot">
           <span class="hub-card-time">3 min</span>
           <span class="hub-card-dot">·</span>
           <span>6 fases</span>
-          <span class="hub-card-arr">→</span>
-        </div>
-      </div>
-
-      <!-- 04 · Meal Tracker -->
-      <div class="hub-card hub-anim" style="--d:.30s;" data-section="meal-tracker" onclick="openMealTrackerGuide()">
-        <div class="hub-card-wm">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M17 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4 2.5-1 2.5-4-1-5-2.5-5zM17 12v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="hub-card-status" data-status-for="meal-tracker">
-          <div class="hub-status-circle"></div>
-        </div>
-        <div class="hub-card-eyebrow">04 · Meal Tracking</div>
-        <div class="hub-card-title">Cómo usar la app de Meal Tracking</div>
-        <div class="hub-card-desc">La herramienta de IA para registrar tus comidas y estimar porciones según tu meta diaria. Opcional, pero te facilita la vida.</div>
-        <div class="hub-card-foot">
-          <span class="hub-card-time">3 min</span>
-          <span class="hub-card-dot">·</span>
-          <span>Herramienta</span>
           <span class="hub-card-arr">→</span>
         </div>
       </div>
@@ -7515,49 +7510,70 @@ function orientGetReadSet() {
   return set;
 }
 let _orientNextGo = null;
+const _CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
 function homeApplyOrientation() {
   const card = document.getElementById('home-orient');
   if (!card) return;
-  const items = orientGetItems();
   const readSet = orientGetReadSet();
-  const total = items.length;
-  let done = 0, hubDone = 0, hubTotal = 0, gDone = 0, gTotal = 0;
-  let next = null;
-  items.forEach(function(it){
-    const isRead = readSet.has(it.key);
-    if (it.group === 'hub') { hubTotal++; if (isRead) hubDone++; }
-    else { gTotal++; if (isRead) gDone++; }
-    if (isRead) done++;
-    if (!isRead && !next) next = it;
-  });
+
+  // Capítulos de la guía (granular para el total real)
+  const chapters = document.querySelectorAll('#s-guia-alimentacion .ga-h1');
+  const gTotal = chapters.length || 15;
+  let gDone = 0;
+  chapters.forEach(function(h){ if (readSet.has('ga:'+h.id)) gDone++; });
+
+  // Filas visibles de la lista: 4 del método + 1 fila resumen de la guía
+  const rows = [
+    { label:'Cómo funciona el programa',         done:readSet.has('programa'),     go:function(){ goSection('s-programa','programa'); } },
+    { label:'Cómo funciona la app',              done:readSet.has('app'),          go:function(){ goSection('s-app-train','app'); } },
+    { label:'Cómo usar la app de Meal Tracking', done:readSet.has('meal-tracker'), go:function(){ openMealTrackerGuide(); } },
+    { label:'Tu Journey en el método',           done:readSet.has('journey'),      go:function(){ goSection('s-journey','journey'); } },
+    { label:'Guía de alimentación',              done:(gDone>=gTotal),  meta:gDone+'/'+gTotal,  go:function(){ go('s-guia-alimentacion'); } }
+  ];
+
+  // Totales granulares (4 secciones + 15 capítulos)
+  const hubDone = rows.slice(0,4).filter(function(r){return r.done;}).length;
+  const total = 4 + gTotal;
+  const done = hubDone + gDone;
   const pct = total ? Math.round(done/total*100) : 0;
 
+  // Primera fila no terminada = "siguiente"
+  let nextIdx = rows.findIndex(function(r){ return !r.done; });
+  _orientNextGo = (nextIdx >= 0) ? rows[nextIdx].go : function(){ go('s-onboarding'); };
+
+  // Cabecera + barra + CTA
   const set = function(id, txt){ const el = document.getElementById(id); if (el) el.textContent = txt; };
   set('orient-done', done);
   set('orient-total', total);
-  set('orient-hub', hubDone + '/' + hubTotal);
-  set('orient-guide', gDone + '/' + gTotal);
   const fill = document.getElementById('orient-fill'); if (fill) fill.style.width = pct + '%';
-
-  const ctaText = document.getElementById('orient-cta-text');
-  const nextTitle = document.getElementById('orient-next-title');
-  const nextLabel = document.getElementById('orient-next-label');
   const eyebrow = document.getElementById('orient-eyebrow');
-
-  card.classList.toggle('is-done', done >= total && total > 0);
-
-  if (next) {
-    _orientNextGo = next.go;
+  const ctaText = document.getElementById('orient-cta-text');
+  card.classList.toggle('is-done', done >= total);
+  if (nextIdx >= 0) {
     if (eyebrow) eyebrow.textContent = (done === 0) ? '👋 Empieza aquí' : 'Tu material';
-    if (nextLabel) nextLabel.textContent = (done === 0) ? 'Empieza por' : 'Sigue por aquí';
-    if (nextTitle) nextTitle.textContent = next.label;
-    if (ctaText) ctaText.textContent = (done === 0) ? 'Empezar' : 'Continuar';
+    if (ctaText) ctaText.textContent = (done === 0 ? 'Empezar: ' : 'Continuar: ') + rows[nextIdx].label;
   } else {
-    _orientNextGo = function(){ go('s-onboarding'); };
     if (eyebrow) eyebrow.textContent = 'Todo al día ✓';
-    if (nextLabel) nextLabel.textContent = '¡Completaste todo el material!';
-    if (nextTitle) nextTitle.textContent = 'Vuelve cuando lo necesites — todo queda aquí.';
-    if (ctaText) ctaText.textContent = 'Repasar';
+    if (ctaText) ctaText.textContent = 'Repasar material';
+  }
+
+  // Render de la lista
+  const list = document.getElementById('orient-list');
+  if (list) {
+    list.innerHTML = '';
+    rows.forEach(function(r, i){
+      const row = document.createElement('div');
+      row.className = 'orient-row' + (r.done ? ' done' : '') + (i === nextIdx ? ' next' : '');
+      row.onclick = r.go;
+      const meta = r.meta ? '<span class="orient-row-meta">'+r.meta+'</span>' : '';
+      const right = r.done ? '' : '<span class="orient-row-arr">→</span>';
+      row.innerHTML =
+        '<span class="orient-row-ico">' + (r.done ? _CHECK_SVG : '') + '</span>' +
+        '<span class="orient-row-label">' + r.label + '</span>' +
+        meta + right;
+      list.appendChild(row);
+    });
   }
 }
 function orientContinue() {
