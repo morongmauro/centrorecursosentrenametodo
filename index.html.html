@@ -82,19 +82,19 @@ body.locked .login-screen{
   background:radial-gradient(circle, rgba(74,86,53,.22) 0%, transparent 70%);
 }
 
-/* Layout: texto 45%, kettlebell 55% - kettlebell tiene más espacio */
+/* Layout estilo Meal Tracker: texto flow normal + kettlebell absoluta sangrando al borde */
 .login-shell{
   position:relative;z-index:1;
-  width:100%;max-width:1080px;
-  display:grid;grid-template-columns:.85fr 1.15fr;
-  gap:2.5rem;align-items:center;
+  width:100%;max-width:760px;
+  display:block;
 }
 
 /* Lado izquierdo: texto */
 .login-text{
+  position:relative;z-index:2;
   display:flex;flex-direction:column;
   padding:1rem 0;
-  max-width:480px;
+  max-width:62%;
 }
 .login-eyebrow{
   font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
@@ -180,44 +180,34 @@ body.locked .login-screen{
   overflow:hidden;
 }
 
-/* Lado derecho: kettlebell GRANDE estilo editorial */
+/* Receta estilo Meal Tracker: kettlebell absoluta, sangrando al borde derecho */
 .login-visual{
-  display:flex;align-items:flex-start;justify-content:flex-end;
-  position:relative;
-  height:100%;min-height:640px;
-  overflow:hidden;                 /* recorta el borde de la kettlebell/sombra */
+  position:absolute;
+  top:8%;
+  right:-6%;
+  width:62%;
+  max-width:440px;
+  height:auto;
+  pointer-events:none;user-select:none;
+  z-index:1;
 }
 .login-kettlebell{
-  width:auto;
+  width:100%;
   height:auto;
-  max-height:230vh;                /* ~x3, editorial */
-  max-width:260%;
-  transform:translate(34%, -10%);  /* más grande, más arriba y sangrando al borde derecho */
   display:block;
   object-fit:contain;
-  mix-blend-mode:multiply;         /* funde el fondo claro de la foto con el crema */
+  filter:drop-shadow(0 12px 24px rgba(0,0,0,.10));
+  mix-blend-mode:multiply;
 }
 
-/* RESPONSIVE */
-/* MÓVIL: mantenemos 2 columnas (kettlebell al lado, no apilada) */
+/* RESPONSIVE — el layout absoluto se mantiene, solo se ajustan tamaños */
 @media (max-width: 720px) {
-  .login-screen{padding:1.25rem .9rem;}
-  .login-shell{
-    grid-template-columns:1.05fr .95fr;  /* texto un poco mayor, pesa al lado */
-    gap:.5rem;
-    max-width:100%;
-    align-items:center;
-  }
-  .login-text{padding:.5rem 0;max-width:100%;}
+  .login-screen{padding:1.5rem 1.25rem;}
+  .login-shell{max-width:100%;}
+  .login-text{max-width:62%;padding:.5rem 0;}
   .login-visual{
-    min-height:auto;height:auto;
-    overflow:hidden;align-items:center;justify-content:flex-end;
-  }
-  .login-kettlebell{
-    max-height:88vh;
-    width:auto;
-    max-width:240%;
-    transform:translate(38%, 0);   /* sangra fuerte hacia el borde derecho */
+    top:6%; right:-8%;
+    width:62%; max-width:340px;
   }
   .login-headline{font-size:42px;}
   .login-welcome{font-size:20px;}
@@ -226,10 +216,13 @@ body.locked .login-screen{
 }
 
 @media (max-width: 420px) {
-  .login-shell{grid-template-columns:1.15fr .85fr;gap:.4rem;}
+  .login-text{max-width:60%;}
   .login-headline{font-size:36px;}
   .login-welcome{font-size:18px;}
-  .login-kettlebell{max-height:70vh;max-width:240%;transform:translate(38%, 0);}
+  .login-visual{
+    top:5%; right:-10%;
+    width:60%; max-width:260px;
+  }
 }
 
 
