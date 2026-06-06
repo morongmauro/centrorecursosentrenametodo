@@ -180,9 +180,10 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
   overflow:visible;
 }
 .login-kettlebell{
-  width:100%;
+  width:auto;
   height:auto;
-  max-height:560px;
+  max-height:700px;
+  max-width:115%;            /* permite que respire/sangre como la referencia */
   transform:none;
   display:block;
   margin:0 auto;
@@ -205,9 +206,9 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
     padding-left:0;
   }
   .login-kettlebell{
-    max-height:340px;
+    max-height:440px;
     width:auto;
-    max-width:86%;
+    max-width:108%;
   }
   .login-headline{font-size:48px;}
   .login-welcome{font-size:22px;}
@@ -218,7 +219,7 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 @media (max-width: 420px) {
   .login-headline{font-size:42px;}
   .login-visual{height:auto;min-height:240px;}
-  .login-kettlebell{max-height:300px;max-width:78%;}
+  .login-kettlebell{max-height:380px;max-width:105%;}
 }
 
 
@@ -4732,6 +4733,41 @@ body:not(.locked) .login-screen{display:none !important;}
   display: block;
 }
 
+/* ============ CARRUSEL CON BLUR (Programa + Journey) ============ */
+.progm-blocks, .jrn-timeline{
+  display:flex; gap:14px;
+  overflow-x:auto; overflow-y:visible;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  padding:.4rem .25rem 1.2rem;
+  scroll-padding-left:7%;
+  -ms-overflow-style:none; scrollbar-width:none;
+}
+.progm-blocks::-webkit-scrollbar, .jrn-timeline::-webkit-scrollbar{display:none;height:0;}
+.progm-blocks > .progm-block, .jrn-timeline > .jrn-phase{
+  flex:0 0 85%;
+  scroll-snap-align:center;
+  max-height:62vh; overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  margin:0;
+  filter:blur(3px); opacity:.4; transform:scale(.95);
+  transition:filter .35s ease, opacity .35s ease, transform .35s ease;
+}
+.progm-blocks > .progm-block::-webkit-scrollbar, .jrn-timeline > .jrn-phase::-webkit-scrollbar{width:0;}
+.progm-blocks > .progm-block.is-active, .jrn-timeline > .jrn-phase.is-active{
+  filter:none; opacity:1; transform:scale(1);
+}
+/* En modo carrusel, ocultar la línea de tiempo vertical del journey */
+.jrn-timeline > .jrn-phase{gap:0;}
+.jrn-timeline > .jrn-phase .jrn-marker{display:none;}
+/* Hint de deslizar */
+.carousel-hint{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:11.5px;color:var(--text-mute);font-weight:600;letter-spacing:.3px;
+  margin:-.4rem .25rem 1rem;
+}
+.carousel-hint .ch-arr{font-size:13px;color:var(--olive);}
+
 /* Cada bloque = card blanca simple, apilada */
 .progm-block {
   position: relative;
@@ -5199,6 +5235,9 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 <!-- HOME (única pantalla principal) -->
 <div id="s-home" class="screen active">
   <div class="content-area">
+
+    <div class="bg-halo bg-halo-1"></div>
+    <div class="bg-halo bg-halo-2"></div>
 
     <div class="home-welcome reveal">
       <div class="home-welcome-hi"><span id="welcome-greet">Bienvenido</span> <span id="welcome-name">al programa</span></div>
@@ -5834,6 +5873,9 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 <!-- =============================================== -->
 <div id="s-biblioteca" class="screen">
   <div class="sub-area">
+
+    <div class="bg-halo bg-halo-1"></div>
+    <div class="bg-halo bg-halo-2"></div>
 
     <div class="sub-back" onclick="go('s-home')">
       <span class="sub-back-arr">←</span>
@@ -8461,6 +8503,40 @@ function appmCloseZoom() {
   }, { passive: true });
 })();
 
+// ============ Carrusel con blur (Programa + Journey) ============
+function initBlurCarousel(scroller){
+  if (!scroller) return;
+  const slides = Array.prototype.slice.call(scroller.children).filter(function(c){
+    return c.classList.contains('progm-block') || c.classList.contains('jrn-phase');
+  });
+  if (!slides.length) return;
+  function update(){
+    const sc = scroller.getBoundingClientRect();
+    const center = sc.left + sc.width/2;
+    let best=null, bestD=Infinity;
+    slides.forEach(function(s){
+      const r = s.getBoundingClientRect();
+      const d = Math.abs((r.left + r.width/2) - center);
+      if (d < bestD){ bestD = d; best = s; }
+    });
+    slides.forEach(function(s){ s.classList.toggle('is-active', s === best); });
+  }
+  if (!scroller._blurInit){
+    scroller.addEventListener('scroll', function(){ window.requestAnimationFrame(update); }, {passive:true});
+    // Inyectar hint de deslizar una vez
+    if (!scroller.nextElementSibling || !scroller.nextElementSibling.classList.contains('carousel-hint')){
+      const hint = document.createElement('div');
+      hint.className = 'carousel-hint';
+      hint.innerHTML = '<span class="ch-arr">‹</span><span>Desliza para ver más</span><span class="ch-arr">›</span>';
+      scroller.parentNode.insertBefore(hint, scroller.nextSibling);
+    }
+    scroller._blurInit = true;
+  }
+  scroller.scrollLeft = 0;
+  update();
+  setTimeout(update, 80);
+}
+
 // Hook en go()
 (function() {
   const prevGo = window.go;
@@ -8471,6 +8547,8 @@ function appmCloseZoom() {
       if (typeof hubApplyReadStates === 'function') hubApplyReadStates();
       if (typeof homeApplyOrientation === 'function') homeApplyOrientation();
     }
+    if (id === 's-programa') setTimeout(function(){ initBlurCarousel(document.querySelector('#s-programa .progm-blocks')); }, 60);
+    if (id === 's-journey')  setTimeout(function(){ initBlurCarousel(document.querySelector('#s-journey .jrn-timeline')); }, 60);
   };
 })();
 </script>
