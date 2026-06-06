@@ -284,21 +284,12 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 .btn-primary:hover .arr{transform:translateY(2px);}
 
 /* ============ Pantalla guía Meal Tracking (iframe inline) ============ */
-#s-meal-guide{padding:0;background:var(--bg);}
-.mg-topbar{
-  position:sticky;top:44px;z-index:10;
-  display:flex;align-items:center;gap:12px;
-  background:var(--black);color:#fff;
-  padding:12px 16px;
+#s-meal-guide{padding:0;background:var(--bg);position:relative;}
+#s-meal-guide .mg-back{
+  position:absolute !important;top:56px;right:12px;z-index:20;
+  margin:0 !important;
 }
-.mg-topbar .back-btn{
-  width:32px;height:32px;border-radius:50%;
-  background:rgba(255,255,255,.12);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;cursor:pointer;flex-shrink:0;
-}
-.mg-topbar-title{font-size:14px;font-weight:600;letter-spacing:.2px;}
-.mg-frame{width:100%;height:calc(100vh - 100px);border:0;display:block;background:var(--bg);}
+.mg-frame{width:100%;height:calc(100vh - 44px);border:0;display:block;background:var(--bg);}
 
 /* ============ HEADER DE MARCA GLOBAL (fino, sticky, en todas menos login) ============ */
 .cr-header{
@@ -2527,7 +2518,7 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 .content-area, .hub-area, .sub-area, .qs-area {
   position: relative;
-  overflow: hidden;
+  overflow: clip;            /* clip (no hidden) para no romper position:sticky */
 }
 .content-area > *:not(.bg-halo),
 .hub-area > *:not(.bg-halo),
@@ -4784,6 +4775,16 @@ body:not(.locked) .login-screen{display:none !important;}
 /* En modo carrusel, ocultar la línea de tiempo vertical del journey */
 .jrn-timeline > .jrn-phase{gap:0;}
 .jrn-timeline > .jrn-phase .jrn-marker{display:none;}
+/* En carrusel: el cuerpo es la card y el Resultado queda DENTRO */
+.jrn-timeline > .jrn-phase{padding-bottom:0;}
+.jrn-timeline > .jrn-phase .jrn-body{
+  background:#fff;border-radius:18px;padding:1.3rem 1.35rem;padding-bottom:1.3rem;
+  box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 28px rgba(0,0,0,.06);
+}
+.jrn-timeline > .jrn-phase .jrn-card{background:transparent;box-shadow:none;border-radius:0;padding:0;overflow:visible;}
+.jrn-timeline > .jrn-phase .jrn-result{
+  margin-top:1rem;padding:.9rem 0 0;border-left:none;border-top:.5px solid var(--border-soft);
+}
 /* Hint de deslizar */
 .carousel-hint{
   display:flex;align-items:center;justify-content:center;gap:8px;
@@ -4791,8 +4792,13 @@ body:not(.locked) .login-screen{display:none !important;}
   margin:-.4rem .25rem 1rem;
 }
 .carousel-hint{text-transform:uppercase;letter-spacing:.3px;}
+/* Indicador de scroll interno en slides largos */
+.scroll-cue{position:sticky;bottom:8px;margin-left:auto;margin-right:2px;width:30px;height:30px;border-radius:50%;background:var(--text);color:#fff;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.22);pointer-events:none;}
+.has-more .scroll-cue{display:flex;}
+.scroll-cue svg{width:16px;height:16px;animation:cueBounce 1.4s ease-in-out infinite;}
+@keyframes cueBounce{0%,100%{transform:translateY(-2px)}50%{transform:translateY(2px)}}
 /* Cards "Cómo funciona la app": títulos legibles (no Bebas) + imagen glass */
-.appt-blocks .progm-block-title{font-family:'Inter',sans-serif;font-size:19px;text-transform:none;letter-spacing:-.2px;line-height:1.28;}
+.appt-blocks .progm-block-title{font-size:30px;}  /* Bebas como Programa, un poco menor por ser frases largas */
 .appt-blocks .appm-img-wrap{margin:0 0 1rem;background:rgba(255,255,255,.55);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:.5px solid rgba(255,255,255,.7);border-radius:14px;overflow:hidden;position:relative;}
 .appt-blocks .appm-img-wrap img{width:100%;height:auto;max-height:230px;object-fit:contain;display:block;}
 .appt-blocks .appm-zoom-btn{position:absolute;bottom:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(20,20,20,.7);color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;}
@@ -4850,6 +4856,12 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 .progm-block-text {
   position: relative;
+}
+.progm-welcome{
+  font-size:14.5px !important;
+  font-weight:600;color:var(--olive-dark) !important;
+  border-left:2px solid var(--olive);
+  padding-left:12px;margin-bottom:1rem !important;line-height:1.5 !important;
 }
 .progm-block-text p {
   font-size: 14px;
@@ -5357,7 +5369,8 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.6"/></svg></div>
         <div class="progm-block-eyebrow">Cómo funciona el programa</div>
         <div class="progm-block-title">TU PROGRESO,<br>CON MÉTODO</div>
-        <div class="progm-block-text"><p>Aquí tu progreso deja de ser aleatorio y empieza a responder a un método.</p>
+        <div class="progm-block-text"><p class="progm-welcome">Bienvenido. Tomaste una decisión seria con tu cuerpo, y aquí la vamos a tratar con la misma seriedad.</p>
+<p>Aquí tu progreso deja de ser aleatorio y empieza a responder a un método.</p>
 <p>Se acabó la improvisación: de ahora en adelante <strong>ejecutas con criterio</strong>. Entrenamiento, alimentación y hábitos trabajan en conjunto.</p>
 <p>Tómate unos minutos para entender cómo funciona. <strong>Acá empieza tu proceso.</strong></p></div>
       </div>
@@ -5387,12 +5400,13 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
         <div class="progm-block-eyebrow">Pilar 3 · Entorno</div>
         <div class="progm-block-title">TU ENTORNO<br>DE TRABAJO</div>
-        <div class="progm-block-text"><p>Cuatro espacios sostienen tu proceso:</p>
+        <div class="progm-block-text"><p>Cinco espacios sostienen tu proceso:</p>
 <ul class="progm-list">
-<li><strong>App del programa.</strong> Tu centro de control: entrenamientos, seguimiento, registros y herramientas.</li>
-<li><strong>WhatsApp 1 a 1.</strong> Canal directo para resolver dudas y hacer ajustes sobre tu proceso.</li>
-<li><strong>Chat grupal IG.</strong> Contenido práctico y aplicable, recursos para todo el equipo.</li>
-<li><strong>Centro de Recursos.</strong> Toda la información centralizada: guías, material y herramientas.</li>
+<li><strong>App de entrenamiento.</strong> Tus rutinas con video, seguimiento de progreso y galería de recetas.</li>
+<li><strong>App de registro de comidas.</strong> Para registrar lo que comes y estimar tus porciones según tu meta.</li>
+<li><strong>Chat 1:1 por WhatsApp.</strong> Canal directo conmigo para resolver dudas y ajustar tu proceso.</li>
+<li><strong>Centro de Recursos (web app).</strong> Todo el material informativo y las guías de aprendizaje en un solo lugar.</li>
+<li><strong>Chat de grupo privado en Instagram.</strong> Comunidad del programa: contenido y acompañamiento.</li>
 </ul></div>
       </div>
       <div class="progm-block">
@@ -5778,9 +5792,9 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
 <!-- ============ GUÍA MEAL TRACKING (inline, sin pestaña nueva) ============ -->
 <div id="s-meal-guide" class="screen">
-  <div class="mg-topbar">
-    <div class="back-btn" onclick="go('s-onboarding')">←</div>
-    <span class="mg-topbar-title">App de Meal Tracking · Guía</span>
+  <div class="sub-back mg-back" onclick="go('s-onboarding')">
+    <span class="sub-back-arr">←</span>
+    <span>El método</span>
   </div>
   <iframe id="meal-guide-frame" class="mg-frame" title="Guía de la app de Meal Tracking"></iframe>
 </div>
@@ -8508,6 +8522,24 @@ function initBlurCarousel(scroller){
   scroller.scrollLeft = 0;
   update();
   setTimeout(update, 80);
+
+  // Indicador "↓ hay más" en slides con scroll interno
+  slides.forEach(function(s){
+    if (!s._cueInit){
+      s._cueInit = true;
+      const cue = document.createElement('div');
+      cue.className = 'scroll-cue';
+      cue.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      s.appendChild(cue);
+      s.addEventListener('scroll', function(){ window.requestAnimationFrame(function(){ cueUpd(s); }); }, {passive:true});
+    }
+    setTimeout(function(){ cueUpd(s); }, 140);
+  });
+  function cueUpd(s){
+    const scrollable = s.scrollHeight > s.clientHeight + 12;
+    const atBottom = s.scrollHeight - s.clientHeight - s.scrollTop <= 16;
+    s.classList.toggle('has-more', scrollable && !atBottom);
+  }
 }
 
 // Hook en go()
