@@ -398,11 +398,19 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 
 /* Lista gestora: qué falta / qué terminaste */
 .orient-list{margin-top:1.05rem;border-top:.5px solid var(--border-soft);}
-.orient-group-label{
-  font-size:10px;letter-spacing:1.2px;text-transform:uppercase;
-  color:var(--text-mute);font-weight:700;
-  padding:.75rem .1rem .35rem;
+/* Grupos colapsables */
+.orient-group{border-bottom:.5px solid var(--border-soft);}
+.orient-group:last-child{border-bottom:none;}
+.orient-group-head{
+  display:flex;align-items:center;gap:10px;
+  padding:.85rem .1rem;cursor:pointer;
 }
+.ogh-title{flex:1;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text);font-weight:700;}
+.ogh-count{font-size:11.5px;color:var(--text-mute);font-weight:700;}
+.ogh-chev{color:var(--text-mute);font-size:14px;transition:transform .25s;line-height:1;}
+.orient-group.open .ogh-chev{transform:rotate(180deg);}
+.orient-group-body{display:none;padding-bottom:.4rem;}
+.orient-group.open .orient-group-body{display:block;}
 .orient-row{
   display:flex;align-items:center;gap:11px;
   padding:.7rem .1rem;cursor:pointer;
@@ -1504,17 +1512,7 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 
 /* Icono temático como marca de agua detrás del texto */
-.hub-card-wm {
-  position: absolute;
-  bottom: -16px;
-  right: -8px;
-  width: 96px;
-  height: 96px;
-  color: rgba(122,140,90,.09);
-  pointer-events: none;
-  z-index: 0;
-}
-.hub-card-wm svg { width: 100%; height: 100%; }
+.hub-card-wm { display: none; }
 
 /* Check de leído — discreto, esquina superior derecha */
 .hub-card-status {
@@ -1593,21 +1591,7 @@ body:not(.locked) .login-screen{display:none !important;}
   border-color: var(--olive);
   box-shadow: 0 0 0 1.5px var(--olive), 0 8px 24px rgba(122,140,90,.18);
 }
-.hub-card-next .hub-card-arr::before {
-  content: 'Empieza aquí';
-  display: inline-block;
-  margin-right: 8px;
-  padding: 3px 9px;
-  background: var(--olive);
-  color: #fff;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  border-radius: 100px;
-  vertical-align: middle;
-  font-family: 'Inter', sans-serif;
-}
+/* (Badge "Empieza aquí" retirado a pedido — el resaltado del borde basta) */
 /* Una vez leídas todas, ninguna tarjeta queda resaltada */
 .hub-card.read.hub-card-next { box-shadow: var(--shadow); border-color: var(--border-soft); }
 
@@ -5192,7 +5176,9 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
       <div class="login-foot">Mauro Morón · ISSA Training and Nutrition Coach</div>
     </div>
 
-    
+    <div class="login-visual">
+      <img src="img/kettlebell.png" alt="" class="login-kettlebell" id="login-kettlebell">
+    </div>
 
   </div>
 </div>
@@ -5215,7 +5201,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
   <div class="content-area">
 
     <div class="home-welcome reveal">
-      <div class="home-welcome-hi">Bienvenido <span id="welcome-name">al programa</span></div>
+      <div class="home-welcome-hi"><span id="welcome-greet">Bienvenido</span> <span id="welcome-name">al programa</span></div>
       <div class="home-welcome-sub">Todo el método, organizado en un solo lugar.</div>
     </div>
 
@@ -7302,12 +7288,22 @@ function runLoginToHomeTransition(onDone) {
   });
 }
 
+// Género por cliente (para "Bienvenido/Bienvenida"). Por defecto masculino.
+const USER_GENDER = {
+  'andrea angulo':'f', 'diana tovar':'f', 'laura lorena cardenas':'f', 'mar alzate':'f',
+  'amalia rodriguez':'f', 'natalia samper':'f', 'maria alejandra gonzales':'f'
+};
 function setWelcomeName(name) {
   const parts = name.trim().split(/\s+/);
   const firstName = parts[0];
   const display = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
   const el = document.getElementById('welcome-name');
   if (el) el.textContent = display;
+  const greet = document.getElementById('welcome-greet');
+  if (greet) {
+    const g = USER_GENDER[normalize(name)] || 'm';
+    greet.textContent = (g === 'f') ? 'Bienvenida' : 'Bienvenido';
+  }
 }
 
 function checkFirstTimeBanner() {
@@ -7526,6 +7522,7 @@ function orientGetReadSet() {
   return set;
 }
 let _orientNextGo = null;
+let _orientExpanded = {};
 const _CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 function homeApplyOrientation() {
@@ -7539,24 +7536,34 @@ function homeApplyOrientation() {
   let gDone = 0;
   chapters.forEach(function(h){ if (readSet.has('ga:'+h.id)) gDone++; });
 
-  // Filas visibles de la lista: 4 del método + 1 fila resumen de la guía
-  const rows = [
+  // Grupos colapsables (escalan cuando crezca el material)
+  const metodoItems = [
     { label:'Cómo funciona el programa',         done:readSet.has('programa'),     go:function(){ goSection('s-programa','programa'); } },
     { label:'Cómo funciona la app',              done:readSet.has('app'),          go:function(){ goSection('s-app-train','app'); } },
     { label:'Cómo usar la app de Meal Tracking', done:readSet.has('meal-tracker'), go:function(){ openMealTrackerGuide(); } },
-    { label:'Tu Journey en el método',           done:readSet.has('journey'),      go:function(){ goSection('s-journey','journey'); } },
-    { label:'Guía de alimentación',              done:(gDone>=gTotal),  meta:gDone+'/'+gTotal,  go:function(){ go('s-guia-alimentacion'); } }
+    { label:'Tu Journey en el método',           done:readSet.has('journey'),      go:function(){ goSection('s-journey','journey'); } }
+  ];
+  const guideItems = [];
+  chapters.forEach(function(h){
+    guideItems.push({ label:(h.textContent||'Capítulo').trim(), done:readSet.has('ga:'+h.id), go:function(){ go('s-guia-alimentacion'); } });
+  });
+  const groups = [
+    { id:'inicio', title:'Al empezar · onboarding', items:metodoItems },
+    { id:'guia',   title:'Guía de alimentación',    items:guideItems }
   ];
 
-  // Totales granulares (4 secciones + 15 capítulos)
-  const hubDone = rows.slice(0,4).filter(function(r){return r.done;}).length;
   const total = 4 + gTotal;
-  const done = hubDone + gDone;
+  const done = metodoItems.filter(function(r){return r.done;}).length + gDone;
   const pct = total ? Math.round(done/total*100) : 0;
 
-  // Primera fila no terminada = "siguiente"
-  let nextIdx = rows.findIndex(function(r){ return !r.done; });
-  _orientNextGo = (nextIdx >= 0) ? rows[nextIdx].go : function(){ go('s-onboarding'); };
+  // Determinar siguiente pendiente y su grupo
+  let nextItem = null, nextGroupId = null;
+  for (let gi=0; gi<groups.length && !nextItem; gi++) {
+    for (let ii=0; ii<groups[gi].items.length; ii++) {
+      if (!groups[gi].items[ii].done) { nextItem = groups[gi].items[ii]; nextGroupId = groups[gi].id; break; }
+    }
+  }
+  _orientNextGo = nextItem ? nextItem.go : function(){ go('s-onboarding'); };
 
   // Cabecera + barra + CTA
   const set = function(id, txt){ const el = document.getElementById(id); if (el) el.textContent = txt; };
@@ -7566,37 +7573,48 @@ function homeApplyOrientation() {
   const eyebrow = document.getElementById('orient-eyebrow');
   const ctaText = document.getElementById('orient-cta-text');
   card.classList.toggle('is-done', done >= total);
-  if (nextIdx >= 0) {
+  if (nextItem) {
     if (eyebrow) eyebrow.textContent = 'TU MATERIAL';
-    if (ctaText) ctaText.textContent = (done === 0 ? 'Empezar: ' : 'Continuar: ') + rows[nextIdx].label;
+    if (ctaText) ctaText.textContent = (done === 0 ? 'Empezar: ' : 'Continuar: ') + nextItem.label;
   } else {
     if (eyebrow) eyebrow.textContent = 'TODO AL DÍA ✓';
     if (ctaText) ctaText.textContent = 'Repasar material';
   }
 
-  // Render de la lista con encabezados de grupo
+  // Render de grupos colapsables
   const list = document.getElementById('orient-list');
   if (list) {
     list.innerHTML = '';
-    const addLabel = function(txt){
-      const l = document.createElement('div');
-      l.className = 'orient-group-label';
-      l.textContent = txt;
-      list.appendChild(l);
-    };
-    rows.forEach(function(r, i){
-      if (i === 0) addLabel('Al empezar · léelo cuando inicias el programa');
-      if (i === 4) addLabel('Lectura a fondo · a tu ritmo');
-      const row = document.createElement('div');
-      row.className = 'orient-row' + (r.done ? ' done' : '') + (i === nextIdx ? ' next' : '');
-      row.onclick = r.go;
-      const meta = r.meta ? '<span class="orient-row-meta">'+r.meta+'</span>' : '';
-      const right = r.done ? '' : '<span class="orient-row-arr">→</span>';
-      row.innerHTML =
-        '<span class="orient-row-ico">' + (r.done ? _CHECK_SVG : '') + '</span>' +
-        '<span class="orient-row-label">' + r.label + '</span>' +
-        meta + right;
-      list.appendChild(row);
+    groups.forEach(function(grp){
+      const gDoneN = grp.items.filter(function(i){return i.done;}).length;
+      // Por defecto: abierto el grupo de la siguiente lectura; el resto cerrado
+      if (_orientExpanded[grp.id] === undefined) _orientExpanded[grp.id] = (grp.id === nextGroupId);
+      const wrap = document.createElement('div');
+      wrap.className = 'orient-group' + (_orientExpanded[grp.id] ? ' open' : '');
+
+      const head = document.createElement('div');
+      head.className = 'orient-group-head';
+      head.innerHTML =
+        '<span class="ogh-title">'+grp.title+'</span>' +
+        '<span class="ogh-count">'+gDoneN+'/'+grp.items.length+'</span>' +
+        '<span class="ogh-chev">⌄</span>';
+      head.onclick = function(){ _orientExpanded[grp.id] = !wrap.classList.contains('open'); wrap.classList.toggle('open'); };
+      wrap.appendChild(head);
+
+      const body = document.createElement('div');
+      body.className = 'orient-group-body';
+      grp.items.forEach(function(it){
+        const row = document.createElement('div');
+        row.className = 'orient-row' + (it.done ? ' done' : '') + (it === nextItem ? ' next' : '');
+        row.onclick = it.go;
+        const right = it.done ? '' : '<span class="orient-row-arr">→</span>';
+        row.innerHTML =
+          '<span class="orient-row-ico">' + (it.done ? _CHECK_SVG : '') + '</span>' +
+          '<span class="orient-row-label">' + it.label + '</span>' + right;
+        body.appendChild(row);
+      });
+      wrap.appendChild(body);
+      list.appendChild(wrap);
     });
   }
 }
