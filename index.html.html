@@ -174,20 +174,20 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 
 /* Lado derecho: kettlebell GRANDE estilo editorial */
 .login-visual{
-  display:flex;align-items:center;justify-content:flex-end;
+  display:flex;align-items:flex-start;justify-content:flex-end;
   position:relative;
   height:100%;min-height:640px;
-  overflow:hidden;                 /* recorta un pedacito de la sombra en el borde */
+  overflow:hidden;                 /* recorta el borde de la kettlebell/sombra */
 }
 .login-kettlebell{
   width:auto;
   height:auto;
-  max-height:175vh;                /* ~x2, editorial */
-  max-width:185%;
-  transform:translateX(22%);       /* pegada/sangrando al borde derecho */
+  max-height:230vh;                /* ~x3, editorial */
+  max-width:260%;
+  transform:translate(34%, -10%);  /* más grande, más arriba y sangrando al borde derecho */
   display:block;
   object-fit:contain;
-  mix-blend-mode:multiply;         /* funde el fondo claro de la foto con el crema (sin rectángulo) */
+  mix-blend-mode:multiply;         /* funde el fondo claro de la foto con el crema */
 }
 
 /* RESPONSIVE */
@@ -204,12 +204,12 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
     height:auto;
     padding-left:0;
   }
-  .login-visual{overflow:hidden;justify-content:flex-end;min-height:340px;}
+  .login-visual{overflow:hidden;justify-content:flex-end;align-items:flex-start;min-height:300px;}
   .login-kettlebell{
-    max-height:78vh;
+    max-height:95vh;
     width:auto;
-    max-width:160%;
-    transform:translateX(16%);
+    max-width:200%;
+    transform:translate(26%, -6%);
   }
   .login-headline{font-size:48px;}
   .login-welcome{font-size:22px;}
@@ -219,8 +219,8 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 
 @media (max-width: 420px) {
   .login-headline{font-size:42px;}
-  .login-visual{height:auto;min-height:300px;justify-content:flex-end;}
-  .login-kettlebell{max-height:64vh;max-width:155%;transform:translateX(18%);}
+  .login-visual{height:auto;min-height:280px;justify-content:flex-end;align-items:flex-start;}
+  .login-kettlebell{max-height:80vh;max-width:190%;transform:translate(28%, -6%);}
 }
 
 
@@ -4803,7 +4803,7 @@ body:not(.locked) .login-screen{display:none !important;}
 .scroll-cue svg{width:16px;height:16px;animation:cueBounce 1.4s ease-in-out infinite;}
 @keyframes cueBounce{0%,100%{transform:translateY(-2px)}50%{transform:translateY(2px)}}
 /* Cards "Cómo funciona la app": títulos legibles (no Bebas) + imagen glass */
-.appt-blocks .progm-block-title{font-size:30px;}  /* Bebas como Programa, un poco menor por ser frases largas */
+.appt-blocks .progm-block-title{font-size:21px;}  /* Inter como Journey/Programa */
 .appt-blocks .appm-img-wrap{margin:0 0 1rem;background:rgba(255,255,255,.55);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:.5px solid rgba(255,255,255,.7);border-radius:14px;overflow:hidden;position:relative;}
 .appt-blocks .appm-img-wrap img{width:100%;height:auto;max-height:230px;object-fit:contain;display:block;}
 .appt-blocks .appm-zoom-btn{position:absolute;bottom:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(20,20,20,.7);color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;}
@@ -4852,12 +4852,13 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 .progm-block-title {
   position: relative;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 34px;
-  line-height: .95;
-  letter-spacing: .8px;
+  font-family: 'Inter', sans-serif;   /* igual que las cards del Journey */
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -.3px;
   color: var(--text);
-  margin-bottom: 1rem;
+  margin-bottom: .9rem;
 }
 .progm-block-text {
   position: relative;
@@ -5382,7 +5383,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-num">00</div>
         <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.6"/></svg></div>
         <div class="progm-block-eyebrow">Cómo funciona el programa</div>
-        <div class="progm-block-title">TU PROGRESO,<br>CON MÉTODO</div>
+        <div class="progm-block-title">Tu progreso, con método</div>
         <div class="progm-block-text"><p class="progm-welcome">Bienvenido. Tomaste una decisión seria con tu cuerpo, y aquí la vamos a tratar con la misma seriedad.</p>
 <p>Aquí tu progreso deja de ser aleatorio y empieza a responder a un método.</p>
 <p>Se acabó la improvisación: de ahora en adelante <strong>ejecutas con criterio</strong>. Entrenamiento, alimentación y hábitos trabajan en conjunto.</p>
@@ -5392,7 +5393,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-num">01</div>
         <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9v6M6 7v10M21 9v6M18 7v10M6 12h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
         <div class="progm-block-eyebrow">Pilar 1 · Entrenamiento</div>
-        <div class="progm-block-title">SOBRE EL<br>ENTRENAMIENTO</div>
+        <div class="progm-block-title">Sobre el entrenamiento</div>
         <div class="progm-block-text"><p>Empezamos con <strong>intensidad adecuada</strong>. A medida que avanzas, ajustamos el estímulo en función de tu desempeño.</p>
 <p>En la práctica, entrenar entre <strong>3 a 6 días por semana</strong>, en sesiones de <strong>45 a 90 minutos</strong>, es lo que permite progresar sin comprometer la recuperación.</p>
 <p>Los primeros días construyen la base: asimilar pesos, mejorar la técnica y preparar el cuerpo.</p>
@@ -5402,7 +5403,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-num">02</div>
         <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18M18 3c-1.5 1-2.5 3-2.5 6s1 4 2.5 5v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="progm-block-eyebrow">Pilar 2 · Alimentación</div>
-        <div class="progm-block-title">SOBRE LA<br>ALIMENTACIÓN</div>
+        <div class="progm-block-title">Sobre la alimentación</div>
         <div class="progm-block-text"><p>La alimentación saludable <strong>no es restricción. Es gestión.</strong></p>
 <p>El objetivo no es seguir menús rígidos, sino aprender a tomar <strong>decisiones alineadas con tu objetivo</strong>.</p>
 <p>Los alimentos son tu base: energía, recuperación y rendimiento. Lo que haces fuera del entrenamiento impacta directamente el resultado.</p>
@@ -5413,7 +5414,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-num">03</div>
         <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
         <div class="progm-block-eyebrow">Pilar 3 · Entorno</div>
-        <div class="progm-block-title">TU ENTORNO<br>DE TRABAJO</div>
+        <div class="progm-block-title">Tu entorno de trabajo</div>
         <div class="progm-block-text"><p>Cinco espacios sostienen tu proceso:</p>
 <ul class="progm-list">
 <li><strong>App de entrenamiento.</strong> Tus rutinas con video, seguimiento de progreso y galería de recetas.</li>
@@ -5427,7 +5428,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-num">04</div>
         <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7 14l3.5-4 3 2.5L20 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="progm-block-eyebrow">Pilar 4 · Seguimiento</div>
-        <div class="progm-block-title">SEGUIMIENTO<br>Y EVOLUCIÓN</div>
+        <div class="progm-block-title">Seguimiento y evolución</div>
         <div class="progm-block-text"><p>Lo que no se mide, no se puede optimizar. Por eso registras tres cosas, cada una en su lugar:</p>
 <ul class="progm-list">
 <li><strong>Tus entrenamientos</strong> en la app de entrenamiento: pesos, repeticiones y percepción de esfuerzo.</li>
@@ -5441,7 +5442,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-num">05</div>
         <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v5M12 16v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
         <div class="progm-block-eyebrow">Importante · Aclaraciones</div>
-        <div class="progm-block-title">ACLARACIONES<br>OPERATIVAS</div>
+        <div class="progm-block-title">Aclaraciones operativas</div>
         <div class="progm-block-text"><ul class="progm-list">
 <li><strong>Informa de inmediato</strong> cualquier molestia, lesión o cambio en tu salud.</li>
 <li>El acceso a la app y al contenido es <strong>personal e intransferible</strong>.</li>
@@ -5475,7 +5476,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     </div>
 
     <div class="sub-header jrn-anim" style="--d:0s;">
-      <div class="sub-eyebrow">02 · Trayecto</div>
+      <div class="sub-eyebrow">04 · Trayecto</div>
       <div class="sub-title">TU JOURNEY<br>EN EL MÉTODO</div>
       <div class="sub-title-line"></div>
       <div class="sub-intro">
@@ -5647,8 +5648,8 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     </div>
 
     <div class="sub-header">
-      <div class="sub-eyebrow">02 · La app</div>
-      <div class="sub-title">CÓMO FUNCIONA<br>LA APP</div>
+      <div class="sub-eyebrow">02 · La app de entrenamiento</div>
+      <div class="sub-title">CÓMO FUNCIONA<br>LA APP DE ENTRENAMIENTO</div>
       <div class="sub-title-line"></div>
       <div class="sub-intro">
         Tu centro de control: rutinas, meta nutricional, recetas y progreso. <strong>Deslízate por las secciones.</strong>
@@ -8565,11 +8566,20 @@ function initBlurCarousel(scroller){
   window.addEventListener('resize', function(){ slides.forEach(function(s){ cueUpd(s); }); }, {passive:true});
 }
 
-// Navegación robusta por delegación (independiente de onclick inline)
+// Navegación robusta por delegación — fase de captura + fallback directo
+function _navTo(id){
+  if (!id) return;
+  try { window.go(id); }
+  catch(err){
+    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+    var t = document.getElementById(id);
+    if (t){ t.classList.add('active'); window.scrollTo(0,0); }
+  }
+}
 document.addEventListener('click', function(e){
   const el = e.target.closest('[data-go]');
-  if (el){ e.preventDefault(); window.go(el.getAttribute('data-go')); }
-});
+  if (el){ e.preventDefault(); _navTo(el.getAttribute('data-go')); }
+}, true);
 
 // Hook en go()
 (function() {
