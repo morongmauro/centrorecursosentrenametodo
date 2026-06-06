@@ -34,7 +34,7 @@
   --shadow-md:0 1px 3px rgba(0,0,0,0.04), 0 6px 18px rgba(0,0,0,0.03);
   --shadow-lg:0 2px 8px rgba(0,0,0,0.05), 0 12px 32px rgba(0,0,0,0.04);
 }
-html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 
 .screen{display:none;animation:fadeIn .4s ease;}
@@ -182,12 +182,12 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 .login-kettlebell{
   width:auto;
   height:auto;
-  max-height:120vh;                /* mucho más grande, editorial */
-  max-width:135%;
-  transform:translateX(8%);        /* sangra hacia el borde derecho */
+  max-height:175vh;                /* ~x2, editorial */
+  max-width:185%;
+  transform:translateX(22%);       /* pegada/sangrando al borde derecho */
   display:block;
   object-fit:contain;
-  filter:drop-shadow(0 30px 55px rgba(0,0,0,.32));
+  mix-blend-mode:multiply;         /* funde el fondo claro de la foto con el crema (sin rectángulo) */
 }
 
 /* RESPONSIVE */
@@ -204,12 +204,12 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
     height:auto;
     padding-left:0;
   }
-  .login-visual{overflow:hidden;justify-content:center;}
+  .login-visual{overflow:hidden;justify-content:flex-end;min-height:340px;}
   .login-kettlebell{
-    max-height:62vh;
+    max-height:78vh;
     width:auto;
-    max-width:120%;
-    transform:none;
+    max-width:160%;
+    transform:translateX(16%);
   }
   .login-headline{font-size:48px;}
   .login-welcome{font-size:22px;}
@@ -219,8 +219,8 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 
 @media (max-width: 420px) {
   .login-headline{font-size:42px;}
-  .login-visual{height:auto;min-height:240px;}
-  .login-kettlebell{max-height:380px;max-width:105%;}
+  .login-visual{height:auto;min-height:300px;justify-content:flex-end;}
+  .login-kettlebell{max-height:64vh;max-width:155%;transform:translateX(18%);}
 }
 
 
@@ -239,7 +239,7 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 }
 .hero-card-dark .hero-bg{
   position:absolute;inset:0;
-  background-image:url('img/home-hero-bg.jpg');
+  background:#0a0a0a;
   background-size:cover;background-position:center;opacity:.8;
 }
 .hero-card-dark .hero-bg::after{
@@ -2012,20 +2012,20 @@ body:not(.locked) .login-screen{display:none !important;}
 
 /* Back link */
 .sub-back, .hub-back-link {
-  position: sticky; top: 44px; z-index: 40;
-  display: inline-flex; align-items: center; gap: 8px;
+  position: sticky; top: 52px; z-index: 40;
+  display: flex; align-items: center; gap: 8px;
   font-size: 12.5px; font-weight: 600;
   color: var(--text);
   cursor: pointer;
   padding: 8px 14px;
-  margin: 8px 0 1rem;
+  margin: 0 0 1rem auto;
   background: rgba(255,255,255,.85);
   backdrop-filter: blur(12px) saturate(140%);
   -webkit-backdrop-filter: blur(12px) saturate(140%);
   border: .5px solid var(--border-soft);
   border-radius: 100px;
-  box-shadow: 0 2px 10px rgba(0,0,0,.04);
-  width: auto; align-self: flex-start;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  width: fit-content;
   transition: color .2s, transform .15s;
 }
 .sub-back:active, .hub-back-link:active { transform: scale(.97); }
@@ -2647,12 +2647,14 @@ body:not(.locked) .login-screen{display:none !important;}
   -webkit-backdrop-filter: blur(12px);
 }
 .sub-back, .hub-back-link {
-  background: rgba(255,255,255,.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255,255,255,.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: .5rem .9rem !important;
   border-radius: 100px;
-  display: inline-flex !important;
+  display: flex !important;
+  margin-left: auto !important;
+  width: fit-content;
 }
 
 /* 6. Quitar "tip-card" oscuro del home (el rectángulo grande negro feo) */
@@ -3589,7 +3591,9 @@ body:not(.locked) .login-screen{display:none !important;}
 .ga-reader {
   padding: 0 1.25rem 2rem;
   max-width: 100%;
+  position: relative;
 }
+#s-guia-alimentacion .ga-reader > *:not(.bg-halo){ position: relative; z-index: 1; }
 
 /* ============ PANEL CONTINUAR LEYENDO (al volver) ============ */
 .ga-resume {
@@ -4786,7 +4790,16 @@ body:not(.locked) .login-screen{display:none !important;}
   font-size:11.5px;color:var(--text-mute);font-weight:600;letter-spacing:.3px;
   margin:-.4rem .25rem 1rem;
 }
-.carousel-hint .ch-arr{font-size:13px;color:var(--olive);}
+.carousel-hint{text-transform:uppercase;letter-spacing:.3px;}
+/* Cards "Cómo funciona la app": títulos legibles (no Bebas) + imagen glass */
+.appt-blocks .progm-block-title{font-family:'Inter',sans-serif;font-size:19px;text-transform:none;letter-spacing:-.2px;line-height:1.28;}
+.appt-blocks .appm-img-wrap{margin:0 0 1rem;background:rgba(255,255,255,.55);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:.5px solid rgba(255,255,255,.7);border-radius:14px;overflow:hidden;position:relative;}
+.appt-blocks .appm-img-wrap img{width:100%;height:auto;max-height:230px;object-fit:contain;display:block;}
+.appt-blocks .appm-zoom-btn{position:absolute;bottom:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(20,20,20,.7);color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.appt-blocks .appm-zoom-btn svg{width:16px;height:16px;}
+.carousel-hint .ch-arr{font-size:14px;color:var(--olive);}
+.carousel-hint .ch-word{letter-spacing:1.4px;}
+.carousel-hint .ch-counter b{color:var(--olive-dark);}
 
 /* Cada bloque = card blanca simple, apilada */
 .progm-block {
@@ -5591,47 +5604,30 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 <!-- ============ 03 · CÓMO FUNCIONA LA APP ========= -->
 <!-- =============================================== -->
 <div id="s-app-train" class="screen">
-  <div class="appm-stage">
-    <div class="appm-backdrop"></div>
-    <div class="appm-card">
-      <div class="appm-head">
-        <div class="appm-segments"><div class="appm-seg"></div><div class="appm-seg"></div><div class="appm-seg"></div><div class="appm-seg"></div><div class="appm-seg"></div><div class="appm-seg"></div><div class="appm-seg"></div><div class="appm-seg"></div></div>
-        <div class="appm-counter"><span id="appm-num">1</span> / 8</div>
-        <button class="progm-close" onclick="go('s-onboarding')" aria-label="Volver al método">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-      </div>
-      <div class="appm-body" id="appm-body">
-        <div class="appm-scroll" id="appm-scroll">
-          <div class="appm-section" id="appm-section"></div>
-          <div class="appm-img-wrap" id="appm-img-wrap">
-            <img id="appm-img" src="" alt="">
-            <button class="appm-zoom-btn" id="appm-zoom-btn" onclick="appmOpenZoom()" aria-label="Ampliar imagen">
-              <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5L21 21M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            </button>
-          </div>
-          <div class="appm-title" id="appm-title"></div>
-          <div class="appm-text" id="appm-text"></div>
-        </div>
-        <div class="appm-scroll-hint" id="appm-scroll-hint">
-          <span>Desliza para ver más</span>
-          <span class="appm-scroll-hint-arr">↓</span>
-        </div>
-      </div>
-      <div class="appm-nav">
-        <button class="appm-nav-btn" id="appm-prev" onclick="appmPrev()">
-          <span class="appm-nav-arr">←</span><span>Anterior</span>
-        </button>
-        <button class="appm-nav-btn appm-nav-primary" id="appm-next" onclick="appmNext()">
-          <span id="appm-next-label">Siguiente</span><span class="appm-nav-arr">→</span>
-        </button>
+  <div class="progm-page">
+    <div class="bg-halo bg-halo-1"></div>
+    <div class="bg-halo bg-halo-2"></div>
+
+    <div class="sub-back" onclick="go('s-onboarding')">
+      <span class="sub-back-arr">←</span>
+      <span>El método</span>
+    </div>
+
+    <div class="sub-header">
+      <div class="sub-eyebrow">02 · La app</div>
+      <div class="sub-title">CÓMO FUNCIONA<br>LA APP</div>
+      <div class="sub-title-line"></div>
+      <div class="sub-intro">
+        Tu centro de control: rutinas, meta nutricional, recetas y progreso. <strong>Deslízate por las secciones.</strong>
       </div>
     </div>
+
+    <div class="progm-blocks appt-blocks" id="appt-carousel"></div>
   </div>
 
   <!-- Visor de zoom de imagen -->
-  <div class="appm-zoom-overlay" id="appm-zoom-overlay" onclick="appmCloseZoom()">
-    <button class="appm-zoom-close" onclick="appmCloseZoom()" aria-label="Cerrar">×</button>
+  <div class="appm-zoom-overlay" id="appm-zoom-overlay" onclick="apptCloseZoom()">
+    <button class="appm-zoom-close" onclick="apptCloseZoom()" aria-label="Cerrar">×</button>
     <img id="appm-zoom-img" src="" alt="">
   </div>
 
@@ -5780,82 +5776,6 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
   </div>
 </div>
 
-<!-- =============================================== -->
-<!-- ============ 05 MEAL TRACKER =================== -->
-<!-- =============================================== -->
-<div id="s-meal-tracker" class="screen">
-  <div class="dark-header">
-    <div class="dh-bg" style="background-image:url('img/meal-tracker-header-bg.jpg');"></div>
-    <div class="dh-bignum">05</div>
-    <div class="dh-content">
-      <div class="dh-back">
-        <div class="back-btn" onclick="go('s-biblioteca')">←</div>
-        <div class="dh-section-label">Nutrición · App de Meal Tracking</div>
-      </div>
-      <div class="dh-title">CÓMO<br>FUNCIONA<br><span class="hl">MEAL TRACKING</span></div>
-      <div class="dh-sub">Registra y estima tus comidas sin pesar todo.</div>
-    </div>
-  </div>
-
-  <div class="content-area">
-    <div class="guide-intro reveal">
-      <div class="tag">Herramienta de apoyo</div>
-      <p>La <strong>app de Meal Tracking</strong> te ayuda a registrar lo que comes y estimar proporciones según tu meta nutricional. Útil para cualquier persona, especialmente si prefieres comidas distintas a las recetas de la galería.</p>
-    </div>
-
-
-
-    <div class="app-feature-card reveal">
-      <div class="afc-screen"><img src="img/meal-tracker-agent-preview.jpg" alt="App de Meal Tracking"></div>
-      <div class="afc-content">
-        <div class="afc-tag">Cómo se ve</div>
-        <h3 class="afc-title">Acceso desde el Centro de Recursos</h3>
-        <p class="afc-text">La app de Meal Tracking vive en tu Centro de Recursos. La abres, le cuentas qué comiste, y te da el cálculo en segundos.</p>
-      </div>
-    </div>
-
-    <div class="prose-block reveal">
-      <div class="prose-tag">Para qué sirve</div>
-      <h3>Tres usos principales</h3>
-      <p><strong>1. Registro rápido.</strong> Cuéntale qué comiste y te muestra calorías y macros — más cuánto te queda para tu meta del día.</p>
-      <p><strong>2. Estimación de proporciones.</strong> Si tienes los ingredientes definidos, calcula cuánto comer de cada uno según tu objetivo.</p>
-      <p><strong>3. Seguimiento del día.</strong> Acumula tus macros y te dice cuánto falta para cumplir tu meta.</p>
-    </div>
-
-    <div class="prose-block reveal">
-      <div class="prose-tag">Cómo usarlo bien</div>
-      <h3>Reglas para sacarle provecho</h3>
-      <p><strong>Habla o escribe normal.</strong> No tienes que ser técnico. "Comí dos huevos revueltos con pan integral" funciona perfecto.</p>
-      <p><strong>Usa siempre el mismo chat.</strong> Mantén tu registro en un solo hilo de conversación — así la app puede acumular tus macros del día correctamente.</p>
-      <p><strong>Necesitas ChatGPT instalado y con sesión iniciada</strong> en tu teléfono para que funcione.</p>
-    </div>
-
-    <div class="prose-block reveal">
-      <div class="prose-tag">Importante</div>
-      <h3>El registro es opcional, no obligatorio</h3>
-      <p>La app de Meal Tracking <strong>complementa</strong> tu proceso, no lo reemplaza. Puedes seguir el método sin usarla si prefieres apoyarte en las recetas de la galería de la app.</p>
-      <p class="accent">Si decides usarlo, sé honesto en lo que registras. Los datos limpios son los únicos que sirven para tomar decisiones.</p>
-    </div>
-
-    <a href="https://mealtrackermauromoron.vercel.app/" target="_blank" rel="noopener" class="mt-open-btn reveal">
-      <span>Abrir app de Meal Tracking</span>
-      <span class="mt-open-arr">→</span>
-    </a>
-
-    <button class="mark-read-btn reveal" onclick="markRead('meal-tracker', this)">
-      <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Marcar como leído</span>
-    </button>
-  </div>
-
-  <div class="footer">
-    <div class="footer-brand">ENTRENA CON MÉTODO</div>
-    <div class="footer-tagline">Mauro Morón · ISSA Training and Nutrition Coach</div>
-    <div class="footer-divider"></div>
-    <div class="footer-rights"><strong>© 2026 Mauro Morón.</strong> Todos los derechos reservados.</div>
-  </div>
-</div>
-
 <!-- ============ GUÍA MEAL TRACKING (inline, sin pestaña nueva) ============ -->
 <div id="s-meal-guide" class="screen">
   <div class="mg-topbar">
@@ -5968,6 +5888,8 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 <div id="s-guia-alimentacion" class="screen">
 
   <div class="ga-reader">
+    <div class="bg-halo bg-halo-1"></div>
+    <div class="bg-halo bg-halo-2"></div>
 
     <div class="ga-topbar">
       <div class="ga-topbar-row">
@@ -8470,14 +8392,47 @@ function appmPrev() {
 
 function appmInit() {
   appmLoadData();
-  appmCurrent = 0;
-  appmRender();
-  // Listener de scroll para actualizar el hint
-  const scrollEl = document.getElementById('appm-scroll');
-  if (scrollEl && !scrollEl.dataset.bound) {
-    scrollEl.addEventListener('scroll', appmCheckScroll, { passive: true });
-    scrollEl.dataset.bound = '1';
+  apptBuild();
+}
+
+// "Cómo funciona la app" — carrusel con blur (mismo motor que Programa)
+function apptBuild() {
+  const wrap = document.getElementById('appt-carousel');
+  if (!wrap) return;
+  if (!appmCards.length) appmLoadData();
+  if (!wrap.dataset.built) {
+    let html = '';
+    appmCards.forEach(function(c, i){
+      const num = ('0' + (i+1)).slice(-2);
+      const safeImg = (c.img || '').replace(/'/g, "\\'");
+      const img = c.img
+        ? '<div class="appm-img-wrap"><img loading="lazy" src="'+c.img+'" alt="">' +
+          "<button class=\"appm-zoom-btn\" onclick=\"apptZoom('"+safeImg+"')\" aria-label=\"Ampliar imagen\">" +
+          '<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5L21 21M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' +
+          '</button></div>'
+        : '';
+      html += '<div class="progm-block">' +
+        '<div class="progm-block-num">'+num+'</div>' +
+        '<div class="progm-block-eyebrow">'+c.section+'</div>' +
+        '<div class="progm-block-title">'+c.title+'</div>' +
+        img +
+        '<div class="progm-block-text">'+c.body+'</div>' +
+        '</div>';
+    });
+    wrap.innerHTML = html;
+    wrap.dataset.built = '1';
   }
+  initBlurCarousel(wrap);
+}
+function apptZoom(src) {
+  const overlay = document.getElementById('appm-zoom-overlay');
+  const zoomImg = document.getElementById('appm-zoom-img');
+  if (zoomImg) zoomImg.src = src;
+  if (overlay) overlay.classList.add('open');
+}
+function apptCloseZoom() {
+  const overlay = document.getElementById('appm-zoom-overlay');
+  if (overlay) overlay.classList.remove('open');
 }
 
 // Zoom de imagen
@@ -8530,6 +8485,7 @@ function initBlurCarousel(scroller){
       hint.className = 'carousel-hint';
       hint.innerHTML =
         '<span class="ch-arr">‹</span>' +
+        '<span class="ch-word">Desliza</span>' +
         '<span class="ch-counter"><b class="ch-current">1</b>/' + slides.length + '</span>' +
         '<span class="ch-arr">›</span>';
       scroller.parentNode.insertBefore(hint, scroller.nextSibling);
