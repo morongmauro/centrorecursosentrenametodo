@@ -234,75 +234,6 @@ body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
   padding:1.5rem 1.4rem 1.4rem;
   margin-bottom:1.25rem;
 }
-
-/* ============ HERO EDITORIAL (claro, kettlebell al costado) ============ */
-.hero-editorial{
-  position:relative;
-  background:var(--bg-card);
-  border:.5px solid var(--border-soft);
-  border-radius:var(--radius-card);
-  padding:1.4rem 1.3rem;
-  margin-bottom:1.25rem;
-  box-shadow:var(--shadow-md);
-  display:flex;align-items:center;gap:.5rem;
-  overflow:hidden;
-  min-height:200px;
-}
-.hero-editorial-text{
-  flex:1;min-width:0;position:relative;z-index:2;
-}
-.hero-editorial-eyebrow{
-  font-size:10px;letter-spacing:2.3px;text-transform:uppercase;
-  color:var(--olive);font-weight:700;margin-bottom:.5rem;
-}
-.hero-editorial-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:40px;line-height:.92;letter-spacing:1.5px;
-  color:var(--text);margin-bottom:.55rem;
-}
-.hero-editorial-line{
-  width:42px;height:2px;background:var(--olive);
-  border-radius:2px;margin-bottom:.7rem;
-}
-.hero-editorial-sub{
-  font-size:13px;line-height:1.45;color:var(--text-soft);font-weight:500;
-}
-.hero-editorial-sub strong{color:var(--text);font-weight:700;}
-.hero-editorial-visual{
-  flex:0 0 38%;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;
-  height:170px;
-}
-.hero-kettlebell{
-  width:auto;height:100%;max-height:170px;
-  object-fit:contain;
-  filter:drop-shadow(0 14px 22px rgba(0,0,0,.22));
-  mix-blend-mode:multiply; /* hace que el blanco del PNG se confunda con el fondo claro */
-}
-@media (max-width:380px){
-  .hero-editorial{padding:1.2rem 1.1rem;}
-  .hero-editorial-title{font-size:34px;}
-  .hero-editorial-visual{flex:0 0 34%;height:150px;}
-  .hero-kettlebell{max-height:150px;}
-}
-
-/* ============ TRANSICIÓN login → home (kettlebell viaja) ============ */
-.kt-flying{
-  position:fixed;left:0;top:0;
-  z-index:9999;
-  pointer-events:none;
-  transform-origin:top left;
-  transition:transform .85s cubic-bezier(.7,0,.2,1),
-             filter .85s ease,
-             opacity .25s ease .6s;
-  filter:drop-shadow(0 25px 45px rgba(0,0,0,.28));
-}
-.kt-flying.landed{
-  filter:drop-shadow(0 14px 22px rgba(0,0,0,.22));
-}
-body.kt-transitioning .login-kettlebell,
-body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 .hero-card-dark .hero-bg{
   position:absolute;inset:0;
   background-image:url('img/home-hero-bg.jpg');
@@ -4959,6 +4890,82 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 .jrn-result-text strong { font-weight: 700; }
 
+/* === Tarjeta de progreso del HOME (método) === */
+.progress-card{
+  position:relative;background:var(--bg-card);
+  border-radius:18px;padding:1.15rem 1.25rem 1.1rem;
+  box-shadow:var(--shadow);border:.5px solid var(--border-soft);
+  margin-bottom:1rem;cursor:pointer;
+  transition:transform .2s, box-shadow .2s, border-color .2s;
+}
+.progress-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.progress-card:active{transform:scale(.995);}
+.progress-card.is-new{
+  border-color:var(--olive);
+  box-shadow:0 0 0 1.5px var(--olive), 0 10px 28px rgba(122,140,90,.18);
+}
+.progress-card.is-done{background:var(--olive-soft);border-color:rgba(122,140,90,.3);}
+.progress-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.55rem;}
+.progress-card-eyebrow{font-size:10.5px;letter-spacing:2.3px;text-transform:uppercase;color:var(--olive);font-weight:700;}
+.progress-card-count{font-size:12.5px;color:var(--text-soft);font-weight:600;letter-spacing:.3px;}
+.progress-card-count strong{color:var(--olive-dark);font-weight:700;}
+.progress-card-title{font-size:18px;font-weight:700;color:var(--text);line-height:1.25;letter-spacing:-.3px;margin-bottom:.35rem;}
+.progress-card-desc{font-size:13.5px;line-height:1.5;color:var(--text-soft);margin-bottom:.95rem;}
+.progress-card-bar{width:100%;height:5px;border-radius:100px;background:rgba(0,0,0,.06);overflow:hidden;margin-bottom:.95rem;}
+.progress-card-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--olive),var(--olive-dark));border-radius:100px;transition:width .8s cubic-bezier(.16,.84,.3,1);}
+.progress-card-cta{display:inline-flex;align-items:center;gap:8px;background:var(--text);color:#fff;padding:10px 18px;border-radius:100px;font-size:13px;font-weight:600;letter-spacing:.3px;}
+.progress-card.is-done .progress-card-cta{background:var(--olive-dark);}
+
+/* === Tarjeta avance de la GUÍA en el home === */
+.guide-progress-card{
+  display:flex;align-items:center;gap:14px;
+  background:var(--bg-card);border:.5px solid var(--border-soft);
+  border-radius:16px;padding:14px 16px;margin-bottom:1.25rem;
+  box-shadow:var(--shadow);cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
+}
+.guide-progress-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.guide-progress-card:active{transform:scale(.995);}
+.gpc-icon{flex-shrink:0;width:42px;height:42px;border-radius:12px;background:var(--olive-soft);display:flex;align-items:center;justify-content:center;color:var(--olive-dark);transition:background .3s, color .3s;}
+.gpc-icon svg{width:22px;height:22px;}
+.gpc-body{flex:1;min-width:0;}
+.gpc-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:7px;}
+.gpc-title{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px;}
+.gpc-count{font-size:12.5px;font-weight:700;color:var(--olive-dark);flex-shrink:0;}
+.gpc-bar{width:100%;height:5px;border-radius:100px;background:rgba(0,0,0,.06);overflow:hidden;margin-bottom:6px;}
+.gpc-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--olive),var(--olive-dark));border-radius:100px;transition:width .8s cubic-bezier(.16,.84,.3,1);}
+.gpc-sub{font-size:11.5px;color:var(--text-soft);font-weight:500;}
+.gpc-arr{flex-shrink:0;color:var(--olive);font-size:18px;}
+.guide-progress-card.is-done .gpc-icon{background:var(--olive);color:#fff;}
+
+/* === Toast "+1 leído" === */
+.read-toast{
+  position:fixed;bottom:24px;left:50%;
+  transform:translate(-50%,80px);
+  background:var(--text);color:#fff;
+  padding:12px 20px;border-radius:100px;
+  font-size:13.5px;font-weight:600;letter-spacing:.2px;
+  box-shadow:0 10px 28px rgba(0,0,0,.25);
+  display:flex;align-items:center;gap:10px;
+  z-index:400;opacity:0;pointer-events:none;
+  transition:transform .35s cubic-bezier(.16,.84,.3,1), opacity .35s;
+  max-width:90vw;
+}
+.read-toast.show{transform:translate(-50%,0);opacity:1;}
+.read-toast-check{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--olive);}
+.read-toast-check svg{width:12px;height:12px;}
+
+/* === Transición shared-element: la kettlebell viaja del login al home === */
+.kt-flying{
+  position:fixed;left:0;top:0;z-index:9999;
+  pointer-events:none;transform-origin:top left;
+  transition:transform .85s cubic-bezier(.7,0,.2,1),
+             opacity .25s ease .6s, filter .85s ease;
+  filter:drop-shadow(0 25px 45px rgba(0,0,0,.28));
+}
+.kt-flying.landed{filter:drop-shadow(0 14px 22px rgba(0,0,0,.22));}
+body.kt-transitioning .login-kettlebell,
+body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
 </style>
 </head>
@@ -4994,10 +5001,7 @@ body:not(.locked) .login-screen{display:none !important;}
       <div class="login-foot">Mauro Morón · ISSA Training and Nutrition Coach</div>
     </div>
 
-    <!-- Lado derecho: kettlebell editorial -->
-    <div class="login-visual" id="login-kettlebell-wrap">
-      <img src="img/kettlebell.png" alt="" class="login-kettlebell" id="login-kettlebell">
-    </div>
+    
 
   </div>
 </div>
@@ -5014,8 +5018,11 @@ body:not(.locked) .login-screen{display:none !important;}
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <!-- HERO editorial: texto + kettlebell al costado -->
+    <!-- HERO CARD inline (sin pantalla aparte) -->
+    <!-- HERO editorial: sobre crema, kettlebell como marca de agua + halos orgánicos -->
     <div class="hero-editorial reveal">
+      <div class="hero-editorial-halo hero-editorial-halo-1"></div>
+      <div class="hero-editorial-halo hero-editorial-halo-2"></div>
       <div class="hero-editorial-text">
         <div class="hero-editorial-eyebrow">Mauro Morón · ISSA Coach</div>
         <div class="hero-editorial-title">CENTRO DE<br>RECURSOS</div>
@@ -5027,25 +5034,46 @@ body:not(.locked) .login-screen{display:none !important;}
       </div>
     </div>
 
-    <!-- ============ ZONA 01 · BIBLIOTECA (CTA grande, hero protagonista) ============ -->
-    <div class="cta-big reveal" onclick="go('s-biblioteca')">
-      <div class="cta-eyebrow-row">
-        <div class="zone-eyebrow">01 · Biblioteca</div>
-        <div class="cta-badge" id="library-new-badge"><span class="badge-dot"></span>2 nuevos</div>
+    <!-- ============ TARJETA DE PROGRESO (cambia según estado del usuario) ============ -->
+    <div class="progress-card reveal" id="home-progress" onclick="go('s-onboarding')">
+      <div class="progress-card-head">
+        <span class="progress-card-eyebrow" id="home-progress-eyebrow">Tu progreso</span>
+        <span class="progress-card-count" id="home-progress-count">0 / 4</span>
       </div>
-      <div class="cta-title">PROFUNDIZA<br>EN EL MÉTODO</div>
-      <div class="cta-title-line"></div>
-      <div class="cta-desc">Artículos de entrenamiento, nutrición y movilidad. Material para volver cuando lo necesites.</div>
-      <div class="cta-action">
-        <span>Ver biblioteca</span>
+      <div class="progress-card-title" id="home-progress-title">¿Primera vez? Empieza por aquí</div>
+      <div class="progress-card-desc" id="home-progress-desc">Cuatro lecturas cortas que te dan el panorama completo del método.</div>
+      <div class="progress-card-bar">
+        <div class="progress-card-fill" id="home-progress-fill"></div>
+      </div>
+      <div class="progress-card-cta">
+        <span id="home-progress-cta">Empezar</span>
         <span class="cta-arrow">→</span>
       </div>
     </div>
 
-    <!-- ============ ZONA 02 · PRIMERA VEZ ============ -->
+    <!-- ============ AVANCE GUÍA DE ALIMENTACIÓN (auto-seguimiento) ============ -->
+    <div class="guide-progress-card reveal" id="home-guide-progress" onclick="go('s-guia-alimentacion')">
+      <div class="gpc-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5V5.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+          <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5A1.5 1.5 0 0 1 20 20.5V5.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="gpc-body">
+        <div class="gpc-head">
+          <span class="gpc-title">Guía de alimentación</span>
+          <span class="gpc-count" id="home-guide-count">0 / 15</span>
+        </div>
+        <div class="gpc-bar"><div class="gpc-fill" id="home-guide-fill"></div></div>
+        <div class="gpc-sub" id="home-guide-sub">Empieza a leer · 0%</div>
+      </div>
+      <span class="gpc-arr">→</span>
+    </div>
+
+    <!-- ============ ZONA 01 · PRIMERA VEZ ============ -->
     <div class="cta-onboarding reveal" onclick="go('s-onboarding')">
       <div class="cta-onboarding-header">
-        <div class="zone-eyebrow">02 · Primera vez</div>
+        <div class="zone-eyebrow">01 · Primera vez</div>
       </div>
       <div class="cta-onboarding-recommended">
         <span class="recommended-dot"></span>
@@ -5055,10 +5083,24 @@ body:not(.locked) .login-screen{display:none !important;}
         <div class="cta-big-title">EMPIEZA AQUÍ</div>
       </div>
       <div class="cta-onboarding-desc-block">
-        Cómo funciona el programa, tu journey, la app y preguntas frecuentes.
+        Cómo funciona el programa, la app, el Meal Tracker y tu journey.
       </div>
       <div class="cta-onboarding-action">
         <span>Empezar</span>
+        <span class="cta-arrow">→</span>
+      </div>
+    </div>
+
+    <!-- ============ ZONA 02 · BIBLIOTECA ============ -->
+    <div class="cta-big reveal" onclick="go('s-biblioteca')">
+      <div class="cta-eyebrow-row">
+        <div class="zone-eyebrow">02 · Biblioteca</div>
+      </div>
+      <div class="cta-title">PROFUNDIZA<br>EN EL MÉTODO</div>
+      <div class="cta-title-line"></div>
+      <div class="cta-desc">Artículos de entrenamiento, nutrición y movilidad. Material para volver cuando lo necesites.</div>
+      <div class="cta-action">
+        <span>Ver biblioteca</span>
         <span class="cta-arrow">→</span>
       </div>
     </div>
@@ -5094,46 +5136,19 @@ body:not(.locked) .login-screen{display:none !important;}
           </div>
           <div class="quick-item-arr">→</div>
         </a>
-        <a href="https://play.google.com/store/apps/details?id=com.trainerize.Trainerize" target="_blank" rel="noopener" class="quick-item" onclick="return openTrainingApp(event)">
+        <a href="https://mealtrackermauromoron.vercel.app/" target="_blank" rel="noopener" class="quick-item">
           <div class="quick-item-icon">
             <svg viewBox="0 0 24 24" fill="none">
-              <rect x="6" y="2" width="12" height="20" rx="2.5" stroke="#4a5635" stroke-width="1.6"/>
-              <path d="M3 10v4M21 10v4M10 18h4" stroke="#4a5635" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18" stroke="#4a5635" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4 2.5-1 2.5-4-1-5-2.5-5zM17 12v9" stroke="#4a5635" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="quick-item-content">
-            <div class="quick-item-title">App de entrenamiento</div>
-            <div class="quick-item-desc">Tus rutinas y registros</div>
+            <div class="quick-item-title">Meal Tracker AI</div>
+            <div class="quick-item-desc">Registra tus comidas con IA</div>
           </div>
           <div class="quick-item-arr">→</div>
         </a>
-        <div class="quick-item quick-item-soon">
-          <div class="quick-item-badge">Próximamente</div>
-          <div class="quick-item-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="9" y="2" width="6" height="12" rx="3" stroke="#4a5635" stroke-width="1.6"/>
-              <path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke="#4a5635" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="quick-item-content">
-            <div class="quick-item-title">Podcasts</div>
-            <div class="quick-item-desc">Episodios del método</div>
-          </div>
-        </div>
-        <div class="quick-item quick-item-soon">
-          <div class="quick-item-badge">Próximamente</div>
-          <div class="quick-item-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M9 18V5l12-2v13" stroke="#4a5635" stroke-width="1.6" stroke-linejoin="round"/>
-              <circle cx="6" cy="18" r="3" stroke="#4a5635" stroke-width="1.6"/>
-              <circle cx="18" cy="16" r="3" stroke="#4a5635" stroke-width="1.6"/>
-            </svg>
-          </div>
-          <div class="quick-item-content">
-            <div class="quick-item-title">Playlists de entrenamiento</div>
-            <div class="quick-item-desc">Música para entrenar</div>
-          </div>
-        </div>
       </div>
       <div class="quick-hint">
         <span class="quick-hint-arr">‹</span>
@@ -7119,20 +7134,16 @@ function doLogin() {
   }
 }
 
-// Transición: la kettlebell del login "viaja" hasta su posición en el hero del home.
-// Usa técnica FLIP: clona la kettlebell, mide origen y destino, anima con transform.
+// Transición shared-element: la kettlebell viaja del login al hero del home.
 function runLoginToHomeTransition(onDone) {
   const origin = document.getElementById('login-kettlebell');
   const target = document.getElementById('hero-kettlebell');
-  // Fallback si algo no está listo: hacer el cambio directo
   if (!origin || !target || !origin.complete) {
     document.body.classList.remove('locked');
     if (onDone) onDone();
     return;
   }
   const oRect = origin.getBoundingClientRect();
-
-  // Crear un clon flotante en la posición de origen
   const ghost = origin.cloneNode(true);
   ghost.removeAttribute('id');
   ghost.className = 'kt-flying';
@@ -7141,18 +7152,13 @@ function runLoginToHomeTransition(onDone) {
   ghost.style.transform = 'translate(' + oRect.left + 'px,' + oRect.top + 'px)';
   document.body.appendChild(ghost);
   document.body.classList.add('kt-transitioning');
-
-  // Forzar pintado del estado inicial, luego revelar el home y animar al destino
   requestAnimationFrame(() => {
-    // Revelar el home detrás para poder medir el destino
     document.body.classList.remove('locked');
     requestAnimationFrame(() => {
       const tRect = target.getBoundingClientRect();
       const scale = tRect.width / oRect.width;
-      ghost.style.transform =
-        'translate(' + tRect.left + 'px,' + tRect.top + 'px) scale(' + scale + ')';
+      ghost.style.transform = 'translate(' + tRect.left + 'px,' + tRect.top + 'px) scale(' + scale + ')';
       ghost.classList.add('landed');
-      // Cuando termina, limpiar el clon y revelar la kettlebell real del hero
       setTimeout(() => {
         document.body.classList.remove('kt-transitioning');
         ghost.style.opacity = '0';
@@ -7267,9 +7273,11 @@ const READ_KEY = 'em_read_sections';
 function getReadSections() { try { return JSON.parse(localStorage.getItem(READ_KEY) || '[]'); } catch(e) { return []; } }
 function markRead(section, btn) {
   const read = getReadSections();
-  if (!read.includes(section)) {
+  const wasNew = !read.includes(section);
+  if (wasNew) {
     read.push(section);
     try { localStorage.setItem(READ_KEY, JSON.stringify(read)); } catch(e) {}
+    if (typeof showReadToast === 'function') showReadToast('Sección leída ✓');
   }
   btn.classList.add('done');
   btn.querySelector('span').textContent = 'Leído ✓';
@@ -7351,16 +7359,97 @@ function hubApplyReadStates() {
   // Banner de bienvenida: solo si aún no ha leído ninguna sección
   const ft = document.getElementById('hub-firsttime');
   if (ft) ft.style.display = (read.length === 0) ? 'flex' : 'none';
+
+  // Refleja también el avance en la tarjeta de progreso del HOME
+  homeApplyProgress(read.length, validSections.length);
 }
 
+// === Tarjeta de progreso del HOME (método) ===
+function homeApplyProgress(done, total) {
+  const card = document.getElementById('home-progress');
+  if (!card) return;
+  const eb  = document.getElementById('home-progress-eyebrow');
+  const cnt = document.getElementById('home-progress-count');
+  const ttl = document.getElementById('home-progress-title');
+  const dsc = document.getElementById('home-progress-desc');
+  const fll = document.getElementById('home-progress-fill');
+  const cta = document.getElementById('home-progress-cta');
+  card.classList.remove('is-new','is-done');
+  cnt.textContent = done + ' / ' + total;
+  fll.style.width = (done/total*100) + '%';
+  if (done === 0) {
+    card.classList.add('is-new');
+    eb.textContent  = '👋 Bienvenido';
+    ttl.textContent = '¿Primera vez? Empieza por aquí';
+    dsc.textContent = 'Cuatro lecturas cortas que te dan el panorama completo del método.';
+    cta.textContent = 'Empezar';
+  } else if (done < total) {
+    eb.textContent  = 'Tu progreso';
+    ttl.textContent = 'Continúa donde quedaste';
+    dsc.textContent = 'Te falta ' + (total-done) + (total-done === 1 ? ' sección' : ' secciones') + ' del método. Sigue avanzando a tu ritmo.';
+    cta.textContent = 'Continuar';
+  } else {
+    card.classList.add('is-done');
+    eb.textContent  = 'Método completo ✓';
+    ttl.textContent = 'Ya conoces el método entero';
+    dsc.textContent = 'Vuelve cuando lo necesites — todo queda aquí organizado.';
+    cta.textContent = 'Revisar';
+  }
+}
+
+// === Avance de la GUÍA en el home (X/15 capítulos) ===
+function homeApplyGuideProgress() {
+  const card = document.getElementById('home-guide-progress');
+  if (!card) return;
+  const chapters = document.querySelectorAll('#s-guia-alimentacion .ga-h1');
+  const total = chapters.length || 15;
+  const validIds = new Set();
+  chapters.forEach(h => validIds.add(h.id));
+  let read = [];
+  try { read = JSON.parse(localStorage.getItem('em_ga_read') || '[]'); } catch(e) {}
+  const done = read.filter(s => validIds.has(s)).length;
+  const pct = total ? Math.round(done/total*100) : 0;
+  const cnt = document.getElementById('home-guide-count');
+  const fll = document.getElementById('home-guide-fill');
+  const sub = document.getElementById('home-guide-sub');
+  if (cnt) cnt.textContent = done + ' / ' + total;
+  if (fll) fll.style.width = pct + '%';
+  card.classList.toggle('is-done', done >= total && total > 0);
+  if (sub) {
+    if (done === 0) sub.textContent = 'Empieza a leer · 0%';
+    else if (done >= total) sub.textContent = '¡Guía completa! · 100% 🎉';
+    else sub.textContent = 'Vas en ' + pct + '% · sigue a tu ritmo';
+  }
+}
+document.addEventListener('DOMContentLoaded', homeApplyGuideProgress);
+setTimeout(homeApplyGuideProgress, 120);
+
+// === Toast "+1 leído" ===
+function showReadToast(message) {
+  let t = document.getElementById('read-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'read-toast';
+    t.className = 'read-toast';
+    t.innerHTML = '<span class="read-toast-check"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="read-toast-msg"></span>';
+    document.body.appendChild(t);
+  }
+  t.querySelector('.read-toast-msg').textContent = message;
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(window._readToastT);
+  window._readToastT = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// Navegar a una sección y marcarla como leída
 // Abrir la guía interactiva del Meal Tracker (archivo separado en el repo)
 function openMealTrackerGuide() {
   hubMarkRead('meal-tracker');
   hubApplyReadStates();
-  window.open('guia-meal-tracker.html', '_blank', 'noopener');
+  window.open('guiamealtracker.html', '_blank', 'noopener');
 }
 
-// Navegar a una sección y marcarla como leída
 function goSection(screenId, sectionKey) {
   hubMarkRead(sectionKey);
   go(screenId);
@@ -7551,6 +7640,11 @@ function gaMarkRead(slug) {
     arr.push(slug);
     gaSaveRead(arr);
     gaUpdateProgress();
+    if (typeof homeApplyGuideProgress === 'function') homeApplyGuideProgress();
+    if (typeof showReadToast === 'function') {
+      const total = document.querySelectorAll('#s-guia-alimentacion .ga-h1').length || 15;
+      showReadToast('+1 leído · Vas ' + arr.length + '/' + total);
+    }
   }
 }
 
@@ -8169,6 +8263,10 @@ function appmCloseZoom() {
   window.go = function(id) {
     prevGo(id);
     if (id === 's-app-train') setTimeout(appmInit, 60);
+    if (id === 's-home') {
+      if (typeof hubApplyReadStates === 'function') hubApplyReadStates();
+      if (typeof homeApplyGuideProgress === 'function') homeApplyGuideProgress();
+    }
   };
 })();
 </script>
