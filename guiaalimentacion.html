@@ -3,27 +3,6 @@
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <div class="ga-topbar">
-      <div class="ga-topbar-row">
-        <div class="ga-back" onclick="go('s-biblioteca')">
-          <span class="ga-back-arr">←</span>
-          <span class="ga-back-text">Volver</span>
-        </div>
-        <div class="ga-progress-info">
-          <span id="ga-progress-num">0</span>%
-        </div>
-        <button class="ga-topbar-btn" onclick="gaToggleSearch()" aria-label="Buscar en la guía">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          <span class="ga-topbar-btn-label">Buscar</span>
-        </button>
-        <button class="ga-topbar-btn ga-topbar-btn-primary" onclick="gaToggleToc()" aria-label="Índice">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          <span class="ga-topbar-btn-label">Índice</span>
-        </button>
-      </div>
-      <div class="ga-progress-track"><div class="ga-progress-fill" id="ga-progress-fill"></div></div>
-    </div>
-
     <div class="ga-search-panel" id="ga-search-panel" style="display:none;">
       <div class="ga-search-wrap">
         <svg viewBox="0 0 24 24" fill="none" class="ga-search-icon"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
@@ -67,26 +46,37 @@
     </div>
 
     <div class="ga-resume" id="ga-resume" style="display:none;">
-      <div class="ga-resume-eyebrow" id="ga-resume-eyebrow">Hola de nuevo</div>
-      <div class="ga-resume-hi" id="ga-resume-hi">Vas en buen ritmo</div>
+      <div class="ga-resume-eyebrow" id="ga-resume-eyebrow">Tu progreso</div>
+      <div class="ga-resume-hi" id="ga-resume-hi">Continúa tu lectura</div>
+
       <div class="ga-resume-progress-block">
         <div class="ga-resume-progress-row">
           <span class="ga-resume-pct" id="ga-resume-pct">0%</span>
           <span class="ga-resume-pct-label">leído</span>
+          <span class="ga-resume-count" id="ga-resume-count">0 / 0 capítulos</span>
         </div>
         <div class="ga-resume-bar"><div class="ga-resume-bar-fill" id="ga-resume-bar-fill"></div></div>
       </div>
-      <div class="ga-resume-status" id="ga-resume-status">Te quedan capítulos por descubrir</div>
+
+      <div class="ga-resume-tracks" id="ga-resume-tracks"></div>
+
       <div class="ga-resume-where" id="ga-resume-where">
         <div class="ga-resume-where-label">Quedaste en</div>
         <div class="ga-resume-where-title" id="ga-resume-where-title">—</div>
       </div>
+
+      <div class="ga-resume-next" id="ga-resume-next">
+        <div class="ga-resume-next-label">Siguiente capítulo</div>
+        <div class="ga-resume-next-title" id="ga-resume-next-title">—</div>
+        <div class="ga-resume-next-time" id="ga-resume-next-time"></div>
+      </div>
+
       <div class="ga-resume-actions">
-        <button class="ga-resume-btn-primary" onclick="gaResume()">
-          <span>Continuar donde quedé</span><span class="arr">→</span>
+        <button class="ga-resume-btn-primary" id="ga-resume-btn-primary" onclick="gaResume()">
+          <span id="ga-resume-btn-primary-text">Continuar donde quedé</span><span class="arr">→</span>
         </button>
-        <button class="ga-resume-btn-secondary" onclick="gaScrollToTop()">
-          Volver al inicio de la guía
+        <button class="ga-resume-btn-secondary" onclick="gaToggleToc()">
+          Ver índice completo
         </button>
       </div>
     </div>
@@ -96,12 +86,6 @@
       <div class="ga-cover-title">GUÍA DE<br>ALIMENTACIÓN</div>
       <div class="ga-cover-line"></div>
       <div class="ga-cover-statement">Comer bien no es comer perfecto.<br><strong>Es tener un método.</strong></div>
-      <div class="ga-cover-image-slot">
-        <div class="ga-cover-image-placeholder">
-          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="10" width="48" height="40" rx="3"/><circle cx="20" cy="24" r="4"/><path d="M6 42l14-14 12 12 6-6 16 16"/></svg>
-          <span>Imagen del autor</span>
-        </div>
-      </div>
       <div class="ga-cover-meta">
         <div class="ga-cover-meta-row"><strong>Mauro Morón</strong> · ISSA Certified Fitness and Nutrition Coach</div>
       </div>
@@ -911,9 +895,9 @@
   </div>
 
   <div class="ga-fab-stack" id="ga-fab-stack">
-    <button class="ga-fab-btn" onclick="go('s-biblioteca')" aria-label="Volver a Biblioteca">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h12a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2V5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 9h6M8 13h6M8 17h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-      <span class="ga-fab-tooltip">Biblioteca</span>
+    <button class="ga-fab-btn" onclick="gaBack()" aria-label="Volver">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="ga-fab-tooltip">Volver</span>
     </button>
     <button class="ga-fab-btn" onclick="gaToggleSearch()" aria-label="Buscar">
       <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>

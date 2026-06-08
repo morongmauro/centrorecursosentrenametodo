@@ -5939,6 +5939,11 @@ function gaToggleMarkRead(slug) {
   gaSaveRead(arr);
   gaUpdateProgress();
   gaUpdateTracks();
+  // Refrescar la card de gobierno con el nuevo estado (pills por track + siguiente capítulo)
+  if (typeof gaShowResumePanel === 'function') gaShowResumePanel();
+  // Refrescar el card del Centro de Recursos en home si existe
+  if (typeof homeApplyOrientation === 'function') homeApplyOrientation();
+  if (typeof hubApplyReadStates === 'function') hubApplyReadStates();
 
   // Micro-animación al marcar (no al desmarcar)
   if (!wasRead) {
@@ -6032,86 +6037,124 @@ function gaShowResumePanel() {
   if (!panel) return;
 
   const read = gaGetRead();
-  const bookmarks = gaGetBookmarks();
   const lastSlug = (() => { try { return localStorage.getItem('em_ga_last_slug') || ''; } catch(e) { return ''; } })();
   const scrollY = (() => { try { return parseInt(localStorage.getItem(GA_KEY_SCROLL) || '0', 10); } catch(e) { return 0; } })();
-  const lastVisit = (() => { try { return parseInt(localStorage.getItem('em_ga_last_visit') || '0', 10); } catch(e) { return 0; } })();
 
-  const hasActivity = read.length > 0 || lastSlug || scrollY > 200;
-
-  if (!hasActivity) {
-    panel.style.display = 'none';
-    return;
-  }
-
-  const total = document.querySelectorAll('#s-guia-alimentacion .ga-h1').length;
+  // Siempre visible — es la card de gobierno
+  const allH1 = Array.from(document.querySelectorAll('#s-guia-alimentacion .ga-h1'));
+  const total = allH1.length;
   const pct = total > 0 ? Math.round(read.length / total * 100) : 0;
+  const readSet = new Set(read);
 
-  // Eyebrow + título según contexto
+  // Estado: nuevo, en curso, completado
+  const isDone = pct === 100;
+  const isFresh = read.length === 0 && !lastSlug && scrollY < 200;
+  panel.classList.toggle('is-done', isDone);
+
   const eyebrowEl = document.getElementById('ga-resume-eyebrow');
   const hiEl = document.getElementById('ga-resume-hi');
-  const statusEl = document.getElementById('ga-resume-status');
-
-  const daysSince = lastVisit ? Math.floor((Date.now() - lastVisit) / (1000*60*60*24)) : 0;
-
-  if (read.length === 0 && scrollY > 200) {
-    if (eyebrowEl) eyebrowEl.textContent = 'Hola de nuevo';
-    if (hiEl) hiEl.textContent = 'Sigue donde quedaste';
-    if (statusEl) statusEl.textContent = 'Continúa tu lectura sin perder tu progreso.';
-  } else if (pct === 100) {
+  if (isDone) {
     if (eyebrowEl) eyebrowEl.textContent = '✓ Guía completada';
     if (hiEl) hiEl.textContent = 'Ya la terminaste';
-    if (statusEl) statusEl.textContent = 'Cuando quieras releerla, está aquí para ti.';
-  } else if (daysSince >= 5) {
-    if (eyebrowEl) eyebrowEl.textContent = 'Hace tiempo no leías';
-    if (hiEl) hiEl.textContent = 'Retomemos';
-    if (statusEl) statusEl.textContent = `Vas en buen camino · Te quedan ${total - read.length} capítulos`;
-  } else if (pct >= 75) {
-    if (eyebrowEl) eyebrowEl.textContent = 'Te falta poco';
-    if (hiEl) hiEl.textContent = 'Ya casi terminas';
-    if (statusEl) statusEl.textContent = `Solo ${total - read.length} capítulos más · termina lo que empezaste`;
+  } else if (isFresh) {
+    if (eyebrowEl) eyebrowEl.textContent = 'Empieza aquí';
+    if (hiEl) hiEl.textContent = 'Tu guía esencial';
   } else {
-    if (eyebrowEl) eyebrowEl.textContent = 'Bienvenido de vuelta';
+    if (eyebrowEl) eyebrowEl.textContent = 'Tu progreso';
     if (hiEl) hiEl.textContent = 'Continúa tu lectura';
-    if (statusEl) statusEl.textContent = `Te quedan ${total - read.length} capítulos por leer`;
   }
 
   // Progreso visual
   const pctEl = document.getElementById('ga-resume-pct');
   if (pctEl) pctEl.textContent = pct + '%';
+  const countEl = document.getElementById('ga-resume-count');
+  if (countEl) countEl.textContent = read.length + ' / ' + total + ' capítulos';
   const barFill = document.getElementById('ga-resume-bar-fill');
   if (barFill) setTimeout(() => barFill.style.width = pct + '%', 200);
 
+  // Pills por track — leer agrupación desde el TOC
+  const tracksEl = document.getElementById('ga-resume-tracks');
+  if (tracksEl) {
+    const tocNav = document.getElementById('ga-toc-nav');
+    const groups = [];
+    if (tocNav) {
+      let current = null;
+      tocNav.childNodes.forEach(node => {
+        if (node.nodeType !== 1) return;
+        if (node.classList.contains('ga-toc-group-label')) {
+          current = { label: node.textContent.trim(), items: [] };
+          groups.push(current);
+        } else if (node.classList.contains('ga-toc-h1') && current) {
+          current.items.push(node.dataset.target);
+        }
+      });
+    }
+    tracksEl.innerHTML = groups.map(g => {
+      const done = g.items.filter(s => readSet.has(s)).length;
+      const isFullDone = done === g.items.length && g.items.length > 0;
+      return '<div class="ga-resume-track-pill' + (isFullDone ? ' done' : '') + '">' +
+        '<div class="ga-resume-track-pill-label">' + g.label + '</div>' +
+        '<div class="ga-resume-track-pill-count">' + done +
+          '<span class="ga-resume-track-pill-total">/' + g.items.length + '</span>' +
+        '</div></div>';
+    }).join('');
+  }
+
   // Dónde quedaste
   const whereEl = document.getElementById('ga-resume-where-title');
-  if (whereEl && lastSlug) {
-    const tocItem = document.querySelector(`.ga-toc-h1[data-target="${lastSlug}"]`);
-    const title = tocItem ? tocItem.querySelector('.ga-toc-text').textContent : 'Última posición';
-    whereEl.textContent = title;
-  } else if (whereEl) {
-    whereEl.textContent = 'Empezar por el principio';
+  if (whereEl) {
+    if (lastSlug) {
+      const tocItem = document.querySelector(`.ga-toc-h1[data-target="${lastSlug}"]`);
+      const title = tocItem ? tocItem.querySelector('.ga-toc-text').textContent : 'Última posición';
+      whereEl.textContent = title;
+    } else {
+      whereEl.textContent = '—';
+    }
+  }
+
+  // Siguiente capítulo pendiente (en orden del TOC)
+  const tocItems = Array.from(document.querySelectorAll('#ga-toc-nav .ga-toc-h1'));
+  const nextItem = tocItems.find(a => !readSet.has(a.dataset.target));
+  const nextTitleEl = document.getElementById('ga-resume-next-title');
+  const nextTimeEl = document.getElementById('ga-resume-next-time');
+  const btnTextEl = document.getElementById('ga-resume-btn-primary-text');
+  if (nextItem) {
+    const t = nextItem.querySelector('.ga-toc-text');
+    const time = nextItem.querySelector('.ga-toc-time');
+    if (nextTitleEl) nextTitleEl.textContent = t ? t.textContent : '';
+    if (nextTimeEl) nextTimeEl.textContent = time ? time.textContent : '';
+    if (btnTextEl) btnTextEl.textContent = lastSlug ? 'Continuar donde quedé' : 'Empezar a leer';
+    panel._gaNextSlug = nextItem.dataset.target;
+  } else {
+    if (nextTitleEl) nextTitleEl.textContent = 'Has completado todos los capítulos';
+    if (nextTimeEl) nextTimeEl.textContent = '';
+    if (btnTextEl) btnTextEl.textContent = 'Releer la guía';
+    panel._gaNextSlug = tocItems[0] ? tocItems[0].dataset.target : '';
   }
 
   panel.style.display = 'block';
 }
 
 function gaResume() {
-  // Ocultar panel
   const panel = document.getElementById('ga-resume');
-  if (panel) panel.style.display = 'none';
-  // Ir a posición guardada
   try {
     const lastSlug = localStorage.getItem('em_ga_last_slug');
     const scrollY = parseInt(localStorage.getItem(GA_KEY_SCROLL) || '0', 10);
+    // 1) Si quedaste con scroll en un capítulo concreto, vuelve exacto
+    if (lastSlug && scrollY > 100) {
+      window.scrollTo({ top: scrollY, behavior: 'smooth' });
+      return;
+    }
+    // 2) Si hay slug pero no scroll, salta al heading
     if (lastSlug) {
       const el = document.getElementById(lastSlug);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     }
-    if (scrollY > 100) {
-      window.scrollTo({ top: scrollY, behavior: 'smooth' });
+    // 3) Si no hay actividad, salta al siguiente capítulo pendiente que calculó el resume panel
+    const nextSlug = panel && panel._gaNextSlug;
+    if (nextSlug) {
+      const el = document.getElementById(nextSlug);
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     }
   } catch(e) {}
 }
@@ -6130,7 +6173,7 @@ function gaToggleSearch() {
   if (!isOpen) {
     setTimeout(() => {
       const input = document.getElementById('ga-search-input');
-      if (input) input.focus();
+      if (input) { try { input.focus({ preventScroll: true }); } catch(e) { input.focus(); } }
     }, 100);
   }
 }
@@ -6277,7 +6320,13 @@ window.addEventListener('beforeunload', () => {
   }
 });
 
-// Hook en go() para inicializar la guía al entrar
+// Hook en go() para inicializar la guía al entrar + tracking de pantalla previa para back FAB
+let _gaPrevScreen = 's-biblioteca';
+function gaBack() {
+  // El back del FAB usa la pantalla previa, con fallback a biblioteca
+  const prev = _gaPrevScreen || 's-biblioteca';
+  window.go(prev);
+}
 (function() {
   let _gaLoaded = false;
   let _gaLoading = null;
@@ -6294,9 +6343,17 @@ window.addEventListener('beforeunload', () => {
   }
   const origGo = window.go;
   window.go = function(id) {
-    // Guardar scroll si salimos de la guía
-    if (document.getElementById('s-guia-alimentacion').classList.contains('active') && id !== 's-guia-alimentacion') {
+    const guia = document.getElementById('s-guia-alimentacion');
+    const wasInGuia = guia && guia.classList.contains('active');
+    if (wasInGuia && id !== 's-guia-alimentacion') {
       try { localStorage.setItem(GA_KEY_SCROLL, String(window.scrollY)); } catch(e) {}
+    }
+    // Registrar pantalla previa antes de entrar a la guía (excepto cuando volvemos a la propia guía)
+    if (id === 's-guia-alimentacion' && !wasInGuia) {
+      const activeScreen = document.querySelector('.screen.active');
+      if (activeScreen && activeScreen.id && activeScreen.id !== 's-guia-alimentacion') {
+        _gaPrevScreen = activeScreen.id;
+      }
     }
     if (id === 's-guia-alimentacion') {
       gaLoadContent().then(() => { origGo(id); setTimeout(gaInit, 100); });
