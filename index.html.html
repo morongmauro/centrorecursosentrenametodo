@@ -6132,7 +6132,64 @@ function gaShowResumePanel() {
     panel._gaNextSlug = tocItems[0] ? tocItems[0].dataset.target : '';
   }
 
+  // Listas colapsables "Por leer" / "Leídos"
+  const renderCh = function(a, opts) {
+    opts = opts || {};
+    const slug = a.dataset.target;
+    const t = a.querySelector('.ga-toc-text');
+    const time = a.querySelector('.ga-toc-time');
+    const cls = 'ga-resume-ch' + (opts.done ? ' done' : '') + (opts.next ? ' next' : '');
+    return '<a href="#' + slug + '" class="' + cls + '" onclick="gaGoToSection(\'' + slug + '\'); gaToggleAssistant(true); return false;">' +
+      '<span class="ga-resume-ch-check"></span>' +
+      '<span class="ga-resume-ch-text">' + (t ? t.textContent : '') + '</span>' +
+      '<span class="ga-resume-ch-time">' + (time ? time.textContent : '') + '</span>' +
+    '</a>';
+  };
+  const pendingBody = document.getElementById('ga-resume-pending-body');
+  const doneBody = document.getElementById('ga-resume-done-body');
+  const pendingCount = document.getElementById('ga-resume-pending-count');
+  const doneCount = document.getElementById('ga-resume-done-count');
+  const pending = tocItems.filter(a => !readSet.has(a.dataset.target));
+  const done = tocItems.filter(a => readSet.has(a.dataset.target));
+  if (pendingBody) {
+    pendingBody.innerHTML = pending.length
+      ? pending.map((a, i) => renderCh(a, { next: i === 0 })).join('')
+      : '<div class="ga-resume-ch-empty">Has completado todos los capítulos ✓</div>';
+  }
+  if (doneBody) {
+    doneBody.innerHTML = done.length
+      ? done.map(a => renderCh(a, { done: true })).join('')
+      : '<div class="ga-resume-ch-empty">Aún no has marcado ningún capítulo como leído</div>';
+  }
+  if (pendingCount) pendingCount.textContent = pending.length;
+  if (doneCount) doneCount.textContent = done.length;
+
   panel.style.display = 'block';
+}
+
+// Asistente de lectura — modal con backdrop blur que clona la card
+function gaToggleAssistant(forceClose) {
+  const modal = document.getElementById('ga-assistant-modal');
+  const resume = document.getElementById('ga-resume');
+  const body = document.getElementById('ga-assistant-body');
+  if (!modal || !resume || !body) return;
+  const isOpen = modal.style.display !== 'none';
+  if (isOpen || forceClose === true) {
+    // Devuelve el ga-resume a su lugar original
+    if (modal._origParent && modal._origNext !== undefined) {
+      if (modal._origNext) modal._origParent.insertBefore(resume, modal._origNext);
+      else modal._origParent.appendChild(resume);
+    }
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    return;
+  }
+  // Recordar dónde estaba el ga-resume y moverlo al modal
+  modal._origParent = resume.parentNode;
+  modal._origNext = resume.nextSibling;
+  body.appendChild(resume);
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
 }
 
 function gaResume() {

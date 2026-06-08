@@ -3,13 +3,21 @@
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <div class="ga-search-panel" id="ga-search-panel" style="display:none;">
-      <div class="ga-search-wrap">
-        <svg viewBox="0 0 24 24" fill="none" class="ga-search-icon"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-        <input type="text" class="ga-search-input" id="ga-search-input" placeholder="Buscar palabra o tema..." oninput="gaSearch(this.value)">
-        <div class="ga-search-clear" onclick="gaClearSearch()">×</div>
+    <div class="sub-back" onclick="gaBack()" style="cursor:pointer">
+      <span class="sub-back-arr">←</span>
+      <span>Volver atrás</span>
+    </div>
+
+    <div class="ga-search-modal" id="ga-search-panel" style="display:none;">
+      <div class="ga-search-backdrop" onclick="gaToggleSearch()"></div>
+      <div class="ga-search-panel">
+        <div class="ga-search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" class="ga-search-icon"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <input type="text" class="ga-search-input" id="ga-search-input" placeholder="Buscar palabra o tema..." oninput="gaSearch(this.value)">
+          <div class="ga-search-clear" onclick="gaToggleSearch()" aria-label="Cerrar buscador">×</div>
+        </div>
+        <div class="ga-search-results" id="ga-search-results"></div>
       </div>
-      <div class="ga-search-results" id="ga-search-results"></div>
     </div>
 
     <div class="ga-toc-drawer" id="ga-toc-drawer">
@@ -46,7 +54,7 @@
     </div>
 
     <div class="ga-resume" id="ga-resume" style="display:none;">
-      <div class="ga-resume-eyebrow" id="ga-resume-eyebrow">Tu progreso</div>
+      <div class="ga-resume-eyebrow" id="ga-resume-eyebrow">Asistente de lectura</div>
       <div class="ga-resume-hi" id="ga-resume-hi">Continúa tu lectura</div>
 
       <div class="ga-resume-progress-block">
@@ -60,11 +68,6 @@
 
       <div class="ga-resume-tracks" id="ga-resume-tracks"></div>
 
-      <div class="ga-resume-where" id="ga-resume-where">
-        <div class="ga-resume-where-label">Quedaste en</div>
-        <div class="ga-resume-where-title" id="ga-resume-where-title">—</div>
-      </div>
-
       <div class="ga-resume-next" id="ga-resume-next">
         <div class="ga-resume-next-label">Siguiente capítulo</div>
         <div class="ga-resume-next-title" id="ga-resume-next-title">—</div>
@@ -75,10 +78,25 @@
         <button class="ga-resume-btn-primary" id="ga-resume-btn-primary" onclick="gaResume()">
           <span id="ga-resume-btn-primary-text">Continuar donde quedé</span><span class="arr">→</span>
         </button>
-        <button class="ga-resume-btn-secondary" onclick="gaToggleToc()">
-          Ver índice completo
-        </button>
       </div>
+
+      <details class="ga-resume-collapse" id="ga-resume-pending">
+        <summary class="ga-resume-collapse-head">
+          <span class="ga-resume-collapse-label">Por leer</span>
+          <span class="ga-resume-collapse-count" id="ga-resume-pending-count">0</span>
+          <span class="ga-resume-collapse-arr">⌄</span>
+        </summary>
+        <div class="ga-resume-collapse-body" id="ga-resume-pending-body"></div>
+      </details>
+
+      <details class="ga-resume-collapse" id="ga-resume-done">
+        <summary class="ga-resume-collapse-head">
+          <span class="ga-resume-collapse-label">Leídos</span>
+          <span class="ga-resume-collapse-count" id="ga-resume-done-count">0</span>
+          <span class="ga-resume-collapse-arr">⌄</span>
+        </summary>
+        <div class="ga-resume-collapse-body" id="ga-resume-done-body"></div>
+      </details>
     </div>
 
     <div class="ga-cover">
@@ -95,71 +113,7 @@
       </div>
     </div>
 
-    <!-- TRACKS: 3 caminos -->
-    <div class="ga-tracks">
-      <div class="ga-tracks-intro">Elige por dónde empezar</div>
-      <div class="ga-track" data-track="1">
-      <button class="ga-track-head" onclick="gaToggleTrack(1)">
-        <div class="ga-track-head-main">
-          <div class="ga-track-name">Lo esencial</div>
-          <div class="ga-track-desc">Lo mínimo para empezar bien</div>
-          <div class="ga-track-meta"><span class="ga-track-count" data-track-count="1">4 capítulos</span> · ~18 min</div>
-        </div>
-        <div class="ga-track-toggle">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-      </button>
-      <div class="ga-track-progress"><div class="ga-track-progress-fill" data-track-fill="1"></div></div>
-      <div class="ga-track-body">
-        <a href="#no-es-una-decision-aislada-es-un-sistema" class="ga-track-ch" data-target="no-es-una-decision-aislada-es-un-sistema"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">No es una decisión aislada, es un sistema</span><span class="ga-track-ch-time">1 min</span></a>
-<a href="#como-leer-esta-guia" class="ga-track-ch" data-target="como-leer-esta-guia"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Cómo leer esta guía</span><span class="ga-track-ch-time">2 min</span></a>
-<a href="#capitulo-1-antes-de-cambiar-tu-alimentacion-entiende-tu-cuer" class="ga-track-ch" data-target="capitulo-1-antes-de-cambiar-tu-alimentacion-entiende-tu-cuer"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Capítulo 1 — Antes de cambiar tu alimentación, entiende tu cuerpo</span><span class="ga-track-ch-time">4 min</span></a>
-<a href="#capitulo-3-como-gestionar-tu-alimentacion-en-la-vida-real" class="ga-track-ch" data-target="capitulo-3-como-gestionar-tu-alimentacion-en-la-vida-real"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Capítulo 3 — Cómo gestionar tu alimentación en la vida real</span><span class="ga-track-ch-time">11 min</span></a>
-      </div>
-    </div><div class="ga-track" data-track="2">
-      <button class="ga-track-head" onclick="gaToggleTrack(2)">
-        <div class="ga-track-head-main">
-          <div class="ga-track-name">Profundizar</div>
-          <div class="ga-track-desc">El método completo</div>
-          <div class="ga-track-meta"><span class="ga-track-count" data-track-count="2">5 capítulos</span> · ~42 min</div>
-        </div>
-        <div class="ga-track-toggle">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-      </button>
-      <div class="ga-track-progress"><div class="ga-track-progress-fill" data-track-fill="2"></div></div>
-      <div class="ga-track-body">
-        <a href="#capitulo-2-nutrientes-y-alimentos-como-tomar-buenas-decision" class="ga-track-ch" data-target="capitulo-2-nutrientes-y-alimentos-como-tomar-buenas-decision"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Capítulo 2 — Nutrientes y alimentos: cómo tomar buenas decisiones</span><span class="ga-track-ch-time">15 min</span></a>
-<a href="#capitulo-4-adherencia-lo-que-sostiene-los-resultados" class="ga-track-ch" data-target="capitulo-4-adherencia-lo-que-sostiene-los-resultados"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Capítulo 4 — Adherencia: lo que sostiene los resultados</span><span class="ga-track-ch-time">12 min</span></a>
-<a href="#capitulo-5-dormir-y-recuperar-el-motor-de-tu-progreso" class="ga-track-ch" data-target="capitulo-5-dormir-y-recuperar-el-motor-de-tu-progreso"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Capítulo 5 — Dormir y recuperar: el motor de tu progreso</span><span class="ga-track-ch-time">5 min</span></a>
-<a href="#capitulo-6-salud-digestiva-funcional" class="ga-track-ch" data-target="capitulo-6-salud-digestiva-funcional"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Capítulo 6 — Salud digestiva funcional</span><span class="ga-track-ch-time">4 min</span></a>
-<a href="#capitulo-7-suplementos-menos-ruido-mas-criterio" class="ga-track-ch" data-target="capitulo-7-suplementos-menos-ruido-mas-criterio"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Capítulo 7 — Suplementos: menos ruido, más criterio</span><span class="ga-track-ch-time">6 min</span></a>
-      </div>
-    </div><div class="ga-track" data-track="3">
-      <button class="ga-track-head" onclick="gaToggleTrack(3)">
-        <div class="ga-track-head-main">
-          <div class="ga-track-name">Extra</div>
-          <div class="ga-track-desc">Temas específicos, opcional</div>
-          <div class="ga-track-meta"><span class="ga-track-count" data-track-count="3">6 capítulos</span> · ~13 min</div>
-        </div>
-        <div class="ga-track-toggle">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-      </button>
-      <div class="ga-track-progress"><div class="ga-track-progress-fill" data-track-fill="3"></div></div>
-      <div class="ga-track-body">
-        <a href="#bonus-1-alcohol-la-variable-subestimada" class="ga-track-ch" data-target="bonus-1-alcohol-la-variable-subestimada"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Bonus 1 — Alcohol: la variable subestimada</span><span class="ga-track-ch-time">4 min</span></a>
-<a href="#bonus-2-ayuno-cuando-tiene-sentido" class="ga-track-ch" data-target="bonus-2-ayuno-cuando-tiene-sentido"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Bonus 2 — Ayuno: cuándo tiene sentido</span><span class="ga-track-ch-time">3 min</span></a>
-<a href="#bonus-3-como-leer-etiquetas-y-no-caer-en-marketing" class="ga-track-ch" data-target="bonus-3-como-leer-etiquetas-y-no-caer-en-marketing"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Bonus 3 — Cómo leer etiquetas y no caer en marketing</span><span class="ga-track-ch-time">2 min</span></a>
-<a href="#cierre-criterio-metodo-y-aplicacion" class="ga-track-ch" data-target="cierre-criterio-metodo-y-aplicacion"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Cierre: Criterio, método y aplicación</span><span class="ga-track-ch-time">1 min</span></a>
-<a href="#aviso-legal-y-uso-del-material" class="ga-track-ch" data-target="aviso-legal-y-uso-del-material"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Aviso legal y uso del material</span><span class="ga-track-ch-time">1 min</span></a>
-<a href="#referencias-y-fuentes" class="ga-track-ch" data-target="referencias-y-fuentes"><span class="ga-track-ch-check"></span><span class="ga-track-ch-text">Referencias y fuentes</span><span class="ga-track-ch-time">2 min</span></a>
-      </div>
-    </div>
-    </div>
-
     <!-- CONTENIDO COMPLETO -->
-    <p class="ga-p">Mauro Morón | Guía Práctica de Alimentación</p>
 <div class="ga-section" data-section="no-es-una-decision-aislada-es-un-sistema" data-level="1" data-track="1">
 <div class="ga-h1-wrap">
 <div class="ga-h1-meta"><span class="ga-h1-time">1 min de lectura</span></div>
@@ -895,17 +849,26 @@
   </div>
 
   <div class="ga-fab-stack" id="ga-fab-stack">
-    <button class="ga-fab-btn" onclick="gaBack()" aria-label="Volver">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="ga-fab-tooltip">Volver</span>
-    </button>
     <button class="ga-fab-btn" onclick="gaToggleSearch()" aria-label="Buscar">
       <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
       <span class="ga-fab-tooltip">Buscar</span>
     </button>
-    <button class="ga-fab-btn ga-fab-btn-primary" onclick="gaToggleToc()" aria-label="Ver índice">
+    <button class="ga-fab-btn" onclick="gaToggleToc()" aria-label="Ver índice">
       <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
       <span class="ga-fab-tooltip">Índice</span>
     </button>
+    <button class="ga-fab-btn ga-fab-btn-primary" onclick="gaToggleAssistant()" aria-label="Asistente de lectura">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a4 4 0 0 0-4 4v1H6a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h.5M12 3a4 4 0 0 1 4 4v1h2a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-.5M9 12v2a3 3 0 0 0 3 3 3 3 0 0 0 3-3v-2M9 17v1a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="ga-fab-tooltip">Asistente</span>
+    </button>
+  </div>
+
+  <!-- Modal del Asistente de lectura (clona el contenido de #ga-resume) -->
+  <div class="ga-assistant-modal" id="ga-assistant-modal" style="display:none;">
+    <div class="ga-assistant-backdrop" onclick="gaToggleAssistant()"></div>
+    <div class="ga-assistant-content">
+      <button class="ga-assistant-close" onclick="gaToggleAssistant()" aria-label="Cerrar">×</button>
+      <div id="ga-assistant-body"></div>
+    </div>
   </div>
 
