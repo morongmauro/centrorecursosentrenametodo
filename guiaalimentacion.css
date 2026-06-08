@@ -138,11 +138,12 @@
 }
 
 /* SEARCH — barra sticky bajo el header del centro de recursos */
-.ga-search-modal {
-  position: fixed;
+/* !important para vencer al `#s-guia .ga-reader > *:not(.bg-halo){position:relative}` */
+#s-guia-alimentacion .ga-search-modal {
+  position: fixed !important;
   top: 44px;          /* justo debajo del .cr-header (44px) */
   left: 0; right: 0;
-  z-index: 300;
+  z-index: 300 !important;
   padding: .75rem 1.25rem;
   background: rgba(245,243,238,.96);
   backdrop-filter: blur(14px) saturate(160%);
@@ -244,8 +245,10 @@
 }
 
 /* TOC DRAWER */
-.ga-toc-drawer {
-  position: fixed; inset: 0; z-index: 200;
+#s-guia-alimentacion .ga-toc-drawer {
+  position: fixed !important;
+  inset: 0;
+  z-index: 200 !important;
   pointer-events: none; opacity: 0;
   transition: opacity .25s;
 }
@@ -392,7 +395,7 @@
   max-width: 100%;
   position: relative;
 }
-#s-guia-alimentacion .ga-reader > *:not(.bg-halo){ position: relative; z-index: 1; }
+#s-guia-alimentacion .ga-reader > *:not(.bg-halo):not(.ga-search-modal):not(.ga-toc-drawer){ position: relative; z-index: 1; }
 
 /* ============ PANEL CONTINUAR LEYENDO (al volver) ============ */
 .ga-resume {
@@ -851,9 +854,9 @@
 
 /* COVER editorial sin redundancia */
 .ga-cover {
-  padding: 2.5rem 0 2.5rem;
-  border-bottom: .5px solid rgba(0,0,0,.08);
-  margin-bottom: 2.5rem;
+  padding: 2rem 0 1.25rem;
+  border-bottom: none;
+  margin-bottom: 1.25rem;
 }
 .ga-cover-eyebrow {
   font-size: 10.5px; letter-spacing: 2.5px;
@@ -910,34 +913,42 @@
   font-weight: 600;
 }
 
-/* TIP de cómo aprovechar la guía */
+/* TIP de cómo aprovechar la guía — nota minimalista, no card */
 .ga-cover-tip {
-  background: #f0eee7;
-  border-left: 3px solid var(--text);
-  padding: 1.1rem 1.25rem;
-  border-radius: 4px 12px 12px 4px;
-  margin-bottom: 1.5rem;
+  background: transparent;
+  border-left: none;
+  padding: 0;
+  border-radius: 0;
+  margin: .5rem 0 1.25rem;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 .ga-cover-tip-label {
-  font-size: 10.5px;
-  letter-spacing: 2px;
+  font-size: 10px;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--text);
-  margin-bottom: .5rem;
+  color: var(--olive-dark);
+  margin: 0;
+  flex-shrink: 0;
 }
 .ga-cover-tip-text {
   font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--text);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-mute);
+  font-weight: 400;
+  margin: 0;
+  flex: 1 1 100%;
 }
-.ga-cover-tip-text strong { font-weight: 700; }
+.ga-cover-tip-text strong { font-weight: 600; color: var(--text-soft); }
 
 /* H1 wrap con número, tiempo, bookmark */
 .ga-section {
-  margin-bottom: 2.5rem;
-  padding-top: 1rem;
+  margin-bottom: 1.5rem;
+  padding-top: .5rem;
   scroll-margin-top: 90px;
   position: relative;
 }
@@ -1064,7 +1075,8 @@
   color: var(--olive-dark);
   font-weight: 600;
 }
-.ga-caption {
+.ga-caption { display: none !important; }
+.ga-caption-old-hidden {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   line-height: 1.5;
