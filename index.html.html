@@ -6113,8 +6113,13 @@ function gaShowResumePanel() {
     }
   }
 
-  // Siguiente capítulo pendiente (en orden del TOC)
-  const tocItems = Array.from(document.querySelectorAll('#ga-toc-nav .ga-toc-h1'));
+  // Siguiente capítulo pendiente — en orden lógico del documento (no agrupado por track)
+  const docH1s = Array.from(document.querySelectorAll('#s-guia-alimentacion .ga-h1'));
+  const slugOrder = new Map();
+  docH1s.forEach((h, i) => slugOrder.set(h.id, i));
+  const tocItems = Array.from(document.querySelectorAll('#ga-toc-nav .ga-toc-h1'))
+    .slice()
+    .sort((a, b) => (slugOrder.get(a.dataset.target) ?? 999) - (slugOrder.get(b.dataset.target) ?? 999));
   const nextItem = tocItems.find(a => !readSet.has(a.dataset.target));
   const nextTitleEl = document.getElementById('ga-resume-next-title');
   const nextTimeEl = document.getElementById('ga-resume-next-time');
