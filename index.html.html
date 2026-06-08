@@ -2952,13 +2952,13 @@ body:not(.locked) .login-screen{display:none !important;}
 .bib-hero {
   background: linear-gradient(180deg, #1f1f1f 0%, #141414 100%);
   color: #f5f3ee;
-  border-radius: 20px;
-  padding: 1.6rem 1.5rem;
-  margin-top: 1.25rem;
-  margin-bottom: 1.75rem;
+  border-radius: 18px;
+  padding: 1.25rem 1.25rem 1.1rem;
+  margin-top: 1.1rem;
+  margin-bottom: 1.5rem;
   cursor: pointer;
   border: 1px solid rgba(245,243,238,.06);
-  box-shadow: 0 2px 6px rgba(0,0,0,.08), 0 14px 36px rgba(0,0,0,.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,.08), 0 12px 32px rgba(0,0,0,.12);
   position: relative;
   overflow: hidden;
   transition: transform .25s, box-shadow .25s;
@@ -2967,61 +2967,62 @@ body:not(.locked) .login-screen{display:none !important;}
   content: '';
   position: absolute;
   top: -50%; right: -25%;
-  width: 320px; height: 320px;
+  width: 280px; height: 280px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(245,233,196,.10) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(122,140,90,.18) 0%, transparent 65%);
   pointer-events: none;
 }
 .bib-hero:hover {
   transform: translateY(-2px);
-  box-shadow: 0 3px 8px rgba(0,0,0,.1), 0 24px 52px rgba(0,0,0,.15);
+  box-shadow: 0 3px 8px rgba(0,0,0,.1), 0 20px 44px rgba(0,0,0,.15);
 }
 .bib-hero:active { transform: scale(.99); }
 
 .bib-hero-eyebrow {
-  font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
-  color: #f5e9c4; font-weight: 700;
-  margin-bottom: .7rem;
+  font-size: 9.5px; letter-spacing: 2.2px; text-transform: uppercase;
+  color: var(--olive-light);
+  font-weight: 700;
+  margin-bottom: .55rem;
   position: relative; z-index: 1;
 }
 .bib-hero-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 42px; line-height: .92; letter-spacing: 1.2px;
+  font-size: 32px; line-height: .95; letter-spacing: 1px;
   color: #fff;
-  margin-bottom: .7rem;
+  margin-bottom: .55rem;
   position: relative; z-index: 1;
 }
 .bib-hero-line {
-  width: 48px; height: 2px;
-  background: #f5e9c4;
-  margin-bottom: 1rem; border-radius: 2px;
+  width: 36px; height: 2px;
+  background: var(--olive-light);
+  margin-bottom: .7rem; border-radius: 2px;
   position: relative; z-index: 1;
 }
 .bib-hero-desc {
-  font-size: 13.5px; line-height: 1.55;
-  color: rgba(245,243,238,.82);
-  margin-bottom: 1.25rem;
+  font-size: 12.5px; line-height: 1.5;
+  color: rgba(245,243,238,.78);
+  margin-bottom: .9rem;
   position: relative; z-index: 1;
 }
 .bib-hero-meta {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  font-size: 11.5px; color: rgba(245,243,238,.55);
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  font-size: 11px; color: rgba(245,243,238,.55);
   font-weight: 500; letter-spacing: .3px;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   position: relative; z-index: 1;
 }
-.bib-hero-meta-time { color: #f5e9c4; font-weight: 600; }
+.bib-hero-meta-time { color: rgba(245,243,238,.85); font-weight: 600; }
 .bib-hero-meta-dot { opacity: .35; }
 
 .bib-hero-cta {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: #f5f3ee;
   color: #141414;
-  padding: 12px 20px;
+  padding: 10px 18px;
   border-radius: 100px;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: .3px;
   position: relative; z-index: 1;

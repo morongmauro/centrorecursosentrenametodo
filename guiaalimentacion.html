@@ -9,7 +9,6 @@
     </div>
 
     <div class="ga-search-modal" id="ga-search-panel" style="display:none;">
-      <div class="ga-search-backdrop" onclick="gaToggleSearch()"></div>
       <div class="ga-search-panel">
         <div class="ga-search-wrap">
           <svg viewBox="0 0 24 24" fill="none" class="ga-search-icon"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
@@ -849,17 +848,13 @@
   </div>
 
   <div class="ga-fab-stack" id="ga-fab-stack">
-    <button class="ga-fab-btn" onclick="gaToggleSearch()" aria-label="Buscar">
+    <button class="ga-fab-btn ga-fab-btn-round" onclick="gaToggleSearch()" aria-label="Buscar">
       <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
       <span class="ga-fab-tooltip">Buscar</span>
     </button>
-    <button class="ga-fab-btn" onclick="gaToggleToc()" aria-label="Ver índice">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-      <span class="ga-fab-tooltip">Índice</span>
-    </button>
-    <button class="ga-fab-btn ga-fab-btn-primary" onclick="gaToggleAssistant()" aria-label="Asistente de lectura">
+    <button class="ga-fab-btn ga-fab-btn-primary ga-fab-btn-pill" onclick="gaToggleAssistant()" aria-label="Asistente de lectura">
       <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a4 4 0 0 0-4 4v1H6a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h.5M12 3a4 4 0 0 1 4 4v1h2a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-.5M9 12v2a3 3 0 0 0 3 3 3 3 0 0 0 3-3v-2M9 17v1a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="ga-fab-tooltip">Asistente</span>
+      <span class="ga-fab-btn-label">Asistente de lectura</span>
     </button>
   </div>
 
