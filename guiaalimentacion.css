@@ -14,8 +14,8 @@
 /* TOPBAR sticky — usando fixed + transform para evitar conflictos */
 #s-guia-alimentacion .ga-topbar {
   position: sticky !important;
-  top: 0 !important;
-  z-index: 100;
+  top: 44px !important;
+  z-index: 50;
   background: rgba(250,248,243,.96);
   backdrop-filter: saturate(180%) blur(16px);
   -webkit-backdrop-filter: saturate(180%) blur(16px);
@@ -331,7 +331,9 @@
 .ga-reader {
   padding: 0 1.25rem 2rem;
   max-width: 100%;
+  position: relative;
 }
+#s-guia-alimentacion .ga-reader > *:not(.bg-halo){ position: relative; z-index: 1; }
 
 /* ============ PANEL CONTINUAR LEYENDO (al volver) ============ */
 .ga-resume {
