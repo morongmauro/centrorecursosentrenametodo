@@ -622,6 +622,51 @@
       .step-title { font-size: 24px; }
     }
 
+    /* ===== Zoom card (close-up de un elemento UI sin todo el teléfono) ===== */
+    .zoom-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px 18px 26px;
+      width: 100%;
+      max-width: 340px;
+      position: relative;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .zoom-card::before {
+      content: 'ZOOM';
+      position: absolute; top: 12px; left: 16px;
+      font-size: 9px; letter-spacing: 0.22em; font-weight: 800;
+      color: var(--accent-dark);
+      background: var(--accent-pastel);
+      padding: 3px 8px; border-radius: 999px;
+    }
+    .zoom-card .zoom-target {
+      margin-top: 26px;
+      display: flex; flex-direction: column; align-items: stretch; gap: 14px;
+    }
+    .zoom-card .zoom-label {
+      font-size: 11px; color: var(--text-muted); text-align: center;
+      line-height: 1.5;
+    }
+    .zoom-card .zoom-label strong { color: var(--text); }
+    .zoom-card .input-bar {
+      position: static; left: auto; right: auto; bottom: auto;
+      transform: scale(1.35); transform-origin: center;
+      margin: 16px 8px;
+    }
+    .zoom-card .fab-pill {
+      position: static; left: auto; right: auto; bottom: auto;
+      align-self: flex-end;
+      transform: scale(1.4); transform-origin: right center;
+      margin: 16px 12px 8px 0;
+    }
+    .zoom-card .tap-arrow {
+      position: static; color: #E84A4A;
+      font-size: 26px; font-weight: 700;
+      text-align: center;
+    }
+
   </style>
 </head>
 <body>
@@ -632,7 +677,7 @@
         <span class="brand">MEAL TRACKER</span>
         <span class="brand-sub">Guía interactiva</span>
       </div>
-      <div class="step-indicator" id="stepIndicator">0 / 12</div>
+      <div class="step-indicator" id="stepIndicator">0 / 13</div>
     </div>
   </div>
 
@@ -660,9 +705,24 @@
           <div class="hero-persona-name">Ana, clienta de Mauro</div>
           <div class="hero-persona-detail">
             Meta diaria: 2200 kcal · 150g proteína · 220g carbohidratos · 70g grasas.
-            Quiere registrar sin esfuerzo y mantener a su coach informado.
+            Quiere registrar sin esfuerzo y que su coach pueda verlo todo.
           </div>
         </div>
+
+        <div class="final-warn" style="max-width: 520px; margin: 0 auto 24px; text-align: left;">
+          <h3>Antes de empezar — qué es y qué no es esta app</h3>
+          <ul>
+            <li><strong>Es</strong> una herramienta de <strong>registro y organización</strong> nutricional. Calcula tus macros y te ayuda a planificar tu día.</li>
+            <li><strong>Sí te ayuda</strong> a armar tus meals con los ingredientes que tienes y te dice las <strong>proporciones</strong> (cuántos gramos de cada cosa) para que cuadre con tu meta.</li>
+            <li><strong>No te da recetas</strong> ni te dice cómo cocinarlo. Para recetas, usa el módulo Meals de Trainerize.</li>
+            <li><strong>No reemplaza</strong> la valoración de un profesional de salud.</li>
+            <li>Si preguntas "¿qué dieta hago?", <strong>te remite al coach</strong>. No improvisa criterios.</li>
+          </ul>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.55;">
+            El criterio personalizado lo aporta tu coach Mauro. Esta app le sirve para ver tu data real, no para reemplazarlo.
+          </p>
+        </div>
+
         <div class="small">Toca <strong>Siguiente</strong> abajo (o usa la flecha derecha del teclado).</div>
       </div>
     </div>
@@ -750,19 +810,19 @@
     </div>
 
     <!-- ============================================ -->
-    <!-- Slide 2: Registrar comida natural -->
+    <!-- Slide 2: Registra texto o voz -->
     <!-- ============================================ -->
     <div class="slide" data-step="2">
       <div class="kicker">Paso 2 · Lo más importante</div>
-      <h1 class="step-title">Registra en lenguaje natural</h1>
+      <h1 class="step-title">Registra: por texto o por voz</h1>
       <div class="accent-line"></div>
       <p class="step-lead">
-        Ana escribe su desayuno como se lo contaría a un amigo. La app interpreta y calcula con valores reales (USDA).
+        Ana cuenta lo que comió en lenguaje natural — escribiendo o dictando. La app interpreta y calcula con valores reales (USDA), incluyendo agua.
       </p>
 
       <div class="phone-row">
         <div class="phone-col">
-          <div class="phone-caption">Vista 1 — Ana escribe</div>
+          <div class="phone-caption">Vista 1 — Escribiendo</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="app-header">
@@ -774,103 +834,8 @@
               </div>
             </div>
             <div class="app-body" style="padding-bottom: 90px;">
-              <div class="goals-sticky">
-                <div class="goals-changemeta">⚙ Cambiar meta</div>
-                <div class="day-label">Hoy · <strong>Lunes 26 de Mayo</strong></div>
-                <div class="goals-rings">
-                  <div class="ring-cell">
-                    <div class="ring-svg-wrap">
-                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#8A9558" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#8A9558" stroke-width="5" stroke-linecap="round" stroke-dasharray="0 157" transform="rotate(-90 28 28)"/></svg>
-                      <div class="ring-num-wrap"><div class="ring-num">0</div><div class="ring-goal">/2200</div></div>
-                    </div>
-                    <div class="ring-label">Cal</div>
-                  </div>
-                  <div class="ring-cell">
-                    <div class="ring-svg-wrap">
-                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#D77A61" stroke-opacity="0.14" stroke-width="5"/></svg>
-                      <div class="ring-num-wrap"><div class="ring-num">0</div><div class="ring-goal">/150g</div></div>
-                    </div>
-                    <div class="ring-label">Prot</div>
-                  </div>
-                  <div class="ring-cell">
-                    <div class="ring-svg-wrap">
-                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#D4B581" stroke-opacity="0.14" stroke-width="5"/></svg>
-                      <div class="ring-num-wrap"><div class="ring-num">0</div><div class="ring-goal">/220g</div></div>
-                    </div>
-                    <div class="ring-label">Carb</div>
-                  </div>
-                  <div class="ring-cell">
-                    <div class="ring-svg-wrap">
-                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#6B7A8F" stroke-opacity="0.14" stroke-width="5"/></svg>
-                      <div class="ring-num-wrap"><div class="ring-num">0</div><div class="ring-goal">/70g</div></div>
-                    </div>
-                    <div class="ring-label">Gras</div>
-                  </div>
-                </div>
-              </div>
               <div class="chat">
                 <div class="bubble user">Desayuno: 2 huevos revueltos, avena con plátano y café con leche</div>
-              </div>
-              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
-              <div class="input-bar">
-                <span class="input-text">2 huevos revueltos, avena con plátano…</span>
-                <div class="input-btn mic">🎤</div>
-                <div class="input-btn send">↑</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="arrow-step">→</div>
-
-        <div class="phone-col">
-          <div class="phone-caption">Vista 2 — Lo que registra</div>
-          <div class="phone">
-            <div class="phone-notch"></div>
-            <div class="app-header">
-              <div class="app-header-inner">
-                <div>
-                  <div class="app-header-brand">MEAL TRACKER</div>
-                  <div class="app-header-tag">Entrena con Método</div>
-                </div>
-              </div>
-            </div>
-            <div class="app-body" style="padding-bottom: 90px;">
-              <div class="goals-sticky">
-                <div class="goals-changemeta">⚙ Cambiar meta</div>
-                <div class="day-label">Hoy · <strong>Lunes 26 de Mayo</strong></div>
-                <div class="goals-rings">
-                  <div class="ring-cell">
-                    <div class="ring-svg-wrap">
-                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#8A9558" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#8A9558" stroke-width="5" stroke-linecap="round" stroke-dasharray="36 157" transform="rotate(-90 28 28)"/></svg>
-                      <div class="ring-num-wrap"><div class="ring-num">505</div><div class="ring-goal">/2200</div></div>
-                    </div>
-                    <div class="ring-label">Cal</div>
-                  </div>
-                  <div class="ring-cell">
-                    <div class="ring-svg-wrap">
-                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#D77A61" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#D77A61" stroke-width="5" stroke-linecap="round" stroke-dasharray="23 157" transform="rotate(-90 28 28)"/></svg>
-                      <div class="ring-num-wrap"><div class="ring-num">22</div><div class="ring-goal">/150g</div></div>
-                    </div>
-                    <div class="ring-label">Prot</div>
-                  </div>
-                  <div class="ring-cell">
-                    <div class="ring-svg-wrap">
-                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#D4B581" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#D4B581" stroke-width="5" stroke-linecap="round" stroke-dasharray="43 157" transform="rotate(-90 28 28)"/></svg>
-                      <div class="ring-num-wrap"><div class="ring-num">60</div><div class="ring-goal">/220g</div></div>
-                    </div>
-                    <div class="ring-label">Carb</div>
-                  </div>
-                  <div class="ring-cell">
-                    <div class="ring-svg-wrap">
-                      <svg width="56" height="56"><circle cx="28" cy="28" r="25" fill="none" stroke="#6B7A8F" stroke-opacity="0.14" stroke-width="5"/><circle cx="28" cy="28" r="25" fill="none" stroke="#6B7A8F" stroke-width="5" stroke-linecap="round" stroke-dasharray="40 157" transform="rotate(-90 28 28)"/></svg>
-                      <div class="ring-num-wrap"><div class="ring-num">18</div><div class="ring-goal">/70g</div></div>
-                    </div>
-                    <div class="ring-label">Gras</div>
-                  </div>
-                </div>
-              </div>
-              <div class="chat">
                 <div class="logged">
                   <div class="logged-header">
                     <div class="logged-header-left">
@@ -882,14 +847,11 @@
                   </div>
                   <div class="logged-items">
                     <div class="logged-item"><span class="logged-item-name">Huevo grande revuelto · 2 ud</span><span class="logged-item-kcal">180 kcal</span></div>
-                    <div class="logged-item"><span class="logged-item-name">Avena cocida · 50g (1 taza)</span><span class="logged-item-kcal">160 kcal</span></div>
+                    <div class="logged-item"><span class="logged-item-name">Avena cocida · 50g</span><span class="logged-item-kcal">160 kcal</span></div>
                     <div class="logged-item"><span class="logged-item-name">Plátano · 1 ud mediana</span><span class="logged-item-kcal">105 kcal</span></div>
                     <div class="logged-item"><span class="logged-item-name">Café con leche · 1 taza</span><span class="logged-item-kcal">60 kcal</span></div>
                   </div>
-                  <div class="logged-total">
-                    <span class="total-label">Total comida</span>
-                    <span class="total-val">505 kcal</span>
-                  </div>
+                  <div class="logged-total"><span class="total-label">Total comida</span><span class="total-val">505 kcal</span></div>
                   <div class="logged-macros"><span class="mp">P 22g</span><span class="mc">C 60g</span><span class="mg">G 18g</span></div>
                 </div>
               </div>
@@ -902,56 +864,11 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="tip">
-        <strong>Tip:</strong> No necesitas decir gramos exactos. Si la app estima algo, te lo avisa con una nota amarilla y puedes ajustar tocando el lápiz ✎ del card.
-      </div>
-    </div>
-
-    <!-- ============================================ -->
-    <!-- Slide 3: Dictar por voz -->
-    <!-- ============================================ -->
-    <div class="slide" data-step="3">
-      <div class="kicker">Paso 3 · Cuando estás cocinando</div>
-      <h1 class="step-title">Dicta por voz</h1>
-      <div class="accent-line"></div>
-      <p class="step-lead">
-        Ana toca el micrófono y dicta lo que comió. La app entiende incluso si las palabras vienen pegadas sin puntuación.
-      </p>
-
-      <div class="phone-row">
-        <div class="phone-col">
-          <div class="phone-caption">Vista 1 — Toca el micrófono</div>
-          <div class="phone">
-            <div class="phone-notch"></div>
-            <div class="app-header">
-              <div class="app-header-inner">
-                <div>
-                  <div class="app-header-brand">MEAL TRACKER</div>
-                  <div class="app-header-tag">Entrena con Método</div>
-                </div>
-              </div>
-            </div>
-            <div class="app-body" style="padding-bottom: 90px; min-height: 480px;">
-              <div class="chat" style="margin-top: 200px;"></div>
-              <div class="fab-pill"><span class="sparkle">✦</span> Herramientas</div>
-              <div class="input-bar">
-                <span class="input-text">Escribe o dicta lo que comiste…</span>
-                <div class="input-btn mic" style="position: relative;">🎤
-                  <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
-                </div>
-                <div class="input-btn send" style="opacity: 0.3">↑</div>
-              </div>
-              <div class="tap-arrow" style="bottom: 50px; right: 70px;">↘</div>
-            </div>
-          </div>
-        </div>
 
         <div class="arrow-step">→</div>
 
         <div class="phone-col">
-          <div class="phone-caption">Vista 2 — Dictando y resultado</div>
+          <div class="phone-caption">Vista 2 — Dictando por voz</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="app-header">
@@ -996,24 +913,24 @@
       </div>
 
       <div class="tip">
-        <strong>Mientras dictas</strong> ves una onda animada que confirma que te escucha. Toca el micrófono de nuevo para detener.
+        <strong>Tip:</strong> no necesitas gramos exactos ni puntuar bien — "tres arepas dos huevos un café" igual se entiende. Si la app estima algo, te lo avisa con una nota amarilla. <strong>Bonus:</strong> también puedes registrar agua — <em>"me tomé un vaso"</em>, <em>"500 ml"</em>, <em>"1 botella"</em>.
       </div>
     </div>
 
     <!-- ============================================ -->
-    <!-- Slide 4: Sumar a la última comida -->
+    <!-- Slide 3: Modifica lo registrado -->
     <!-- ============================================ -->
-    <div class="slide" data-step="4">
-      <div class="kicker">Paso 4 · Se te olvidó algo</div>
-      <h1 class="step-title">Suma a tu última comida</h1>
+    <div class="slide" data-step="3">
+      <div class="kicker">Paso 3 · Ajusta sobre la marcha</div>
+      <h1 class="step-title">Modifica lo registrado</h1>
       <div class="accent-line"></div>
       <p class="step-lead">
-        Ana se acuerda que también comió mantequilla de maní. Lo escribe y la app lo <strong>suma a su desayuno</strong>, no crea una comida nueva.
+        Tres formas de corregir cualquier comida ya registrada: <strong>sumar</strong> con una frase nueva ("olvidé", "súmale"), <strong>editar</strong> con ✎ para cambiar cantidades, o <strong>borrar</strong> con 🗑.
       </p>
 
       <div class="phone-row">
         <div class="phone-col">
-          <div class="phone-caption">Resultado: Desayuno actualizado</div>
+          <div class="phone-caption">Vista 1 — Suma a tu última comida</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="app-header">
@@ -1040,14 +957,6 @@
                     <div class="added-block-label">Sumé este ítem</div>
                     <div class="logged-item"><span class="logged-item-name">+ Mantequilla de maní · 1 cda (~16g)</span><span class="logged-item-kcal">95 kcal</span></div>
                   </div>
-                  <div class="full-list-label">Comida completa</div>
-                  <div class="logged-items">
-                    <div class="logged-item"><span class="logged-item-name">Huevo grande revuelto · 2 ud</span><span class="logged-item-kcal">180 kcal</span></div>
-                    <div class="logged-item"><span class="logged-item-name">Avena cocida · 50g</span><span class="logged-item-kcal">160 kcal</span></div>
-                    <div class="logged-item"><span class="logged-item-name">Plátano · 1 ud mediana</span><span class="logged-item-kcal">105 kcal</span></div>
-                    <div class="logged-item"><span class="logged-item-name">Café con leche · 1 taza</span><span class="logged-item-kcal">60 kcal</span></div>
-                    <div class="logged-item added"><span class="logged-item-name">Mantequilla de maní · 1 cda</span><span class="logged-item-kcal">95 kcal</span></div>
-                  </div>
                   <div class="logged-total"><span class="total-label">Nuevo total comida</span><span class="total-val">600 kcal</span></div>
                   <div class="logged-macros"><span class="mp">P 26g</span><span class="mc">C 63g</span><span class="mg">G 26g</span></div>
                 </div>
@@ -1061,18 +970,58 @@
             </div>
           </div>
         </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">Vista 2 — Las 3 acciones por comida</div>
+          <div class="zoom-card">
+            <div class="zoom-target">
+              <div class="zoom-label">Arriba a la derecha de cada comida registrada.</div>
+              <div class="logged" style="transform: scale(1.05); transform-origin: top center; margin-bottom: 16px;">
+                <div class="logged-header">
+                  <div class="logged-header-left">
+                    <div class="logged-check">✓</div>
+                    <span class="logged-meal">Almuerzo</span>
+                    <span class="logged-time">13:20 p.m.</span>
+                  </div>
+                  <div class="logged-actions" style="position: relative;">
+                    <span style="position: relative;">★
+                      <span style="display: block; position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); font-size: 6.5px; letter-spacing: 0.1em; color: var(--accent-dark); font-weight: 700; white-space: nowrap;">FAV</span>
+                    </span>
+                    <span style="position: relative;">✎
+                      <span style="display: block; position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); font-size: 6.5px; letter-spacing: 0.1em; color: var(--c-fat); font-weight: 700; white-space: nowrap;">EDITAR</span>
+                    </span>
+                    <span style="position: relative;">🗑
+                      <span style="display: block; position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); font-size: 6.5px; letter-spacing: 0.1em; color: var(--c-protein); font-weight: 700; white-space: nowrap;">BORRAR</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="logged-items" style="margin-top: 14px;">
+                  <div class="logged-item"><span class="logged-item-name">Pollo a la plancha · 180g</span><span class="logged-item-kcal">295 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Arroz blanco · 150g</span><span class="logged-item-kcal">195 kcal</span></div>
+                  <div class="logged-item"><span class="logged-item-name">Palta · 60g</span><span class="logged-item-kcal">96 kcal</span></div>
+                </div>
+                <div class="logged-total"><span class="total-label">Total comida</span><span class="total-val">586 kcal</span></div>
+              </div>
+              <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.55; text-align: center;">
+                <strong style="color: var(--text);">★</strong> guarda como menú favorito · <strong style="color: var(--text);">✎</strong> ajusta gramos o quita un ítem · <strong style="color: var(--text);">🗑</strong> borra la comida completa.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="tip">
-        <strong>Frases que la app detecta para sumar:</strong> "me faltó", "olvidé", "también comí", "agrégale", "súmale", "no te dije que también". Siempre se suma a la última comida del día.
+        <strong>Frases que detecta para sumar:</strong> "me faltó", "olvidé", "también comí", "agrégale", "súmale". Para cambios más finos (gramos, quitar un solo ítem) usa ✎. Nada es permanente — siempre puedes corregir.
       </div>
     </div>
 
     <!-- ============================================ -->
-    <!-- Slide 5: Pregunta sin registrar -->
+    <!-- Slide 4: Pregunta sin registrar -->
     <!-- ============================================ -->
-    <div class="slide" data-step="5">
-      <div class="kicker">Paso 5 · Antes de comer</div>
+    <div class="slide" data-step="4">
+      <div class="kicker">Paso 4 · Antes de comer</div>
       <h1 class="step-title">Consulta sin registrar</h1>
       <div class="accent-line"></div>
       <p class="step-lead">
@@ -1129,49 +1078,193 @@
     </div>
 
     <!-- ============================================ -->
-    <!-- Slide 6: Mis ingredientes -->
+    <!-- Slide 5: Cuándo registra, cuándo sugiere -->
     <!-- ============================================ -->
-    <div class="slide" data-step="6">
-      <div class="kicker">Paso 6 · Configura una vez, beneficia todo</div>
-      <h1 class="step-title">Mis ingredientes favoritos</h1>
+    <div class="slide" data-step="5">
+      <div class="kicker">Paso 5 · Las reglas del juego</div>
+      <h1 class="step-title">Cuándo registra, cuándo solo sugiere</h1>
       <div class="accent-line"></div>
       <p class="step-lead">
-        Ana abre <strong>Herramientas</strong> (botón flotante abajo a la derecha), entra a <strong>Mis ingredientes</strong> y agrega los alimentos que suele comprar.
+        La app es flexible: lee la <strong>intención</strong> de lo que escribes y decide si te lo cuenta como comida del día o si solo te ayuda a pensar. Estas son las 5 reglas que conviene tener claras.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 16px 0 20px;">
+
+        <!-- Card 1: Hora del día -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="width: 28px; height: 28px; background: var(--accent-pastel); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">⏰</div>
+            <div style="font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 800; color: var(--accent-dark);">Auto · por la hora</div>
+          </div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em;">Detecta el tipo de comida por la hora</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px;">
+            A las 8 AM dices "huevos revueltos y avena" → lo guarda como <strong style="color: var(--accent-dark);">Desayuno</strong>. A las 13:00 → <strong style="color: var(--accent-dark);">Almuerzo</strong>. A las 20:00 → <strong style="color: var(--accent-dark);">Cena</strong>.
+          </div>
+          <div style="background: var(--accent-pastel); padding: 6px 10px; border-radius: 8px; font-size: 11px; color: var(--accent-dark); font-weight: 600;">
+            ✓ Registra como comida del día
+          </div>
+        </div>
+
+        <!-- Card 2: Por el verbo -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="width: 28px; height: 28px; background: var(--accent-pastel); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">🗣️</div>
+            <div style="font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 800; color: var(--accent-dark);">Tú mandas · por el verbo</div>
+          </div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em;">Si nombras la comida, gana tu palabra</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px;">
+            "<em>Desayuné</em> dos arepas", "<em>almorcé</em> pollo con arroz", "<em>merendé</em> un yogur", "<em>cené</em> ensalada" → cae en ese meal aunque la hora no coincida.
+          </div>
+          <div style="background: var(--accent-pastel); padding: 6px 10px; border-radius: 8px; font-size: 11px; color: var(--accent-dark); font-weight: 600;">
+            ✓ Registra en el meal que tú dices
+          </div>
+        </div>
+
+        <!-- Card 3: Día completo -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="width: 28px; height: 28px; background: var(--accent-pastel); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">📋</div>
+            <div style="font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 800; color: var(--accent-dark);">Atajo · día entero</div>
+          </div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em;">Puedes contarle todo el día de un tiro</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px;">
+            "<em>Desayuné huevos y avena, almorcé pollo con arroz y palta, cené atún con pan</em>" → separa las 3 comidas, las registra y marca <strong style="color: var(--accent-dark);">todo el día</strong> de una.
+          </div>
+          <div style="background: var(--accent-pastel); padding: 6px 10px; border-radius: 8px; font-size: 11px; color: var(--accent-dark); font-weight: 600;">
+            ✓ Registra todas las comidas
+          </div>
+        </div>
+
+        <!-- Card 4: Me pasé -->
+        <div style="background: var(--surface); border: 1px solid rgba(184, 115, 43, 0.3); border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="width: 28px; height: 28px; background: rgba(184, 115, 43, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">⚠️</div>
+            <div style="font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 800; color: var(--warn);">Solo consejo</div>
+          </div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em;">"Me pasé" no se registra como comida</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px;">
+            "<em>Creo que me pasé hoy con la pizza, ¿qué hago?</em>" → la app te sugiere cómo ajustar la próxima comida o el día siguiente, <strong>sin</strong> sumarlo como nuevo registro.
+          </div>
+          <div style="background: rgba(184, 115, 43, 0.12); padding: 6px 10px; border-radius: 8px; font-size: 11px; color: var(--warn); font-weight: 600;">
+            ⚠ Sugiere, no registra
+          </div>
+        </div>
+
+        <!-- Card 5: Arma mi día / propón -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); grid-column: 1 / -1;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="width: 28px; height: 28px; background: var(--c-fat-pastel); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;">🍳</div>
+            <div style="font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 800; color: var(--c-fat);">Propuesta · tú decides</div>
+          </div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em;">"Arma mi día" o "propón" — la app propone, tú confirmas</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px;">
+            "<em>Con mis ingredientes, ármame el día</em>", "<em>¿qué puedo cenar?</em>", "<em>propón un almuerzo</em>" → la app te muestra opciones con macros, pero <strong>nada queda registrado</strong>. Tú decides: <strong style="color: var(--accent-dark);">★ guardar como favorito</strong>, <strong style="color: var(--accent-dark);">✓ registrar</strong> o <strong style="color: var(--accent-dark);">↻ pedir otra</strong>.
+          </div>
+          <div style="background: var(--c-fat-pastel); padding: 6px 10px; border-radius: 8px; font-size: 11px; color: var(--c-fat); font-weight: 600;">
+            ↳ Propone, no registra hasta que tú lo confirmes
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tip">
+        <strong>Regla de oro:</strong> si la app no está segura de tu intención, te pregunta antes de registrar. Si registra algo que no querías, toca el ✎ para editar o el 🗑 para borrar — no hay magia que no puedas deshacer.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 6: Tu menú de herramientas (intro) -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="6">
+      <div class="kicker">Paso 6 · Tu base de operaciones</div>
+      <h1 class="step-title">Tu menú de herramientas</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        En la <strong>esquina inferior derecha</strong> está siempre visible el botón <strong>Herramientas</strong>. Ana lo toca y se abre un menú con todo lo que la app puede hacer, organizado en 3 secciones.
       </p>
 
       <div class="phone-row">
-        <div class="phone-col">
-          <div class="phone-caption">1. Toca "Herramientas"</div>
+        <div class="phone-col" style="max-width: 360px;">
+          <div class="phone-caption">El menú completo</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="app-header">
               <div class="app-header-inner">
-                <div>
-                  <div class="app-header-brand">MEAL TRACKER</div>
-                  <div class="app-header-tag">Entrena con Método</div>
-                </div>
+                <div><div class="app-header-brand">MEAL TRACKER</div></div>
               </div>
             </div>
-            <div class="app-body" style="padding-bottom: 90px; min-height: 480px;">
-              <div class="chat"></div>
-              <div class="fab-pill" style="position: relative;">
-                <span class="sparkle">✦</span> Herramientas
-                <div class="tap-indicator" style="inset: -10px; border-radius: 30px;"></div>
-              </div>
-              <div class="tap-arrow" style="bottom: 110px; right: 144px;">↘</div>
-              <div class="input-bar">
-                <span class="input-text">Escribe o dicta lo que comiste…</span>
-                <div class="input-btn mic">🎤</div>
-                <div class="input-btn send" style="opacity: 0.3">↑</div>
+            <div class="app-body" style="padding: 0; min-height: 540px; background: rgba(0,0,0,0.32); position: relative;">
+              <div class="bottom-sheet">
+                <div class="sheet-grabber"></div>
+                <div class="sheet-header">
+                  <div>
+                    <div class="sheet-kicker">Acciones</div>
+                    <div class="sheet-title">¿Qué quieres hacer?</div>
+                  </div>
+                  <div class="sheet-close">×</div>
+                </div>
+                <div class="tools-section-label">Día a día</div>
+                <div class="tools-grid">
+                  <div class="tool-chip" style="background: var(--accent-pastel);"><span class="ic">🍳</span> Arma mi día</div>
+                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida de ayer</div>
+                  <div class="tool-chip" style="background: var(--accent-pastel);"><span class="ic">★</span> Menús favoritos</div>
+                  <div class="tool-chip" style="background: var(--accent-pastel);"><span class="ic">🍴</span> Mis ingredientes</div>
+                  <div class="tool-chip"><span class="ic">📅</span> Guardar día como favorito</div>
+                </div>
+                <div class="tools-section-label">Tu progreso</div>
+                <div class="tools-grid">
+                  <div class="tool-chip" style="background: var(--accent-pastel);"><span class="ic">📊</span> Mi desempeño</div>
+                  <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
+                  <div class="tool-chip"><span class="ic">✨</span> Check-in del día</div>
+                  <div class="tool-chip" style="background: var(--accent-pastel);"><span class="ic">📅</span> Calendario</div>
+                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda con proporciones</div>
+                </div>
+                <div class="tools-section-label">Coach y configuración</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">⚙</span> Cambiar meta</div>
+                  <div class="tool-chip"><span class="ic">ⓘ</span> ¿Qué puedo hacer?</div>
+                  <div class="tool-chip"><span class="ic">↺</span> Reiniciar día</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="arrow-step">→</div>
+        <div class="phone-col" style="max-width: 360px; align-self: center;">
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 18px;">
+            <div class="modal-kicker" style="margin-bottom: 8px;">Lo más útil</div>
+            <p style="font-size: 13px; color: var(--text); line-height: 1.55; margin-bottom: 12px;">
+              Hay varias acciones, pero las que más vas a usar son estas <span style="background: var(--accent-pastel); padding: 1px 6px; border-radius: 6px;">resaltadas en verde</span>. Las recorremos en los próximos pasos:
+            </p>
+            <ul style="font-size: 13px; color: var(--text); line-height: 1.7; padding-left: 18px; margin-bottom: 12px;">
+              <li><strong>Mis ingredientes</strong> · tu despensa habitual</li>
+              <li><strong>Arma mi día</strong> · plan diario con tus alimentos</li>
+              <li><strong>Menús favoritos</strong> · combinaciones que repites</li>
+              <li><strong>Calendario</strong> · revisa días pasados</li>
+              <li><strong>Mi desempeño</strong> · tu progreso real</li>
+            </ul>
+            <div class="tip" style="margin: 0; font-size: 12px;">
+              <strong>Pista:</strong> el botón es siempre la misma esquina inferior derecha — no se mueve. Si te pierdes, ahí está la salida.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- ============================================ -->
+    <!-- Slide 7: Mis ingredientes -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="7">
+      <div class="kicker">Paso 7 · Configura una vez, beneficia todo</div>
+      <h1 class="step-title">Mis ingredientes favoritos</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Desde <strong>Herramientas → Mis ingredientes</strong>, Ana agrega los alimentos que suele comprar. Esta lista alimenta a <em>Arma mi día</em>, a las sugerencias de comida y a las equivalencias.
+      </p>
+
+      <div class="phone-row">
         <div class="phone-col">
-          <div class="phone-caption">2. Selecciona "Mis ingredientes"</div>
+          <div class="phone-caption">1. Selecciona "Mis ingredientes"</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="app-header">
@@ -1195,24 +1288,26 @@
                 <div class="tools-section-label">Día a día</div>
                 <div class="tools-grid">
                   <div class="tool-chip"><span class="ic">🍳</span> Arma mi día</div>
-                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
+                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida de ayer</div>
                   <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
                   <div class="tool-chip" style="position: relative; background: var(--accent-pastel);"><span class="ic">🍴</span> Mis ingredientes
                     <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
                   </div>
+                  <div class="tool-chip"><span class="ic">📅</span> Guardar día como favorito</div>
                 </div>
 
                 <div class="tools-section-label">Tu progreso</div>
                 <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📊</span> Mi desempeño</div>
                   <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
                   <div class="tool-chip"><span class="ic">✨</span> Check-in del día</div>
                   <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
-                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
+                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda con proporciones</div>
                 </div>
 
                 <div class="tools-section-label">Coach y configuración</div>
                 <div class="tools-grid">
-                  <div class="tool-chip"><span class="ic">📄</span> Reporte al coach</div>
+                  <div class="tool-chip"><span class="ic">⚙</span> Cambiar meta</div>
                   <div class="tool-chip"><span class="ic">ⓘ</span> ¿Qué puedo hacer?</div>
                   <div class="tool-chip"><span class="ic">↺</span> Reiniciar día</div>
                 </div>
@@ -1224,7 +1319,7 @@
         <div class="arrow-step">→</div>
 
         <div class="phone-col">
-          <div class="phone-caption">3. Agrega tus ingredientes</div>
+          <div class="phone-caption">2. Agrega tus ingredientes</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="modal-screen">
@@ -1264,63 +1359,19 @@
     </div>
 
     <!-- ============================================ -->
-    <!-- Slide 7: Arma mi día -->
+    <!-- Slide 8: Propuestas con tus ingredientes -->
     <!-- ============================================ -->
-    <div class="slide" data-step="7">
-      <div class="kicker">Paso 7 · Cuando no sabes qué cocinar</div>
-      <h1 class="step-title">Arma mi día</h1>
+    <div class="slide" data-step="8">
+      <div class="kicker">Paso 8 · Cuando no sabes qué cocinar</div>
+      <h1 class="step-title">Propuestas con tus ingredientes</h1>
       <div class="accent-line"></div>
       <p class="step-lead">
-        En <strong>Herramientas → Arma mi día</strong>, la app distribuye tus ingredientes favoritos en 4 comidas que cuadran con tu meta diaria.
+        La app te propone opciones reales usando solo lo que tienes en <strong>Mis ingredientes</strong>. Dos puertas de entrada: el plan del día entero (Arma mi día) o una sugerencia de un solo meal por chat.
       </p>
 
       <div class="phone-row">
         <div class="phone-col">
-          <div class="phone-caption">Toca "Arma mi día"</div>
-          <div class="phone">
-            <div class="phone-notch"></div>
-            <div class="app-header">
-              <div class="app-header-inner">
-                <div>
-                  <div class="app-header-brand">MEAL TRACKER</div>
-                </div>
-              </div>
-            </div>
-            <div class="app-body" style="padding: 0; min-height: 540px; background: rgba(0,0,0,0.32); position: relative;">
-              <div class="bottom-sheet">
-                <div class="sheet-grabber"></div>
-                <div class="sheet-header">
-                  <div>
-                    <div class="sheet-kicker">Acciones</div>
-                    <div class="sheet-title">¿Qué quieres hacer?</div>
-                  </div>
-                  <div class="sheet-close">×</div>
-                </div>
-                <div class="tools-section-label">Día a día</div>
-                <div class="tools-grid">
-                  <div class="tool-chip" style="position: relative; background: var(--accent-pastel);"><span class="ic">🍳</span> Arma mi día
-                    <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
-                  </div>
-                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
-                  <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
-                  <div class="tool-chip"><span class="ic">🍴</span> Mis ingredientes</div>
-                </div>
-                <div class="tools-section-label">Tu progreso</div>
-                <div class="tools-grid">
-                  <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
-                  <div class="tool-chip"><span class="ic">✨</span> Check-in del día</div>
-                  <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
-                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="arrow-step">→</div>
-
-        <div class="phone-col">
-          <div class="phone-caption">Recibe tu propuesta del día</div>
+          <div class="phone-caption">Vista 1 — Arma mi día (4 meals)</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="modal-screen">
@@ -1328,7 +1379,7 @@
                 <div class="modal-kicker">Planificador</div>
                 <div class="modal-title">Arma mi día</div>
                 <div class="modal-body-text">
-                  Entendiendo que estos son los ingredientes que te gustan y compras, la distribución podría ser esta.
+                  Con tus ingredientes habituales, distribuiría tu día así.
                 </div>
 
                 <div class="option-card">
@@ -1338,7 +1389,6 @@
                   <div class="logged-item"><span class="logged-item-name">Banana · 1 ud</span><span class="logged-item-kcal">105 kcal</span></div>
                   <div class="option-subtotal"><span>558 kcal</span><span class="mp">P 25g</span><span class="mc">C 75g</span><span class="mg">G 16g</span></div>
                 </div>
-
                 <div class="option-card">
                   <div class="option-label">Almuerzo</div>
                   <div class="logged-item"><span class="logged-item-name">Pollo · 180g</span><span class="logged-item-kcal">295 kcal</span></div>
@@ -1346,26 +1396,23 @@
                   <div class="logged-item"><span class="logged-item-name">Palta · 80g</span><span class="logged-item-kcal">128 kcal</span></div>
                   <div class="option-subtotal"><span>658 kcal</span><span class="mp">P 50g</span><span class="mc">C 55g</span><span class="mg">G 25g</span></div>
                 </div>
-
                 <div class="option-card">
                   <div class="option-label">Snack</div>
                   <div class="logged-item"><span class="logged-item-name">Yogur griego · 200g</span><span class="logged-item-kcal">130 kcal</span></div>
                   <div class="logged-item"><span class="logged-item-name">Almendras · 25g</span><span class="logged-item-kcal">145 kcal</span></div>
                   <div class="option-subtotal"><span>275 kcal</span><span class="mp">P 24g</span><span class="mc">C 14g</span><span class="mg">G 14g</span></div>
                 </div>
-
                 <div class="option-card">
                   <div class="option-label">Cena</div>
                   <div class="logged-item"><span class="logged-item-name">Atún · 1 lata</span><span class="logged-item-kcal">110 kcal</span></div>
                   <div class="logged-item"><span class="logged-item-name">Pan integral · 60g</span><span class="logged-item-kcal">160 kcal</span></div>
-                  <div class="logged-item"><span class="logged-item-name">Aceite oliva · 1 cda</span><span class="logged-item-kcal">120 kcal</span></div>
                   <div class="logged-item"><span class="logged-item-name">Palta · 50g</span><span class="logged-item-kcal">80 kcal</span></div>
-                  <div class="option-subtotal"><span>470 kcal</span><span class="mp">P 35g</span><span class="mc">C 32g</span><span class="mg">G 18g</span></div>
+                  <div class="option-subtotal"><span>350 kcal</span><span class="mp">P 35g</span><span class="mc">C 32g</span><span class="mg">G 18g</span></div>
                 </div>
 
                 <div style="background: var(--accent-pastel); padding: 10px 12px; border-radius: 12px; margin-bottom: 12px;">
                   <div class="option-label" style="margin-bottom: 4px;">Total del día</div>
-                  <div style="font-size: 11px; font-weight: 700; color: var(--text);">1961 kcal · P 134g · C 176g · G 73g</div>
+                  <div style="font-size: 11px; font-weight: 700; color: var(--text);">1841 kcal · P 134g · C 176g · G 73g</div>
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 5px;">
@@ -1377,27 +1424,11 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="tip">
-        <strong>Importante:</strong> Son cantidades y macros, no recetas. Para recetas usa el módulo Meals de Trainerize. Decides tú si registras, guardas o pides otra variante.
-      </div>
-    </div>
+        <div class="arrow-step">→</div>
 
-    <!-- ============================================ -->
-    <!-- Slide 8: Qué puedo cenar -->
-    <!-- ============================================ -->
-    <div class="slide" data-step="8">
-      <div class="kicker">Paso 8 · Sin abrir menú</div>
-      <h1 class="step-title">"¿Qué puedo cenar?"</h1>
-      <div class="accent-line"></div>
-      <p class="step-lead">
-        Ana pregunta directo en el chat. La app le propone <strong>2 o 3 combinaciones</strong> usando sus ingredientes favoritos.
-      </p>
-
-      <div class="phone-row">
         <div class="phone-col">
-          <div class="phone-caption">Pregunta y respuesta</div>
+          <div class="phone-caption">Vista 2 — "¿Qué puedo cenar?" (chat)</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="app-header">
@@ -1417,9 +1448,8 @@
                     Cena · opciones
                   </div>
                   <div class="suggestion-text">
-                    Basándome en los ingredientes que sueles tener, podrías combinar:
+                    Con los ingredientes que sueles tener, podrías combinar:
                   </div>
-
                   <div class="option-card">
                     <div class="option-label">Opción 1</div>
                     <div class="logged-item"><span class="logged-item-name">Pollo · 120g</span><span class="logged-item-kcal">195 kcal</span></div>
@@ -1427,7 +1457,6 @@
                     <div class="logged-item"><span class="logged-item-name">Palta · 50g</span><span class="logged-item-kcal">80 kcal</span></div>
                     <div class="option-subtotal"><span>≈ 405 kcal</span><span class="mp">P 32g</span><span class="mc">C 30g</span><span class="mg">G 18g</span></div>
                   </div>
-
                   <div class="option-card">
                     <div class="option-label">Opción 2</div>
                     <div class="logged-item"><span class="logged-item-name">Atún · 1 lata</span><span class="logged-item-kcal">110 kcal</span></div>
@@ -1435,7 +1464,6 @@
                     <div class="logged-item"><span class="logged-item-name">Palta · 60g</span><span class="logged-item-kcal">95 kcal</span></div>
                     <div class="option-subtotal"><span>≈ 335 kcal</span><span class="mp">P 28g</span><span class="mc">C 28g</span><span class="mg">G 14g</span></div>
                   </div>
-
                   <div class="option-card">
                     <div class="option-label">Opción 3</div>
                     <div class="logged-item"><span class="logged-item-name">Huevo · 3 ud</span><span class="logged-item-kcal">225 kcal</span></div>
@@ -1443,9 +1471,8 @@
                     <div class="logged-item"><span class="logged-item-name">Palta · 40g</span><span class="logged-item-kcal">65 kcal</span></div>
                     <div class="option-subtotal"><span>≈ 395 kcal</span><span class="mp">P 24g</span><span class="mc">C 22g</span><span class="mg">G 23g</span></div>
                   </div>
-
                   <div class="disclaimer-note">
-                    Cálculo organizativo basado en tus ingredientes habituales. No constituye consejo nutricional. Para criterio personalizado, consulta con tu coach.
+                    Cálculo organizativo basado en tus ingredientes. No constituye consejo nutricional.
                   </div>
                 </div>
               </div>
@@ -1461,24 +1488,24 @@
       </div>
 
       <div class="tip">
-        <strong>Si tu lista de ingredientes está vacía o es muy corta:</strong> la app te pide configurarla primero. Cuanto más completa, mejores opciones.
+        <strong>Importante:</strong> son cantidades y macros, no recetas. <strong>Nada queda registrado</strong> hasta que tú confirmes. Puedes registrar, guardar como favorito o pedir otra variante. Si tu lista de ingredientes está vacía, la app te pide configurarla primero.
       </div>
     </div>
 
     <!-- ============================================ -->
-    <!-- Slide 9: Cómo voy hoy + gap -->
+    <!-- Slide 9: Tu progreso hoy y la semana -->
     <!-- ============================================ -->
     <div class="slide" data-step="9">
-      <div class="kicker">Paso 9 · Ver tu progreso</div>
-      <h1 class="step-title">"¿Cómo voy hoy?"</h1>
+      <div class="kicker">Paso 9 · Ver cómo vas</div>
+      <h1 class="step-title">Tu progreso · hoy y la semana</h1>
       <div class="accent-line"></div>
       <p class="step-lead">
-        Ana pregunta. La app muestra el resumen, y si le faltan macros importantes, le ofrece equivalencias con sus ingredientes.
+        Pregunta "¿cómo voy hoy?" en el chat para el resumen del día y qué te falta. Abre <strong>Mi desempeño</strong> en Herramientas para ver tu semana, mes o tendencia con gráficas reales.
       </p>
 
       <div class="phone-row">
         <div class="phone-col">
-          <div class="phone-caption">Resumen + Gap nutricional</div>
+          <div class="phone-caption">Vista 1 — Hoy (chat con gap)</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="app-header">
@@ -1529,14 +1556,10 @@
                     Lo que falta hoy
                   </div>
                   <div style="font-size: 11px; line-height: 1.5; margin-bottom: 8px;">
-                    Faltan <strong>65g de proteína</strong> · meta 150g<br>
-                    Faltan <strong>65g de carbohidratos</strong> · meta 220g
-                  </div>
-                  <div style="font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); font-weight: 600; margin-bottom: 6px;">
-                    De tus ingredientes, equivalencias para cubrirlo
+                    Faltan <strong>65g de proteína</strong> y <strong>65g de carbos</strong>
                   </div>
                   <div class="option-card">
-                    <div class="option-label">Opción 1</div>
+                    <div class="option-label">Opción 1 (de tus ingredientes)</div>
                     <div class="logged-item"><span>Pollo · 180g</span><span class="logged-item-kcal">295 kcal</span></div>
                     <div class="logged-item"><span>Arroz cocido · 150g</span><span class="logged-item-kcal">195 kcal</span></div>
                     <div class="option-subtotal"><span>≈ 490 kcal</span><span class="mp">P 50g</span><span class="mc">C 45g</span></div>
@@ -1547,9 +1570,6 @@
                     <div class="logged-item"><span>Avena · 50g</span><span class="logged-item-kcal">190 kcal</span></div>
                     <div class="logged-item"><span>Banana · 1 ud</span><span class="logged-item-kcal">105 kcal</span></div>
                     <div class="option-subtotal"><span>≈ 455 kcal</span><span class="mp">P 28g</span><span class="mc">C 65g</span></div>
-                  </div>
-                  <div class="disclaimer-note">
-                    Cálculo organizativo. No constituye consejo nutricional ni reemplaza la valoración de un profesional.
                   </div>
                 </div>
               </div>
@@ -1562,18 +1582,270 @@
             </div>
           </div>
         </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">Vista 2 — Esta semana (Mi desempeño)</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="modal-screen">
+              <div class="modal-card">
+                <div class="modal-kicker">Mi desempeño</div>
+                <div class="modal-title">Cómo te ha ido, Ana</div>
+
+                <div style="display: flex; gap: 4px; margin-bottom: 14px; background: var(--surface-2); padding: 3px; border-radius: 10px;">
+                  <div style="flex: 1; background: #1F1F1F; color: #fff; padding: 7px; border-radius: 8px; font-size: 10px; font-weight: 700; text-align: center;">Semana</div>
+                  <div style="flex: 1; color: var(--text-muted); padding: 7px; font-size: 10px; font-weight: 600; text-align: center;">Mes</div>
+                  <div style="flex: 1; color: var(--text-muted); padding: 7px; font-size: 10px; font-weight: 600; text-align: center;">Tendencia</div>
+                </div>
+
+                <div style="font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Promedio diario</div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 12px;">
+                  <div style="text-align: center; padding: 6px 2px; background: var(--surface-2); border-radius: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--accent-dark);">2010</div>
+                    <div style="font-size: 7px; color: var(--text-light);">/2200 kcal</div>
+                    <div style="font-size: 8px; color: var(--success); font-weight: 700; margin-top: 2px;">91%</div>
+                  </div>
+                  <div style="text-align: center; padding: 6px 2px; background: var(--surface-2); border-radius: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--c-protein);">138g</div>
+                    <div style="font-size: 7px; color: var(--text-light);">/150g P</div>
+                    <div style="font-size: 8px; color: var(--success); font-weight: 700; margin-top: 2px;">92%</div>
+                  </div>
+                  <div style="text-align: center; padding: 6px 2px; background: var(--surface-2); border-radius: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--c-carbs);">202g</div>
+                    <div style="font-size: 7px; color: var(--text-light);">/220g C</div>
+                    <div style="font-size: 8px; color: var(--success); font-weight: 700; margin-top: 2px;">92%</div>
+                  </div>
+                  <div style="text-align: center; padding: 6px 2px; background: var(--surface-2); border-radius: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--c-fat);">66g</div>
+                    <div style="font-size: 7px; color: var(--text-light);">/70g G</div>
+                    <div style="font-size: 8px; color: var(--success); font-weight: 700; margin-top: 2px;">94%</div>
+                  </div>
+                </div>
+
+                <div style="font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">Calorías por día · esta semana</div>
+                <div style="background: var(--surface-2); border-radius: 10px; padding: 10px 8px 8px; margin-bottom: 6px; position: relative;">
+                  <div style="position: absolute; left: 8px; right: 8px; top: 18px; border-top: 1px dashed var(--c-protein); opacity: 0.55;"></div>
+                  <div style="position: absolute; right: 10px; top: 8px; font-size: 7px; color: var(--c-protein); font-weight: 700;">meta 2200</div>
+                  <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; align-items: end; height: 76px; padding-top: 14px;">
+                    <div style="display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end;">
+                      <div style="font-size: 7px; color: var(--text-light); margin-bottom: 2px;">2150</div>
+                      <div style="width: 100%; height: 78%; background: var(--accent); border-radius: 3px 3px 0 0;"></div>
+                      <div style="font-size: 8px; color: var(--text-muted); margin-top: 3px; font-weight: 700;">L</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end;">
+                      <div style="font-size: 7px; color: var(--text-light); margin-bottom: 2px;">2240</div>
+                      <div style="width: 100%; height: 82%; background: var(--accent); border-radius: 3px 3px 0 0;"></div>
+                      <div style="font-size: 8px; color: var(--text-muted); margin-top: 3px; font-weight: 700;">M</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end;">
+                      <div style="font-size: 7px; color: var(--text-light); margin-bottom: 2px;">2080</div>
+                      <div style="width: 100%; height: 75%; background: var(--accent); border-radius: 3px 3px 0 0;"></div>
+                      <div style="font-size: 8px; color: var(--text-muted); margin-top: 3px; font-weight: 700;">M</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end;">
+                      <div style="font-size: 7px; color: var(--text-light); margin-bottom: 2px;">1950</div>
+                      <div style="width: 100%; height: 70%; background: var(--accent); border-radius: 3px 3px 0 0;"></div>
+                      <div style="font-size: 8px; color: var(--text-muted); margin-top: 3px; font-weight: 700;">J</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end;">
+                      <div style="font-size: 7px; color: var(--text-light); margin-bottom: 2px;">2310</div>
+                      <div style="width: 100%; height: 84%; background: var(--warn); border-radius: 3px 3px 0 0;"></div>
+                      <div style="font-size: 8px; color: var(--text-muted); margin-top: 3px; font-weight: 700;">V</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end;">
+                      <div style="font-size: 7px; color: var(--text-light); margin-bottom: 2px;">1820</div>
+                      <div style="width: 100%; height: 65%; background: var(--c-fat); border-radius: 3px 3px 0 0;"></div>
+                      <div style="font-size: 8px; color: var(--text-muted); margin-top: 3px; font-weight: 700;">S</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end;">
+                      <div style="font-size: 7px; color: var(--text-light); margin-bottom: 2px;">2010</div>
+                      <div style="width: 100%; height: 73%; background: var(--accent); border-radius: 3px 3px 0 0;"></div>
+                      <div style="font-size: 8px; color: var(--text-muted); margin-top: 3px; font-weight: 700;">D</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin: 8px 0 4px;">Micros (promedio 7d)</div>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <div style="display: flex; align-items: center; gap: 6px; padding: 5px 8px; background: var(--surface-2); border-radius: 6px;">
+                    <div style="flex: 0 0 48px; font-size: 9px; font-weight: 600;">Fibra</div>
+                    <div style="flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden;"><div style="width: 78%; height: 100%; background: var(--accent);"></div></div>
+                    <div style="font-size: 8px; color: var(--text-muted);">23/30g</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 6px; padding: 5px 8px; background: var(--surface-2); border-radius: 6px;">
+                    <div style="flex: 0 0 48px; font-size: 9px; font-weight: 600;">Hierro</div>
+                    <div style="flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden;"><div style="width: 85%; height: 100%; background: var(--accent);"></div></div>
+                    <div style="font-size: 8px; color: var(--text-muted);">15/18mg</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 6px; padding: 5px 8px; background: var(--surface-2); border-radius: 6px;">
+                    <div style="flex: 0 0 48px; font-size: 9px; font-weight: 600;">Vit. D</div>
+                    <div style="flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden;"><div style="width: 45%; height: 100%; background: var(--warn);"></div></div>
+                    <div style="font-size: 8px; color: var(--text-muted);">9/20μg</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="tip">
-        <strong>Esto aparece automáticamente</strong> cuando te falta más del 25% en algún macro. También se dispara en la narrativa del cierre del día (21:30).
+        <strong>Cuándo cada uno:</strong> "¿cómo voy hoy?" para una decisión rápida sobre el siguiente meal. <strong>Mi desempeño</strong> para ver patrón semanal y micros — el panel que Mauro mira para ajustarte.
       </div>
     </div>
 
     <!-- ============================================ -->
-    <!-- Slide 10: Check-in del día -->
+    <!-- Slide 10: Calendario -->
     <!-- ============================================ -->
     <div class="slide" data-step="10">
-      <div class="kicker">Paso 10 · Oro para tu coach</div>
+      <div class="kicker">Paso 10 · Mirar atrás</div>
+      <h1 class="step-title">Calendario · revisa días pasados</h1>
+      <div class="accent-line"></div>
+      <p class="step-lead">
+        Desde <strong>Herramientas → Calendario</strong>, Ana ve todos sus días en una grilla. Los días con buena adherencia se ven verdes; los más flojos, en gris. Toca cualquier día para ver exactamente qué comió.
+      </p>
+
+      <div class="phone-row">
+        <div class="phone-col">
+          <div class="phone-caption">Vista 1 — Grilla del mes</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="modal-screen">
+              <div class="modal-card">
+                <div class="modal-kicker">Historial</div>
+                <div class="modal-title">Mayo 2025</div>
+                <div class="modal-body-text">
+                  Cada cuadrito es un día. El color te dice cómo te fue con tus metas.
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; font-size: 8px; color: var(--text-light); text-align: center; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px;">
+                  <div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 14px;">
+                  <!-- Semana 1 -->
+                  <div style="aspect-ratio: 1; background: var(--surface-2); border-radius: 6px;"></div>
+                  <div style="aspect-ratio: 1; background: var(--surface-2); border-radius: 6px;"></div>
+                  <div style="aspect-ratio: 1; background: var(--surface-2); border-radius: 6px;"></div>
+                  <div style="aspect-ratio: 1; background: var(--accent-pastel); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--accent-dark);">1</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">2</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">3</div>
+                  <div style="aspect-ratio: 1; background: var(--c-fat-pastel); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--c-fat);">4</div>
+                  <!-- Semana 2 -->
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">5</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">6</div>
+                  <div style="aspect-ratio: 1; background: var(--accent-pastel); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--accent-dark);">7</div>
+                  <div style="aspect-ratio: 1; background: rgba(184, 115, 43, 0.25); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--warn);">8</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">9</div>
+                  <div style="aspect-ratio: 1; background: var(--surface-2); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 500; color: var(--text-light);">10</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">11</div>
+                  <!-- Semana 3 -->
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">12</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">13</div>
+                  <div style="aspect-ratio: 1; background: var(--accent-pastel); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--accent-dark);">14</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">15</div>
+                  <div style="aspect-ratio: 1; background: var(--c-fat-pastel); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--c-fat);">16</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">17</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">18</div>
+                  <!-- Semana 4 (today highlighted) -->
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">19</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">20</div>
+                  <div style="aspect-ratio: 1; background: var(--accent-pastel); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--accent-dark);">21</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">22</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">23</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">24</div>
+                  <div style="aspect-ratio: 1; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff;">25</div>
+                  <!-- Semana 5 — hoy con borde -->
+                  <div style="aspect-ratio: 1; background: #1F1F1F; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: #fff; box-shadow: 0 0 0 2px var(--accent);">26</div>
+                  <div style="aspect-ratio: 1;"></div>
+                  <div style="aspect-ratio: 1;"></div>
+                  <div style="aspect-ratio: 1;"></div>
+                  <div style="aspect-ratio: 1;"></div>
+                  <div style="aspect-ratio: 1;"></div>
+                  <div style="aspect-ratio: 1;"></div>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 8px 12px; font-size: 9px; color: var(--text-muted); padding-top: 8px; border-top: 1px solid var(--border-soft);">
+                  <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="width: 9px; height: 9px; background: var(--accent); border-radius: 2px;"></span> en meta</span>
+                  <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="width: 9px; height: 9px; background: var(--accent-pastel); border-radius: 2px;"></span> cerca</span>
+                  <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="width: 9px; height: 9px; background: var(--c-fat-pastel); border-radius: 2px;"></span> bajo</span>
+                  <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="width: 9px; height: 9px; background: rgba(184, 115, 43, 0.25); border-radius: 2px;"></span> alto</span>
+                  <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="width: 9px; height: 9px; background: var(--surface-2); border-radius: 2px;"></span> sin registro</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-step">→</div>
+
+        <div class="phone-col">
+          <div class="phone-caption">Vista 2 — Toca un día</div>
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="modal-screen">
+              <div class="modal-card">
+                <div class="modal-kicker">Día anterior</div>
+                <div class="modal-title">Viernes 23 de Mayo</div>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 14px;">
+                  <div style="text-align: center; padding: 6px 2px; background: var(--surface-2); border-radius: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--accent-dark);">2180</div>
+                    <div style="font-size: 7px; color: var(--text-light);">/2200 kcal</div>
+                  </div>
+                  <div style="text-align: center; padding: 6px 2px; background: var(--surface-2); border-radius: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--c-protein);">148g</div>
+                    <div style="font-size: 7px; color: var(--text-light);">/150g P</div>
+                  </div>
+                  <div style="text-align: center; padding: 6px 2px; background: var(--surface-2); border-radius: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--c-carbs);">215g</div>
+                    <div style="font-size: 7px; color: var(--text-light);">/220g C</div>
+                  </div>
+                  <div style="text-align: center; padding: 6px 2px; background: var(--surface-2); border-radius: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--c-fat);">68g</div>
+                    <div style="font-size: 7px; color: var(--text-light);">/70g G</div>
+                  </div>
+                </div>
+
+                <div class="option-card" style="margin-bottom: 6px;">
+                  <div class="option-label">Desayuno · 08:30</div>
+                  <div class="logged-item"><span class="logged-item-name">Avena con yogur y banana</span><span class="logged-item-kcal">420 kcal</span></div>
+                </div>
+                <div class="option-card" style="margin-bottom: 6px;">
+                  <div class="option-label">Almuerzo · 13:15</div>
+                  <div class="logged-item"><span class="logged-item-name">Pollo, arroz, palta</span><span class="logged-item-kcal">585 kcal</span></div>
+                </div>
+                <div class="option-card" style="margin-bottom: 6px;">
+                  <div class="option-label">Snack · 17:00</div>
+                  <div class="logged-item"><span class="logged-item-name">Yogur griego + almendras</span><span class="logged-item-kcal">275 kcal</span></div>
+                </div>
+                <div class="option-card" style="margin-bottom: 12px;">
+                  <div class="option-label">Cena · 21:00</div>
+                  <div class="logged-item"><span class="logged-item-name">Atún, pan integral, palta</span><span class="logged-item-kcal">395 kcal</span></div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                  <div class="secondary-btn">↻ Repetir este día completo</div>
+                  <div class="secondary-btn">★ Guardar este día como favorito</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>Doble utilidad:</strong> sirve para revisar (qué comiste el martes pasado), pero también para <strong>repetir</strong>. Si un día te salió perfecto, lo repites con un toque sin tener que re-escribirlo.
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Slide 11: Check-in del día -->
+    <!-- ============================================ -->
+    <div class="slide" data-step="11">
+      <div class="kicker">Paso 11 · Oro para tu coach</div>
       <h1 class="step-title">Check-in en 3 toques</h1>
       <div class="accent-line"></div>
       <p class="step-lead">
@@ -1603,18 +1875,26 @@
                 <div class="tools-section-label">Día a día</div>
                 <div class="tools-grid">
                   <div class="tool-chip"><span class="ic">🍳</span> Arma mi día</div>
-                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
+                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida de ayer</div>
                   <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
                   <div class="tool-chip"><span class="ic">🍴</span> Mis ingredientes</div>
+                  <div class="tool-chip"><span class="ic">📅</span> Guardar día como favorito</div>
                 </div>
                 <div class="tools-section-label">Tu progreso</div>
                 <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📊</span> Mi desempeño</div>
                   <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
                   <div class="tool-chip" style="position: relative; background: var(--accent-pastel);"><span class="ic">✨</span> Check-in del día
                     <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
                   </div>
                   <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
-                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
+                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda con proporciones</div>
+                </div>
+                <div class="tools-section-label">Coach y configuración</div>
+                <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">⚙</span> Cambiar meta</div>
+                  <div class="tool-chip"><span class="ic">ⓘ</span> ¿Qué puedo hacer?</div>
+                  <div class="tool-chip"><span class="ic">↺</span> Reiniciar día</div>
                 </div>
               </div>
             </div>
@@ -1664,24 +1944,24 @@
       </div>
 
       <div class="tip">
-        <strong>Por qué importa:</strong> Si Ana cumple macros pero su energía está en 2/5, algo no encaja. Mauro lo ve en el reporte y ajusta. Sin esto, los números no cuentan toda la historia.
+        <strong>Por qué importa:</strong> Si Ana cumple macros pero su energía está en 2/5, algo no encaja. Mauro lo ve en su panel de coach y ajusta. Sin esto, los números no cuentan toda la historia.
       </div>
     </div>
 
     <!-- ============================================ -->
-    <!-- Slide 11: Reporte al coach -->
+    <!-- Slide 12: Cambiar meta -->
     <!-- ============================================ -->
-    <div class="slide" data-step="11">
-      <div class="kicker">Paso 11 · Tu coach informado</div>
-      <h1 class="step-title">Reporte al coach</h1>
+    <div class="slide" data-step="12">
+      <div class="kicker">Paso 12 · Cuando Mauro te ajusta</div>
+      <h1 class="step-title">Cambiar meta</h1>
       <div class="accent-line"></div>
       <p class="step-lead">
-        Cada lunes la app envía automáticamente un reporte a Mauro. Ana también puede mandarlo manual cuando quiera desde <strong>Herramientas → Reporte al coach</strong>.
+        Si tu coach te ajusta el objetivo (más calorías, más proteína, o un cambio de fase), entra a <strong>Herramientas → Cambiar meta</strong>. Mueves los sliders y la app rebalancea sola para que los porcentajes sumen 100%.
       </p>
 
       <div class="phone-row">
         <div class="phone-col">
-          <div class="phone-caption">Selecciona "Reporte al coach"</div>
+          <div class="phone-caption">1. Entra desde Herramientas</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="app-header">
@@ -1702,20 +1982,22 @@
                 <div class="tools-section-label">Día a día</div>
                 <div class="tools-grid">
                   <div class="tool-chip"><span class="ic">🍳</span> Arma mi día</div>
-                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
+                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida de ayer</div>
                   <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
                   <div class="tool-chip"><span class="ic">🍴</span> Mis ingredientes</div>
+                  <div class="tool-chip"><span class="ic">📅</span> Guardar día como favorito</div>
                 </div>
                 <div class="tools-section-label">Tu progreso</div>
                 <div class="tools-grid">
+                  <div class="tool-chip"><span class="ic">📊</span> Mi desempeño</div>
                   <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
                   <div class="tool-chip"><span class="ic">✨</span> Check-in del día</div>
                   <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
-                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
+                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda con proporciones</div>
                 </div>
                 <div class="tools-section-label">Coach y configuración</div>
                 <div class="tools-grid">
-                  <div class="tool-chip" style="position: relative; background: var(--accent-pastel);"><span class="ic">📄</span> Reporte al coach
+                  <div class="tool-chip" style="position: relative; background: var(--accent-pastel);"><span class="ic">⚙</span> Cambiar meta
                     <div class="tap-indicator" style="inset: -6px; border-radius: 14px;"></div>
                   </div>
                   <div class="tool-chip"><span class="ic">ⓘ</span> ¿Qué puedo hacer?</div>
@@ -1729,26 +2011,44 @@
         <div class="arrow-step">→</div>
 
         <div class="phone-col">
-          <div class="phone-caption">Descarga o envía el reporte</div>
+          <div class="phone-caption">2. Ajusta y guarda</div>
           <div class="phone">
             <div class="phone-notch"></div>
             <div class="modal-screen">
-              <div class="modal-card">
-                <div class="modal-kicker">Exportar</div>
-                <div class="modal-title">Reporte al coach</div>
+              <div class="onb-card">
+                <div class="onb-title">Tu meta</div>
+                <div class="onb-accent"></div>
 
-                <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Periodo</div>
-                <div style="display: flex; gap: 5px; margin-bottom: 14px;">
-                  <div style="flex: 1; background: #1F1F1F; color: #fff; padding: 9px; border-radius: 11px; font-size: 11px; font-weight: 600; text-align: center;">Últimos 7 días</div>
-                  <div style="flex: 1; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-muted); padding: 9px; border-radius: 11px; font-size: 11px; font-weight: 600; text-align: center;">Últimos 14 días</div>
+                <div class="onb-row">
+                  <div class="onb-row-label">Calorías diarias <span class="onb-row-val">2350 kcal</span></div>
+                  <div class="onb-slider"><div class="fill" style="width: 60%"></div><div class="knob" style="left: 60%"></div></div>
+                  <div style="font-size: 9px; color: var(--c-protein); font-weight: 700; margin-top: 4px;">↑ +150 vs meta anterior</div>
                 </div>
 
-                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px; border-radius: 12px; font-size: 11px; color: var(--text); line-height: 1.5; margin-bottom: 12px;">
-                  Genera un PDF con tu data del periodo. Puedes enviárselo al coach por WhatsApp o correo directamente desde tu celular.
+                <div class="onb-bar-stack">
+                  <div class="seg-p" style="width: 30%"></div>
+                  <div class="seg-c" style="width: 40%"></div>
+                  <div class="seg-g" style="width: 30%"></div>
                 </div>
 
-                <div class="primary-btn" style="margin-bottom: 6px;">📄 Descargar PDF</div>
-                <div class="secondary-btn">✉ Enviar al coach por email</div>
+                <div class="onb-row">
+                  <div class="onb-row-label" style="color: var(--c-protein)">Proteína <span class="onb-row-val">175g · 30%</span></div>
+                  <div class="onb-slider"><div class="fill" style="background: var(--c-protein); width: 30%"></div><div class="knob" style="border-color: var(--c-protein); left: 30%"></div></div>
+                </div>
+                <div class="onb-row">
+                  <div class="onb-row-label" style="color: var(--c-carbs)">Carbohidratos <span class="onb-row-val">235g · 40%</span></div>
+                  <div class="onb-slider"><div class="fill" style="background: var(--c-carbs); width: 40%"></div><div class="knob" style="border-color: var(--c-carbs); left: 40%"></div></div>
+                </div>
+                <div class="onb-row">
+                  <div class="onb-row-label" style="color: var(--c-fat)">Grasas <span class="onb-row-val">78g · 30%</span></div>
+                  <div class="onb-slider"><div class="fill" style="background: var(--c-fat); width: 30%"></div><div class="knob" style="border-color: var(--c-fat); left: 30%"></div></div>
+                </div>
+
+                <div style="background: var(--accent-pastel); padding: 8px 10px; border-radius: 10px; font-size: 10px; color: var(--accent-dark); margin-top: 8px;">
+                  ✓ Los porcentajes suman 100% — la app rebalancea automáticamente al mover un slider.
+                </div>
+
+                <div class="primary-btn" style="margin-top: 10px;">Guardar nueva meta ↑</div>
               </div>
             </div>
           </div>
@@ -1756,76 +2056,29 @@
       </div>
 
       <div class="tip">
-        <strong>Auto-envío semanal:</strong> Cada lunes, Mauro recibe el reporte de tu semana sin tocar nada. El botón es por si quieres mandarlo extra (ajuste de metas, semana especial, etc).
+        <strong>Cuándo conviene cambiarla:</strong> cuando Mauro te lo indica (cambio de fase, ajuste de peso, nueva temporada). No te la cambies por impulso — la meta es la referencia con la que mide tu progreso. Si estás en duda, pregúntale al coach primero.
       </div>
     </div>
 
     <!-- ============================================ -->
-    <!-- Slide 12: Cierre -->
+    <!-- Slide 13: Cierre -->
     <!-- ============================================ -->
-    <div class="slide" data-step="12">
-      <div class="kicker">Paso 12 · Para cerrar</div>
-      <h1 class="step-title">Todo en Herramientas</h1>
+    <div class="slide" data-step="13">
+      <div class="kicker">Paso 13 · Para cerrar</div>
+      <h1 class="step-title">Tu coach también lo ve</h1>
       <div class="accent-line"></div>
       <p class="step-lead">
-        El botón <strong>Herramientas</strong> abajo a la derecha es siempre visible. Desde ahí accedes a todo, organizado en 3 secciones.
+        Ya viste las herramientas, los comportamientos y el panel de desempeño. Antes de cerrar, lo más importante: por qué tu registro vale tanto.
       </p>
 
-      <div class="phone-row">
-        <div class="phone-col">
-          <div class="phone-caption">Tu menú completo</div>
-          <div class="phone">
-            <div class="phone-notch"></div>
-            <div class="app-header">
-              <div class="app-header-inner">
-                <div><div class="app-header-brand">MEAL TRACKER</div></div>
-              </div>
-            </div>
-            <div class="app-body" style="padding: 0; min-height: 540px; background: rgba(0,0,0,0.32); position: relative;">
-              <div class="bottom-sheet">
-                <div class="sheet-grabber"></div>
-                <div class="sheet-header">
-                  <div>
-                    <div class="sheet-kicker">Acciones</div>
-                    <div class="sheet-title">¿Qué quieres hacer?</div>
-                  </div>
-                  <div class="sheet-close">×</div>
-                </div>
-                <div class="tools-section-label">Día a día</div>
-                <div class="tools-grid">
-                  <div class="tool-chip"><span class="ic">🍳</span> Arma mi día</div>
-                  <div class="tool-chip"><span class="ic">↻</span> Repetir comida ayer</div>
-                  <div class="tool-chip"><span class="ic">★</span> Menús favoritos</div>
-                  <div class="tool-chip"><span class="ic">🍴</span> Mis ingredientes</div>
-                </div>
-                <div class="tools-section-label">Tu progreso</div>
-                <div class="tools-grid">
-                  <div class="tool-chip"><span class="ic">📈</span> Resumen del día</div>
-                  <div class="tool-chip"><span class="ic">✨</span> Check-in del día</div>
-                  <div class="tool-chip"><span class="ic">📅</span> Calendario</div>
-                  <div class="tool-chip"><span class="ic">🥧</span> Ayuda proporciones</div>
-                </div>
-                <div class="tools-section-label">Coach y configuración</div>
-                <div class="tools-grid">
-                  <div class="tool-chip"><span class="ic">📄</span> Reporte al coach</div>
-                  <div class="tool-chip"><span class="ic">ⓘ</span> ¿Qué puedo hacer?</div>
-                  <div class="tool-chip"><span class="ic">↺</span> Reiniciar día</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="final-warn">
-        <h3>⚠ Lo que esta app NO hace</h3>
-        <ul>
-          <li><strong>No te da recetas.</strong> Si quieres recetas, usa el módulo Meals de Trainerize.</li>
-          <li><strong>No reemplaza la valoración de un profesional de salud.</strong></li>
-          <li><strong>Si preguntas "¿qué dieta hago?", te remite al coach.</strong> No improvisa.</li>
-        </ul>
-        <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.55;">
-          Esta app es una <strong style="color: var(--text)">herramienta de registro y organización</strong>. El criterio personalizado lo aporta tu coach Mauro.
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px;">
+        <div class="kicker" style="margin-bottom: 6px;">Tu coach ve todo</div>
+        <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 8px; color: var(--text); letter-spacing: -0.01em;">Mauro tiene un tablero con tu data</h3>
+        <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6;">
+          No necesitas enviar nada. Cada vez que registras una comida, agua, o un check-in, Mauro lo ve <strong style="color: var(--text)">en vivo</strong> desde su panel de coach: tus macros del día, tu adherencia, tus sensaciones, tu desempeño semanal.
+        </p>
+        <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-top: 10px;">
+          Por eso el registro es tan importante: es el <strong style="color: var(--text)">puente entre tú y tu coach</strong>. Mientras más completo registres, mejor criterio puede aportarte Mauro en cada sesión.
         </p>
       </div>
 
@@ -1844,7 +2097,7 @@
   <div class="nav-footer">
     <div class="nav-inner">
       <button class="nav-btn secondary" id="prevBtn" disabled>← Anterior</button>
-      <div class="nav-counter" id="navCounter">1 / 13</div>
+      <div class="nav-counter" id="navCounter">1 / 14</div>
       <button class="nav-btn primary" id="nextBtn">Siguiente →</button>
     </div>
   </div>
