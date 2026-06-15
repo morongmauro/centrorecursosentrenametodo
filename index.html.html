@@ -4098,6 +4098,357 @@ body:not(.locked) .login-screen{display:none !important;}
 body.kt-transitioning .login-kettlebell,
 body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
+/* ============================================================ */
+/* ====== DIFERENCIACIÓN POR SECCIÓN — v2 EDITORIAL PREMIUM ==== */
+/* ============================================================ */
+/* Principio: la sección se distingue por TIPOGRAFÍA, TINTE de  */
+/* superficie y SOMBRA editorial — NO por bordes gruesos de     */
+/* color, chips saturados o números outline gigantes (que es lo */
+/* que delata el "look hecho con AI"). Inspiración: la guía del */
+/* Meal Tracker — kickers tipográficos, filetes 1px, sombras    */
+/* grandes pero suaves, surfaces ligeramente teñidas.           */
+/* ============================================================ */
+
+/* ---- Variables de acento por sección (más apagadas, premium) ---- */
+#s-programa  {
+  --accent:#7a8c5a; --accent-dark:#4a5635;
+  --accent-soft:#f1f3e8; --accent-tint:rgba(122,140,90,.05);
+  --surface-tint:#fafbf6;
+}
+#s-journey   {
+  --accent:#9c6b3a; --accent-dark:#5e3f1f;
+  --accent-soft:#f5ede2; --accent-tint:rgba(156,107,58,.05);
+  --surface-tint:#fbf7f1;
+}
+#s-app-train {
+  --accent:#3d6e76; --accent-dark:#1f4a52;
+  --accent-soft:#e9f0f2; --accent-tint:rgba(61,110,118,.05);
+  --surface-tint:#f6fafb;
+}
+
+/* Fondo de pantalla con tinte muy sutil de la sección — el "olor visual" */
+#s-programa .progm-page,
+#s-app-train .progm-page,
+#s-journey  .sub-area{
+  background:var(--surface-tint);
+}
+
+/* ============ HEADER editorial unificado y diferenciado ====== */
+/* Kicker tipográfico fino con número tabular + filete 1px      */
+#s-programa .sub-eyebrow,
+#s-journey  .sub-eyebrow,
+#s-app-train .sub-eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--accent-dark);font-weight:700;
+  background:transparent;border:none;padding:0;border-radius:0;
+}
+#s-programa .sub-eyebrow::before,
+#s-journey  .sub-eyebrow::before,
+#s-app-train .sub-eyebrow::before{
+  content:'';width:24px;height:1px;background:var(--accent);display:inline-block;
+}
+/* Título: kerning más editorial, color sutil de acento */
+#s-programa .sub-title,
+#s-journey  .sub-title,
+#s-app-train .sub-title{
+  letter-spacing:.5px;
+  color:var(--text);
+}
+#s-programa .sub-title-line,
+#s-journey  .sub-title-line,
+#s-app-train .sub-title-line{
+  background:var(--accent);height:1.5px;width:40px;
+}
+
+/* Pequeño "stamp" alineado a la derecha del header con la naturaleza
+   de la sección. Cambia por sección, manteniendo el mismo lenguaje. */
+#s-programa .sub-header,
+#s-journey  .sub-header,
+#s-app-train .sub-header{
+  position:relative;
+}
+#s-programa .sub-header::after{ content:'05 PILARES'; }
+#s-journey  .sub-header::after{ content:'06 FASES'; }
+#s-app-train .sub-header::after{ content:'TOUR · 8 PANTALLAS'; }
+#s-programa .sub-header::after,
+#s-journey  .sub-header::after,
+#s-app-train .sub-header::after{
+  position:absolute;top:0;right:.25rem;
+  font-size:9.5px;letter-spacing:.2em;
+  color:var(--text-mute);font-weight:600;
+  font-variant-numeric:tabular-nums;
+  padding-top:4px;
+}
+
+/* ============ CARD genérica — sombra editorial premium ======= */
+/* Sin border-top/border-bottom de color. Sin shadow doble.      */
+/* Solo: 1px de borde neutro + sombra grande de baja opacidad.   */
+#s-programa .progm-block,
+#s-app-train .progm-block,
+#s-journey  .jrn-timeline > .jrn-phase .jrn-body{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.05);
+  border-radius:16px;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,.02),
+    0 22px 50px rgba(20,20,20,.06);
+  padding:1.6rem 1.5rem;
+}
+
+/* Eyebrow dentro de card: kicker tipográfico, no pill */
+#s-programa .progm-block-eyebrow,
+#s-app-train .progm-block-eyebrow{
+  display:flex;align-items:center;gap:10px;
+  background:transparent;border:none;padding:0;border-radius:0;
+  font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--accent-dark);font-weight:700;
+  margin-bottom:.9rem;
+}
+#s-programa .progm-block-eyebrow::before,
+#s-app-train .progm-block-eyebrow::before{
+  content:'';width:18px;height:1px;background:var(--accent);
+  border-radius:0;box-shadow:none;
+  flex-shrink:0;
+}
+#s-programa .progm-block-eyebrow::after,
+#s-app-train .progm-block-eyebrow::after{ display:none; }
+
+/* Número outline gigante → fuera (el "delator" más fuerte de AI) */
+#s-programa .progm-block-num,
+#s-app-train .progm-block-num{ display:none !important; }
+
+/* Sello editorial: número tabular pequeño + label "PILAR" arriba de la card */
+#s-programa .progm-block::before{
+  content:'PILAR ' counter(programa-step, decimal-leading-zero);
+  position:absolute;top:1.6rem;right:1.6rem;
+  font-size:9.5px;letter-spacing:.22em;
+  color:var(--accent);font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+#s-programa .progm-blocks{ counter-reset:programa-step -1; }
+#s-programa .progm-block{ counter-increment:programa-step; }
+/* La intro (PILAR 00) la mostramos como "INTRO" para no decir "PILAR 00" */
+#s-programa .progm-block:first-child::before{ content:'INTRO'; }
+/* El último bloque es "Aclaraciones operativas", no es un pilar */
+#s-programa .progm-block:last-child::before{ content:'NOTAS'; }
+
+/* Misma técnica para la App: pequeño "PANTALLA 01/08" arriba derecha */
+#s-app-train .progm-block::before{
+  content:'PANTALLA ' counter(app-step, decimal-leading-zero);
+  position:absolute;top:1.6rem;right:1.6rem;
+  font-size:9.5px;letter-spacing:.22em;
+  color:var(--accent);font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+#s-app-train .progm-blocks{ counter-reset:app-step 0; }
+#s-app-train .progm-block{ counter-increment:app-step; }
+
+/* Ícono del Programa: SI lo mostramos, pero como GLIFO editorial fino, no como chip cuadrado */
+#s-programa .progm-block-icon{
+  display:flex !important;
+  position:relative;
+  width:32px;height:32px;
+  align-items:center;justify-content:center;
+  color:var(--accent-dark);
+  background:transparent;border:none;border-radius:0;
+  margin-bottom:.9rem;
+  margin-top:-.4rem;
+}
+#s-programa .progm-block-icon svg{ width:26px;height:26px;stroke-width:1.4; }
+
+/* Título dentro de la card: sin padding-right innecesario, tracking editorial */
+#s-programa .progm-block-title,
+#s-app-train .progm-block-title{
+  padding-left:0;padding-right:0;
+  color:var(--text);
+  letter-spacing:-.3px;
+  margin-bottom:.9rem;
+}
+#s-programa .progm-block-title::before,
+#s-app-train .progm-block-title::before{ display:none; }
+
+/* Filete 1px debajo del título — el detalle premium */
+#s-programa .progm-block-title::after,
+#s-app-train .progm-block-title::after{
+  content:'';display:block;
+  width:32px;height:1.5px;background:var(--accent);
+  margin-top:.85rem;border-radius:1px;
+  opacity:.85;
+}
+
+/* ============ JOURNEY — premium editorial =================== */
+.jrn-timeline > .jrn-phase .jrn-body{ border-left:none; }
+.jrn-timeline > .jrn-phase .jrn-body::before{ display:none; }
+
+/* Número de fase como número editorial tabular, NO sello pesado */
+.jrn-timeline > .jrn-phase .jrn-card-num{
+  position:absolute;
+  top:1.6rem;right:1.6rem;
+  width:auto;height:auto;
+  font-family:'Inter',sans-serif;
+  font-size:9.5px;line-height:1;letter-spacing:.22em;
+  color:var(--accent);
+  -webkit-text-stroke:0;
+  background:transparent;border:none;padding:0;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+  z-index:2;
+}
+.jrn-timeline > .jrn-phase .jrn-card-num::before{
+  content:'FASE ';
+}
+
+/* Eyebrow de la card del journey */
+.jrn-timeline > .jrn-phase .jrn-card-eyebrow{
+  display:flex;align-items:center;gap:10px;
+  font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--accent-dark);font-weight:700;
+  margin-top:0;margin-bottom:.6rem;
+}
+.jrn-timeline > .jrn-phase .jrn-card-eyebrow::before{
+  content:'';width:18px;height:1px;background:var(--accent);display:inline-block;
+}
+
+/* Título editorial */
+.jrn-timeline > .jrn-phase .jrn-card-title{
+  font-family:'Inter',sans-serif;
+  font-size:22px;font-weight:700;
+  color:var(--text);
+  letter-spacing:-.3px;
+  margin:.3rem 0 .6rem;
+  padding-right:60px;
+}
+.jrn-timeline > .jrn-phase .jrn-card-title::after{
+  content:'';display:block;
+  width:32px;height:1.5px;background:var(--accent);
+  margin-top:.85rem;border-radius:1px;opacity:.85;
+}
+
+/* Steps */
+#s-journey .jrn-steps li::before{ color:var(--accent); }
+#s-journey .jrn-steps-label{ color:var(--accent-dark); }
+
+/* Resultado: surface suave, no pill saturada */
+.jrn-timeline > .jrn-phase .jrn-result{
+  background:var(--accent-tint) !important;
+  border-left:2px solid var(--accent) !important;
+  border-radius:8px;
+  padding:.95rem 1.1rem !important;
+  margin-top:1.1rem !important;
+}
+.jrn-timeline > .jrn-phase .jrn-result .jrn-result-label{
+  color:var(--accent-dark) !important;
+  font-size:9.5px;letter-spacing:.22em;
+}
+.jrn-timeline > .jrn-phase .jrn-result .jrn-result-text{
+  color:var(--text) !important;font-weight:500;
+}
+
+/* Fase final: leve tinte de fondo, sin gradiente burdo */
+.jrn-timeline > .jrn-phase.jrn-phase-final .jrn-body{
+  background:var(--surface-tint);
+}
+.jrn-timeline > .jrn-phase.jrn-phase-final .jrn-card-num::before{
+  content:'DESTINO · FASE ';
+}
+
+/* ============ APP DE ENTRENAMIENTO — imagen limpia, sin mockup ======= */
+/* Quitamos el marco de teléfono (notch + bezel) — se veía cargado */
+#s-app-train .appm-img-wrap{
+  margin:.4rem 0 1.2rem !important;
+  background:#fafafa !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  border:1px solid rgba(0,0,0,.05) !important;
+  border-radius:12px !important;
+  padding:0 !important;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,.02),
+    0 14px 32px rgba(20,20,20,.07) !important;
+  overflow:hidden !important;
+  position:relative !important;
+}
+#s-app-train .appm-img-wrap::before,
+#s-app-train .appm-img-wrap::after{ display:none !important; content:none !important; }
+#s-app-train .appm-img-wrap img{
+  border-radius:0;
+  max-height:260px !important;
+  background:#fff;
+  width:100%;
+}
+#s-app-train .appm-zoom-btn{
+  bottom:10px !important;right:10px !important;
+  background:rgba(20,20,20,.78) !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+}
+
+/* ============ SCROLL CUE — arriba a la derecha, siempre visible ====== */
+/* Antes estaba abajo y se escondía. Ahora chip discreto top-right que
+   ya dice "↓ Más" para que se entienda que hay contenido abajo. */
+.progm-blocks > .progm-block,
+.jrn-timeline > .jrn-phase{
+  position:relative;
+}
+.scroll-cue{
+  position:sticky !important;
+  top:10px !important;
+  bottom:auto !important;
+  margin-left:auto !important; margin-right:0 !important;
+  width:fit-content !important; max-width:fit-content !important;
+  height:26px !important;
+  padding:0 12px !important;
+  border-radius:100px !important;
+  background:rgba(20,20,20,.88) !important;
+  color:#fff !important;
+  border:none !important;
+  display:none; align-items:center !important; gap:6px;
+  font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:700;
+  box-shadow:0 6px 18px rgba(0,0,0,.18) !important;
+  pointer-events:none; opacity:0;
+  transition:opacity .3s;
+  z-index:5;
+}
+.has-more .scroll-cue{ display:flex !important; opacity:.96; }
+.scroll-cue::after{ content:'Más'; letter-spacing:.18em; }
+.scroll-cue svg{
+  width:11px !important; height:11px !important;
+  animation:cueBounce 1.4s ease-in-out infinite;
+}
+/* Las cards de Programa y App tienen el rótulo "PILAR XX/PANTALLA XX"
+   arriba a la derecha — bajamos la flechita debajo de ese rótulo. */
+#s-app-train .scroll-cue,
+#s-programa .scroll-cue{ top:42px !important; }
+
+/* Carrusel — hint y números con acento por sección */
+#s-programa .carousel-hint .ch-arr,
+#s-journey  .carousel-hint .ch-arr,
+#s-app-train .carousel-hint .ch-arr{ color:var(--accent); }
+#s-programa .carousel-hint .ch-counter b,
+#s-journey  .carousel-hint .ch-counter b,
+#s-app-train .carousel-hint .ch-counter b{ color:var(--accent-dark); }
+
+/* Halos: muy sutiles, no protagonistas */
+#s-programa .bg-halo, #s-journey .bg-halo, #s-app-train .bg-halo{
+  opacity:.5 !important;filter:blur(90px) !important;
+}
+#s-journey .bg-halo-1{
+  background:radial-gradient(circle, rgba(156,107,58,.16) 0%, transparent 70%) !important;
+}
+#s-journey .bg-halo-2{
+  background:radial-gradient(circle, rgba(94,63,31,.12) 0%, transparent 70%) !important;
+}
+#s-app-train .bg-halo-1{
+  background:radial-gradient(circle, rgba(61,110,118,.14) 0%, transparent 70%) !important;
+}
+#s-app-train .bg-halo-2{
+  background:radial-gradient(circle, rgba(31,74,82,.10) 0%, transparent 70%) !important;
+}
+
+/* Volver atrás: hover con acento por sección */
+#s-journey   .sub-back:hover,
+#s-app-train .sub-back:hover{ color:var(--accent-dark); }
+
 </style>
 </head>
 <body class="locked">
@@ -5162,7 +5513,6 @@ const AUTHORIZED_USERS = [
   "Mateo Bermudez",
   "Sergio Cuellar",
   "Amalia Rodriguez",
-  "Salvador Montoya",
   "Natalia Samper",
   "Maria Alejandra Gonzales"
 ];
@@ -6643,7 +6993,7 @@ function initBlurCarousel(scroller){
       const cue = document.createElement('div');
       cue.className = 'scroll-cue';
       cue.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      s.appendChild(cue);
+      s.insertBefore(cue, s.firstChild);
       s.addEventListener('scroll', function(){ window.requestAnimationFrame(function(){ cueUpd(s); }); }, {passive:true});
       // imágenes dentro de la card pueden cambiar la altura → recalcular al cargar
       s.querySelectorAll('img').forEach(function(im){ im.addEventListener('load', function(){ cueUpd(s); }); });
