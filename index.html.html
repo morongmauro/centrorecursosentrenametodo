@@ -4449,6 +4449,186 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 #s-journey   .sub-back:hover,
 #s-app-train .sub-back:hover{ color:var(--accent-dark); }
 
+/* ============================================================ */
+/* ============== v3 · ICONO-BADGE + CALLOUT ✓ ================= */
+/* ============================================================ */
+/* Patrón estilo Meal Tracker:                                  */
+/* - Círculo pastel con icono saturado top-left de cada card    */
+/* - Color por concepto (no por sección — variedad cromática)   */
+/* - Footer callout con check verde derivando de progm-note,    */
+/*   progm-welcome y jrn-result que ya existen                  */
+/* ============================================================ */
+
+/* ----- Variables de color por concepto (Pilares, Fases, Pantallas, FAQ) ----- */
+/* PROGRAMA · pilares */
+#s-programa .progm-block:nth-child(1){ --c:#9c6b3a; --c-soft:#fbeedb; --c-dark:#5e3f1f; } /* INTRO - dorado */
+#s-programa .progm-block:nth-child(2){ --c:#7a8c5a; --c-soft:#eef1e4; --c-dark:#4a5635; } /* Entrenamiento - oliva */
+#s-programa .progm-block:nth-child(3){ --c:#b8642b; --c-soft:#fbe5d3; --c-dark:#7a3f15; } /* Alimentación - terracota */
+#s-programa .progm-block:nth-child(4){ --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; } /* Entorno - teal */
+#s-programa .progm-block:nth-child(5){ --c:#6a5a7e; --c-soft:#e9e2f0; --c-dark:#3f3450; } /* Seguimiento - violeta */
+#s-programa .progm-block:nth-child(6){ --c:#8a7a5a; --c-soft:#efe9da; --c-dark:#574a32; } /* Aclaraciones - sand */
+
+/* JOURNEY · fases (la timeline en carrusel renderiza .jrn-phase, ojo) */
+.jrn-timeline > .jrn-phase:nth-child(1){ --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; } /* 00 Diagnóstico - teal */
+.jrn-timeline > .jrn-phase:nth-child(2){ --c:#b8642b; --c-soft:#fbe5d3; --c-dark:#7a3f15; } /* 01 Arranque - terracota */
+.jrn-timeline > .jrn-phase:nth-child(3){ --c:#6a5a7e; --c-soft:#e9e2f0; --c-dark:#3f3450; } /* 02 Aprendizaje - violeta */
+.jrn-timeline > .jrn-phase:nth-child(4){ --c:#7a8c5a; --c-soft:#eef1e4; --c-dark:#4a5635; } /* 03 Ejecución - oliva */
+.jrn-timeline > .jrn-phase:nth-child(5){ --c:#8a7a5a; --c-soft:#efe9da; --c-dark:#574a32; } /* 04 Autonomía - sand */
+.jrn-timeline > .jrn-phase:nth-child(6){ --c:#9c6b3a; --c-soft:#fbeedb; --c-dark:#5e3f1f; } /* 05 Maestría - dorado */
+
+/* APP · pantallas (mapeo por sección del JSON, vía data-section-key) */
+#s-app-train .progm-block[data-section-key="intro"]{        --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; }
+#s-app-train .progm-block[data-section-key="rutina"]{       --c:#7a8c5a; --c-soft:#eef1e4; --c-dark:#4a5635; }
+#s-app-train .progm-block[data-section-key="meta"]{         --c:#b8642b; --c-soft:#fbe5d3; --c-dark:#7a3f15; }
+#s-app-train .progm-block[data-section-key="progreso"]{     --c:#6a5a7e; --c-soft:#e9e2f0; --c-dark:#3f3450; }
+#s-app-train .progm-block[data-section-key="reco"]{         --c:#8a7a5a; --c-soft:#efe9da; --c-dark:#574a32; }
+#s-app-train .progm-block:not([data-section-key]){          --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; }
+
+/* FAQ · categorías */
+#s-faq .faq-item[data-cat="proceso"]{        --c:#7a8c5a; --c-soft:#eef1e4; --c-dark:#4a5635; }
+#s-faq .faq-item[data-cat="entrenamiento"]{  --c:#b8642b; --c-soft:#fbe5d3; --c-dark:#7a3f15; }
+#s-faq .faq-item[data-cat="alimentacion"]{   --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; }
+
+/* ----- Badge circular con icono ----- */
+#s-programa .progm-block{ padding-top:1.5rem !important; }
+#s-programa .progm-block-icon,
+.jrn-timeline > .jrn-phase .jrn-card-wm{
+  display:flex !important;
+  position:relative !important;
+  width:38px !important; height:38px !important;
+  border-radius:50% !important;
+  background:var(--c-soft) !important;
+  color:var(--c) !important;
+  align-items:center !important; justify-content:center !important;
+  margin:0 0 .9rem !important;
+  top:auto !important; right:auto !important; left:auto !important;
+  border:none !important;
+}
+#s-programa .progm-block-icon svg,
+.jrn-timeline > .jrn-phase .jrn-card-wm svg{
+  width:20px !important; height:20px !important;
+  stroke-width:1.8 !important;
+  position:static !important;
+}
+
+/* El eyebrow del programa adopta el color del pilar (sutil, no chip) */
+#s-programa .progm-block-eyebrow{
+  color:var(--c-dark) !important;
+}
+#s-programa .progm-block-eyebrow::before{
+  background:var(--c) !important;
+}
+/* Rótulo "PILAR 0X" arriba derecha en color del pilar */
+#s-programa .progm-block::before{ color:var(--c) !important; }
+
+/* Filete bajo título también del color del pilar */
+#s-programa .progm-block-title::after{
+  background:var(--c) !important;
+}
+
+/* ----- Journey: badge visible + eyebrow color por fase ----- */
+.jrn-timeline > .jrn-phase .jrn-card-eyebrow{ color:var(--c-dark); }
+.jrn-timeline > .jrn-phase .jrn-card-eyebrow::before{ background:var(--c); }
+.jrn-timeline > .jrn-phase .jrn-card-title{ color:var(--c-dark); }
+.jrn-timeline > .jrn-phase .jrn-card-title::after{ background:var(--c); }
+.jrn-timeline > .jrn-phase .jrn-card-num{ color:var(--c) !important; }
+#s-journey .jrn-steps li::before{ color:var(--c) !important; }
+#s-journey .jrn-steps-label{ color:var(--c-dark) !important; }
+
+/* ----- Callout footer con check verde ----- */
+/* Aplica a: progm-note (Programa), progm-welcome (intro Programa) y jrn-result (Journey) */
+#s-programa .progm-note,
+#s-programa .progm-welcome,
+.jrn-timeline > .jrn-phase .jrn-result{
+  background:var(--c-soft) !important;
+  border:1px solid color-mix(in srgb, var(--c) 25%, transparent) !important;
+  border-left:none !important;
+  border-radius:10px !important;
+  padding:11px 14px 11px 14px !important;
+  margin-top:1.1rem !important; margin-bottom:0 !important;
+  font-size:13.5px !important; line-height:1.5 !important;
+  color:var(--c-dark) !important;
+  font-weight:600 !important;
+  display:flex !important; align-items:flex-start !important; gap:10px;
+}
+#s-programa .progm-note::before,
+#s-programa .progm-welcome::before,
+.jrn-timeline > .jrn-phase .jrn-result::before{
+  content:'✓';
+  color:var(--c);
+  font-weight:800;
+  font-size:14px;
+  line-height:1.5;
+  flex-shrink:0;
+}
+#s-programa .progm-note strong,
+#s-programa .progm-welcome strong,
+.jrn-timeline > .jrn-phase .jrn-result strong{
+  color:var(--c-dark) !important; font-weight:800 !important;
+}
+/* jrn-result tiene 2 spans hijos; los reorganizamos en una sola línea legible */
+.jrn-timeline > .jrn-phase .jrn-result-label{
+  display:none !important;
+}
+.jrn-timeline > .jrn-phase .jrn-result-text{
+  color:var(--c-dark) !important;
+  font-size:13.5px !important;
+  font-weight:600 !important;
+}
+
+/* ----- FAQ: badge categoría + look premium ----- */
+#s-faq .faq-q{ position:relative; padding-left:54px !important; }
+#s-faq .faq-q-num{
+  position:absolute !important;
+  left:14px !important; top:50% !important;
+  transform:translateY(-50%) !important;
+  width:30px !important; height:30px !important;
+  border-radius:50% !important;
+  background:var(--c-soft) !important;
+  color:var(--c-dark) !important;
+  display:flex !important; align-items:center !important; justify-content:center !important;
+  font-size:11px !important; font-weight:800 !important;
+  letter-spacing:.05em !important;
+  font-variant-numeric:tabular-nums;
+  border:none !important;
+}
+#s-faq .faq-q-arr{ color:var(--c) !important; }
+#s-faq .faq-item[open] > .faq-q .faq-q-arr{ color:var(--c-dark) !important; }
+#s-faq .faq-a strong{ color:var(--c-dark) !important; }
+
+/* ----- App: badge + callout vía clases inyectadas por JS ----- */
+#s-app-train .progm-block .appt-badge{
+  display:flex; width:38px; height:38px;
+  border-radius:50%;
+  background:var(--c-soft); color:var(--c);
+  align-items:center; justify-content:center;
+  margin:0 0 .9rem;
+}
+#s-app-train .progm-block .appt-badge svg{ width:20px; height:20px; stroke-width:1.8; }
+#s-app-train .progm-block-eyebrow{ color:var(--c-dark) !important; }
+#s-app-train .progm-block-eyebrow::before{ background:var(--c) !important; }
+#s-app-train .progm-block-title{ color:var(--c-dark) !important; }
+#s-app-train .progm-block-title::after{ background:var(--c) !important; }
+#s-app-train .progm-block::before{ color:var(--c) !important; }
+#s-app-train .progm-block .appt-callout{
+  display:flex; align-items:flex-start; gap:10px;
+  background:var(--c-soft);
+  border:1px solid color-mix(in srgb, var(--c) 25%, transparent);
+  border-radius:10px;
+  padding:11px 14px;
+  margin-top:1.1rem;
+  font-size:13.5px; line-height:1.5;
+  color:var(--c-dark); font-weight:600;
+}
+#s-app-train .progm-block .appt-callout::before{
+  content:'✓'; color:var(--c);
+  font-weight:800; font-size:14px;
+  flex-shrink:0;
+}
+
+/* Volver atrás también acent en programa cuando hace hover */
+#s-programa .sub-back:hover{ color:var(--accent-dark); }
+
 </style>
 </head>
 <body class="locked">
@@ -5512,7 +5692,6 @@ const AUTHORIZED_USERS = [
   "Mar Alzate",
   "Mateo Bermudez",
   "Sergio Cuellar",
-  "Salvador Montoya",
   "Amalia Rodriguez",
   "Natalia Samper",
   "Maria Alejandra Gonzales"
@@ -6879,22 +7058,49 @@ function apptBuild() {
   if (!wrap) return;
   if (!appmCards.length) appmLoadData();
   if (!wrap.dataset.built) {
+    // Mapeo sección → llave de color + icono + frase de callout
+    function mapSection(sec){
+      var s = (sec || '').toLowerCase();
+      if (s.indexOf('cómo funciona la app') !== -1 || s.indexOf('como funciona la app') !== -1)
+        return { key:'intro',    callout:'Tu centro de control diario',
+                 svg:'<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M9 7h6M9 11h6M9 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' };
+      if (s.indexOf('iniciar tu rutina') !== -1)
+        return { key:'rutina',   callout:'Activa la rutina desde Home o Calendar',
+                 svg:'<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' };
+      if (s.indexOf('meta nutricional') !== -1 || s.indexOf('recetas') !== -1)
+        return { key:'meta',     callout:'Tu meta diaria como referencia',
+                 svg:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>' };
+      if (s.indexOf('progreso') !== -1)
+        return { key:'progreso', callout:'Mide para optimizar',
+                 svg:'<svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 14l3.5-4 3 2.5L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' };
+      if (s.indexOf('recomendaciones') !== -1)
+        return { key:'reco',     callout:'Hábitos que multiplican tu progreso',
+                 svg:'<svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>' };
+      return { key:'intro', callout:'',
+               svg:'<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/></svg>' };
+    }
     let html = '';
     appmCards.forEach(function(c, i){
       const num = ('0' + (i+1)).slice(-2);
       const safeImg = (c.img || '').replace(/'/g, "\\'");
+      const m = mapSection(c.section);
       const img = c.img
         ? '<div class="appm-img-wrap"><img loading="lazy" src="'+c.img+'" alt="">' +
           "<button class=\"appm-zoom-btn\" onclick=\"apptZoom('"+safeImg+"')\" aria-label=\"Ampliar imagen\">" +
           '<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5L21 21M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' +
           '</button></div>'
         : '';
-      html += '<div class="progm-block">' +
+      const callout = m.callout
+        ? '<div class="appt-callout"><span>'+m.callout+'</span></div>'
+        : '';
+      html += '<div class="progm-block" data-section-key="'+m.key+'">' +
         '<div class="progm-block-num">'+num+'</div>' +
+        '<div class="appt-badge">'+m.svg+'</div>' +
         '<div class="progm-block-eyebrow">'+c.section+'</div>' +
         '<div class="progm-block-title">'+c.title+'</div>' +
         img +
         '<div class="progm-block-text">'+c.body+'</div>' +
+        callout +
         '</div>';
     });
     wrap.innerHTML = html;
@@ -7026,5 +7232,145 @@ function initBlurCarousel(scroller){
   };
 })();
 </script>
+
+<!-- ============================================================ -->
+<!-- ====== CLOUD SYNC — eventos de lectura a Supabase =========  -->
+<!-- Lo único que toca: cada vez que el cliente marca algo como  -->
+<!-- leído (HUB, guía o secciones legacy), también envía un POST  -->
+<!-- a Supabase. Si Supabase falla o no está configurado, el     -->
+<!-- centro sigue funcionando normal: el localStorage no cambia. -->
+<!-- ============================================================ -->
+<script>
+(function(){
+  // === CONFIG: pega aquí tu Supabase URL y anon key ===
+  // (Supabase → Project Settings → API)
+  var SUPABASE_URL      = 'TU_SUPABASE_URL';
+  var SUPABASE_ANON_KEY = 'TU_SUPABASE_ANON_KEY';
+
+  // Si no se ha configurado, no hacemos nada (modo solo-local)
+  if (!SUPABASE_URL || SUPABASE_URL === 'TU_SUPABASE_URL') return;
+
+  // ID anónimo de dispositivo (sobrevive cache si usan el mismo navegador)
+  function getDeviceId(){
+    try {
+      var k = 'em_device_id';
+      var v = localStorage.getItem(k);
+      if (v) return v;
+      var u = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+            : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+                var r = Math.random()*16|0; return (c==='x'?r:(r&0x3|0x8)).toString(16);
+              });
+      localStorage.setItem(k, u);
+      return u;
+    } catch(e){ return null; }
+  }
+
+  // Nombre del cliente del login. Si no hay login todavía, no enviamos.
+  function getClientName(){
+    try {
+      var raw = localStorage.getItem('em_client');
+      if (!raw) return null;
+      var obj = JSON.parse(raw);
+      return obj && obj.name ? obj.name : null;
+    } catch(e){ return null; }
+  }
+
+  var deviceId = getDeviceId();
+
+  // Etiquetas legibles por section_key para mostrar bonito en el dashboard
+  var LABELS = {
+    'programa':     'Cómo funciona el programa',
+    'app':          'Cómo funciona la app',
+    'journey':      'Tu Journey en el método',
+    'meal-tracker': 'Cómo usar Meal Tracker'
+  };
+
+  // Envío fire-and-forget. Si falla, ni nos enteramos — el localStorage manda.
+  function postEvent(source, sectionKey, sectionLabel){
+    var name = getClientName();
+    if (!name) return; // aún no se ha logueado
+    var body = JSON.stringify({
+      client_name: name,
+      source: source,
+      section_key: sectionKey,
+      section_label: sectionLabel || LABELS[sectionKey] || sectionKey,
+      device_id: deviceId
+    });
+    try {
+      fetch(SUPABASE_URL + '/rest/v1/reading_events', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: body,
+        keepalive: true
+      }).catch(function(){});
+    } catch(e){}
+  }
+
+  // ====== Engancha las 3 funciones existentes ======
+  // hubMarkRead → secciones del HUB (programa, app, journey, meal-tracker)
+  if (typeof window.hubMarkRead === 'function'){
+    var _hub = window.hubMarkRead;
+    window.hubMarkRead = function(section){
+      var r = _hub.apply(this, arguments);
+      postEvent('hub', section);
+      return r;
+    };
+  }
+  // gaMarkRead → capítulos de la guía de alimentación
+  if (typeof window.gaMarkRead === 'function'){
+    var _ga = window.gaMarkRead;
+    window.gaMarkRead = function(slug){
+      var r = _ga.apply(this, arguments);
+      // Tratar de sacar el título visible del capítulo si existe en el DOM
+      var label = null;
+      try {
+        var el = document.querySelector('[data-ga-slug="'+slug+'"] .ga-h1, .ga-h1[data-slug="'+slug+'"]');
+        if (el) label = el.textContent.trim();
+      } catch(e){}
+      postEvent('guia', slug, label);
+      return r;
+    };
+  }
+  // markRead (legacy / FAQ)
+  if (typeof window.markRead === 'function'){
+    var _mk = window.markRead;
+    window.markRead = function(section, btn){
+      var r = _mk.apply(this, arguments);
+      postEvent('legacy', section);
+      return r;
+    };
+  }
+
+  // ====== Re-envío inicial: si el cliente ya tenía cosas leídas en
+  // localStorage de antes de habilitar el sync, las subimos una vez para
+  // que el dashboard no aparezca vacío. Lo hacemos una sola vez por dispositivo.
+  function backfillOnce(){
+    try {
+      if (localStorage.getItem('em_cloud_backfilled') === '1') return;
+      if (!getClientName()) return;
+      var hub  = JSON.parse(localStorage.getItem('em_hub_read_sections') || '[]');
+      var ga   = JSON.parse(localStorage.getItem('em_ga_read') || '[]');
+      var lega = JSON.parse(localStorage.getItem('em_read_sections') || '[]');
+      hub.forEach(function(s){ postEvent('hub', s); });
+      ga.forEach(function(s){ postEvent('guia', s); });
+      lega.forEach(function(s){ postEvent('legacy', s); });
+      localStorage.setItem('em_cloud_backfilled', '1');
+    } catch(e){}
+  }
+
+  // Cuando el usuario acabe de loguearse, intentar backfill
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(backfillOnce, 1500);
+  });
+  // Y también un intento más tarde por si el login es posterior
+  setTimeout(backfillOnce, 4000);
+})();
+</script>
 </body>
+
 </html>
