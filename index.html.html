@@ -3671,11 +3671,20 @@ body:not(.locked) .login-screen{display:none !important;}
 }
 .jrn-timeline > .jrn-phase .jrn-result .jrn-result-label{color:var(--olive);}
 .jrn-timeline > .jrn-phase .jrn-result .jrn-result-text{color:var(--olive-dark);font-weight:600;}
-/* Hint de deslizar */
+/* Hint de deslizar — AHORA encima del carrusel, como instrucción previa */
 .carousel-hint{
-  display:flex;align-items:center;justify-content:center;gap:8px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
   font-size:11.5px;color:var(--text-mute);font-weight:600;letter-spacing:.3px;
-  margin:-.4rem .25rem 1rem;
+  margin:.4rem .25rem 1rem;
+  padding:8px 16px;
+  background:rgba(255,255,255,.55);
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+  backdrop-filter:blur(10px) saturate(140%);
+  border:.5px solid rgba(0,0,0,.04);
+  border-radius:100px;
+  width:fit-content;
+  margin-left:auto;margin-right:auto;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
 }
 .carousel-hint{text-transform:uppercase;letter-spacing:.3px;}
 /* Indicador de scroll interno en slides largos */
@@ -4460,34 +4469,35 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 /* ============================================================ */
 
 /* ----- Variables de color por concepto (Pilares, Fases, Pantallas, FAQ) ----- */
+/* --c: saturado | --c-soft: pastel bg | --c-mid: borde visible | --c-dark: texto */
 /* PROGRAMA · pilares */
-#s-programa .progm-block:nth-child(1){ --c:#9c6b3a; --c-soft:#fbeedb; --c-dark:#5e3f1f; } /* INTRO - dorado */
-#s-programa .progm-block:nth-child(2){ --c:#7a8c5a; --c-soft:#eef1e4; --c-dark:#4a5635; } /* Entrenamiento - oliva */
-#s-programa .progm-block:nth-child(3){ --c:#b8642b; --c-soft:#fbe5d3; --c-dark:#7a3f15; } /* Alimentación - terracota */
-#s-programa .progm-block:nth-child(4){ --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; } /* Entorno - teal */
-#s-programa .progm-block:nth-child(5){ --c:#6a5a7e; --c-soft:#e9e2f0; --c-dark:#3f3450; } /* Seguimiento - violeta */
-#s-programa .progm-block:nth-child(6){ --c:#8a7a5a; --c-soft:#efe9da; --c-dark:#574a32; } /* Aclaraciones - sand */
+#s-programa .progm-block:nth-child(1){ --c:#9c6b3a; --c-soft:#fbeedb; --c-mid:#dcb78a; --c-dark:#5e3f1f; } /* INTRO - dorado */
+#s-programa .progm-block:nth-child(2){ --c:#7a8c5a; --c-soft:#eef1e4; --c-mid:#b9c594; --c-dark:#4a5635; } /* Entrenamiento - oliva */
+#s-programa .progm-block:nth-child(3){ --c:#b8642b; --c-soft:#fbe5d3; --c-mid:#e0a87a; --c-dark:#7a3f15; } /* Alimentación - terracota */
+#s-programa .progm-block:nth-child(4){ --c:#3d6e76; --c-soft:#dfeef0; --c-mid:#8ab6bb; --c-dark:#1f4a52; } /* Entorno - teal */
+#s-programa .progm-block:nth-child(5){ --c:#6a5a7e; --c-soft:#e9e2f0; --c-mid:#a99fb5; --c-dark:#3f3450; } /* Seguimiento - violeta */
+#s-programa .progm-block:nth-child(6){ --c:#8a7a5a; --c-soft:#efe9da; --c-mid:#c0b596; --c-dark:#574a32; } /* Aclaraciones - sand */
 
 /* JOURNEY · fases (la timeline en carrusel renderiza .jrn-phase, ojo) */
-.jrn-timeline > .jrn-phase:nth-child(1){ --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; } /* 00 Diagnóstico - teal */
-.jrn-timeline > .jrn-phase:nth-child(2){ --c:#b8642b; --c-soft:#fbe5d3; --c-dark:#7a3f15; } /* 01 Arranque - terracota */
-.jrn-timeline > .jrn-phase:nth-child(3){ --c:#6a5a7e; --c-soft:#e9e2f0; --c-dark:#3f3450; } /* 02 Aprendizaje - violeta */
-.jrn-timeline > .jrn-phase:nth-child(4){ --c:#7a8c5a; --c-soft:#eef1e4; --c-dark:#4a5635; } /* 03 Ejecución - oliva */
-.jrn-timeline > .jrn-phase:nth-child(5){ --c:#8a7a5a; --c-soft:#efe9da; --c-dark:#574a32; } /* 04 Autonomía - sand */
-.jrn-timeline > .jrn-phase:nth-child(6){ --c:#9c6b3a; --c-soft:#fbeedb; --c-dark:#5e3f1f; } /* 05 Maestría - dorado */
+.jrn-timeline > .jrn-phase:nth-child(1){ --c:#3d6e76; --c-soft:#dfeef0; --c-mid:#8ab6bb; --c-dark:#1f4a52; } /* 00 Diagnóstico - teal */
+.jrn-timeline > .jrn-phase:nth-child(2){ --c:#b8642b; --c-soft:#fbe5d3; --c-mid:#e0a87a; --c-dark:#7a3f15; } /* 01 Arranque - terracota */
+.jrn-timeline > .jrn-phase:nth-child(3){ --c:#6a5a7e; --c-soft:#e9e2f0; --c-mid:#a99fb5; --c-dark:#3f3450; } /* 02 Aprendizaje - violeta */
+.jrn-timeline > .jrn-phase:nth-child(4){ --c:#7a8c5a; --c-soft:#eef1e4; --c-mid:#b9c594; --c-dark:#4a5635; } /* 03 Ejecución - oliva */
+.jrn-timeline > .jrn-phase:nth-child(5){ --c:#8a7a5a; --c-soft:#efe9da; --c-mid:#c0b596; --c-dark:#574a32; } /* 04 Autonomía - sand */
+.jrn-timeline > .jrn-phase:nth-child(6){ --c:#9c6b3a; --c-soft:#fbeedb; --c-mid:#dcb78a; --c-dark:#5e3f1f; } /* 05 Maestría - dorado */
 
 /* APP · pantallas (mapeo por sección del JSON, vía data-section-key) */
-#s-app-train .progm-block[data-section-key="intro"]{        --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; }
-#s-app-train .progm-block[data-section-key="rutina"]{       --c:#7a8c5a; --c-soft:#eef1e4; --c-dark:#4a5635; }
-#s-app-train .progm-block[data-section-key="meta"]{         --c:#b8642b; --c-soft:#fbe5d3; --c-dark:#7a3f15; }
-#s-app-train .progm-block[data-section-key="progreso"]{     --c:#6a5a7e; --c-soft:#e9e2f0; --c-dark:#3f3450; }
-#s-app-train .progm-block[data-section-key="reco"]{         --c:#8a7a5a; --c-soft:#efe9da; --c-dark:#574a32; }
-#s-app-train .progm-block:not([data-section-key]){          --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; }
+#s-app-train .progm-block[data-section-key="intro"]{        --c:#3d6e76; --c-soft:#dfeef0; --c-mid:#8ab6bb; --c-dark:#1f4a52; }
+#s-app-train .progm-block[data-section-key="rutina"]{       --c:#7a8c5a; --c-soft:#eef1e4; --c-mid:#b9c594; --c-dark:#4a5635; }
+#s-app-train .progm-block[data-section-key="meta"]{         --c:#b8642b; --c-soft:#fbe5d3; --c-mid:#e0a87a; --c-dark:#7a3f15; }
+#s-app-train .progm-block[data-section-key="progreso"]{     --c:#6a5a7e; --c-soft:#e9e2f0; --c-mid:#a99fb5; --c-dark:#3f3450; }
+#s-app-train .progm-block[data-section-key="reco"]{         --c:#8a7a5a; --c-soft:#efe9da; --c-mid:#c0b596; --c-dark:#574a32; }
+#s-app-train .progm-block:not([data-section-key]){          --c:#3d6e76; --c-soft:#dfeef0; --c-mid:#8ab6bb; --c-dark:#1f4a52; }
 
 /* FAQ · categorías */
-#s-faq .faq-item[data-cat="proceso"]{        --c:#7a8c5a; --c-soft:#eef1e4; --c-dark:#4a5635; }
-#s-faq .faq-item[data-cat="entrenamiento"]{  --c:#b8642b; --c-soft:#fbe5d3; --c-dark:#7a3f15; }
-#s-faq .faq-item[data-cat="alimentacion"]{   --c:#3d6e76; --c-soft:#dfeef0; --c-dark:#1f4a52; }
+#s-faq .faq-item[data-cat="proceso"]{        --c:#7a8c5a; --c-soft:#eef1e4; --c-mid:#b9c594; --c-dark:#4a5635; }
+#s-faq .faq-item[data-cat="entrenamiento"]{  --c:#b8642b; --c-soft:#fbe5d3; --c-mid:#e0a87a; --c-dark:#7a3f15; }
+#s-faq .faq-item[data-cat="alimentacion"]{   --c:#3d6e76; --c-soft:#dfeef0; --c-mid:#8ab6bb; --c-dark:#1f4a52; }
 
 /* ----- Badge circular con icono ----- */
 #s-programa .progm-block{ padding-top:1.5rem !important; }
@@ -4629,6 +4639,577 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 /* Volver atrás también acent en programa cuando hace hover */
 #s-programa .sub-back:hover{ color:var(--accent-dark); }
 
+/* ============================================================ */
+/* ============== v4 · LIMPIEZA "LOOK AI" ===================== */
+/* ============================================================ */
+/* - Fuera las líneas horizontales delante del eyebrow          */
+/* - Fuera el filete debajo del título                           */
+/* - Los callouts con border visible tipo Meal Tracker          */
+/* - Iconos un pelín más bold para que se vean nítidos          */
+/* ============================================================ */
+
+/* 1) Fuera las líneas horizontales antes del eyebrow */
+#s-programa .progm-block-eyebrow::before,
+#s-app-train .progm-block-eyebrow::before,
+.jrn-timeline > .jrn-phase .jrn-card-eyebrow::before{
+  display:none !important;
+  content:none !important;
+}
+
+/* 2) Fuera el filete debajo del título */
+#s-programa .progm-block-title::after,
+#s-app-train .progm-block-title::after,
+.jrn-timeline > .jrn-phase .jrn-card-title::after{
+  display:none !important;
+  content:none !important;
+}
+
+/* 3) Callouts con border visible (sin color-mix, full color directo) */
+#s-programa .progm-note,
+#s-programa .progm-welcome,
+.jrn-timeline > .jrn-phase .jrn-result,
+#s-app-train .progm-block .appt-callout{
+  background:var(--c-soft) !important;
+  border:1.5px solid var(--c-mid) !important;
+  border-radius:12px !important;
+  padding:12px 14px !important;
+  margin-top:1.1rem !important;
+  font-size:13.5px !important; line-height:1.5 !important;
+  color:var(--c-dark) !important;
+  font-weight:600 !important;
+  display:flex !important; align-items:flex-start !important; gap:10px !important;
+}
+
+/* 4) Iconos un poco más bold y un pelín más grandes */
+#s-programa .progm-block-icon svg,
+.jrn-timeline > .jrn-phase .jrn-card-wm svg,
+#s-app-train .progm-block .appt-badge svg{
+  width:22px !important; height:22px !important;
+  stroke-width:2 !important;
+}
+
+/* 5) Quitar también el filete del header de las 3 secciones (la sub-title-line) */
+#s-programa .sub-title-line,
+#s-journey  .sub-title-line,
+#s-app-train .sub-title-line{
+  display:none !important;
+}
+
+/* 6) Y la línea del eyebrow del HEADER de la sección (no de las cards) */
+#s-programa .sub-eyebrow::before,
+#s-journey  .sub-eyebrow::before,
+#s-app-train .sub-eyebrow::before{
+  display:none !important;
+  content:none !important;
+}
+#s-programa .sub-eyebrow,
+#s-journey  .sub-eyebrow,
+#s-app-train .sub-eyebrow{
+  gap:0 !important;
+}
+
+/* ============================================================ */
+/* ============== v5 · GLASS CALLOUT + EMOJI ICONS ============= */
+/* ============================================================ */
+/* - Iconos = EMOJIS reales (🏋 🥗 🚀…) dentro de círculo pastel  */
+/* - Badge inline con el eyebrow (misma fila, no apilados)       */
+/* - Callout glass: fondo translúcido tinte del color + brillo   */
+/*   blanco, SIN bordes duros                                    */
+/* ============================================================ */
+
+/* ----- Esconder los SVG existentes ----- */
+#s-programa .progm-block-icon svg,
+.jrn-timeline > .jrn-phase .jrn-card-wm svg,
+#s-app-train .progm-block .appt-badge svg{
+  display:none !important;
+}
+
+/* ----- Badge: círculo pastel absoluto top-left con emoji centrado ----- */
+#s-programa .progm-block,
+.jrn-timeline > .jrn-phase .jrn-body,
+#s-app-train .progm-block{
+  position:relative !important;
+}
+#s-programa .progm-block-icon,
+.jrn-timeline > .jrn-phase .jrn-card-wm,
+#s-app-train .progm-block .appt-badge{
+  display:flex !important;
+  position:absolute !important;
+  top:1.5rem !important;
+  left:1.5rem !important;
+  width:42px !important; height:42px !important;
+  border-radius:50% !important;
+  background:var(--c-soft) !important;
+  align-items:center !important; justify-content:center !important;
+  font-size:22px !important;
+  line-height:1 !important;
+  margin:0 !important;
+  border:none !important;
+  z-index:2;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+}
+
+/* ----- Eyebrow padded para alinearse al lado del badge ----- */
+#s-programa .progm-block-eyebrow,
+.jrn-timeline > .jrn-phase .jrn-card-eyebrow,
+#s-app-train .progm-block-eyebrow{
+  padding-left:54px !important;
+  min-height:42px !important;
+  display:flex !important;
+  align-items:center !important;
+  margin-bottom:.85rem !important;
+}
+
+/* ----- Emojis por concepto vía ::after ----- */
+/* PROGRAMA · pilares */
+#s-programa .progm-block:nth-child(1) .progm-block-icon::after{ content:'🧭'; }   /* INTRO */
+#s-programa .progm-block:nth-child(2) .progm-block-icon::after{ content:'🏋️'; }   /* Entrenamiento */
+#s-programa .progm-block:nth-child(3) .progm-block-icon::after{ content:'🥗'; }   /* Alimentación */
+#s-programa .progm-block:nth-child(4) .progm-block-icon::after{ content:'🛠️'; }   /* Entorno */
+#s-programa .progm-block:nth-child(5) .progm-block-icon::after{ content:'📊'; }   /* Seguimiento */
+#s-programa .progm-block:nth-child(6) .progm-block-icon::after{ content:'📌'; }   /* Aclaraciones */
+
+/* JOURNEY · fases */
+.jrn-timeline > .jrn-phase:nth-child(1) .jrn-card-wm::after{ content:'🧭'; }   /* 00 Diagnóstico */
+.jrn-timeline > .jrn-phase:nth-child(2) .jrn-card-wm::after{ content:'🚀'; }   /* 01 Arranque */
+.jrn-timeline > .jrn-phase:nth-child(3) .jrn-card-wm::after{ content:'📚'; }   /* 02 Aprendizaje */
+.jrn-timeline > .jrn-phase:nth-child(4) .jrn-card-wm::after{ content:'⚙️'; }   /* 03 Ejecución */
+.jrn-timeline > .jrn-phase:nth-child(5) .jrn-card-wm::after{ content:'🎯'; }   /* 04 Autonomía */
+.jrn-timeline > .jrn-phase:nth-child(6) .jrn-card-wm::after{ content:'🏆'; }   /* 05 Maestría */
+
+/* APP · pantallas */
+#s-app-train .progm-block[data-section-key="intro"]    .appt-badge::after{ content:'📱'; }
+#s-app-train .progm-block[data-section-key="rutina"]   .appt-badge::after{ content:'📅'; }
+#s-app-train .progm-block[data-section-key="meta"]     .appt-badge::after{ content:'🎯'; }
+#s-app-train .progm-block[data-section-key="progreso"] .appt-badge::after{ content:'📸'; }
+#s-app-train .progm-block[data-section-key="reco"]     .appt-badge::after{ content:'✅'; }
+
+/* ----- Rótulo PILAR/FASE/PANTALLA: queda en top-right (donde estaba) ----- */
+/* Sin cambios; ya está bien posicionado por v2 */
+
+/* ----- CALLOUT GLASS: tinte del concepto + brillo blanco, sin border ----- */
+#s-programa .progm-note,
+#s-programa .progm-welcome,
+.jrn-timeline > .jrn-phase .jrn-result,
+#s-app-train .progm-block .appt-callout{
+  background:
+    linear-gradient(160deg, rgba(255,255,255,.65) 0%, rgba(255,255,255,.25) 100%),
+    var(--c-soft) !important;
+  -webkit-backdrop-filter:blur(10px) saturate(140%) !important;
+  backdrop-filter:blur(10px) saturate(140%) !important;
+  border:none !important;
+  border-radius:14px !important;
+  padding:12px 14px !important;
+  margin-top:1.1rem !important;
+  margin-bottom:0 !important;
+  font-size:13.5px !important; line-height:1.5 !important;
+  color:var(--c-dark) !important;
+  font-weight:600 !important;
+  display:flex !important;
+  flex-direction:row !important;  /* fix: .jrn-result tiene column por defecto */
+  align-items:center !important;
+  gap:10px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.8),
+    inset 0 -1px 0 rgba(0,0,0,.03),
+    0 1px 2px rgba(0,0,0,.03),
+    0 6px 16px rgba(0,0,0,.04) !important;
+}
+
+/* Fix overlap badge ↔ titulo: separar mas el titulo del eyebrow row */
+.jrn-timeline > .jrn-phase .jrn-card-title{
+  margin-top:.7rem !important;
+}
+#s-programa .progm-block-title,
+#s-app-train .progm-block-title{
+  margin-top:.5rem !important;
+}
+
+/* ============================================================ */
+/* ============== v6 · FIX OVERLAP + GLASS NOTA SOFT ========== */
+/* ============================================================ */
+/* Reservar espacio arriba en la card; badge vive ahi y el      */
+/* contenido (eyebrow, titulo, body) empieza limpio debajo.     */
+/* Tambien aplica glass a progm-note-soft (la nota gris).       */
+/* ============================================================ */
+
+/* Reservar zona superior en las cards para que el badge no se monte sobre nada */
+.jrn-timeline > .jrn-phase .jrn-card{
+  padding-top:64px !important;
+}
+#s-programa .progm-block,
+#s-app-train .progm-block{
+  padding-top:68px !important;
+}
+
+/* Badge: top:1rem left:1rem (mas pegado al borde), tamano 40px */
+#s-programa .progm-block-icon,
+.jrn-timeline > .jrn-phase .jrn-card-wm,
+#s-app-train .progm-block .appt-badge{
+  top:1.1rem !important;
+  left:1.4rem !important;
+  width:42px !important; height:42px !important;
+}
+
+/* Rotulo del concepto (PILAR 0X / FASE 0X / PANTALLA 0X) también en la zona superior */
+#s-programa .progm-block::before,
+#s-app-train .progm-block::before{
+  top:1.4rem !important;
+  right:1.4rem !important;
+}
+.jrn-timeline > .jrn-phase .jrn-card-num{
+  top:1.4rem !important;
+  right:1.4rem !important;
+}
+
+/* Eyebrow normal flow — sin padding-left ni min-height. Empieza limpio bajo el badge. */
+#s-programa .progm-block-eyebrow,
+.jrn-timeline > .jrn-phase .jrn-card-eyebrow,
+#s-app-train .progm-block-eyebrow{
+  padding-left:0 !important;
+  min-height:0 !important;
+  display:block !important;
+  margin-bottom:.5rem !important;
+  margin-top:0 !important;
+}
+
+/* Titulo natural sin margin-top forzado */
+.jrn-timeline > .jrn-phase .jrn-card-title{
+  margin-top:0 !important;
+}
+#s-programa .progm-block-title,
+#s-app-train .progm-block-title{
+  margin-top:0 !important;
+}
+
+/* ----- Glass tambien para progm-note-soft (nota gris del Pilar 4) ----- */
+#s-programa .progm-note-soft{
+  background:
+    linear-gradient(160deg, rgba(255,255,255,.65) 0%, rgba(255,255,255,.25) 100%),
+    var(--c-soft) !important;
+  -webkit-backdrop-filter:blur(10px) saturate(140%) !important;
+  backdrop-filter:blur(10px) saturate(140%) !important;
+  border:none !important;
+  border-radius:12px !important;
+  padding:11px 14px !important;
+  margin:.4rem 0 1rem !important;
+  font-size:13px !important; line-height:1.5 !important;
+  color:var(--c-dark) !important;
+  font-weight:500 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.7),
+    0 1px 2px rgba(0,0,0,.03),
+    0 4px 12px rgba(0,0,0,.04) !important;
+}
+#s-programa .progm-note-soft strong{
+  color:var(--c-dark) !important; font-weight:700 !important;
+}
+
+/* ============================================================ */
+/* ============== v7 · HOME engagement + olor visual =========== */
+/* ============================================================ */
+/* - Welcome con contexto (llevas X de Y leidas) — texto via JS  */
+/* - Orient-card (TU MATERIAL) tratada como hero glass premium   */
+/* - Emoji prefijo por seccion en cada row del orient-list      */
+/* - Sticky bottom CTA en mobile cuando se scrollea              */
+/* ============================================================ */
+
+/* Welcome con mas presencia */
+.home-welcome{ margin-bottom:1.5rem !important; }
+#welcome-greet, #welcome-name{ line-height:1.05; }
+.home-welcome-sub{
+  display:flex; align-items:center; gap:8px;
+  font-size:13.5px; color:var(--text-soft);
+  margin-top:.4rem;
+}
+
+/* Orient-card como hero glass */
+.orient-card{
+  position:relative;
+  background:
+    linear-gradient(160deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.55) 100%),
+    var(--olive-soft) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  backdrop-filter:blur(14px) saturate(140%);
+  border:.5px solid rgba(255,255,255,.7) !important;
+  border-radius:20px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.8),
+    0 1px 2px rgba(0,0,0,.03),
+    0 22px 50px rgba(20,20,20,.07) !important;
+  overflow:hidden;
+}
+.orient-card::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 0% 0%, rgba(122,140,90,.18) 0%, transparent 55%);
+  pointer-events:none;
+}
+.orient-card > *{ position:relative; z-index:1; }
+.orient-cta{
+  background:var(--text) !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.18) !important;
+}
+.orient-cta:hover{
+  box-shadow:0 8px 22px rgba(0,0,0,.25) !important;
+}
+
+/* Emoji por seccion en orient-row */
+.orient-row[data-section]::after{ display:none; }
+.orient-row[data-section] .orient-row-emoji{
+  font-size:16px;
+  line-height:1;
+  margin-right:8px;
+  flex-shrink:0;
+}
+
+/* Sticky CTA en mobile (aparece al scrollear) */
+@media (max-width:560px){
+  .home-sticky-cta{
+    position:fixed;
+    left:50%; bottom:14px;
+    transform:translate(-50%,80px);
+    z-index:90;
+    background:var(--text);
+    color:#fff;
+    padding:13px 22px;
+    border-radius:100px;
+    font-size:13.5px; font-weight:600; letter-spacing:.3px;
+    box-shadow:0 14px 34px rgba(0,0,0,.32);
+    display:flex; align-items:center; gap:10px;
+    opacity:0; pointer-events:none;
+    transition:transform .35s cubic-bezier(.16,.84,.3,1), opacity .35s;
+    max-width:90vw;
+  }
+  .home-sticky-cta.show{
+    transform:translate(-50%,0);
+    opacity:1;
+    pointer-events:auto;
+    cursor:pointer;
+  }
+  .home-sticky-cta .cta-arrow{font-size:15px;}
+}
+
+/* ============================================================ */
+/* ============== v8 · ONBOARDING HUB con emoji + olor ========= */
+/* ============================================================ */
+/* Las 4 cards del hub (Programa, App, Meal, Journey) heredan el */
+/* mismo lenguaje de emoji + color por seccion que las cards de  */
+/* contenido. Subtle: tinte y emoji, sin sobrecargar.            */
+/* ============================================================ */
+
+/* Color por seccion (mismas paletas que en las secciones) */
+.hub-card[data-section="programa"]    { --c:#7a8c5a; --c-soft:#eef1e4; --c-mid:#b9c594; --c-dark:#4a5635; }
+.hub-card[data-section="app"]         { --c:#3d6e76; --c-soft:#dfeef0; --c-mid:#8ab6bb; --c-dark:#1f4a52; }
+.hub-card[data-section="meal-tracker"]{ --c:#b8642b; --c-soft:#fbe5d3; --c-mid:#e0a87a; --c-dark:#7a3f15; }
+.hub-card[data-section="journey"]     { --c:#9c6b3a; --c-soft:#fbeedb; --c-mid:#dcb78a; --c-dark:#5e3f1f; }
+
+/* Reservar espacio arriba para el badge emoji */
+.hub-card{
+  padding-top:60px !important;
+  position:relative;
+}
+
+/* Badge emoji top-left con circulo pastel */
+/* IMPORTANTE: display:block !important vence una regla anterior que ponia display:none !important */
+.hub-card[data-section]::before{
+  content:'';
+  display:block !important;
+  position:absolute !important;
+  top:1.1rem !important;
+  left:1.1rem !important;
+  width:40px !important;
+  height:40px !important;
+  border-radius:50% !important;
+  background:var(--c-soft) !important;
+  font-size:22px !important;
+  text-align:center !important;
+  line-height:40px !important;
+  z-index:2 !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6) !important;
+}
+.hub-card[data-section="programa"]::before    { content:'🧭'; }
+.hub-card[data-section="app"]::before         { content:'📱'; }
+.hub-card[data-section="meal-tracker"]::before{ content:'🥗'; }
+.hub-card[data-section="journey"]::before     { content:'🚀'; }
+
+/* Eyebrow y title con el color del concepto (sutil) */
+.hub-card[data-section] .hub-card-eyebrow{ color:var(--c-dark) !important; }
+.hub-card[data-section] .hub-card-time   { color:var(--c-dark) !important; }
+.hub-card[data-section] .hub-card-arr    { color:var(--c) !important; }
+
+/* La card "siguiente" (current/next) recibe trato premium glass tinted */
+.hub-card.hub-card-next[data-section]{
+  background:
+    linear-gradient(160deg, rgba(255,255,255,.7) 0%, rgba(255,255,255,.4) 100%),
+    var(--c-soft) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  backdrop-filter:blur(14px) saturate(140%);
+  border:.5px solid var(--c-mid) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.8),
+    0 1px 2px rgba(0,0,0,.03),
+    0 16px 38px rgba(20,20,20,.08) !important;
+}
+
+/* Cards compactas (las que NO son la next): contenido empieza tras el badge */
+.hub-card.compact{
+  padding-top:1.15rem !important;
+  padding-left:64px !important;
+}
+.hub-card.compact[data-section]::before{
+  top:50%;
+  margin-top:-18px;
+  width:36px; height:36px;
+  font-size:19px;
+  line-height:36px;
+}
+
+/* Status circle (check de leido) no se monta con el badge */
+.hub-card .hub-card-status{
+  top:1.1rem !important;
+  right:1.1rem !important;
+}
+
+/* ============================================================ */
+/* ============== v8b · BIBLIOTECA con mismo lenguaje =========== */
+/* ============================================================ */
+/* Cards de biblioteca usan .hub-card pero con secciones propias.*/
+/* Layout vertical (bars), emoji + color por concepto.           */
+/* ============================================================ */
+
+#s-biblioteca .bib-cards{
+  display:flex;
+  flex-direction:column;
+  gap:.7rem;
+  margin-top:1.2rem;
+}
+#s-biblioteca .hub-progress-bar{ margin-top:1.5rem; margin-bottom:.5rem; }
+
+/* Color por seccion de biblioteca */
+#s-biblioteca .hub-card[data-section="guia"]         { --c:#7a8c5a; --c-soft:#eef1e4; --c-mid:#b9c594; --c-dark:#4a5635; }
+#s-biblioteca .hub-card[data-section="entrenamiento"]{ --c:#3d6e76; --c-soft:#dfeef0; --c-mid:#8ab6bb; --c-dark:#1f4a52; }
+#s-biblioteca .hub-card[data-section="nutricion"]    { --c:#b8642b; --c-soft:#fbe5d3; --c-mid:#e0a87a; --c-dark:#7a3f15; }
+#s-biblioteca .hub-card[data-section="movilidad"]    { --c:#6a5a7e; --c-soft:#e9e2f0; --c-mid:#a99fb5; --c-dark:#3f3450; }
+#s-biblioteca .hub-card[data-section="recuperacion"] { --c:#8a7a5a; --c-soft:#efe9da; --c-mid:#c0b596; --c-dark:#574a32; }
+#s-biblioteca .hub-card[data-section="faq"]          { --c:#9c6b3a; --c-soft:#fbeedb; --c-mid:#dcb78a; --c-dark:#5e3f1f; }
+
+/* Emojis por seccion biblioteca */
+#s-biblioteca .hub-card[data-section="guia"]::before         { content:'📚'; }
+#s-biblioteca .hub-card[data-section="entrenamiento"]::before{ content:'🏋️'; }
+#s-biblioteca .hub-card[data-section="nutricion"]::before    { content:'🥗'; }
+#s-biblioteca .hub-card[data-section="movilidad"]::before    { content:'🤸'; }
+#s-biblioteca .hub-card[data-section="recuperacion"]::before { content:'😴'; }
+#s-biblioteca .hub-card[data-section="faq"]::before          { content:'❓'; }
+
+/* Las cards de biblioteca usan layout compacto (1 fila c/u), bar style */
+#s-biblioteca .hub-card{
+  padding:1.1rem 1.2rem 1.1rem 64px !important;
+  padding-top:1.1rem !important;
+  cursor:pointer;
+  position:relative;
+}
+#s-biblioteca .hub-card[data-section]::before{
+  top:50%;
+  margin-top:-18px;
+  width:36px; height:36px;
+  font-size:19px;
+  line-height:36px;
+}
+#s-biblioteca .hub-card-title{ padding-right:0 !important; font-size:15.5px; }
+#s-biblioteca .hub-card-eyebrow{ padding-right:0 !important; color:var(--c-dark) !important; }
+#s-biblioteca .hub-card-arr{ color:var(--c) !important; }
+#s-biblioteca .hub-card-time{ color:var(--c-dark) !important; }
+
+/* Cards "proximamente": un poco mas apagadas + sin hover lift */
+#s-biblioteca .hub-card.hub-card-soon{
+  opacity:.78;
+  cursor:default;
+}
+#s-biblioteca .hub-card.hub-card-soon:hover{
+  transform:none;
+  box-shadow:var(--shadow);
+}
+#s-biblioteca .hub-card.hub-card-soon .hub-card-arr{
+  color:var(--text-mute) !important;
+}
+
+/* Esconder bib-hero, bib-cats viejos, bib-section-head viejos (por si quedan) */
+#s-biblioteca .bib-hero,
+#s-biblioteca .bib-cats:not(.bib-cards):not(.bib-cards-soon),
+#s-biblioteca .bib-section-head,
+#s-biblioteca .bib-faq-card{ display:none !important; }
+
+/* Subseccion: encabezado del bloque 'Proximamente / Material grafico' */
+#s-biblioteca .bib-subsection{
+  margin:2rem .15rem .8rem;
+  padding-top:1.4rem;
+  border-top:.5px solid var(--border-soft);
+}
+#s-biblioteca .bib-subsection-eyebrow{
+  display:inline-block;
+  font-size:9.5px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-weight:700;
+  color:var(--text-mute);
+  background:rgba(0,0,0,.04);
+  padding:4px 10px;
+  border-radius:100px;
+  margin-bottom:.7rem;
+}
+#s-biblioteca .bib-subsection-title{
+  font-family:'Inter',sans-serif;
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.3px;
+  color:var(--text);
+  margin-bottom:.4rem;
+}
+#s-biblioteca .bib-subsection-desc{
+  font-size:13.5px;
+  line-height:1.5;
+  color:var(--text-soft);
+  margin-bottom:.3rem;
+}
+
+/* Card destacada: GUÍA DE ALIMENTACIÓN con glass tinted sutil */
+#s-biblioteca .hub-card.hub-card-featured{
+  background:
+    linear-gradient(160deg, rgba(255,255,255,.75) 0%, rgba(255,255,255,.45) 100%),
+    var(--c-soft) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  backdrop-filter:blur(14px) saturate(140%);
+  border:.5px solid var(--c-mid) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.8),
+    0 1px 2px rgba(0,0,0,.03),
+    0 16px 38px rgba(20,20,20,.08) !important;
+}
+#s-programa .progm-note::before,
+#s-programa .progm-welcome::before,
+.jrn-timeline > .jrn-phase .jrn-result::before,
+#s-app-train .progm-block .appt-callout::before{
+  content:'✓' !important;
+  color:var(--c) !important;
+  font-weight:800 !important;
+  font-size:14px !important;
+  line-height:1.5 !important;
+  flex-shrink:0 !important;
+}
+
+/* ----- FAQ: también con badge emoji por categoría ----- */
+#s-faq .faq-item[data-cat="proceso"]       .faq-q-num::after{ content:'🔄'; }
+#s-faq .faq-item[data-cat="entrenamiento"] .faq-q-num::after{ content:'🏋️'; }
+#s-faq .faq-item[data-cat="alimentacion"]  .faq-q-num::after{ content:'🥗'; }
+#s-faq .faq-q-num{
+  font-size:0 !important; /* esconder el texto del numero */
+}
+#s-faq .faq-q-num::after{
+  font-size:18px !important;
+  line-height:1 !important;
+}
+
 </style>
 </head>
 <body class="locked">
@@ -4675,7 +5256,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 <div class="app-shell">
 
 <!-- HEADER DE MARCA GLOBAL (fino, sticky, visible en todas las pantallas menos login) -->
-<header class="cr-header" id="cr-topbar">
+<header class="cr-header" id="cr-topbar" onclick="go('s-home')" style="cursor:pointer" title="Ir al home">
   <div class="cr-header-blob"></div>
   <div class="cr-header-inner">
     <span class="cr-header-title">CENTRO DE RECURSOS</span>
@@ -4698,7 +5279,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     <!-- ============ TARJETA GESTORA: tu material (qué falta / qué terminaste) ============ -->
     <div class="orient-card reveal" id="home-orient">
       <div class="orient-head">
-        <span class="orient-title" id="orient-eyebrow">TU MATERIAL</span>
+        <span class="orient-title" id="orient-eyebrow">EN USO Y PENDIENTE</span>
         <span class="orient-count"><strong id="orient-done">0</strong> <span class="orient-sep">/</span> <span id="orient-total">19</span> leído</span>
       </div>
       <div class="orient-bar"><div class="orient-fill" id="orient-fill"></div></div>
@@ -4718,8 +5299,8 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
           <div class="home-tile-ico">
             <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5V5.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5A1.5 1.5 0 0 1 20 20.5V5.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
           </div>
-          <div class="home-tile-title">Profundiza en el método</div>
-          <div class="home-tile-desc">Biblioteca de contenidos</div>
+          <div class="home-tile-title">Galería de material informativo</div>
+          <div class="home-tile-desc">Para consultar cuando lo necesites</div>
         </div>
 
         <div class="home-tile" onclick="go('s-onboarding')" style="cursor:pointer">
@@ -4779,7 +5360,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-back" onclick="go('s-onboarding')" style="cursor:pointer">
       <span class="sub-back-arr">←</span>
-      <span>Volver atrás</span>
+      <span>Volver al onboarding</span>
     </div>
 
     <div class="sub-header">
@@ -4885,7 +5466,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-back" onclick="go('s-onboarding')" style="cursor:pointer">
       <span class="sub-back-arr">←</span>
-      <span>Volver atrás</span>
+      <span>Volver al onboarding</span>
     </div>
 
     <div class="sub-header jrn-anim" style="--d:0s;">
@@ -5057,7 +5638,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-back" onclick="go('s-onboarding')" style="cursor:pointer">
       <span class="sub-back-arr">←</span>
-      <span>Volver atrás</span>
+      <span>Volver al onboarding</span>
     </div>
 
     <div class="sub-header">
@@ -5092,7 +5673,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-back" onclick="go('s-onboarding')" style="cursor:pointer">
       <span class="sub-back-arr">←</span>
-      <span>Volver atrás</span>
+      <span>Volver al onboarding</span>
     </div>
 
     <div class="sub-header sub-anim" style="--d:0s;">
@@ -5227,7 +5808,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 <div id="s-meal-guide" class="screen">
   <div class="sub-back mg-back" onclick="go('s-onboarding')" style="cursor:pointer">
     <span class="sub-back-arr">←</span>
-    <span>Volver atrás</span>
+    <span>Volver al onboarding</span>
   </div>
   <iframe id="meal-guide-frame" class="mg-frame" title="Guía de la app de Meal Tracking"></iframe>
 </div>
@@ -5249,77 +5830,103 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 
     <div class="sub-header sub-anim" style="--d:0s;">
       <div class="sub-eyebrow">01 · Biblioteca</div>
-      <div class="sub-title">PROFUNDIZA<br>EN EL MÉTODO</div>
+      <div class="sub-title">GALERÍA DE<br>MATERIAL INFORMATIVO</div>
       <div class="sub-intro">
         Material de consulta para volver cuando lo necesites.
       </div>
     </div>
 
-    <!-- PROTAGONISTA: Guía de Alimentación -->
-    <div class="bib-hero sub-anim" style="--d:.08s;" onclick="go('s-guia-alimentacion')">
-      <div class="bib-hero-eyebrow">Guía esencial</div>
-      <div class="bib-hero-title">GUÍA DE<br>ALIMENTACIÓN</div>
-      <div class="bib-hero-line"></div>
-      <div class="bib-hero-desc">
-        Comer bien no es comer perfecto, es tener un método. Guía para entender cómo gestionar tu alimentación adaptada a tu vida.
+    <!-- Progress bar (avance del material informativo) -->
+    <div class="hub-progress-bar sub-anim" style="--d:.05s;">
+      <div class="hub-progress-label">
+        <span class="hub-progress-eyebrow">Tu avance en el material informativo</span>
+        <span class="hub-progress-count"><strong id="bib-ga-done">0</strong> <span style="opacity:.5;">/</span> <span id="bib-ga-total">15</span> capítulos leídos</span>
       </div>
-      <div class="bib-hero-meta">
-        <span class="bib-hero-meta-time">Lee a tu ritmo</span>
-        <span class="bib-hero-meta-dot">·</span>
-        <span>Sin prisa</span>
-      </div>
-      <div class="bib-hero-cta">
-        <span>Leer guía</span>
-        <span class="cta-arrow">→</span>
+      <div class="hub-progress-track">
+        <div class="hub-progress-fill" id="bib-ga-fill"></div>
       </div>
     </div>
 
-    <!-- Sección Por tema -->
-    <div class="bib-section-head sub-anim" style="--d:.14s;">
-      <div class="bib-section-eyebrow">Por tema</div>
-      <div class="bib-section-title">Explora por área de interés</div>
+    <!-- CONTENIDO DISPONIBLE -->
+    <div class="bib-cards sub-anim" style="--d:.10s;">
+
+      <!-- GUÍA DE ALIMENTACIÓN (card destacada, glass tinted) -->
+      <div class="hub-card hub-card-featured" data-section="guia" onclick="go('s-guia-alimentacion')">
+        <div class="hub-card-eyebrow">Guía esencial</div>
+        <div class="hub-card-title">Guía de alimentación</div>
+        <div class="hub-card-desc">Cómo gestionar tu alimentación adaptada a tu vida. Lee a tu ritmo, sin prisa.</div>
+        <div class="hub-card-foot">
+          <span class="hub-card-time"><span id="bib-ga-foot-done">0</span>/<span id="bib-ga-foot-total">15</span> capítulos</span>
+          <span class="hub-card-dot">·</span>
+          <span>Lee a tu ritmo</span>
+          <span class="hub-card-arr">→</span>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="hub-card" data-section="faq" onclick="go('s-faq')">
+        <div class="hub-card-eyebrow">Dudas resueltas</div>
+        <div class="hub-card-title">Preguntas frecuentes</div>
+        <div class="hub-card-desc">Resuelve las dudas más comunes del programa en un solo lugar.</div>
+        <div class="hub-card-foot">
+          <span class="hub-card-time">Búsqueda rápida</span>
+          <span class="hub-card-dot">·</span>
+          <span>Por categoría</span>
+          <span class="hub-card-arr">→</span>
+        </div>
+      </div>
+
     </div>
 
-    <div class="bib-cats sub-anim" style="--d:.20s;">
-      <div class="bib-cat">
-        <div class="bib-cat-soon">Próximamente</div>
-        <div class="bib-cat-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9v6M6 7v10M21 9v6M18 7v10M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <div class="bib-cat-title">Entrenamiento</div>
-        <div class="bib-cat-desc">Fuerza, técnica y progresión</div>
-      </div>
-      <div class="bib-cat">
-        <div class="bib-cat-soon">Próximamente</div>
-        <div class="bib-cat-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18M18 3c-1.5 1-2.5 3-2.5 6s1 4 2.5 5v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="bib-cat-title">Nutrición</div>
-        <div class="bib-cat-desc">Recetas, hábitos y criterio</div>
-      </div>
-      <div class="bib-cat">
-        <div class="bib-cat-soon">Próximamente</div>
-        <div class="bib-cat-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12c2-6 6-9 7-9s5 3 7 9-2 9-7 9-9-3-7-9z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
-        <div class="bib-cat-title">Movilidad</div>
-        <div class="bib-cat-desc">Rango, control y postura</div>
-      </div>
-      <div class="bib-cat">
-        <div class="bib-cat-soon">Próximamente</div>
-        <div class="bib-cat-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <div class="bib-cat-title">Recuperación</div>
-        <div class="bib-cat-desc">Descanso, sueño y energía</div>
-      </div>
+    <!-- SUBSECCIÓN: Material gráfico / esquemas visuales (Próximamente) -->
+    <div class="bib-subsection sub-anim" style="--d:.18s;">
+      <div class="bib-subsection-eyebrow">Próximamente</div>
+      <div class="bib-subsection-title">Material gráfico e informativo</div>
+      <div class="bib-subsection-desc">Slides, esquemas visuales y resúmenes que estarán disponibles para reforzar lo aprendido.</div>
     </div>
 
-    <!-- FAQ como card -->
-    <div class="bib-faq-card sub-anim" style="--d:.26s;" onclick="go('s-faq')">
-      <div class="bib-faq-icon">
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
-          <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.5M12 17v.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+    <div class="bib-cards bib-cards-soon sub-anim" style="--d:.22s;">
+
+      <div class="hub-card hub-card-soon" data-section="entrenamiento">
+        <div class="hub-card-eyebrow">Próximamente</div>
+        <div class="hub-card-title">Entrenamiento</div>
+        <div class="hub-card-desc">Fuerza, técnica y progresión. Material extra para profundizar.</div>
+        <div class="hub-card-foot">
+          <span class="hub-card-time">En preparación</span>
+          <span class="hub-card-arr">⏳</span>
+        </div>
       </div>
-      <div class="bib-faq-text">
-        <div class="bib-faq-title">Preguntas frecuentes</div>
-        <div class="bib-faq-desc">Resuelve las dudas más comunes del programa</div>
+
+      <div class="hub-card hub-card-soon" data-section="nutricion">
+        <div class="hub-card-eyebrow">Próximamente</div>
+        <div class="hub-card-title">Nutrición</div>
+        <div class="hub-card-desc">Recetas, hábitos y criterio para tomar decisiones alineadas con tu objetivo.</div>
+        <div class="hub-card-foot">
+          <span class="hub-card-time">En preparación</span>
+          <span class="hub-card-arr">⏳</span>
+        </div>
       </div>
-      <span class="bib-faq-arr">→</span>
+
+      <div class="hub-card hub-card-soon" data-section="movilidad">
+        <div class="hub-card-eyebrow">Próximamente</div>
+        <div class="hub-card-title">Movilidad</div>
+        <div class="hub-card-desc">Rango, control y postura. Cuidar cómo te mueves.</div>
+        <div class="hub-card-foot">
+          <span class="hub-card-time">En preparación</span>
+          <span class="hub-card-arr">⏳</span>
+        </div>
+      </div>
+
+      <div class="hub-card hub-card-soon" data-section="recuperacion">
+        <div class="hub-card-eyebrow">Próximamente</div>
+        <div class="hub-card-title">Recuperación</div>
+        <div class="hub-card-desc">Descanso, sueño y energía. El otro lado del rendimiento.</div>
+        <div class="hub-card-foot">
+          <span class="hub-card-time">En preparación</span>
+          <span class="hub-card-arr">⏳</span>
+        </div>
+      </div>
+
     </div>
 
     <div class="footer">
@@ -5350,8 +5957,8 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     </div>
 
     <div class="hub-header-block hub-anim" style="--d:0s;">
-      <div class="hub-eyebrow">02 · El método</div>
-      <div class="hub-title">EL MÉTODO</div>
+      <div class="hub-eyebrow">02 · Onboarding</div>
+      <div class="hub-title">EL ONBOARDING</div>
       <div class="hub-title-line"></div>
       <div class="hub-intro">
         Conoce cómo funciona tu programa, la app de entrenamiento y el camino que vas a recorrer. <strong>Cuatro piezas que te dan el panorama completo.</strong>
@@ -5839,6 +6446,9 @@ function go(id){
     target.classList.add('active');
     window.scrollTo(0,0);
   }
+  if (id === 's-biblioteca' && typeof bibApplyGuiaProgress === 'function') {
+    setTimeout(bibApplyGuiaProgress, 30);
+  }
 }
 
 function scrollToOnboarding() {
@@ -6066,7 +6676,7 @@ function homeApplyOrientation() {
   const ctaText = document.getElementById('orient-cta-text');
   card.classList.toggle('is-done', done >= total);
   if (nextItem) {
-    if (eyebrow) eyebrow.textContent = 'TU MATERIAL';
+    if (eyebrow) eyebrow.textContent = 'EN USO Y PENDIENTE';
     // Si el siguiente es la guía, mostrar nombre del próximo capítulo
     const ctaTarget = (nextItem === guideRow && nextChapterLabel) ? nextChapterLabel : nextItem.label;
     if (ctaText) ctaText.textContent = (done === 0 ? 'Empezar: ' : 'Continuar: ') + ctaTarget;
@@ -6074,6 +6684,21 @@ function homeApplyOrientation() {
     if (eyebrow) eyebrow.textContent = 'TODO AL DÍA ✓';
     if (ctaText) ctaText.textContent = 'Repasar material';
   }
+
+  // ===== Welcome contextual: "Hola X, llevas Y de Z leídas" =====
+  try {
+    const subEl = document.querySelector('.home-welcome-sub');
+    if (subEl) {
+      if (done === 0) {
+        subEl.innerHTML = '👋 Todo el método, organizado en un solo lugar.';
+      } else if (done >= total) {
+        subEl.innerHTML = '🎯 Has leído todo el material. <strong>Sigue tu proceso con consistencia.</strong>';
+      } else {
+        const falta = total - done;
+        subEl.innerHTML = '📖 Llevas <strong>' + done + ' de ' + total + '</strong> · te falta' + (falta>1?'n':'') + ' <strong>' + falta + '</strong> para tener el panorama completo.';
+      }
+    }
+  } catch(e){}
 
   // Render de grupos colapsables
   const list = document.getElementById('orient-list');
@@ -6101,14 +6726,28 @@ function homeApplyOrientation() {
 
       const body = document.createElement('div');
       body.className = 'orient-group-body';
+      // Mapeo label -> emoji por sección
+      const _emojiFor = function(label){
+        const l = (label||'').toLowerCase();
+        if (l.indexOf('programa') !== -1) return '🧭';
+        if (l.indexOf('app') !== -1 && l.indexOf('meal') === -1) return '📱';
+        if (l.indexOf('meal') !== -1) return '🥗';
+        if (l.indexOf('journey') !== -1) return '🚀';
+        if (l.indexOf('guía') !== -1 || l.indexOf('guia') !== -1) return '📚';
+        return '';
+      };
       grp.items.forEach(function(it){
         const row = document.createElement('div');
         row.className = 'orient-row' + (it.done ? ' done' : '') + (it === nextItem ? ' next' : '');
+        row.setAttribute('data-section', '1');
         row.onclick = it.go;
         const right = it.done ? '' : '<span class="orient-row-arr">→</span>';
         const meta = it.meta ? '<span class="orient-row-meta">'+it.meta+'</span>' : '';
+        const emoji = _emojiFor(it.label);
+        const emojiSpan = emoji ? '<span class="orient-row-emoji" aria-hidden="true">'+emoji+'</span>' : '';
         row.innerHTML =
           '<span class="orient-row-ico">' + (it.done ? _CHECK_SVG : '') + '</span>' +
+          emojiSpan +
           '<span class="orient-row-label">' + it.label + '</span>' + meta + right;
         body.appendChild(row);
       });
@@ -6123,6 +6762,61 @@ function orientContinue() {
 }
 document.addEventListener('DOMContentLoaded', homeApplyOrientation);
 setTimeout(homeApplyOrientation, 120);
+
+// Progreso de la guía dentro de Biblioteca (mismo patrón que onboarding)
+function bibApplyGuiaProgress(){
+  try {
+    const chapters = document.querySelectorAll('#s-guia-alimentacion .ga-h1');
+    const total = chapters.length || 15;
+    const readArr = JSON.parse(localStorage.getItem('em_ga_read') || '[]');
+    let done = 0;
+    chapters.forEach(function(h){ if (readArr.indexOf(h.id) !== -1) done++; });
+    const set = function(id, v){ const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('bib-ga-done', done);
+    set('bib-ga-total', total);
+    set('bib-ga-foot-done', done);
+    set('bib-ga-foot-total', total);
+    const fill = document.getElementById('bib-ga-fill');
+    if (fill) fill.style.width = (total ? Math.round(done/total*100) : 0) + '%';
+  } catch(e){}
+}
+document.addEventListener('DOMContentLoaded', bibApplyGuiaProgress);
+setTimeout(bibApplyGuiaProgress, 300);
+
+// ===== Sticky bottom CTA (mobile) =====
+// Aparece cuando el usuario scrollea más allá del orient-card;
+// usa el mismo texto y acción que el CTA del card "Continuar".
+(function initStickyCta(){
+  function setupOnce(){
+    const home = document.getElementById('s-home');
+    if (!home) return;
+    if (document.getElementById('home-sticky-cta')) return; // ya creado
+    const btn = document.createElement('div');
+    btn.id = 'home-sticky-cta';
+    btn.className = 'home-sticky-cta';
+    btn.innerHTML = '<span class="sticky-text">Continuar</span><span class="cta-arrow">→</span>';
+    btn.addEventListener('click', function(){ if (typeof orientContinue === 'function') orientContinue(); });
+    home.appendChild(btn);
+
+    const orient = document.getElementById('home-orient');
+    function update(){
+      if (!home.classList.contains('active')) { btn.classList.remove('show'); return; }
+      if (!orient) return;
+      const rect = orient.getBoundingClientRect();
+      // Mostrar sticky cuando el orient-card ya salio de la pantalla por arriba
+      const visible = rect.bottom < 60;
+      btn.classList.toggle('show', visible);
+      // Sincronizar texto con el CTA principal
+      const txt = document.getElementById('orient-cta-text');
+      const sTxt = btn.querySelector('.sticky-text');
+      if (txt && sTxt) sTxt.textContent = txt.textContent;
+    }
+    window.addEventListener('scroll', function(){ window.requestAnimationFrame(update); }, {passive:true});
+    update();
+  }
+  document.addEventListener('DOMContentLoaded', setupOnce);
+  setTimeout(setupOnce, 300);
+})();
 
 // === Toast "+1 leído" ===
 function showReadToast(message) {
@@ -7164,15 +7858,15 @@ function initBlurCarousel(scroller){
   let counterEl = null;
   if (!scroller._blurInit){
     scroller.addEventListener('scroll', function(){ window.requestAnimationFrame(update); }, {passive:true});
-    if (!scroller.nextElementSibling || !scroller.nextElementSibling.classList.contains('carousel-hint')){
+    if (!scroller.previousElementSibling || !scroller.previousElementSibling.classList.contains('carousel-hint')){
       const hint = document.createElement('div');
       hint.className = 'carousel-hint';
       hint.innerHTML =
         '<span class="ch-arr">‹</span>' +
         '<span class="ch-word">Desliza</span>' +
-        '<span class="ch-counter"><b class="ch-current">1</b>/' + slides.length + '</span>' +
+        '<span class="ch-counter"><b class="ch-current">1</b> de ' + slides.length + '</span>' +
         '<span class="ch-arr">›</span>';
-      scroller.parentNode.insertBefore(hint, scroller.nextSibling);
+      scroller.parentNode.insertBefore(hint, scroller);
     }
     scroller._blurInit = true;
   }
