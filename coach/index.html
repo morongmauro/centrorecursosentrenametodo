@@ -265,17 +265,40 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 // CONFIG — pega aquí tu Supabase URL y anon key
 // (Supabase → Project Settings → API)
 // ============================================================
-const SUPABASE_URL = 'https://kkoayfexdhpazufmyeoj.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_9UimuwTGp2aIhe-4oSwJpw_ORwmzzhn';
+const SUPABASE_URL = 'TU_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'TU_SUPABASE_ANON_KEY';
 
 // ============================================================
-// LISTA DE CLIENTES AUTORIZADOS — debe coincidir con AUTHORIZED_USERS
-// del index.html.html para que el dashboard sepa quién falta.
+// LISTA DE CLIENTES AUTORIZADOS
+// El dashboard la lee AUTOMÁTICAMENTE del index.html.html del centro.
+// Tú solo editas la lista en el centro, aquí no hay que tocar nada.
+// El array de abajo es solo fallback si la lectura falla.
 // ============================================================
-const AUTHORIZED_USERS = [
-  // Ejemplo: 'Andrea Castaño', 'Carolina Pérez', ...
-  // Reemplaza con la lista real del centro de recursos.
-];
+let AUTHORIZED_USERS = [];
+
+async function loadAuthorizedUsers(){
+  // Intenta varias rutas posibles donde puede estar el centro
+  const paths = ['../index.html.html', '../index.html', '/index.html.html', '/index.html'];
+  for (const path of paths){
+    try {
+      const res = await fetch(path, { cache: 'no-store' });
+      if (!res.ok) continue;
+      const html = await res.text();
+      // Buscar: const AUTHORIZED_USERS = [ "Nombre", "Otro" ];
+      const match = html.match(/const\s+AUTHORIZED_USERS\s*=\s*\[([\s\S]*?)\]/);
+      if (match){
+        const items = match[1].match(/"([^"]+)"|'([^']+)'/g) || [];
+        const names = items.map(s => s.slice(1, -1)).filter(Boolean);
+        if (names.length){
+          AUTHORIZED_USERS = names;
+          console.log('[coach] Usuarios cargados del centro:', names.length);
+          return;
+        }
+      }
+    } catch(e) { /* probar el siguiente path */ }
+  }
+  console.warn('[coach] No se pudo leer la lista del centro — el dashboard mostrará solo a los que tengan eventos en Supabase');
+}
 
 // Secciones del HUB (las 4 cards de "El Método")
 const HUB_SECTIONS = [
@@ -311,10 +334,12 @@ function showLogin(){
   loginScreen.style.display = 'flex';
   dashScreen.style.display = 'none';
 }
-function showDash(session){
+async function showDash(session){
   loginScreen.style.display = 'none';
   dashScreen.style.display = 'block';
   userEmail.textContent = session.user.email;
+  // Cargar la lista de usuarios desde el centro (auto-sync)
+  await loadAuthorizedUsers();
   loadData();
 }
 loginForm.addEventListener('submit', async (e) => {
@@ -332,7 +357,10 @@ loginForm.addEventListener('submit', async (e) => {
 document.getElementById('logout-btn').addEventListener('click', async () => {
   await sb.auth.signOut(); showLogin();
 });
-document.getElementById('refresh-btn').addEventListener('click', loadData);
+document.getElementById('refresh-btn').addEventListener('click', async () => {
+  await loadAuthorizedUsers();
+  loadData();
+});
 
 // ----- DATA -----
 let CURRENT_ROWS = []; // estado renderizado para búsqueda
