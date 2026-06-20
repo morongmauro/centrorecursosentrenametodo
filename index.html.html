@@ -8248,6 +8248,62 @@ function initBlurCarousel(scroller){
     } catch(e){}
   });
 
+  // ====== FALLBACK BULLETPROOF: polling que sincroniza desde localStorage ======
+  // Cada 8 segundos compara el localStorage con lo que ya envió y manda lo nuevo.
+  // No depende de que el wrap haya funcionado. Cubre TODOS los casos.
+  function pollSync(){
+    try {
+      var name = getClientName();
+      if (!name) return; // sin login todavía
+      // HUB
+      var hub = JSON.parse(localStorage.getItem('em_hub_read_sections') || '[]');
+      var sentHub = JSON.parse(localStorage.getItem('em_synced_hub') || '[]');
+      var newHub = hub.filter(function(s){ return sentHub.indexOf(s) === -1; });
+      if (newHub.length){
+        log('Polling detecto', newHub.length, 'eventos hub nuevos:', newHub.join(','));
+        Promise.all(newHub.map(function(s){ return postEvent('hub', s); })).then(function(results){
+          var ok = results.every(function(r){ return r !== false; });
+          if (ok) {
+            try { localStorage.setItem('em_synced_hub', JSON.stringify(hub)); } catch(e){}
+            log('Polling sync hub ✓');
+          }
+        });
+      }
+      // GUIA
+      var ga = JSON.parse(localStorage.getItem('em_ga_read') || '[]');
+      var sentGa = JSON.parse(localStorage.getItem('em_synced_ga') || '[]');
+      var newGa = ga.filter(function(s){ return sentGa.indexOf(s) === -1; });
+      if (newGa.length){
+        log('Polling detecto', newGa.length, 'eventos guia nuevos');
+        Promise.all(newGa.map(function(s){ return postEvent('guia', s); })).then(function(results){
+          var ok = results.every(function(r){ return r !== false; });
+          if (ok) {
+            try { localStorage.setItem('em_synced_ga', JSON.stringify(ga)); } catch(e){}
+            log('Polling sync guia ✓');
+          }
+        });
+      }
+      // LEGACY
+      var lega = JSON.parse(localStorage.getItem('em_read_sections') || '[]');
+      var sentLega = JSON.parse(localStorage.getItem('em_synced_legacy') || '[]');
+      var newLega = lega.filter(function(s){ return sentLega.indexOf(s) === -1; });
+      if (newLega.length){
+        Promise.all(newLega.map(function(s){ return postEvent('legacy', s); })).then(function(results){
+          var ok = results.every(function(r){ return r !== false; });
+          if (ok) try { localStorage.setItem('em_synced_legacy', JSON.stringify(lega)); } catch(e){}
+        });
+      }
+    } catch(e){ log('Polling error:', e.message); }
+  }
+  // Arrancar polling cuando haya login + cada 8 segundos
+  setInterval(pollSync, 8000);
+  // Y al inicio, tras 2s para esperar al login
+  setTimeout(pollSync, 2500);
+  // Y cada vez que el usuario interactúa (visibilidad cambia)
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden) setTimeout(pollSync, 300);
+  });
+
   // ====== PANEL DIAGNOSTICO VISIBLE — se activa con ?syncdebug=1 ======
   // Muestra en pantalla el estado del sync sin necesidad de DevTools
   // Pensado para que el usuario haga screenshot desde el celular
