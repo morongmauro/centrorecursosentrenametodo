@@ -6730,7 +6730,7 @@ function homeApplyOrientation() {
   const guideRow = {
     label:'Guía de alimentación',
     done:(gDone>=gTotal && gTotal>0),
-    meta: gDone + '/' + gTotal + (nextChapterLabel ? ' · ' + nextChapterLabel : ''),
+    meta: gDone + '/' + gTotal,
     go:function(){ go('s-guia-alimentacion'); }
   };
   const groups = [
@@ -7324,20 +7324,13 @@ function gaSetupObserver() {
   });
 }
 
-// Fade-in observer para secciones
-let gaFadeObserver = null;
+// Fade-in: las secciones nacen con opacity:0 en el CSS. El IntersectionObserver
+// no siempre las revelaba a tiempo al entrar a la guía (sobre todo al restaurar
+// la posición de scroll guardada), lo que dejaba la pantalla en blanco y hacía
+// creer a los clientes que la guía estaba rota. Se revelan todas de inmediato.
 function gaSetupFadeIn() {
-  if (gaFadeObserver) gaFadeObserver.disconnect();
-  gaFadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('ga-visible');
-        gaFadeObserver.unobserve(entry.target);
-      }
-    });
-  }, { rootMargin: '0px 0px -10% 0px', threshold: .05 });
   document.querySelectorAll('#s-guia-alimentacion .ga-section').forEach(s => {
-    gaFadeObserver.observe(s);
+    s.classList.add('ga-visible');
   });
 }
 
