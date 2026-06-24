@@ -7614,6 +7614,21 @@ function gaGoToSection(slug) {
   const searchPanel = document.getElementById('ga-search-panel');
   if (searchPanel) searchPanel.style.display = 'none';
 
+  // Las secciones nacen con opacity:0 y solo se revelan (.ga-visible) al hacer
+  // scroll mediante el IntersectionObserver de fade-in. Cuando se navega de forma
+  // directa (asistente de lectura, TOC, buscador) hay que forzar la visibilidad de
+  // la sección destino y de las previas; de lo contrario se aterriza en una zona
+  // que sigue en opacity:0 y se ve en blanco.
+  const target = document.getElementById(slug);
+  if (target) {
+    const targetSection = target.closest('.ga-section');
+    const sections = Array.from(document.querySelectorAll('#s-guia-alimentacion .ga-section'));
+    for (const section of sections) {
+      section.classList.add('ga-visible');
+      if (section === targetSection) break;
+    }
+  }
+
   setTimeout(() => {
     const el = document.getElementById(slug);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
