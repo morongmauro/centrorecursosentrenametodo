@@ -6408,22 +6408,89 @@ function normalize(s) {
   return s.toLowerCase().trim().replace(/\s+/g, ' ').replace(/[áàä]/g,'a').replace(/[éè]/g,'e').replace(/[íì]/g,'i').replace(/[óòö]/g,'o').replace(/[úùü]/g,'u').replace(/ñ/g,'n');
 }
 
+// ─── VALIDACIÓN CONTRA EL CRM (vía Meal Tracker) ─────────────────────────
+// Pega aquí la URL de tu Meal Tracker desplegado (p. ej.
+// 'https://mealtracker-mauro.vercel.app'). Con eso, el acceso al centro se
+// valida contra el CRM — la MISMA lista que el Meal Tracker: registrar un
+// cliente en el CRM le da acceso a ambos; ponerlo en pausa se lo suspende
+// en ambos. Requiere agregar el dominio de ESTE centro a la variable
+// ALLOWED_ORIGINS del proyecto mealtracker en Vercel.
+// Si queda vacío o el endpoint no responde, se usa la lista local de
+// arriba (comportamiento anterior) — nadie pierde acceso por un fallo.
+const MT_AUTH_URL = '';
+
+// Devuelve Promise<{ok, status} | null>. null = validador no configurado o
+// inalcanzable (→ el que llama decide con la lista local).
+function remoteAccessCheck(name){
+  if (!MT_AUTH_URL) return Promise.resolve(null);
+  return fetch(MT_AUTH_URL.replace(/\/+$/, '') + '/api/authorize', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name }),
+  }).then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){
+      if (!j || typeof j.authorized !== 'boolean') return null;
+      return { ok: j.authorized, status: j.status || '' };
+    })
+    .catch(function(){ return null; });
+}
+
+// Capitaliza "juan pérez" → "Juan Pérez" (nombre canónico para clientes que
+// vienen del CRM y aún no están en la lista local de arriba).
+function formatClientName(name){
+  return String(name || '').trim().split(/\s+/)
+    .map(function(w){ return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); })
+    .join(' ');
+}
+
+function accessDeniedMessage(status){
+  if (status === 'pausa') return 'Tu plan está en pausa. Escríbele a Mauro para reactivarlo — tu avance queda guardado.';
+  if (status === 'finalizado') return 'Tu plan finalizó. Escríbele a Mauro si quieres retomarlo — tu avance queda guardado.';
+  return 'Ese nombre no está en la lista. Revisa la ortografía o escríbele a Mauro.';
+}
+
+let loginInFlight = false;
 function doLogin() {
   const name = document.getElementById('login-name').value;
   const err = document.getElementById('login-error');
   if (!name.trim()) { err.textContent = 'Escribe tu nombre y apellido.'; err.classList.add('show'); return; }
+  if (loginInFlight) return;
   const nameN = normalize(name);
   const found = AUTHORIZED_USERS.find(u => normalize(u) === nameN);
-  if (found) {
-    try { localStorage.setItem(CLIENT_KEY, JSON.stringify({name: found, t: Date.now()})); } catch(e) {}
-    setWelcomeName(found);
+
+  const proceed = (canonical, via) => {
+    try { localStorage.setItem(CLIENT_KEY, JSON.stringify({name: canonical, t: Date.now(), via: via || 'login'})); } catch(e) {}
+    setWelcomeName(canonical);
+    // Trae el avance guardado en la nube para ESTE cliente (otro
+    // dispositivo, caché borrada, etc.) — unión con lo local.
+    try { if (typeof emCloudRestore === 'function') emCloudRestore(); } catch(e) {}
     runLoginToHomeTransition(() => {
       document.body.classList.remove('locked');
       checkFirstTimeBanner();
     });
-  } else {
+  };
+
+  // Primero el CRM (una sola lista para todo el ecosistema); la lista local
+  // queda de respaldo/puente si el validador no responde o no conoce el
+  // nombre. La pausa del CRM manda incluso si el nombre sigue en la lista.
+  loginInFlight = true;
+  err.classList.remove('show');
+  remoteAccessCheck(name).then(function(remote){
+    loginInFlight = false;
+    if (remote) {
+      if (remote.ok) { proceed(found || formatClientName(name), 'crm'); return; }
+      if (remote.status === 'pausa' || remote.status === 'finalizado') {
+        err.textContent = accessDeniedMessage(remote.status);
+        err.classList.add('show');
+        return;
+      }
+      // not_found en CRM: la lista local del centro decide (puede tener
+      // nombres que aún no migran al CRM)
+    }
+    if (found) { proceed(found, 'lista'); return; }
+    err.textContent = accessDeniedMessage('not_found');
     err.classList.add('show');
-  }
+  });
 }
 
 // Transición shared-element: la kettlebell viaja del login al hero del home.
@@ -6508,15 +6575,150 @@ function goToOnboarding(event) {
     const stored = localStorage.getItem(CLIENT_KEY);
     if (stored) {
       const data = JSON.parse(stored);
-      const exists = AUTHORIZED_USERS.find(u => normalize(u) === normalize(data.name));
-      if (exists) {
-        document.body.classList.remove('locked');
-        setWelcomeName(exists);
-        checkFirstTimeBanner();
-      }
+      if (!data || !data.name) return;
+      // La sesión guardada se respeta SIEMPRE: fue validada al crearse (por
+      // la lista, por el CRM o por el puente del Meal Tracker). Así los
+      // clientes creados solo en el CRM no pierden su sesión, y las
+      // sesiones existentes siguen activas tal cual. La pausa del CRM la
+      // aplica sessionGuard (más abajo), sin cerrar la sesión.
+      const canonical = AUTHORIZED_USERS.find(u => normalize(u) === normalize(data.name)) || data.name;
+      document.body.classList.remove('locked');
+      setWelcomeName(canonical);
+      checkFirstTimeBanner();
     }
   } catch(e) {}
 })();
+
+// ─── PUENTE CON EL MEAL TRACKER ─────────────────────────────────────────
+// El botón "Aprendizaje" del Meal Tracker abre este centro con la identidad
+// del cliente en la URL (?mt_name=Nombre Apellido&mt_user=uuid). Si el
+// nombre está autorizado, se abre SU sesión directamente — mismo usuario en
+// ambas apps, sin segundo login. Manda sobre cualquier sesión previa del
+// navegador (p. ej. un dispositivo compartido).
+(function mtBridge(){
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const mtName = params.get('mt_name');
+    if (!mtName) return;
+    const mtUser = params.get('mt_user') || null;
+    const enter = (canonical) => {
+      try {
+        localStorage.setItem(CLIENT_KEY, JSON.stringify({
+          name: canonical, t: Date.now(), via: 'mealtracker', mt_user: mtUser,
+        }));
+      } catch(e) {}
+      document.body.classList.remove('locked');
+      setWelcomeName(canonical);
+      checkFirstTimeBanner();
+      try { if (typeof emCloudRestore === 'function') emCloudRestore(); } catch(e) {}
+    };
+    // Limpia la URL para no dejar el nombre a la vista ni en el historial
+    try { history.replaceState({}, '', window.location.pathname); } catch(e) {}
+    const found = AUTHORIZED_USERS.find(u => normalize(u) === normalize(mtName));
+    if (found) {
+      // Entrada inmediata (viene ya validado por el Meal Tracker); si el CRM
+      // lo tiene en pausa, la revalidación de sesión de abajo lo bloquea.
+      enter(found);
+      return;
+    }
+    // No está en la lista local: puede ser un cliente nuevo creado SOLO en
+    // el CRM — validamos contra el CRM antes de dejarlo pasar.
+    remoteAccessCheck(mtName).then(function(remote){
+      if (remote && remote.ok) enter(formatClientName(mtName));
+    });
+  } catch(e) {}
+})();
+
+// ─── REVALIDACIÓN DE LA SESIÓN GUARDADA (pausa desde el CRM) ────────────
+// En segundo plano: si el CRM dice que el plan está en pausa/finalizado,
+// se bloquea la pantalla con un mensaje claro. NUNCA se cierra la sesión ni
+// se borra el avance — al reactivar el plan en el CRM, el cliente entra de
+// nuevo con todo tal cual. Si no hay red o el validador no está
+// configurado, no pasa nada (la sesión sigue activa: fallo abierto).
+(function sessionGuard(){
+  try {
+    var d = JSON.parse(localStorage.getItem(CLIENT_KEY) || 'null');
+    if (!d || !d.name) return;
+    remoteAccessCheck(d.name).then(function(remote){
+      if (!remote) return;
+      if (!remote.ok && (remote.status === 'pausa' || remote.status === 'finalizado')) {
+        document.body.classList.add('locked');
+        var err = document.getElementById('login-error');
+        if (err) { err.textContent = accessDeniedMessage(remote.status); err.classList.add('show'); }
+      }
+    });
+  } catch(e) {}
+})();
+
+// ─── RESTAURAR AVANCE DESDE SUPABASE ────────────────────────────────────
+// El avance local (localStorage) es por navegador; cada lectura además se
+// registra en Supabase (reading_events → vista reading_state) con el nombre
+// del cliente. Al abrir sesión, fusionamos lo que hay en la nube con lo
+// local: así el cliente ve su avance REAL aunque entre desde otro
+// dispositivo o haya borrado caché. Nunca se pierde nada: es unión, no
+// reemplazo.
+function emCloudRestore(){
+  var SUPA_URL = 'https://kkoayfexdhpazufmyeoj.supabase.co';
+  var SUPA_KEY = 'sb_publishable_9UimuwTGp2aIhe-4oSwJpw_ORwmzzhn';
+  var name = null;
+  try { var d = JSON.parse(localStorage.getItem(CLIENT_KEY) || 'null'); name = d && d.name; } catch(e) {}
+  if (!name) return;
+  // Una vez por sesión de navegador y por cliente (evita refetch en cada nav)
+  try { if (sessionStorage.getItem('em_cloud_restored') === name) return; } catch(e) {}
+  var headers = { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY };
+  var q = '?client_name=eq.' + encodeURIComponent(name) + '&select=source,section_key';
+  function markDone(){ try { sessionStorage.setItem('em_cloud_restored', name); } catch(e) {} }
+  function mergeKey(storageKey, values){
+    if (!values.length) return false;
+    try {
+      var cur = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      var set = {};
+      cur.forEach(function(v){ set[v] = 1; });
+      var changed = false;
+      values.forEach(function(v){ if (!set[v]) { set[v] = 1; changed = true; } });
+      if (changed) localStorage.setItem(storageKey, JSON.stringify(Object.keys(set)));
+      return changed;
+    } catch(e){ return false; }
+  }
+  fetch(SUPA_URL + '/rest/v1/reading_state' + q, { headers: headers })
+    .then(function(r){
+      if (r.ok) return r.json();
+      // Plan B: tabla cruda de eventos (por si la vista cambia de nombre)
+      return fetch(SUPA_URL + '/rest/v1/reading_events' + q, { headers: headers })
+        .then(function(r2){ return r2.ok ? r2.json() : []; });
+    })
+    .then(function(rows){
+      if (!Array.isArray(rows)) { markDone(); return; }
+      var hub = [], ga = [], legacy = [];
+      rows.forEach(function(ev){
+        if (!ev || !ev.section_key) return;
+        if (ev.source === 'hub') hub.push(ev.section_key);
+        else if (ev.source === 'guia' || ev.source === 'ga') ga.push(ev.section_key);
+        else if (ev.source === 'legacy') legacy.push(ev.section_key);
+      });
+      var changed = false;
+      if (mergeKey(HUB_READ_KEY, hub)) changed = true;
+      if (mergeKey(GA_KEY_READ, ga)) changed = true;
+      if (mergeKey(READ_KEY, legacy)) changed = true;
+      markDone();
+      if (!changed) return;
+      // Repintar la UI con el avance recién llegado — sin recargar: son las
+      // mismas funciones que la página usa al cargar (chulos del hub,
+      // orientación del home y progreso de la biblioteca leen localStorage).
+      var applyUI = function(){
+        try { if (typeof hubApplyReadStates === 'function') hubApplyReadStates(); } catch(e){}
+        try { if (typeof homeApplyOrientation === 'function') homeApplyOrientation(); } catch(e){}
+        try { if (typeof bibApplyGuiaProgress === 'function') bibApplyGuiaProgress(); } catch(e){}
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function(){ setTimeout(applyUI, 60); });
+      } else {
+        applyUI();
+      }
+    })
+    .catch(function(){ /* sin red: se usa solo el avance local */ });
+}
+emCloudRestore();
 
 document.addEventListener('DOMContentLoaded', () => {
   const nameInput = document.getElementById('login-name');
