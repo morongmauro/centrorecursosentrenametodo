@@ -38,7 +38,7 @@
 html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 body{max-width:520px;margin:0 auto;background:var(--bg);min-height:100vh;}
 /* Cuando el usuario NO está logueado, el login ocupa TODA la pantalla (sin max-width ni márgenes) */
-body.locked{max-width:none !important;margin:0 !important;width:100vw !important;background:#e2e3e0 !important;}
+body.locked{max-width:none !important;margin:0 !important;width:100vw !important;background:#efebe0 !important;}
 body.locked .login-screen{
   position:fixed !important;
   top:0 !important;left:0 !important;right:0 !important;bottom:0 !important;
@@ -60,8 +60,9 @@ body.locked .login-screen{
 /* ============ LOGIN EDITORIAL (v4) ============ */
 .login-screen{
   min-height:100vh;
-  background:#e8e9e7;
-  background-image: linear-gradient(180deg, #ecedeb 0%, #e2e3e0 100%);
+  background:#f4f1e8;
+  /* Crema cálido — misma familia que el fondo del Meal Tracker (#F7F4ED) */
+  background-image: linear-gradient(180deg, #f7f4ed 0%, #efebe0 100%);
   display:flex;align-items:center;justify-content:center;
   padding:2.5rem 1.5rem;color:var(--text);
   position:relative;overflow:hidden;
@@ -198,7 +199,6 @@ body.locked .login-screen{
   display:block;
   object-fit:contain;
   filter:drop-shadow(0 12px 24px rgba(0,0,0,.10));
-  mix-blend-mode:multiply;
 }
 
 /* RESPONSIVE — el layout absoluto se mantiene, solo se ajustan tamaños */
@@ -5217,6 +5217,61 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
   line-height:1 !important;
 }
 
+/* ============================================================ */
+/* ===== v9 · ESTADO DE LECTURA CLARO (Leído / Sigue aquí) ===== */
+/* ============================================================ */
+/* Pill de estado explícita en las cards del onboarding: texto en
+   lugar de un circulito ambiguo. El JS (hubApplyReadStates) la crea. */
+.hub-card-state{
+  position:absolute; top:1.05rem; right:1.05rem; z-index:3;
+  font-size:9.5px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+  padding:5px 10px; border-radius:100px;
+  pointer-events:none; white-space:nowrap;
+}
+.hub-card-state[data-state="read"]{
+  background:var(--olive-soft); color:var(--olive-dark);
+  border:.5px solid var(--olive-chip);
+}
+.hub-card-state[data-state="read"]::before{ content:''; }
+.hub-card-state[data-state="next"]{
+  background:var(--black); color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,.22);
+}
+.hub-card-state[data-state="pending"]{
+  background:#fff; color:var(--text-mute);
+  border:.5px solid var(--border);
+}
+/* La pill reemplaza el circulito en el onboarding (evita doble señal) */
+#s-onboarding .hub-card .hub-card-status{ display:none !important; }
+/* En cards compactas la pill queda centrada verticalmente y el texto no la pisa */
+.hub-card.compact .hub-card-state{ top:50%; transform:translateY(-50%); }
+.hub-card.compact .hub-card-eyebrow,
+.hub-card.compact .hub-card-title{ padding-right:96px !important; }
+
+/* Lista de orientación del home: leído = check oliva, siguiente = fila resaltada */
+.orient-row.done .orient-row-ico{
+  background:var(--olive) !important;
+  border-color:var(--olive) !important;
+}
+.orient-row.next{
+  background:var(--olive-soft);
+  border-radius:12px;
+  border-bottom-color:transparent;
+  margin:2px -8px;
+  padding-left:10px;
+  padding-right:10px;
+}
+.orient-row.next .orient-row-arr{ display:none; } /* la pill lo reemplaza */
+.orient-row.next::after{
+  /* display explícito: una regla anterior (.orient-row[data-section]::after) lo pone en none */
+  display:inline-flex; align-items:center;
+  content:'SIGUE AQUÍ';
+  font-size:8.5px; font-weight:800; letter-spacing:.1em;
+  color:#fff; background:var(--olive-dark);
+  padding:3px 7px; border-radius:100px;
+  flex-shrink:0;
+}
+
 </style>
 </head>
 <body class="locked">
@@ -5327,7 +5382,29 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     </div>
 
     <div class="login-visual">
-      <img src="img/kettlebell.png" alt="" class="login-kettlebell" id="login-kettlebell">
+      <!-- Kettlebell de marca: ilustración flat en la paleta oliva/crema del
+           ecosistema (mismo lenguaje visual que el Meal Tracker), en lugar de
+           la foto de producto. -->
+      <svg class="login-kettlebell" id="login-kettlebell" viewBox="0 0 260 260" role="img" aria-hidden="true">
+        <defs>
+          <radialGradient id="kt-halo" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(122,140,90,.30)"/>
+            <stop offset="65%" stop-color="rgba(122,140,90,.10)"/>
+            <stop offset="100%" stop-color="rgba(122,140,90,0)"/>
+          </radialGradient>
+          <linearGradient id="kt-body" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#5a6741"/>
+            <stop offset="100%" stop-color="#3d4729"/>
+          </linearGradient>
+        </defs>
+        <circle cx="130" cy="136" r="120" fill="url(#kt-halo)"/>
+        <path d="M86 120 C72 58 96 34 130 34 C164 34 188 58 174 120" fill="none" stroke="url(#kt-body)" stroke-width="20" stroke-linecap="round"/>
+        <circle cx="130" cy="164" r="66" fill="url(#kt-body)"/>
+        <ellipse cx="104" cy="138" rx="26" ry="15" fill="rgba(255,255,255,.10)" transform="rotate(-26 104 138)"/>
+        <circle cx="152" cy="172" r="23" fill="rgba(255,255,255,.10)"/>
+        <text x="152" y="173" text-anchor="middle" dominant-baseline="central" font-family="'Bebas Neue',sans-serif" font-size="24" letter-spacing="1.5" fill="#e8ebe0">EM</text>
+        <ellipse cx="130" cy="238" rx="56" ry="8" fill="rgba(20,20,20,.10)"/>
+      </svg>
     </div>
 
   </div>
@@ -5401,15 +5478,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
           <div class="home-tile-desc">Resuelve dudas rápido</div>
         </div>
 
-        <a href="https://mealtrackermauromoron.vercel.app/" target="_blank" rel="noopener" class="home-tile">
-          <div class="home-tile-ico">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4 2.5-1 2.5-4-1-5-2.5-5zM17 12v9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="home-tile-title">App de Meal Tracking</div>
-          <div class="home-tile-desc">Registra tus comidas</div>
-        </a>
-
-        <a href="https://ig.me/j/AbYeQwBuaYR8SlZZ/" target="_blank" rel="noopener" class="home-tile home-tile-wide">
+        <a href="https://ig.me/j/AbYeQwBuaYR8SlZZ/" target="_blank" rel="noopener" class="home-tile">
           <div class="home-tile-ico">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
           </div>
@@ -5483,7 +5552,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-text"><p>La alimentación saludable <strong>no es restricción. Es gestión.</strong></p>
 <p>El objetivo no es seguir menús rígidos, sino aprender a tomar <strong>decisiones alineadas con tu objetivo</strong>.</p>
 <p>Los alimentos son tu base: energía, recuperación y rendimiento. Lo que haces fuera del entrenamiento impacta directamente el resultado.</p>
-<p>Tendrás una <strong>meta nutricional diaria</strong> y herramientas: galería de recetas, guía de alimentación y un sistema de registro simple.</p>
+<p>Tendrás una <strong>meta nutricional diaria</strong> y herramientas: guía de alimentación y una app de registro simple con <strong>recetas inteligentes</strong>.</p>
 <p class="progm-note">No buscamos perfección. <strong>Buscamos consistencia.</strong></p></div>
       </div>
       <div class="progm-block">
@@ -5493,8 +5562,8 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="progm-block-title">Tu entorno de trabajo</div>
         <div class="progm-block-text"><p>Cinco espacios sostienen tu proceso:</p>
 <ul class="progm-list">
-<li><strong>App de entrenamiento.</strong> Tus rutinas con video, seguimiento de progreso y galería de recetas.</li>
-<li><strong>App de registro de comidas.</strong> Para registrar lo que comes y estimar tus porciones según tu meta.</li>
+<li><strong>App de entrenamiento.</strong> Tus rutinas con video y seguimiento de progreso.</li>
+<li><strong>App de registro de comidas.</strong> Para registrar lo que comes, estimar tus porciones según tu meta y recibir recetas inteligentes con tus ingredientes.</li>
 <li><strong>Chat 1:1 por WhatsApp.</strong> Canal directo conmigo para resolver dudas y ajustar tu proceso.</li>
 <li><strong>Centro de Recursos (web app).</strong> Todo el material informativo y las guías de aprendizaje en un solo lugar.</li>
 <li><strong>Chat de grupo privado en Instagram.</strong> Comunidad del programa: contenido y acompañamiento.</li>
@@ -5622,7 +5691,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
               <div class="jrn-card-meaning">Comprendes la lógica del método.</div>
             </div>
             <div class="jrn-steps-label">Lo que haces tú</div>
-            <ul class="jrn-steps"><li>Registras tu <strong>punto de partida</strong> (fotografía y composición corporal).</li><li>Revisas la <strong>estructura de las rutinas</strong>.</li><li>Revisas videos y explicaciones de ejercicios para entender <strong>postura y ejecución</strong>.</li><li>Exploras las herramientas de nutrición (guía, recetas, chatbot AI).</li></ul>
+            <ul class="jrn-steps"><li>Registras tu <strong>punto de partida</strong> (fotografía y composición corporal).</li><li>Revisas la <strong>estructura de las rutinas</strong>.</li><li>Revisas videos y explicaciones de ejercicios para entender <strong>postura y ejecución</strong>.</li><li>Exploras las herramientas de nutrición (guía de alimentación y app de Meal Tracking con recetas inteligentes).</li></ul>
           </div>
           <div class="jrn-result">
             <span class="jrn-result-label">Resultado</span>
@@ -5728,7 +5797,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
       <div class="sub-title">CÓMO FUNCIONA<br>LA APP DE ENTRENAMIENTO</div>
       <div class="sub-title-line"></div>
       <div class="sub-intro">
-        Tu centro de control: rutinas, meta nutricional, recetas y progreso. <strong>Deslízate por las secciones.</strong>
+        Tu centro de control: rutinas, calendario y registro de progreso. <strong>Deslízate por las secciones.</strong>
       </div>
     </div>
 
@@ -5741,7 +5810,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
     <img id="appm-zoom-img" src="" alt="">
   </div>
 
-  <script id="appm-data" type="application/json">[{"section": "C\u00f3mo funciona la app", "title": "Tu app de entrenamiento", "body": "<p>Dentro del programa usamos una app para organizar y dar seguimiento a los tres pilares del proceso: <strong>entrenamiento, alimentaci\u00f3n y progreso</strong>.</p>\n<p>No es una app de rutinas gen\u00e9ricas. Es la herramienta de tu <strong>coaching online personalizado</strong>: registrar tu entrenamiento permite basar el proceso en datos reales y tomar decisiones con criterio.</p>\n<p>Aqu\u00ed encontrar\u00e1s tus rutinas con videos, tu calendario, tu meta nutricional diaria, recetas y las gr\u00e1ficas de tu progreso.</p>", "img": ""}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "D\u00f3nde encuentras tu rutina del d\u00eda", "body": "<p>Puedes iniciar tu rutina desde dos lugares: la secci\u00f3n <strong>Home</strong> o la secci\u00f3n <strong>Calendar</strong>, donde se muestra c\u00f3mo est\u00e1 organizada tu semana de entrenamiento.</p>\n<p>All\u00ed seleccionas la <strong>rutina programada para el d\u00eda</strong> e inicias. El Home funciona como tu punto de partida diario: te orienta antes de entrenar.</p>", "img": "img/app-tutorial-01-rutina-del-dia.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "Ejecutar: videos, registro y percepci\u00f3n", "body": "<p>Al abrir la rutina, cada ejercicio incluye un <strong>video demostrativo</strong> y una explicaci\u00f3n textual para guiar su correcta ejecuci\u00f3n.</p>\n<p>El orden responde a una l\u00f3gica de entrenamiento: calentamiento, fuerza, resistencia, movilidad y enfriamiento. <strong>S\u00edguelo como est\u00e1 planteado.</strong></p>\n<p>Durante la sesi\u00f3n registras los <strong>pesos, repeticiones y tu nivel de percepci\u00f3n de esfuerzo</strong>. Esto da trazabilidad real a tu progreso.</p>", "img": "img/app-tutorial-02-ejecucion-videos.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "La galer\u00eda de workouts y tu programa", "body": "<p>En la secci\u00f3n <strong>Workouts</strong> encuentras tu programa completo: las rutinas organizadas por fase, con su duraci\u00f3n estimada y n\u00famero de ejercicios.</p>\n<p>Esta secci\u00f3n es <strong>de consulta</strong>: \u00fasala si quieres visualizar tus ejercicios y videos. Pero lo recomendable es <strong>activar las rutinas desde el Calendar o el Home</strong>, seg\u00fan tu calendario. La galer\u00eda es para consultar, no para iniciar.</p>", "img": "img/app-tutorial-03-galeria-workouts.png"}, {"section": "Secci\u00f3n 2 \u00b7 Meta nutricional y recetas", "title": "Tu meta nutricional diaria y macros", "body": "<p>En la secci\u00f3n <strong>Goals</strong> se encuentra tu meta nutricional diaria: calor\u00edas y macronutrientes.</p>\n<p>Funciona como un <strong>marco de referencia</strong> para gestionar tu alimentaci\u00f3n. La idea es consultarla y tenerla clara para avanzar hacia tu objetivo: aumentar, reducir o mantener peso.</p>\n<p>Esta meta <strong>se va adaptando seg\u00fan progresas</strong>. Cuando ajustemos la estimaci\u00f3n de tus requerimientos, se te notificar\u00e1 oportunamente.</p>", "img": "img/app-tutorial-04-meta-nutricional.png"}, {"section": "Secci\u00f3n 2 \u00b7 Meta nutricional y recetas", "title": "Galer\u00eda de recetas, video y porciones", "body": "<p>En la secci\u00f3n <strong>Meals</strong> encuentras una galer\u00eda amplia de recetas, ajustadas a las <strong>proporciones que t\u00fa necesitas</strong> para alcanzar tu meta nutricional diaria.</p>\n<p>Cada receta incluye lista de ingredientes, proporciones sugeridas, explicaci\u00f3n textual y <strong>video de preparaci\u00f3n</strong>.</p>\n<p>Tienes un listado inicial de recetas eficientes en tiempo, nutrici\u00f3n y econom\u00eda. Y puedes usar el <strong>buscador</strong> para encontrar m\u00e1s opciones seg\u00fan tus ingredientes.</p>", "img": "img/app-tutorial-05-galeria-recetas.png"}, {"section": "Secci\u00f3n 3 \u00b7 Registro peri\u00f3dico de progreso", "title": "Fotos de progreso y composici\u00f3n corporal", "body": "<p>Para observar tu evoluci\u00f3n, registra <strong>mensualmente</strong> tu peso, porcentaje de grasa corporal y un registro fotogr\u00e1fico.</p>\n<p>Lo haces en las secciones <strong>Body Stats y Photos</strong>, desde el Calendar o desde el men\u00fa de opciones.</p>\n<p>Este registro peri\u00f3dico es lo que permite <strong>medir cambios reales</strong> y ajustar el proceso con datos, no con percepci\u00f3n.</p>", "img": "img/app-tutorial-06-fotos-progreso.png"}, {"section": "Secci\u00f3n 4 \u00b7 Recomendaciones", "title": "Buenas pr\u00e1cticas para aprovechar la app", "body": "<p>H\u00e1bitos que hacen la diferencia en tu proceso:</p>\n<ul class=\"app-modal-list\">\n<li>Revisa el <strong>Home</strong> antes de iniciar tu entrenamiento.</li>\n<li>Sigue las rutinas en el <strong>orden del calendario</strong>.</li>\n<li>Repasa los <strong>videos</strong> de los ejercicios antes de realizarlos.</li>\n<li>Consulta tu <strong>meta nutricional</strong> como referencia.</li>\n<li>Registra <strong>pesos, repeticiones e intensidad</strong> de cada sesi\u00f3n.</li>\n<li>Ap\u00f3yate en la <strong>gu\u00eda de alimentaci\u00f3n</strong> y la <strong>app de Meal Tracking</strong>.</li>\n</ul>", "img": ""}]</script>
+  <script id="appm-data" type="application/json">[{"section": "C\u00f3mo funciona la app", "title": "Tu app de entrenamiento", "body": "<p>Dentro del programa usamos una app para organizar y dar seguimiento a dos pilares del proceso: <strong>entrenamiento y progreso</strong>.</p>\n<p>No es una app de rutinas gen\u00e9ricas. Es la herramienta de tu <strong>coaching online personalizado</strong>: registrar tu entrenamiento permite basar el proceso en datos reales y tomar decisiones con criterio.</p>\n<p>Aqu\u00ed encontrar\u00e1s tus rutinas con videos, tu calendario y las gr\u00e1ficas de tu progreso.</p>", "img": ""}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "D\u00f3nde encuentras tu rutina del d\u00eda", "body": "<p>Puedes iniciar tu rutina desde dos lugares: la secci\u00f3n <strong>Home</strong> o la secci\u00f3n <strong>Calendar</strong>, donde se muestra c\u00f3mo est\u00e1 organizada tu semana de entrenamiento.</p>\n<p>All\u00ed seleccionas la <strong>rutina programada para el d\u00eda</strong> e inicias. El Home funciona como tu punto de partida diario: te orienta antes de entrenar.</p>", "img": "img/app-tutorial-01-rutina-del-dia.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "Ejecutar: videos, registro y percepci\u00f3n", "body": "<p>Al abrir la rutina, cada ejercicio incluye un <strong>video demostrativo</strong> y una explicaci\u00f3n textual para guiar su correcta ejecuci\u00f3n.</p>\n<p>El orden responde a una l\u00f3gica de entrenamiento: calentamiento, fuerza, resistencia, movilidad y enfriamiento. <strong>S\u00edguelo como est\u00e1 planteado.</strong></p>\n<p>Durante la sesi\u00f3n registras los <strong>pesos, repeticiones y tu nivel de percepci\u00f3n de esfuerzo</strong>. Esto da trazabilidad real a tu progreso.</p>", "img": "img/app-tutorial-02-ejecucion-videos.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "La galer\u00eda de workouts y tu programa", "body": "<p>En la secci\u00f3n <strong>Workouts</strong> encuentras tu programa completo: las rutinas organizadas por fase, con su duraci\u00f3n estimada y n\u00famero de ejercicios.</p>\n<p>Esta secci\u00f3n es <strong>de consulta</strong>: \u00fasala si quieres visualizar tus ejercicios y videos. Pero lo recomendable es <strong>activar las rutinas desde el Calendar o el Home</strong>, seg\u00fan tu calendario. La galer\u00eda es para consultar, no para iniciar.</p>", "img": "img/app-tutorial-03-galeria-workouts.png"}, {"section": "Secci\u00f3n 2 \u00b7 Registro peri\u00f3dico de progreso", "title": "Fotos de progreso y composici\u00f3n corporal", "body": "<p>Para observar tu evoluci\u00f3n, registra <strong>mensualmente</strong> tu peso, porcentaje de grasa corporal y un registro fotogr\u00e1fico.</p>\n<p>Lo haces en las secciones <strong>Body Stats y Photos</strong>, desde el Calendar o desde el men\u00fa de opciones.</p>\n<p>Este registro peri\u00f3dico es lo que permite <strong>medir cambios reales</strong> y ajustar el proceso con datos, no con percepci\u00f3n.</p>", "img": "img/app-tutorial-06-fotos-progreso.png"}, {"section": "Secci\u00f3n 3 \u00b7 Recomendaciones", "title": "Buenas pr\u00e1cticas para aprovechar la app", "body": "<p>H\u00e1bitos que hacen la diferencia en tu proceso:</p>\n<ul class=\"app-modal-list\">\n<li>Revisa el <strong>Home</strong> antes de iniciar tu entrenamiento.</li>\n<li>Sigue las rutinas en el <strong>orden del calendario</strong>.</li>\n<li>Repasa los <strong>videos</strong> de los ejercicios antes de realizarlos.</li>\n<li>Registra <strong>pesos, repeticiones e intensidad</strong> de cada sesi\u00f3n.</li>\n<li>Ap\u00f3yate en la <strong>gu\u00eda de alimentaci\u00f3n</strong> y la <strong>app de Meal Tracking</strong>.</li>\n</ul>", "img": ""}]</script>
 </div>
 
 <!-- =============================================== -->
@@ -6100,7 +6169,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         </div>
         <div class="hub-card-eyebrow">02 · App</div>
         <div class="hub-card-title">Cómo funciona la app de entrenamiento</div>
-        <div class="hub-card-desc">Tu centro de control: cómo iniciar tus rutinas, consultar tu meta nutricional, recetas y registrar tu progreso.</div>
+        <div class="hub-card-desc">Tu centro de control: cómo iniciar tus rutinas, seguir tu calendario y registrar tu progreso.</div>
         <div class="hub-card-foot">
           <span class="hub-card-time">5 min</span>
           <span class="hub-card-dot">·</span>
@@ -6209,7 +6278,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         </div>
         <div class="qs-block">
           <div class="qs-block-text">
-            <strong>La alimentación no es restricción, es gestión</strong>. Tienes una meta nutricional diaria y herramientas (recetas, guía, chatbot AI) para llegar a ella sin obsesionarte.
+            <strong>La alimentación no es restricción, es gestión</strong>. Tienes una meta nutricional diaria y herramientas (guía de alimentación y app de Meal Tracking con recetas inteligentes) para llegar a ella sin obsesionarte.
           </div>
         </div>
         <div class="qs-callout">
@@ -6249,7 +6318,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
         <div class="qs-block">
           <div class="qs-block-eyebrow">App del programa</div>
           <div class="qs-block-text">
-            Tu <strong>centro de control</strong>. Calendario, videos de ejercicios, registro de cargas, check-ins y herramientas de nutrición. Todo en un solo lugar.
+            Tu <strong>centro de control</strong>. Calendario, videos de ejercicios, registro de cargas y seguimiento de tu progreso. Todo en un solo lugar.
           </div>
         </div>
         <div class="qs-block">
@@ -6349,7 +6418,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
           </div>
         </div>
 
-        <button class="qs-cta-primary" onclick="alert('Aquí se abriría la app de entrenamiento')">
+        <button class="qs-cta-primary" onclick="openTrainingApp(event)">
           <span>Abrir app de entrenamiento</span><span class="qs-arr">→</span>
         </button>
         <button class="qs-cta-secondary" onclick="go('s-onboarding')">
@@ -6392,16 +6461,15 @@ const FTB_KEY = 'em_ftb_dismissed';
 
 function openTrainingApp(event) {
   // Detecta el sistema operativo y abre el store correcto
+  if (event) event.preventDefault();
   const ua = navigator.userAgent || navigator.vendor || '';
   const isIOS = /iPad|iPhone|iPod/.test(ua) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  if (isIOS) {
-    if (event) event.preventDefault();
-    window.open('https://apps.apple.com/us/app/fitness-app-abc-trainerize/id516851502', '_blank', 'noopener');
-    return false;
-  }
-  // Android y resto: usa el href por defecto (Google Play)
-  return true;
+  const url = isIOS
+    ? 'https://apps.apple.com/us/app/fitness-app-abc-trainerize/id516851502'
+    : 'https://play.google.com/store/search?q=ABC%20Trainerize&c=apps';
+  window.open(url, '_blank', 'noopener');
+  return false;
 }
 
 function normalize(s) {
@@ -6742,40 +6810,6 @@ function scrollToOnboarding() {
   if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-function faq(el){
-  const open = el.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
-  if(!open) el.classList.add('open');
-}
-
-function searchFaq(query) {
-  const q = normalize(query);
-  const wrap = document.getElementById('faq-search-wrap');
-  if (q.length > 0) wrap.classList.add('has-text'); else wrap.classList.remove('has-text');
-  const items = document.querySelectorAll('#s-faq .faq-item');
-  let visibleCount = 0;
-  items.forEach(item => {
-    const qData = normalize(item.dataset.q || '');
-    const qText = normalize(item.querySelector('.faq-q p').textContent);
-    const aText = normalize(item.querySelector('.faq-a p').textContent);
-    const matches = !q || qData.includes(q) || qText.includes(q) || aText.includes(q);
-    if (matches) { item.classList.remove('hidden'); visibleCount++; }
-    else item.classList.add('hidden');
-  });
-  document.querySelectorAll('[data-faq-group]').forEach(label => {
-    let next = label.nextElementSibling;
-    let hasVisible = false;
-    while (next && !next.hasAttribute('data-faq-group') && !next.classList.contains('mark-read-btn')) {
-      if (next.classList.contains('faq-item') && !next.classList.contains('hidden')) { hasVisible = true; break; }
-      next = next.nextElementSibling;
-    }
-    label.style.display = hasVisible ? '' : 'none';
-  });
-  document.getElementById('faq-no-results').classList.toggle('show', visibleCount === 0 && q.length > 0);
-}
-
-function clearSearch() { document.getElementById('faq-search').value = ''; searchFaq(''); }
-
 const READ_KEY = 'em_read_sections';
 function getReadSections() { try { return JSON.parse(localStorage.getItem(READ_KEY) || '[]'); } catch(e) { return []; } }
 function markRead(section, btn) {
@@ -6851,18 +6885,32 @@ function hubApplyReadStates() {
 
   // Jerarquía: la PRIMERA no leída es protagonista (card completa);
   // todas las demás (leídas o futuras) quedan compactas tipo checklist.
+  // OJO: scope a #s-onboarding — hay .hub-card[data-section] también en la
+  // Biblioteca (que va antes en el DOM) y sin el scope se robaba el foco.
   let focusSet = false;
-  document.querySelectorAll('.hub-card[data-section]').forEach(card => {
+  document.querySelectorAll('#s-onboarding .hub-card[data-section]').forEach(card => {
     const isRead = read.includes(card.dataset.section);
     card.classList.toggle('read', isRead);
+    let isNext = false;
     if (!isRead && !focusSet) {
       card.classList.add('hub-card-next');
       card.classList.remove('compact');
       focusSet = true;
+      isNext = true;
     } else {
       card.classList.remove('hub-card-next');
       card.classList.add('compact');
     }
+    // Pill de estado explícita: el cliente ve con texto qué leyó y qué sigue
+    let state = card.querySelector('.hub-card-state');
+    if (!state) {
+      state = document.createElement('div');
+      state.className = 'hub-card-state';
+      card.appendChild(state);
+    }
+    if (isRead) { state.textContent = '✓ Leído'; state.dataset.state = 'read'; }
+    else if (isNext) { state.textContent = 'Sigue aquí'; state.dataset.state = 'next'; }
+    else { state.textContent = 'Pendiente'; state.dataset.state = 'pending'; }
   });
 
   const doneEl = document.getElementById('hub-progress-done');
@@ -8055,9 +8103,6 @@ function apptBuild() {
       if (s.indexOf('iniciar tu rutina') !== -1)
         return { key:'rutina',   callout:'Activa la rutina desde Home o Calendar',
                  svg:'<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' };
-      if (s.indexOf('meta nutricional') !== -1 || s.indexOf('recetas') !== -1)
-        return { key:'meta',     callout:'Tu meta diaria como referencia',
-                 svg:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>' };
       if (s.indexOf('progreso') !== -1)
         return { key:'progreso', callout:'Mide para optimizar',
                  svg:'<svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 14l3.5-4 3 2.5L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' };
