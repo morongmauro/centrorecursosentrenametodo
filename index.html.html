@@ -7175,9 +7175,10 @@ function showReadToast(message) {
 function openMealTrackerGuide() {
   hubMarkRead('meal-tracker');
   hubApplyReadStates();
-  // Carga diferida del iframe la primera vez y navega dentro de la misma app
+  // Carga diferida del iframe la primera vez y navega dentro de la misma app.
+  // El ?v= evita que el navegador sirva una versión vieja de la guía desde caché.
   const fr = document.getElementById('meal-guide-frame');
-  if (fr && !fr.getAttribute('src')) fr.setAttribute('src', 'guiamealtracker.html');
+  if (fr && !fr.getAttribute('src')) fr.setAttribute('src', 'guiamealtracker.html?v=' + Date.now());
   go('s-meal-guide');
 }
 
@@ -8263,6 +8264,80 @@ function initBlurCarousel(scroller){
     if (id === 's-programa') setTimeout(function(){ initBlurCarousel(document.querySelector('#s-programa .progm-blocks')); }, 60);
     if (id === 's-journey')  setTimeout(function(){ initBlurCarousel(document.querySelector('#s-journey .jrn-timeline')); }, 60);
   };
+})();
+</script>
+
+<!-- ============================================================ -->
+<!-- ====== AUTO-ACTUALIZACIÓN — sin refresh manual ============  -->
+<!-- Compara el ETag/Last-Modified de esta página contra el      -->
+<!-- servidor (al volver a la pestaña y cada 15 min). Si hay una -->
+<!-- versión nueva: recarga sola cuando el cliente REGRESA a la  -->
+<!-- app (estuvo >1 min fuera, no interrumpe nada) o muestra un  -->
+<!-- aviso "toca para actualizar" si la está usando en ese       -->
+<!-- momento. Si el servidor no responde o no manda headers, no  -->
+<!-- hace nada (fallo abierto, igual que el resto del centro).   -->
+<!-- ============================================================ -->
+<script>
+(function(){
+  var CHECK_EVERY_MS = 15 * 60 * 1000;   // chequeo periódico con la app abierta
+  var AWAY_MS = 60 * 1000;               // "estuvo fuera" = >1 min oculta
+  var baseline = null;                   // firma de la versión cargada
+  var lastHiddenAt = 0;
+  var checking = false;
+
+  function signatureOf(r){
+    var etag = r.headers.get('ETag') || '';
+    var lm = r.headers.get('Last-Modified') || '';
+    return (etag || lm) ? (etag + '|' + lm) : null;
+  }
+
+  function fetchSignature(){
+    return fetch(window.location.href, { method: 'HEAD', cache: 'no-store' })
+      .then(function(r){ return r.ok ? signatureOf(r) : null; })
+      .catch(function(){ return null; });
+  }
+
+  function showUpdatePill(){
+    if (document.getElementById('em-update-pill')) return;
+    var pill = document.createElement('div');
+    pill.id = 'em-update-pill';
+    pill.setAttribute('role', 'button');
+    pill.style.cssText =
+      'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:500;' +
+      'display:flex;align-items:center;gap:9px;background:#141414;color:#fff;' +
+      'padding:12px 20px;border-radius:100px;font-size:13px;font-weight:600;' +
+      'letter-spacing:.2px;box-shadow:0 12px 30px rgba(0,0,0,.3);cursor:pointer;' +
+      'max-width:92vw;animation:slideUp .35s ease;';
+    pill.innerHTML = '<span style="font-size:15px;">✨</span><span>Hay una versión nueva · toca para actualizar</span>';
+    pill.onclick = function(){ window.location.reload(); };
+    document.body.appendChild(pill);
+  }
+
+  function checkForUpdate(reloadIfAway){
+    if (!baseline || checking) return;
+    checking = true;
+    fetchSignature().then(function(sig){
+      checking = false;
+      if (!sig || sig === baseline) return;
+      // Hay versión nueva desplegada
+      var wasAway = lastHiddenAt && (Date.now() - lastHiddenAt > AWAY_MS);
+      if (reloadIfAway && wasAway) {
+        // Regresa a la app tras estar fuera: recargar es invisible para él
+        window.location.reload();
+      } else {
+        showUpdatePill();
+      }
+    });
+  }
+
+  // Firma inicial de la versión que el cliente tiene cargada
+  fetchSignature().then(function(sig){ baseline = sig; });
+
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) { lastHiddenAt = Date.now(); }
+    else { checkForUpdate(true); }
+  });
+  setInterval(function(){ if (!document.hidden) checkForUpdate(false); }, CHECK_EVERY_MS);
 })();
 </script>
 
