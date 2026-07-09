@@ -5359,9 +5359,11 @@ body.locked .em-grain{display:none;}
 /* el toggle ya dice "En uso y pendiente": dentro solo mostramos el conteo */
 .em-assist-full .orient-title{display:none;}
 .em-assist-full .orient-head{justify-content:flex-end;}
+/* sin el halo radial oliva del diseño anterior: blanco uniforme */
+.em-assist-full .orient-card::before{display:none !important;}
 
 /* cinta editorial en movimiento */
-.em-ribbon{margin:22px -1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:10px 0;overflow:hidden;}
+.em-ribbon{margin:30px -1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:10px 0;overflow:hidden;}
 .em-ribbon-track{display:flex;width:max-content;animation:emSlide 30s linear infinite;}
 .em-ribbon span{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.3em;color:var(--text-mute);padding:0 22px;white-space:nowrap;text-transform:uppercase;}
 .em-ribbon span i{font-style:normal;color:var(--olive);padding-left:22px;}
@@ -5656,22 +5658,16 @@ body.locked .em-grain{display:none;}
       </div><!-- /em-assist-full -->
     </aside>
 
-    <!-- ============ CINTA EDITORIAL ============ -->
-    <div class="em-ribbon" aria-hidden="true">
-      <div class="em-ribbon-track">
-        <span>Método<i>·</i></span><span>Movilidad<i>·</i></span><span>Fuerza<i>·</i></span><span>Composición<i>·</i></span><span>Aprendizaje<i>·</i></span><span>Nutrición<i>·</i></span><span>Constancia<i>·</i></span>
-        <span>Método<i>·</i></span><span>Movilidad<i>·</i></span><span>Fuerza<i>·</i></span><span>Composición<i>·</i></span><span>Aprendizaje<i>·</i></span><span>Nutrición<i>·</i></span><span>Constancia<i>·</i></span>
-      </div>
-    </div>
 
     <!-- ============ ¿NUEVO AQUÍ? ============ -->
     <div class="em-sec reveal">
       <div class="em-sec-head">¿Nuevo aquí? — Entra acá</div>
+      <p class="em-sec-sub">Tu punto de partida: el método explicado una sola vez, en orden.</p>
       <a class="em-new" onclick="go('s-onboarding')" style="cursor:pointer">
         <svg class="em-clay-sm" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="emKbV" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#F7F9EC"/><stop offset=".55" stop-color="#E4E9CE"/><stop offset="1" stop-color="#CBD3A8"/>
+              <stop offset="0" stop-color="#F6F5F0"/><stop offset=".55" stop-color="#E5E3DA"/><stop offset="1" stop-color="#CFCCBE"/>
             </linearGradient>
             <filter id="emDropK" x="-30%" y="-30%" width="160%" height="170%">
               <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#4A5238" flood-opacity=".24"/>
@@ -5694,27 +5690,28 @@ body.locked .em-grain{display:none;}
     <!-- ============ APRENDIZAJE ============ -->
     <div class="em-sec reveal">
       <div class="em-sec-head">Aprendizaje</div>
+      <p class="em-sec-sub">Para cuando termines tu ruta de inicio. Consulta libre, a tu ritmo.</p>
       <a class="em-new" onclick="go('s-biblioteca')" style="cursor:pointer">
         <svg class="em-clay-sm" viewBox="0 0 130 120" aria-hidden="true">
           <defs>
             <linearGradient id="emBkL" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#F7F9EC"/><stop offset="1" stop-color="#D9E0B9"/>
+              <stop offset="0" stop-color="#F6F5F0"/><stop offset="1" stop-color="#DBD8CC"/>
             </linearGradient>
             <linearGradient id="emBkR" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#EFF2DE"/><stop offset="1" stop-color="#CBD3A8"/>
+              <stop offset="0" stop-color="#EFEEE7"/><stop offset="1" stop-color="#CFCCBE"/>
             </linearGradient>
             <filter id="emDropBk" x="-30%" y="-30%" width="160%" height="170%">
               <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#4A5238" flood-opacity=".24"/>
             </filter>
           </defs>
           <g filter="url(#emDropBk)">
-            <path d="M65 92c-13-8.5-34-9-47-3.5V36c13-6 34-5.5 47 3.5 13-9 34-9.5 47-3.5v52.5c-13-5.5-34-5-47 3.5z" fill="#B9C293"/>
+            <path d="M65 92c-13-8.5-34-9-47-3.5V36c13-6 34-5.5 47 3.5 13-9 34-9.5 47-3.5v52.5c-13-5.5-34-5-47 3.5z" fill="#BEBBAC"/>
             <path d="M65 86c-12-8-32-8.5-45-3.5V32c13-5.5 33-5 45 3.5z" fill="url(#emBkL)"/>
             <path d="M65 86c12-8 32-8.5 45-3.5V32c-13-5.5-33-5-45 3.5z" fill="url(#emBkR)"/>
-            <path d="M65 35.5v50.5" stroke="#A9B478" stroke-width="2.4" opacity=".55"/>
+            <path d="M65 35.5v50.5" stroke="#B3B0A2" stroke-width="2.4" opacity=".55"/>
           </g>
-          <path d="M28 44c9-2.8 21-2.4 29 1.6M28 55c9-2.8 21-2.4 29 1.6" stroke="#CBD3A8" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-          <path d="M102 44c-9-2.8-21-2.4-29 1.6M102 55c-9-2.8-21-2.4-29 1.6" stroke="#D3DAB2" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <path d="M28 44c9-2.8 21-2.4 29 1.6M28 55c9-2.8 21-2.4 29 1.6" stroke="#CFCCBE" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <path d="M102 44c-9-2.8-21-2.4-29 1.6M102 55c-9-2.8-21-2.4-29 1.6" stroke="#D5D2C6" stroke-width="2.6" stroke-linecap="round" fill="none"/>
           <ellipse cx="40" cy="34" rx="11" ry="3.6" fill="#FFFEF9" opacity=".55" transform="rotate(-8 40 34)"/>
         </svg>
         <span class="em-new-txt">
@@ -5729,19 +5726,20 @@ body.locked .em-grain{display:none;}
     <!-- ============ DUDAS Y COMUNIDAD ============ -->
     <div class="em-sec reveal">
       <div class="em-sec-head">Dudas y comunidad</div>
+      <p class="em-sec-sub">Respuestas rápidas y el grupo del programa.</p>
       <div class="em-also">
         <div class="em-also-row" onclick="go('s-faq')" style="cursor:pointer">
           <svg class="em-clay-xs" viewBox="0 0 120 120" aria-hidden="true">
             <defs>
               <radialGradient id="emQR" cx=".5" cy=".4" r=".65">
-                <stop offset="0" stop-color="#F7F9EC"/><stop offset=".7" stop-color="#E4E9CE"/><stop offset="1" stop-color="#CBD3A8"/>
+                <stop offset="0" stop-color="#F6F5F0"/><stop offset=".7" stop-color="#E5E3DA"/><stop offset="1" stop-color="#CFCCBE"/>
               </radialGradient>
               <filter id="emDropQ" x="-30%" y="-30%" width="160%" height="170%">
                 <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#4A5238" flood-opacity=".24"/>
               </filter>
             </defs>
             <g filter="url(#emDropQ)"><circle cx="60" cy="60" r="38" fill="url(#emQR)"/></g>
-            <path d="M50 50a10 10 0 1 1 14 9.2c-2.8 1.2-4 3.2-4 6v2.4M60 80v.4" stroke="#B9C293" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M50 50a10 10 0 1 1 14 9.2c-2.8 1.2-4 3.2-4 6v2.4M60 80v.4" stroke="#BEBBAC" stroke-width="7" stroke-linecap="round" fill="none"/>
             <ellipse cx="48" cy="40" rx="11" ry="4.5" fill="#FFFEF9" opacity=".65" transform="rotate(-18 48 40)"/>
           </svg>
           <span class="em-also-txt"><strong>Preguntas frecuentes</strong><small>Resuelve dudas rápido</small></span>
@@ -5751,20 +5749,28 @@ body.locked .em-grain{display:none;}
           <svg class="em-clay-xs" viewBox="0 0 120 120" aria-hidden="true">
             <defs>
               <linearGradient id="emIgV" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#F7F9EC"/><stop offset=".55" stop-color="#E4E9CE"/><stop offset="1" stop-color="#CBD3A8"/>
+                <stop offset="0" stop-color="#F6F5F0"/><stop offset=".55" stop-color="#E5E3DA"/><stop offset="1" stop-color="#CFCCBE"/>
               </linearGradient>
               <filter id="emDropI" x="-30%" y="-30%" width="160%" height="170%">
                 <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#4A5238" flood-opacity=".24"/>
               </filter>
             </defs>
             <g filter="url(#emDropI)"><rect x="22" y="22" width="76" height="76" rx="24" fill="url(#emIgV)"/></g>
-            <circle cx="60" cy="60" r="17" fill="none" stroke="#B9C293" stroke-width="7"/>
-            <circle cx="82" cy="38" r="5" fill="#B9C293"/>
+            <circle cx="60" cy="60" r="17" fill="none" stroke="#BEBBAC" stroke-width="7"/>
+            <circle cx="82" cy="38" r="5" fill="#BEBBAC"/>
             <ellipse cx="45" cy="31" rx="13" ry="4.5" fill="#FFFEF9" opacity=".6" transform="rotate(-8 45 31)"/>
           </svg>
           <span class="em-also-txt"><strong>Chat grupal de Instagram</strong><small>Comunidad del programa</small></span>
           <span class="em-also-arr">→</span>
         </a>
+      </div>
+    </div>
+
+    <!-- ============ CINTA EDITORIAL ============ -->
+    <div class="em-ribbon" aria-hidden="true">
+      <div class="em-ribbon-track">
+        <span>Método<i>·</i></span><span>Movilidad<i>·</i></span><span>Fuerza<i>·</i></span><span>Composición<i>·</i></span><span>Aprendizaje<i>·</i></span><span>Nutrición<i>·</i></span><span>Constancia<i>·</i></span>
+        <span>Método<i>·</i></span><span>Movilidad<i>·</i></span><span>Fuerza<i>·</i></span><span>Composición<i>·</i></span><span>Aprendizaje<i>·</i></span><span>Nutrición<i>·</i></span><span>Constancia<i>·</i></span>
       </div>
     </div>
 
