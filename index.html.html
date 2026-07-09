@@ -12,17 +12,18 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 :root{
-  --olive:#7a8c5a;
-  --olive-light:#a3b07a;
-  --olive-dark:#4a5635;
-  --olive-soft:#e8ebe0;
-  --olive-chip:#dde2d0;
+  /* tokens unificados con el Meal Tracker (fuente de verdad de marca) */
+  --olive:#8A9558;
+  --olive-light:#A9B478;
+  --olive-dark:#4A5238;
+  --olive-soft:#F1F3E5;
+  --olive-chip:#D4DAB8;
   --black:#141414;
   --black-soft:#1f1f1f;
-  --bg:#f5f3ee;
-  --bg-login:#eeece7;
+  --bg:#F7F4ED;
+  --bg-login:#EFEBE0;
   --bg-card:#ffffff;
-  --bg-soft:#faf9f5;
+  --bg-soft:#FBF9F3;
   --text:#181818;
   --text-soft:#5a5a5a;
   --text-mute:#9a9a9a;
@@ -5272,6 +5273,151 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
   flex-shrink:0;
 }
 
+/* ═══════════ Rediseño home — lenguaje visual Meal Tracker ═══════════ */
+.em-grain{
+  position:fixed;inset:0;z-index:80;pointer-events:none;
+  opacity:.045;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body.locked .em-grain{display:none;}
+
+.em-hero{
+  position:relative;overflow:hidden;background:var(--black);color:#F3EFE4;
+  margin:-1.5rem -1rem 0;padding:40px 22px 56px;
+}
+.em-hero-glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;}
+.em-hero-glow.a{width:340px;height:340px;top:-150px;right:-110px;background:rgba(138,149,88,.32);animation:emDrift 14s ease-in-out infinite alternate;}
+.em-hero-glow.b{width:260px;height:260px;bottom:-160px;left:-100px;background:rgba(138,149,88,.18);animation:emDrift 18s ease-in-out infinite alternate-reverse;}
+.em-hero-glow.c{width:260px;height:260px;bottom:-150px;right:-90px;background:rgba(138,149,88,.22);}
+@keyframes emDrift{from{transform:translate(0,0) scale(1);}to{transform:translate(-30px,24px) scale(1.1);}}
+.em-hero-eyebrow{
+  position:relative;display:flex;align-items:center;gap:12px;
+  font-size:10.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--olive-chip);
+}
+.em-hero-eyebrow::after{content:"";flex:1;height:1px;background:rgba(212,218,184,.25);}
+.em-hero .home-welcome-hi{
+  position:relative;font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(44px,12vw,60px);line-height:.98;letter-spacing:.015em;
+  color:#F3EFE4;margin-top:16px;display:flex;flex-direction:column;gap:0;
+}
+.em-hero .home-welcome-hi #welcome-name{color:var(--olive);}
+.em-hero .home-welcome-sub{
+  position:relative;margin-top:13px;font-size:13.5px;line-height:1.55;
+  color:rgba(243,239,228,.65);max-width:34ch;
+}
+.em-hero .home-welcome-sub strong{color:#F3EFE4;}
+
+/* asistente de lectura */
+.em-assist{
+  position:relative;z-index:5;margin-top:-30px;padding:13px 15px 14px;
+  background:rgba(255,255,255,.62);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.92);border-radius:var(--radius-card);
+  box-shadow:0 1px .5px rgba(0,0,0,.13),0 10px 28px rgba(74,82,56,.13),0 1px 0 rgba(255,255,255,.93) inset;
+}
+.em-assist-tag{
+  display:flex;align-items:center;gap:7px;color:var(--olive-dark);
+  font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  margin:0 0 10px 2px;
+}
+.em-assist-tag svg{flex:none;}
+.em-assist-row{display:flex;align-items:center;gap:13px;}
+.em-assist-ring{position:relative;width:46px;height:46px;flex:none;}
+.em-assist-ring svg{transform:rotate(-90deg);display:block;}
+.em-assist-ring .track{stroke:var(--olive-soft);}
+.em-assist-ring .arc{stroke:var(--olive);stroke-linecap:round;transition:stroke-dashoffset 1.4s cubic-bezier(0.34,1.56,0.64,1);}
+.em-assist-ring b{
+  position:absolute;inset:0;display:grid;place-content:center;
+  font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:13px;letter-spacing:.03em;color:var(--olive-dark);
+}
+.em-assist-body{flex:1;min-width:0;}
+.em-assist-body strong{display:block;font-size:13.5px;font-weight:600;letter-spacing:-.01em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.em-assist-body span{display:block;font-size:11.5px;color:var(--text-mute);margin-top:1px;}
+.em-assist-go{
+  flex:none;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--olive);color:#fff;display:grid;place-content:center;
+  transition:transform .2s cubic-bezier(0.34,1.56,0.64,1), background .25s ease;
+}
+.em-assist-go:hover{background:var(--olive-dark);transform:translateX(2px);}
+.em-assist-go:active{transform:scale(.94);}
+
+/* cabeceras de sección */
+.em-sec{margin-top:26px;}
+.em-sec-head{
+  display:flex;align-items:baseline;gap:14px;
+  font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--olive-dark);
+}
+.em-sec-head::after{content:"";flex:1;height:1px;background:var(--border);transform:translateY(-3px);}
+.em-sec-sub{margin:7px 0 0;font-size:12.5px;color:var(--text-mute);}
+
+/* orient-card en clave glass */
+.orient-card{
+  background:rgba(255,255,255,.62) !important;
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.92) !important;
+  box-shadow:0 1px .5px rgba(0,0,0,.13),0 10px 28px rgba(74,82,56,.13),0 1px 0 rgba(255,255,255,.93) inset !important;
+  margin-top:.9rem !important;
+}
+
+/* material de aprendizaje */
+.em-mat{margin-top:14px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;}
+.em-mat-card{
+  position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;
+  padding:15px 14px 13px;text-decoration:none;color:inherit;
+  background:rgba(255,255,255,.62);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.92);border-radius:var(--radius-card);
+  box-shadow:0 1px .5px rgba(0,0,0,.13),0 10px 28px rgba(74,82,56,.13),0 1px 0 rgba(255,255,255,.93) inset;
+  transition:transform .3s cubic-bezier(0.34,1.56,0.64,1), box-shadow .3s ease;
+}
+.em-mat-card:hover{transform:translateY(-3px);}
+.em-mat-card:active{transform:scale(.98);}
+.em-clay{width:72px;height:66px;display:block;margin:2px 0 7px;max-width:100%;}
+.em-mat-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text);}
+.em-mat-sub{font-size:10.5px;color:var(--text-mute);line-height:1.45;}
+.em-mat-state{width:100%;margin-top:8px;}
+.em-mat-state small{display:block;font-size:9.5px;color:var(--olive-dark);font-weight:600;letter-spacing:.04em;margin-bottom:4px;}
+.em-mat-track{display:block;height:3px;border-radius:99px;background:var(--olive-soft);overflow:hidden;}
+.em-mat-fill{display:block;height:100%;border-radius:99px;background:var(--olive);transition:width 1s cubic-bezier(0.34,1.56,0.64,1);}
+
+/* accesos secundarios */
+.em-also{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.em-also-row{
+  display:flex;align-items:center;gap:12px;padding:12px 15px;text-decoration:none;color:inherit;
+  background:var(--bg-card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);
+  transition:transform .25s cubic-bezier(0.34,1.56,0.64,1);
+}
+.em-also-row:active{transform:scale(.985);}
+.em-also-ico{
+  flex:none;width:36px;height:36px;border-radius:12px;background:var(--olive-soft);
+  display:grid;place-content:center;color:var(--olive-dark);
+}
+.em-also-txt{flex:1;min-width:0;display:flex;flex-direction:column;}
+.em-also-txt strong{font-size:13px;font-weight:600;color:var(--text);}
+.em-also-txt small{font-size:11px;color:var(--text-mute);}
+.em-also-arr{color:var(--olive-dark);font-size:14px;}
+
+/* firma editorial */
+.em-signature{
+  position:relative;overflow:hidden;margin:30px -1rem -2rem;
+  background:var(--black);color:#F3EFE4;
+  border-radius:var(--radius-card) var(--radius-card) 0 0;
+  padding:34px 22px 26px;
+}
+.em-sig-quote{
+  position:relative;font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(26px,6.4vw,34px);line-height:1.05;margin:0;color:#F3EFE4;
+}
+.em-sig-quote em{font-style:normal;color:var(--olive);}
+.em-sig-rule{position:relative;width:44px;height:1px;background:var(--olive);margin:18px 0 12px;}
+.em-sig-name{position:relative;font-size:13px;font-weight:600;margin:0;}
+.em-sig-cred{position:relative;font-size:10px;color:rgba(243,239,228,.55);margin:3px 0 0;letter-spacing:.05em;}
+.em-sig-rights{position:relative;font-size:9.5px;color:rgba(243,239,228,.35);margin:16px 0 0;}
+
+@media (prefers-reduced-motion: reduce){
+  .em-hero-glow{animation:none !important;}
+  .em-assist-ring .arc,.em-mat-fill{transition:none !important;}
+}
 </style>
 </head>
 <body class="locked">
@@ -5403,15 +5549,51 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
 </header>
 
 <!-- HOME (única pantalla principal) -->
+<div class="em-grain" aria-hidden="true"></div>
+
 <div id="s-home" class="screen active">
   <div class="content-area">
 
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <div class="home-welcome reveal">
+    <!-- ============ HERO editorial oscuro ============ -->
+    <div class="em-hero">
+      <div class="em-hero-glow a" aria-hidden="true"></div>
+      <div class="em-hero-glow b" aria-hidden="true"></div>
+      <div class="em-hero-eyebrow">Mauro Morón · Coach</div>
       <div class="home-welcome-hi"><span id="welcome-greet">Bienvenido</span> <span id="welcome-name">al programa</span></div>
       <div class="home-welcome-sub">Todo el método, organizado en un solo lugar.</div>
+    </div>
+
+    <!-- ============ ASISTENTE DE LECTURA ============ -->
+    <aside class="em-assist reveal" aria-label="Asistente de lectura">
+      <p class="em-assist-tag">
+        <svg width="11" height="13" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 26l-7-5-7 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        Asistente de lectura
+      </p>
+      <div class="em-assist-row">
+        <div class="em-assist-ring" role="img" aria-label="Progreso de lectura">
+          <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+            <circle class="track" cx="23" cy="23" r="19" stroke-width="4"/>
+            <circle class="arc" id="em-assist-arc" cx="23" cy="23" r="19" stroke-width="4"
+                    stroke-dasharray="119.4" stroke-dashoffset="119.4"/>
+          </svg>
+          <b id="em-assist-pct">0%</b>
+        </div>
+        <div class="em-assist-body">
+          <strong id="em-assist-title">Empieza aquí</strong>
+          <span id="em-assist-meta">Tu progreso se guarda solo</span>
+        </div>
+        <button class="em-assist-go" type="button" aria-label="Retomar lectura" onclick="orientContinue()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ============ RUTA DE INICIO ============ -->
+    <div class="em-sec reveal">
+      <div class="em-sec-head">¿Nuevo aquí? — Empieza por acá</div>
     </div>
 
     <!-- ============ TARJETA GESTORA: tu material (qué falta / qué terminaste) ============ -->
@@ -5428,53 +5610,103 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
       <div class="orient-list" id="orient-list"></div>
     </div>
 
-    <!-- ============ EXPLORA (cards pequeñas secundarias) ============ -->
-    <div class="home-explore reveal">
-      <div class="zone-eyebrow" style="padding:0 .15rem;margin-bottom:.85rem;">Explora</div>
-      <div class="home-tiles">
+    <!-- ============ MATERIAL DE APRENDIZAJE ============ -->
+    <div class="em-sec reveal">
+      <div class="em-sec-head">Material de aprendizaje</div>
+      <p class="em-sec-sub">Para cuando termines tu ruta de inicio. Consulta libre, a tu ritmo — el asistente marca lo que ya leíste.</p>
+      <div class="em-mat">
 
-        <div class="home-tile" onclick="go('s-biblioteca')" style="cursor:pointer">
-          <div class="home-tile-ico">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5V5.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5A1.5 1.5 0 0 1 20 20.5V5.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="home-tile-title">Galería de material informativo</div>
-          <div class="home-tile-desc">Para consultar cuando lo necesites</div>
-        </div>
+        <a class="em-mat-card" onclick="go('s-guia-alimentacion')" style="cursor:pointer">
+          <svg class="em-clay" viewBox="0 0 140 120" aria-hidden="true">
+            <defs>
+              <radialGradient id="emPlateR" cx=".5" cy=".42" r=".62">
+                <stop offset="0" stop-color="#FBF8F0"/><stop offset=".62" stop-color="#EFE9DA"/><stop offset="1" stop-color="#D5CCB4"/>
+              </radialGradient>
+              <radialGradient id="emPlateIn" cx=".5" cy=".45" r=".7">
+                <stop offset="0" stop-color="#E6DFCB"/><stop offset="1" stop-color="#F3EEDF"/>
+              </radialGradient>
+              <filter id="emDropA" x="-30%" y="-30%" width="160%" height="170%">
+                <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#4A5238" flood-opacity=".24"/>
+              </filter>
+            </defs>
+            <g filter="url(#emDropA)">
+              <circle cx="70" cy="60" r="35" fill="url(#emPlateR)"/>
+              <rect x="15" y="28" width="3.6" height="15" rx="1.8" fill="url(#emPlateIn)"/>
+              <rect x="21.5" y="28" width="3.6" height="15" rx="1.8" fill="url(#emPlateIn)"/>
+              <rect x="28" y="28" width="3.6" height="15" rx="1.8" fill="url(#emPlateIn)"/>
+              <path d="M15 41h16.6v5.5a6 6 0 0 1-6 6h-4.6a6 6 0 0 1-6-6z" fill="#EDE6D3"/>
+              <rect x="20" y="50" width="6.6" height="42" rx="3.3" fill="url(#emPlateIn)"/>
+              <path d="M116 28c8 8.5 9.5 22 4.5 30l-6.5.5V29z" fill="#EDE6D3"/>
+              <rect x="112.5" y="56" width="7" height="36" rx="3.5" fill="url(#emPlateIn)"/>
+            </g>
+            <circle cx="70" cy="60" r="21" fill="url(#emPlateIn)"/>
+            <ellipse cx="61" cy="41" rx="12" ry="4.5" fill="#FFFEF9" opacity=".6" transform="rotate(-18 61 41)"/>
+          </svg>
+          <span class="em-mat-label">Guía de alimentación</span>
+          <span class="em-mat-sub">7 capítulos + 3 bonus</span>
+          <span class="em-mat-state">
+            <small id="em-mat-ga-state">Sin empezar</small>
+            <span class="em-mat-track"><span class="em-mat-fill" id="em-mat-ga-fill" style="width:0%"></span></span>
+          </span>
+        </a>
 
-        <div class="home-tile" onclick="go('s-onboarding')" style="cursor:pointer">
-          <div class="home-tile-ico">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="home-tile-title">Repasa el onboarding</div>
-          <div class="home-tile-desc">El método paso a paso</div>
-        </div>
-
-        <div class="home-tile" onclick="go('s-faq')" style="cursor:pointer">
-          <div class="home-tile-ico">
-            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.7M12 17.5v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          </div>
-          <div class="home-tile-title">Preguntas frecuentes</div>
-          <div class="home-tile-desc">Resuelve dudas rápido</div>
-        </div>
-
-        <a href="https://ig.me/j/AbYeQwBuaYR8SlZZ/" target="_blank" rel="noopener" class="home-tile">
-          <div class="home-tile-ico">
-            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-          </div>
-          <div class="home-tile-title">Chat grupal de Instagram</div>
-          <div class="home-tile-desc">Comunidad del programa</div>
+        <a class="em-mat-card" onclick="go('s-biblioteca')" style="cursor:pointer">
+          <svg class="em-clay" viewBox="0 0 130 120" aria-hidden="true">
+            <defs>
+              <linearGradient id="emClipV" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#FBF8F0"/><stop offset=".55" stop-color="#EAE3D0"/><stop offset="1" stop-color="#D8D0BA"/>
+              </linearGradient>
+              <linearGradient id="emClipT" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#F3EEDF"/><stop offset="1" stop-color="#CFC6AD"/>
+              </linearGradient>
+              <filter id="emDropB" x="-30%" y="-30%" width="160%" height="170%">
+                <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#4A5238" flood-opacity=".24"/>
+              </filter>
+            </defs>
+            <g filter="url(#emDropB)">
+              <rect x="25" y="25" width="80" height="70" rx="20" fill="url(#emClipV)"/>
+              <path d="M56 45c0-3.1 3.4-5 6-3.4l17.5 10.4c2.6 1.5 2.6 5.3 0 6.8L62 69.4c-2.6 1.6-6-.3-6-3.4z" fill="url(#emClipT)"/>
+            </g>
+            <ellipse cx="47" cy="33" rx="13" ry="4" fill="#FFFEF9" opacity=".6" transform="rotate(-6 47 33)"/>
+          </svg>
+          <span class="em-mat-label">Material informativo</span>
+          <span class="em-mat-sub">Galería de recursos del método</span>
+          <span class="em-mat-state">
+            <small>Consulta cuando lo necesites</small>
+            <span class="em-mat-track"><span class="em-mat-fill" style="width:0%"></span></span>
+          </span>
         </a>
 
       </div>
     </div>
 
-  <!-- FOOTER minimalista -->
-  <div class="footer">
-    <div class="footer-brand">ENTRENA CON MÉTODO</div>
-    <div class="footer-tagline">Mauro Morón · ISSA Training and Nutrition Coach</div>
-    <div class="footer-rights">
-      © 2026 Mauro Morón · Acceso personal e intransferible
+    <!-- ============ ACCESOS SECUNDARIOS ============ -->
+    <div class="em-also reveal">
+      <div class="em-also-row" onclick="go('s-onboarding')" style="cursor:pointer">
+        <span class="em-also-ico"><svg viewBox="0 0 24 24" fill="none" width="17" height="17"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="em-also-txt"><strong>Repasa el onboarding</strong><small>El método paso a paso</small></span>
+        <span class="em-also-arr">→</span>
+      </div>
+      <div class="em-also-row" onclick="go('s-faq')" style="cursor:pointer">
+        <span class="em-also-ico"><svg viewBox="0 0 24 24" fill="none" width="17" height="17"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.7M12 17.5v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <span class="em-also-txt"><strong>Preguntas frecuentes</strong><small>Resuelve dudas rápido</small></span>
+        <span class="em-also-arr">→</span>
+      </div>
+      <a href="https://ig.me/j/AbYeQwBuaYR8SlZZ/" target="_blank" rel="noopener" class="em-also-row">
+        <span class="em-also-ico"><svg viewBox="0 0 24 24" fill="none" width="17" height="17"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span>
+        <span class="em-also-txt"><strong>Chat grupal de Instagram</strong><small>Comunidad del programa</small></span>
+        <span class="em-also-arr">→</span>
+      </a>
     </div>
+
+  <!-- FIRMA editorial -->
+  <div class="em-signature">
+    <div class="em-hero-glow c" aria-hidden="true"></div>
+    <p class="em-sig-quote">Comer bien no es comer perfecto.<br><em>Es tener un método.</em></p>
+    <div class="em-sig-rule"></div>
+    <p class="em-sig-name">Mauro Morón</p>
+    <p class="em-sig-cred">ISSA CERTIFIED FITNESS AND NUTRITION COACH</p>
+    <p class="em-sig-rights">© 2026 Mauro Morón · Acceso personal e intransferible</p>
   </div>
   </div>
 </div>
@@ -7003,12 +7235,12 @@ function homeApplyOrientation() {
     const subEl = document.querySelector('.home-welcome-sub');
     if (subEl) {
       if (done === 0) {
-        subEl.innerHTML = '👋 Todo el método, organizado en un solo lugar.';
+        subEl.innerHTML = 'Todo el método, organizado en un solo lugar.';
       } else if (done >= total) {
-        subEl.innerHTML = '🎯 Has leído todo el material. <strong>Sigue tu proceso con consistencia.</strong>';
+        subEl.innerHTML = 'Has leído todo el material. <strong>Sigue tu proceso con consistencia.</strong>';
       } else {
         const falta = total - done;
-        subEl.innerHTML = '📖 Llevas <strong>' + done + ' de ' + total + '</strong> · te falta' + (falta>1?'n':'') + ' <strong>' + falta + '</strong> para tener el panorama completo.';
+        subEl.innerHTML = 'Llevas <strong>' + done + ' de ' + total + '</strong> · te falta' + (falta>1?'n':'') + ' <strong>' + falta + '</strong> para tener el panorama completo.';
       }
     }
   } catch(e){}
@@ -7056,7 +7288,7 @@ function homeApplyOrientation() {
         row.onclick = it.go;
         const right = it.done ? '' : '<span class="orient-row-arr">→</span>';
         const meta = it.meta ? '<span class="orient-row-meta">'+it.meta+'</span>' : '';
-        const emoji = _emojiFor(it.label);
+        const emoji = ''; // sin emoji: iconografía de línea, consistente con la marca
         const emojiSpan = emoji ? '<span class="orient-row-emoji" aria-hidden="true">'+emoji+'</span>' : '';
         row.innerHTML =
           '<span class="orient-row-ico">' + (it.done ? _CHECK_SVG : '') + '</span>' +
@@ -8685,6 +8917,71 @@ function initBlurCarousel(scroller){
     }
   }
   document.addEventListener('DOMContentLoaded', function(){ setTimeout(buildDebugPanel, 600); });
+})();
+</script>
+<script>
+/* ── Asistente de lectura: refleja el estado real del orient-card ── */
+(function(){
+  var CIRC = 119.4;
+
+  function emSyncAssist(){
+    try {
+      var doneEl = document.getElementById('orient-done');
+      var totalEl = document.getElementById('orient-total');
+      var ctaEl = document.getElementById('orient-cta-text');
+      if (!doneEl || !totalEl) return;
+      var done = parseInt(doneEl.textContent, 10) || 0;
+      var total = parseInt(totalEl.textContent, 10) || 0;
+      var pct = total ? Math.round(done / total * 100) : 0;
+
+      var arc = document.getElementById('em-assist-arc');
+      if (arc) arc.style.strokeDashoffset = (CIRC * (1 - pct / 100)).toFixed(1);
+      var pctEl = document.getElementById('em-assist-pct');
+      if (pctEl) pctEl.textContent = pct + '%';
+
+      var title = document.getElementById('em-assist-title');
+      var meta = document.getElementById('em-assist-meta');
+      var cta = ctaEl ? ctaEl.textContent : '';
+      if (title) {
+        if (done >= total && total > 0) {
+          title.textContent = 'Todo al día — repasa lo que quieras';
+        } else if (cta.indexOf('Empezar: ') === 0) {
+          title.textContent = 'Empieza aquí: ' + cta.slice(9);
+        } else if (cta.indexOf('Continuar: ') === 0) {
+          title.textContent = 'Retoma: ' + cta.slice(11);
+        } else if (cta) {
+          title.textContent = cta;
+        }
+      }
+      if (meta) meta.textContent = done + ' de ' + total + ' leídos · tu progreso se guarda solo';
+    } catch(e){}
+  }
+
+  function emSyncGuia(){
+    try {
+      var chapters = document.querySelectorAll('#s-guia-alimentacion .ga-h1');
+      var total = chapters.length || 15;
+      var readArr = JSON.parse(localStorage.getItem('em_ga_read') || '[]');
+      var done = 0;
+      chapters.forEach(function(h){ if (readArr.indexOf(h.id) !== -1) done++; });
+      var state = document.getElementById('em-mat-ga-state');
+      var fill = document.getElementById('em-mat-ga-fill');
+      if (state) state.textContent = done === 0 ? 'Sin empezar · 0 de ' + total : done + ' de ' + total + ' capítulos';
+      if (fill) fill.style.width = (total ? Math.round(done / total * 100) : 0) + '%';
+    } catch(e){}
+  }
+
+  function emSyncAll(){ emSyncAssist(); emSyncGuia(); }
+
+  // se re-sincroniza cada vez que la lógica existente recalcula la orientación
+  if (typeof window.homeApplyOrientation === 'function' && !window.homeApplyOrientation.__emAssist) {
+    var _ha = window.homeApplyOrientation;
+    window.homeApplyOrientation = function(){ _ha.apply(this, arguments); emSyncAll(); };
+    window.homeApplyOrientation.__emAssist = true;
+  }
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(emSyncAll, 250); });
+  setTimeout(emSyncAll, 500);
+  setTimeout(emSyncAll, 1500);
 })();
 </script>
 </body>
