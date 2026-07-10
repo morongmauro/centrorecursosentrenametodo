@@ -5841,6 +5841,306 @@ body.locked .em-grain{display:none;}
   color:#F3EFE4 !important; margin:0 !important;
 }
 #s-programa .rh-dark-quote em{ font-style:normal; color:var(--olive-light); }
+
+/* ═══ v10 · Iconos lineales grandes (home) ═══ */
+.em-lin{flex:none;display:block;}
+.em-lin-sm{width:50px;height:50px;}
+.em-lin-xs{width:46px;height:46px;}
+
+/* ═══ v10 · Cerrar sesión (bajo la firma editorial) ═══ */
+.em-logout{
+  position:relative;display:inline-flex;align-items:center;gap:6px;
+  margin-top:16px;padding:6px 0;background:none;border:none;cursor:pointer;
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.05em;
+  color:rgba(243,239,228,.45);
+  transition:color .2s ease;
+}
+.em-logout:hover{color:rgba(243,239,228,.8);}
+.em-logout svg{flex:none;opacity:.85;}
+
+/* ═══ v10 · Sin bordes rígidos en cards (global) ═══ */
+.em-assist,.em-new,.em-also-row{border-color:transparent;}
+.em-also-row{box-shadow:0 1px .5px rgba(0,0,0,.1),0 10px 28px rgba(74,82,56,.12);}
+.orient-card{border-color:transparent !important;}
+#s-programa .progm-blocks > .progm-block,
+#s-app-train .progm-blocks > .progm-block,
+#s-journey .jrn-timeline > .jrn-phase .jrn-body{border-color:rgba(0,0,0,.03) !important;}
+#s-onboarding .hub-cards .hub-card,
+#s-biblioteca .bib-cards .hub-card,
+#s-onboarding .hub-progress-bar,#s-biblioteca .hub-progress-bar,
+#s-onboarding .hub-firsttime{border-color:rgba(0,0,0,.03) !important;}
+#s-faq .faq-list .faq-item{border-color:rgba(0,0,0,.03) !important;}
+#s-faq .faq-list .faq-item[open]{border-color:rgba(0,0,0,.03) !important;}
+#s-ea-quickstart .qs-block,#s-ea-quickstart .qs-actions-block{border-color:rgba(0,0,0,.03) !important;}
+#s-programa .carousel-hint,#s-journey .carousel-hint,#s-app-train .carousel-hint{border-color:rgba(0,0,0,.03);}
+/* resaltadas: sin borde oliva duro — la sombra tintada hace el trabajo */
+#s-onboarding .hub-cards .hub-card.hub-card-next,
+#s-biblioteca .bib-cards .hub-card.hub-card-featured{
+  border-color:transparent !important;
+  box-shadow:0 1px .5px rgba(0,0,0,.1),0 12px 30px rgba(74,82,56,.24) !important;
+}
+/* callouts y takeaways sin borde */
+#s-programa .progm-note,#s-programa .progm-welcome,
+#s-app-train .progm-block .appt-callout{border-color:transparent !important;}
+#s-programa .progm-note-soft{border-color:rgba(0,0,0,.03) !important;}
+#s-programa .rh-takeaway{border-color:transparent;}
+#s-ea-quickstart .qs-callout{border-color:transparent;}
+/* chips "LEÍDO" y similares: glass translúcido, sin borde rígido */
+.hub-card-state[data-state="read"]{
+  background:rgba(138,149,88,.14) !important;
+  color:var(--olive-dark) !important;
+  border:.5px solid transparent !important;
+}
+.hub-card-state[data-state="pending"]{
+  border:.5px solid rgba(0,0,0,.03) !important;
+  box-shadow:0 2px 8px rgba(74,82,56,.10);
+}
+
+/* ═══ v10 · Índice del onboarding ═══ */
+#s-onboarding .hub-progress-bar{display:none !important;}
+#s-onboarding .hub-eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-size:10.5px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--olive-dark);
+}
+#s-onboarding .hub-eyebrow::after{content:'';flex:1;height:1px;background:var(--border);}
+#s-onboarding .hub-cards .hub-card{padding-left:82px !important;}
+#s-onboarding .hub-card .hub-card-wm{
+  display:flex !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  width:48px !important;height:48px !important;
+  left:1.05rem;top:50% !important;margin-top:-24px !important;
+  color:var(--olive-dark);
+}
+#s-onboarding .hub-card .hub-card-wm svg{width:46px !important;height:46px !important;}
+#s-onboarding .hub-card .hub-card-wm svg *{stroke-width:1.6 !important;}
+#s-onboarding .hub-card[data-section="programa"] .hub-card-wm{color:#8A9558;}
+#s-onboarding .hub-card[data-section="app"] .hub-card-wm{color:#4A5238;}
+#s-onboarding .hub-card[data-section="meal-tracker"] .hub-card-wm{color:#8B887C;}
+#s-onboarding .hub-card[data-section="journey"] .hub-card-wm{color:#A9B478;}
+#s-onboarding .hub-card.compact .hub-card-wm{width:44px !important;height:44px !important;margin-top:-22px !important;}
+#s-onboarding .hub-card.compact .hub-card-wm svg{width:42px !important;height:42px !important;}
+
+/* ═══ v10 · Hero oscuro compacto (páginas de sección del onboarding) ═══ */
+#s-programa .sub-header,#s-app-train .sub-header{margin:-32px -1.25rem 1.4rem;}
+#s-journey .sub-header, #s-biblioteca .sub-header{margin:-32px -1rem 1.4rem;}
+#s-programa .sub-header,#s-app-train .sub-header,#s-journey .sub-header,#s-biblioteca .sub-header{
+  position:relative;overflow:hidden;
+  background:var(--black);
+  padding:32px 22px 30px;
+  border-radius:0;
+}
+#s-programa .sub-header::before,#s-app-train .sub-header::before,#s-journey .sub-header::before,#s-biblioteca .sub-header::before{
+  content:'';position:absolute;top:-70px;right:-50px;width:230px;height:230px;
+  border-radius:50%;background:rgba(138,149,88,.28);filter:blur(60px);
+  pointer-events:none;display:block;
+}
+#s-programa .sub-header > *,#s-app-train .sub-header > *,#s-journey .sub-header > *,#s-biblioteca .sub-header > *{position:relative;}
+#s-programa .sub-eyebrow,#s-app-train .sub-eyebrow,#s-journey .sub-eyebrow,#s-biblioteca .sub-eyebrow{color:var(--olive-chip) !important;}
+#s-programa .sub-title,#s-app-train .sub-title,#s-journey .sub-title,#s-biblioteca .sub-title{
+  color:#F3EFE4 !important;font-size:44px;line-height:.95;margin-bottom:.7rem;
+}
+#s-programa .sub-title-line,#s-app-train .sub-title-line,#s-journey .sub-title-line{
+  background:var(--olive);margin-bottom:1rem;
+}
+#s-programa .sub-intro,#s-app-train .sub-intro,#s-journey .sub-intro,#s-biblioteca .sub-intro{
+  color:rgba(243,239,228,.65) !important;font-size:13px;line-height:1.55;
+}
+#s-programa .sub-intro strong,#s-app-train .sub-intro strong,#s-journey .sub-intro strong,#s-biblioteca .sub-intro strong{color:#F3EFE4 !important;}
+#s-programa .rh-contract{color:rgba(243,239,228,.5);}
+/* "Volver al onboarding": pill translúcida legible sobre el oscuro */
+#s-programa .sub-back,#s-app-train .sub-back,#s-journey .sub-back,#s-biblioteca .sub-back{
+  background:rgba(20,20,20,.55) !important;
+  border-color:transparent !important;
+  color:#F3EFE4 !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+#s-programa .sub-back:hover,#s-app-train .sub-back:hover,#s-journey .sub-back:hover,#s-biblioteca .sub-back:hover{color:#fff !important;}
+
+/* ═══ v10 · Ritmo editorial: s-app-train + s-journey ═══ */
+#s-app-train .rh-quote,#s-journey .rh-quote{
+  font-family:'Bebas Neue',sans-serif !important;
+  font-size:31px !important;line-height:1.05 !important;
+  font-weight:400 !important;letter-spacing:.4px;
+  color:var(--text) !important;
+  margin:1.3rem 0 1.2rem !important;
+  max-width:96%;
+}
+#s-app-train .rh-quote:first-child{margin-top:.2rem !important;}
+#s-app-train .rh-quote em,#s-journey .rh-quote em{font-style:normal;color:var(--olive);}
+#s-journey .jrn-card .rh-quote{margin:.4rem 0 1.05rem !important;}
+#s-app-train .rh-takeaway,#s-journey .rh-takeaway{
+  background:var(--olive-soft);border:1px solid transparent;
+  border-radius:14px;padding:14px 16px 13px;margin-top:1.25rem;
+}
+#s-app-train .rh-take-label,#s-journey .rh-take-label{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  font-weight:700;color:var(--olive-dark);margin-bottom:.5rem;
+}
+#s-app-train .rh-takeaway ul,#s-journey .rh-takeaway ul{list-style:none;margin:0;padding:0;}
+#s-app-train .rh-takeaway li,#s-journey .rh-takeaway li{
+  position:relative;padding-left:21px;margin:0 0 .35rem;
+  font-size:13px;line-height:1.5;color:var(--olive-dark);font-weight:600;
+}
+#s-app-train .rh-takeaway li:last-child,#s-journey .rh-takeaway li:last-child{margin-bottom:0;}
+#s-app-train .rh-takeaway li::before,#s-journey .rh-takeaway li::before{
+  content:'✓';position:absolute;left:0;top:0;
+  color:var(--olive);font-weight:800;font-size:13px;
+}
+#s-app-train .rh-dark,#s-journey .rh-dark{
+  background:#141414;border-radius:16px;
+  padding:1.3rem 1.25rem 1.2rem;margin-top:1.35rem;
+}
+#s-app-train .rh-dark-kicker,#s-journey .rh-dark-kicker{
+  font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;
+  font-weight:700;color:rgba(243,239,228,.52);margin-bottom:.55rem;
+}
+#s-app-train .rh-dark .rh-dark-quote,#s-journey .rh-dark .rh-dark-quote{
+  font-family:'Bebas Neue',sans-serif !important;
+  font-size:31px !important;line-height:1.05 !important;
+  font-weight:400 !important;letter-spacing:.4px;
+  color:#F3EFE4 !important;margin:0 !important;
+}
+#s-app-train .rh-dark-quote em,#s-journey .rh-dark-quote em{font-style:normal;color:var(--olive-light);}
+#s-journey .rh-dark.jrn-close{margin:.4rem .25rem 1.6rem;}
+/* "Resultado" del journey como cierre estilo Para llevar: oliva suave, ✓ (ya lo pone
+   la regla base con ::before), sin borde rígido */
+#s-journey .jrn-timeline > .jrn-phase .jrn-result{
+  border-color:transparent !important;
+  border-radius:14px !important;
+}
+
+/* ═══ v10 · Anclas lineales tonales (sin chip ni cerámica) ═══ */
+/* s-programa: fuera la pieza clay; el icono lineal grande la reemplaza */
+#s-programa .rh-clay{display:none !important;}
+#s-programa .progm-blocks .progm-block .progm-block-icon{
+  display:flex !important;
+  width:48px !important;height:48px !important;
+  align-items:center;justify-content:center;
+  background:transparent !important;box-shadow:none !important;border-radius:0 !important;
+  margin:2px 0 14px;
+  color:var(--olive-dark);
+}
+#s-programa .progm-block-icon svg{width:46px !important;height:46px !important;}
+#s-programa .progm-blocks .progm-block:nth-child(1) .progm-block-icon{color:#8A9558;}
+#s-programa .progm-blocks .progm-block:nth-child(2) .progm-block-icon{color:#4A5238;}
+#s-programa .progm-blocks .progm-block:nth-child(3) .progm-block-icon{color:#8B887C;}
+#s-programa .progm-blocks .progm-block:nth-child(4) .progm-block-icon{color:#A9B478;}
+#s-programa .progm-blocks .progm-block:nth-child(5) .progm-block-icon{color:#8A9558;}
+#s-programa .progm-blocks .progm-block:nth-child(6) .progm-block-icon{color:#4A5238;}
+/* s-app-train: badge sin chip, icono grande tonal */
+#s-app-train .progm-block .appt-badge{
+  width:48px !important;height:48px !important;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent !important;box-shadow:none !important;border-radius:0 !important;
+  color:var(--olive-dark) !important;
+}
+#s-app-train .progm-block .appt-badge svg{width:46px !important;height:46px !important;}
+#s-app-train .progm-block[data-section-key="intro"] .appt-badge{color:#8A9558 !important;}
+#s-app-train .progm-block[data-section-key="rutina"] .appt-badge{color:#4A5238 !important;}
+#s-app-train .progm-block[data-section-key="progreso"] .appt-badge{color:#8B887C !important;}
+#s-app-train .progm-block[data-section-key="reco"] .appt-badge{color:#A9B478 !important;}
+/* el callout del cierre duplica la cita del bloque: fuera */
+#s-app-train .progm-block[data-section-key="reco"] .appt-callout{display:none !important;}
+/* s-journey: watermark sin chip, icono grande tonal */
+#s-journey .jrn-timeline > .jrn-phase .jrn-card-wm{
+  width:48px !important;height:48px !important;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent !important;box-shadow:none !important;border-radius:0 !important;
+  color:var(--olive-dark) !important;
+}
+#s-journey .jrn-timeline > .jrn-phase .jrn-card-wm svg{width:46px !important;height:46px !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(1) .jrn-card-wm{color:#8A9558 !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(2) .jrn-card-wm{color:#4A5238 !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(3) .jrn-card-wm{color:#8B887C !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(4) .jrn-card-wm{color:#A9B478 !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(5) .jrn-card-wm{color:#8A9558 !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(6) .jrn-card-wm{color:#4A5238 !important;}
+
+/* ═══ v10 · Biblioteca: curso base destacado + galería de contenidos ═══ */
+/* Card destacada de la Guía: fondo olive-soft, sombra fuerte, sin borde duro */
+#s-biblioteca .bib-feat{
+  position:relative;cursor:pointer;
+  margin:0 0 6px;padding:18px 18px 16px;
+  background:linear-gradient(180deg,#F4F6E9 0%,var(--olive-soft) 100%);
+  border:1px solid rgba(138,149,88,.10);
+  border-radius:var(--radius-card);
+  box-shadow:0 1px .5px rgba(0,0,0,.1),0 14px 34px rgba(74,82,56,.26);
+  transition:transform .3s cubic-bezier(0.34,1.56,0.64,1), box-shadow .3s ease;
+}
+#s-biblioteca .bib-feat:hover{transform:translateY(-2px);}
+#s-biblioteca .bib-feat:active{transform:scale(.985);}
+#s-biblioteca .bib-feat-top{display:flex;align-items:center;gap:14px;}
+#s-biblioteca .bib-feat-ico{flex:none;width:50px;height:50px;color:var(--olive);}
+#s-biblioteca .bib-feat-eyebrow{
+  font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--olive-dark);margin-bottom:3px;
+}
+#s-biblioteca .bib-feat-title{
+  font-size:19px;font-weight:700;letter-spacing:-.015em;color:var(--text);line-height:1.15;
+}
+#s-biblioteca .bib-feat-desc{
+  margin-top:10px;font-size:12.5px;line-height:1.55;color:var(--text-soft);
+}
+#s-biblioteca .bib-feat-progress{margin-top:12px;}
+#s-biblioteca .bib-feat-progress-label{
+  display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;
+}
+#s-biblioteca .bib-feat-progress-eyebrow{
+  font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--olive-dark);
+}
+#s-biblioteca .bib-feat-progress-count{
+  font-size:11.5px;color:var(--text-soft);font-variant-numeric:tabular-nums;
+}
+#s-biblioteca .bib-feat-progress-count strong{color:var(--olive-dark);font-weight:700;}
+#s-biblioteca .bib-feat .hub-progress-track{background:rgba(74,82,56,.12);height:6px;border-radius:100px;overflow:hidden;}
+#s-biblioteca .bib-feat-foot{
+  display:flex;align-items:center;gap:7px;margin-top:12px;padding-top:11px;
+  border-top:1px solid rgba(74,82,56,.10);
+  font-size:11.5px;color:var(--text-soft);font-weight:500;
+}
+#s-biblioteca .bib-feat-count{color:var(--olive-dark);font-weight:600;font-variant-numeric:tabular-nums;}
+#s-biblioteca .bib-feat-dot{opacity:.45;}
+#s-biblioteca .bib-feat-arr{
+  margin-left:auto;font-size:12px;font-weight:700;color:var(--olive-dark);letter-spacing:.02em;
+}
+/* Galería de contenidos */
+#s-biblioteca .bib-gal{margin-top:6px;}
+#s-biblioteca .bib-gal-head{
+  display:flex;align-items:baseline;gap:14px;margin:24px 0 0;
+  font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--olive-dark);
+}
+#s-biblioteca .bib-gal-head::after{content:"";flex:1;height:1px;background:var(--border);transform:translateY(-3px);}
+#s-biblioteca .bib-gal-items{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+#s-biblioteca .bib-item{
+  display:flex;align-items:center;gap:13px;padding:13px 15px;
+  text-decoration:none;color:inherit;cursor:pointer;
+  background:var(--bg-card);
+  border:1px solid rgba(0,0,0,.03);
+  border-radius:var(--radius-card);
+  box-shadow:0 1px .5px rgba(0,0,0,.1),0 10px 28px rgba(74,82,56,.12);
+  transition:transform .25s cubic-bezier(0.34,1.56,0.64,1);
+}
+#s-biblioteca .bib-item:hover{transform:translateY(-2px);}
+#s-biblioteca .bib-item:active{transform:scale(.985);}
+#s-biblioteca .bib-item-ico{flex:none;width:24px;height:24px;}
+#s-biblioteca .bib-item-txt{flex:1;min-width:0;display:flex;flex-direction:column;}
+#s-biblioteca .bib-item-txt strong{
+  font-size:13.5px;font-weight:600;color:var(--text);letter-spacing:-.01em;line-height:1.3;
+}
+#s-biblioteca .bib-item-txt small{font-size:11px;color:var(--text-mute);margin-top:1px;}
+#s-biblioteca .bib-item-arr{flex:none;color:var(--olive-dark);font-size:14px;}
+/* Chip NUEVO: rojo pastel translúcido, sin borde */
+#s-biblioteca .bib-item-new{
+  flex:none;padding:4px 9px;border-radius:100px;
+  background:rgba(224,142,132,.15);color:#C4685D;
+  font-size:8.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap;
+}
+/* La subsección "Próximamente" hereda su divisor; solo la separamos de la galería */
+#s-biblioteca .bib-subsection{margin-top:2rem;}
 </style>
 </head>
 <body class="locked">
@@ -6002,7 +6302,7 @@ body.locked .em-grain{display:none;}
     <!-- ============ ASISTENTE DE LECTURA (compacto + expandible) ============ -->
     <aside class="em-assist reveal" aria-label="Asistente de lectura">
       <p class="em-assist-tag">
-        <svg width="11" height="13" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 26l-7-5-7 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <svg width="11" height="13" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="color:#E08E84"><path d="M19 26l-7-5-7 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         Asistente de lectura
       </p>
       <div class="em-assist-row">
@@ -6042,20 +6342,10 @@ body.locked .em-grain{display:none;}
       <div class="em-sec-head">¿Nuevo aquí? — Entra acá</div>
       <p class="em-sec-sub">Tu punto de partida: el método explicado una sola vez, en orden.</p>
       <a class="em-new" onclick="go('s-onboarding')" style="cursor:pointer">
-        <svg class="em-clay-sm" viewBox="0 0 120 120" aria-hidden="true">
-          <defs>
-            <linearGradient id="emKbV" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#F6F5F0"/><stop offset=".55" stop-color="#E5E3DA"/><stop offset="1" stop-color="#CFCCBE"/>
-            </linearGradient>
-            <filter id="emDropK" x="-30%" y="-30%" width="160%" height="170%">
-              <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#4A5238" flood-opacity=".24"/>
-            </filter>
-          </defs>
-          <g filter="url(#emDropK)">
-            <path d="M42 44c-3-9 2-20 18-20s21 11 18 20" fill="none" stroke="url(#emKbV)" stroke-width="11" stroke-linecap="round"/>
-            <circle cx="60" cy="70" r="30" fill="url(#emKbV)"/>
-          </g>
-          <ellipse cx="50" cy="53" rx="11" ry="4.5" fill="#FFFEF9" opacity=".6" transform="rotate(-16 50 53)"/>
+        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="color:#8A9558" aria-hidden="true">
+          <path d="M8.3 11.4C7 7.6 9 5 12 5s5 2.6 3.7 6.4"/>
+          <circle cx="12" cy="15.4" r="5.3"/>
+          <path d="M9.3 16.6c.8.55 1.7.85 2.7.85s1.9-.3 2.7-.85" opacity=".6"/>
         </svg>
         <span class="em-new-txt">
           <strong>El onboarding del programa</strong>
@@ -6070,27 +6360,10 @@ body.locked .em-grain{display:none;}
       <div class="em-sec-head">Aprendizaje</div>
       <p class="em-sec-sub">Para cuando termines tu ruta de inicio. Consulta libre, a tu ritmo.</p>
       <a class="em-new" onclick="go('s-biblioteca')" style="cursor:pointer">
-        <svg class="em-clay-sm" viewBox="0 0 130 120" aria-hidden="true">
-          <defs>
-            <linearGradient id="emBkL" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#F6F5F0"/><stop offset="1" stop-color="#DBD8CC"/>
-            </linearGradient>
-            <linearGradient id="emBkR" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#EFEEE7"/><stop offset="1" stop-color="#CFCCBE"/>
-            </linearGradient>
-            <filter id="emDropBk" x="-30%" y="-30%" width="160%" height="170%">
-              <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#4A5238" flood-opacity=".24"/>
-            </filter>
-          </defs>
-          <g filter="url(#emDropBk)">
-            <path d="M65 92c-13-8.5-34-9-47-3.5V36c13-6 34-5.5 47 3.5 13-9 34-9.5 47-3.5v52.5c-13-5.5-34-5-47 3.5z" fill="#BEBBAC"/>
-            <path d="M65 86c-12-8-32-8.5-45-3.5V32c13-5.5 33-5 45 3.5z" fill="url(#emBkL)"/>
-            <path d="M65 86c12-8 32-8.5 45-3.5V32c-13-5.5-33-5-45 3.5z" fill="url(#emBkR)"/>
-            <path d="M65 35.5v50.5" stroke="#B3B0A2" stroke-width="2.4" opacity=".55"/>
-          </g>
-          <path d="M28 44c9-2.8 21-2.4 29 1.6M28 55c9-2.8 21-2.4 29 1.6" stroke="#CFCCBE" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-          <path d="M102 44c-9-2.8-21-2.4-29 1.6M102 55c-9-2.8-21-2.4-29 1.6" stroke="#D5D2C6" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-          <ellipse cx="40" cy="34" rx="11" ry="3.6" fill="#FFFEF9" opacity=".55" transform="rotate(-8 40 34)"/>
+        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="color:#4A5238" aria-hidden="true">
+          <path d="M12 7.1C10.1 5.4 6.9 5.1 4.2 6.1v11.7c2.7-1 5.9-.7 7.8 1 1.9-1.7 5.1-2 7.8-1V6.1c-2.7-1-5.9-.7-7.8 1z"/>
+          <path d="M12 7.1v11.7"/>
+          <path d="M6.6 9.6c1.6-.3 2.8-.25 3.9.15M14.9 9.75c1.1-.4 2.3-.45 3.9-.15" opacity=".55"/>
         </svg>
         <span class="em-new-txt">
           <strong>Material de aprendizaje</strong>
@@ -6107,36 +6380,19 @@ body.locked .em-grain{display:none;}
       <p class="em-sec-sub">Respuestas rápidas y el grupo del programa.</p>
       <div class="em-also">
         <div class="em-also-row" onclick="go('s-faq')" style="cursor:pointer">
-          <svg class="em-clay-xs" viewBox="0 0 120 120" aria-hidden="true">
-            <defs>
-              <radialGradient id="emQR" cx=".5" cy=".4" r=".65">
-                <stop offset="0" stop-color="#F6F5F0"/><stop offset=".7" stop-color="#E5E3DA"/><stop offset="1" stop-color="#CFCCBE"/>
-              </radialGradient>
-              <filter id="emDropQ" x="-30%" y="-30%" width="160%" height="170%">
-                <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#4A5238" flood-opacity=".24"/>
-              </filter>
-            </defs>
-            <g filter="url(#emDropQ)"><circle cx="60" cy="60" r="38" fill="url(#emQR)"/></g>
-            <path d="M50 50a10 10 0 1 1 14 9.2c-2.8 1.2-4 3.2-4 6v2.4M60 80v.4" stroke="#BEBBAC" stroke-width="7" stroke-linecap="round" fill="none"/>
-            <ellipse cx="48" cy="40" rx="11" ry="4.5" fill="#FFFEF9" opacity=".65" transform="rotate(-18 48 40)"/>
+          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="color:#8B887C" aria-hidden="true">
+            <circle cx="12" cy="12" r="8.6"/>
+            <path d="M9.5 9.7a2.55 2.55 0 1 1 3.7 2.3c-.8.45-1.2.95-1.2 1.8v.3"/>
+            <path d="M12 16.9v.01" stroke-width="2.2"/>
           </svg>
           <span class="em-also-txt"><strong>Preguntas frecuentes</strong><small>Resuelve dudas rápido</small></span>
           <span class="em-also-arr">→</span>
         </div>
         <a href="https://ig.me/j/AbYeQwBuaYR8SlZZ/" target="_blank" rel="noopener" class="em-also-row">
-          <svg class="em-clay-xs" viewBox="0 0 120 120" aria-hidden="true">
-            <defs>
-              <linearGradient id="emIgV" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#F6F5F0"/><stop offset=".55" stop-color="#E5E3DA"/><stop offset="1" stop-color="#CFCCBE"/>
-              </linearGradient>
-              <filter id="emDropI" x="-30%" y="-30%" width="160%" height="170%">
-                <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#4A5238" flood-opacity=".24"/>
-              </filter>
-            </defs>
-            <g filter="url(#emDropI)"><rect x="22" y="22" width="76" height="76" rx="24" fill="url(#emIgV)"/></g>
-            <circle cx="60" cy="60" r="17" fill="none" stroke="#BEBBAC" stroke-width="7"/>
-            <circle cx="82" cy="38" r="5" fill="#BEBBAC"/>
-            <ellipse cx="45" cy="31" rx="13" ry="4.5" fill="#FFFEF9" opacity=".6" transform="rotate(-8 45 31)"/>
+          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="color:#A9B478" aria-hidden="true">
+            <rect x="4.2" y="4.2" width="15.6" height="15.6" rx="5"/>
+            <circle cx="12" cy="12" r="3.6"/>
+            <circle cx="16.6" cy="7.4" r="1" fill="currentColor" stroke="none"/>
           </svg>
           <span class="em-also-txt"><strong>Chat grupal de Instagram</strong><small>Comunidad del programa</small></span>
           <span class="em-also-arr">→</span>
@@ -6160,6 +6416,10 @@ body.locked .em-grain{display:none;}
     <p class="em-sig-name">Mauro Morón</p>
     <p class="em-sig-cred">ISSA CERTIFIED FITNESS AND NUTRITION COACH</p>
     <p class="em-sig-rights">© 2026 Mauro Morón · Acceso personal e intransferible</p>
+    <button class="em-logout" type="button" onclick="emLogout()" aria-label="Cerrar sesión">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Cerrar sesión
+    </button>
   </div>
   </div>
 </div>
@@ -6429,6 +6689,7 @@ body.locked .em-grain{display:none;}
               <div class="jrn-card-title">Diagnóstico y claridad</div>
               <div class="jrn-card-meaning">Entendemos tu contexto y definimos objetivos.</div>
             </div>
+            <p class="rh-quote">Objetivos según <em>tu realidad.</em></p>
             <div class="jrn-steps-label">Lo que haces tú</div>
             <ul class="jrn-steps"><li>Participas en la <strong>entrevista inicial</strong> y compartes tu contexto: trabajo, horarios, hábitos, anhelos.</li><li>Alineamos expectativas con el método y definimos <strong>objetivos según tu realidad</strong>.</li></ul>
           </div>
@@ -6452,6 +6713,7 @@ body.locked .em-grain{display:none;}
               <div class="jrn-card-title">Activación</div>
               <div class="jrn-card-meaning">Accedes al programa y entiendes cómo funcionan las herramientas.</div>
             </div>
+            <p class="rh-quote">Claridad para iniciar: <em>no improvisas.</em></p>
             <div class="jrn-steps-label">Lo que haces tú</div>
             <ul class="jrn-steps"><li>Recibes el acceso al programa, <strong>descargas la app</strong> y activas tu cuenta.</li><li>Lees el onboarding y la <strong>guía de uso</strong> para comprender cómo está estructurado el sistema.</li><li>Exploras la app y te familiarizas con sus secciones, calendario y herramientas.</li></ul>
           </div>
@@ -6475,6 +6737,7 @@ body.locked .em-grain{display:none;}
               <div class="jrn-card-title">Aprendizaje</div>
               <div class="jrn-card-meaning">Comprendes la lógica del método.</div>
             </div>
+            <p class="rh-quote">Mayor conexión <em>con tu proceso.</em></p>
             <div class="jrn-steps-label">Lo que haces tú</div>
             <ul class="jrn-steps"><li>Registras tu <strong>punto de partida</strong> (fotografía y composición corporal).</li><li>Revisas la <strong>estructura de las rutinas</strong>.</li><li>Revisas videos y explicaciones de ejercicios para entender <strong>postura y ejecución</strong>.</li><li>Exploras las herramientas de nutrición (guía de alimentación y app de Meal Tracking con recetas inteligentes).</li></ul>
           </div>
@@ -6498,6 +6761,7 @@ body.locked .em-grain{display:none;}
               <div class="jrn-card-title">Ejecución y estructura</div>
               <div class="jrn-card-meaning">Aplicas el método en tu entrenamiento, alimentación y hábitos.</div>
             </div>
+            <p class="rh-quote">Las primeras mejoras <em>se notan.</em></p>
             <div class="jrn-steps-label">Lo que haces tú</div>
             <ul class="jrn-steps"><li>Inicias el ciclo y registras <strong>pesos y repeticiones</strong> en cada sesión.</li><li>Te concentras en postura, ejecución, nivel de fuerza y rango de movilidad.</li><li>Defines tu <strong>nivel de gestión nutricional</strong> y revisas tu meta diaria.</li><li>Utilizas las herramientas de nutrición.</li><li>Implementas mejoras de hábitos y respetas descansos.</li></ul>
           </div>
@@ -6521,6 +6785,7 @@ body.locked .em-grain{display:none;}
               <div class="jrn-card-title">Desarrollo de criterio</div>
               <div class="jrn-card-meaning">Interpretas datos y tomas decisiones con inteligencia.</div>
             </div>
+            <p class="rh-quote">Interpretas datos, <em>decides con criterio.</em></p>
             <div class="jrn-steps-label">Lo que haces tú</div>
             <ul class="jrn-steps"><li>Envías <strong>videos de ejecución</strong> para revisión técnica.</li><li>Participas activamente en seguimientos, compartiendo información relevante.</li><li>Actualizas <strong>composición y fotografías</strong> mensualmente.</li><li>Repasas los videos de ejecución.</li><li>Gestionas activamente tu alimentación.</li></ul>
           </div>
@@ -6544,6 +6809,7 @@ body.locked .em-grain{display:none;}
               <div class="jrn-card-title">Dominio del método</div>
               <div class="jrn-card-meaning">El método se vuelve parte natural de tu vida.</div>
             </div>
+            <p class="rh-quote">Sabes entrenar, alimentarte <em>y adaptarte.</em></p>
             <div class="jrn-steps-label">Lo que haces tú</div>
             <ul class="jrn-steps"><li>Ajustas entrenamiento y alimentación según <strong>trabajo, viajes y eventos</strong>.</li><li>Mantienes la estructura del sistema en el día a día.</li></ul>
           </div>
@@ -6554,6 +6820,8 @@ body.locked .em-grain{display:none;}
         </div>
       </div>
     </div>
+
+    <div class="rh-dark jrn-close"><div class="rh-dark-kicker">Fase a fase</div><p class="rh-dark-quote">Adaptarte a tu realidad <em>sin perder el rumbo.</em></p></div>
 
     <div class="footer">
       <div class="footer-brand">ENTRENA CON MÉTODO</div>
@@ -6595,7 +6863,7 @@ body.locked .em-grain{display:none;}
     <img id="appm-zoom-img" src="" alt="">
   </div>
 
-  <script id="appm-data" type="application/json">[{"section": "C\u00f3mo funciona la app", "title": "Tu app de entrenamiento", "body": "<p>Dentro del programa usamos una app para organizar y dar seguimiento a dos pilares del proceso: <strong>entrenamiento y progreso</strong>.</p>\n<p>No es una app de rutinas gen\u00e9ricas. Es la herramienta de tu <strong>coaching online personalizado</strong>: registrar tu entrenamiento permite basar el proceso en datos reales y tomar decisiones con criterio.</p>\n<p>Aqu\u00ed encontrar\u00e1s tus rutinas con videos, tu calendario y las gr\u00e1ficas de tu progreso.</p>", "img": ""}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "D\u00f3nde encuentras tu rutina del d\u00eda", "body": "<p>Puedes iniciar tu rutina desde dos lugares: la secci\u00f3n <strong>Home</strong> o la secci\u00f3n <strong>Calendar</strong>, donde se muestra c\u00f3mo est\u00e1 organizada tu semana de entrenamiento.</p>\n<p>All\u00ed seleccionas la <strong>rutina programada para el d\u00eda</strong> e inicias. El Home funciona como tu punto de partida diario: te orienta antes de entrenar.</p>", "img": "img/app-tutorial-01-rutina-del-dia.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "Ejecutar: videos, registro y percepci\u00f3n", "body": "<p>Al abrir la rutina, cada ejercicio incluye un <strong>video demostrativo</strong> y una explicaci\u00f3n textual para guiar su correcta ejecuci\u00f3n.</p>\n<p>El orden responde a una l\u00f3gica de entrenamiento: calentamiento, fuerza, resistencia, movilidad y enfriamiento. <strong>S\u00edguelo como est\u00e1 planteado.</strong></p>\n<p>Durante la sesi\u00f3n registras los <strong>pesos, repeticiones y tu nivel de percepci\u00f3n de esfuerzo</strong>. Esto da trazabilidad real a tu progreso.</p>", "img": "img/app-tutorial-02-ejecucion-videos.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "La galer\u00eda de workouts y tu programa", "body": "<p>En la secci\u00f3n <strong>Workouts</strong> encuentras tu programa completo: las rutinas organizadas por fase, con su duraci\u00f3n estimada y n\u00famero de ejercicios.</p>\n<p>Esta secci\u00f3n es <strong>de consulta</strong>: \u00fasala si quieres visualizar tus ejercicios y videos. Pero lo recomendable es <strong>activar las rutinas desde el Calendar o el Home</strong>, seg\u00fan tu calendario. La galer\u00eda es para consultar, no para iniciar.</p>", "img": "img/app-tutorial-03-galeria-workouts.png"}, {"section": "Secci\u00f3n 2 \u00b7 Registro peri\u00f3dico de progreso", "title": "Fotos de progreso y composici\u00f3n corporal", "body": "<p>Para observar tu evoluci\u00f3n, registra <strong>mensualmente</strong> tu peso, porcentaje de grasa corporal y un registro fotogr\u00e1fico.</p>\n<p>Lo haces en las secciones <strong>Body Stats y Photos</strong>, desde el Calendar o desde el men\u00fa de opciones.</p>\n<p>Este registro peri\u00f3dico es lo que permite <strong>medir cambios reales</strong> y ajustar el proceso con datos, no con percepci\u00f3n.</p>", "img": "img/app-tutorial-06-fotos-progreso.png"}, {"section": "Secci\u00f3n 3 \u00b7 Recomendaciones", "title": "Buenas pr\u00e1cticas para aprovechar la app", "body": "<p>H\u00e1bitos que hacen la diferencia en tu proceso:</p>\n<ul class=\"app-modal-list\">\n<li>Revisa el <strong>Home</strong> antes de iniciar tu entrenamiento.</li>\n<li>Sigue las rutinas en el <strong>orden del calendario</strong>.</li>\n<li>Repasa los <strong>videos</strong> de los ejercicios antes de realizarlos.</li>\n<li>Registra <strong>pesos, repeticiones e intensidad</strong> de cada sesi\u00f3n.</li>\n<li>Ap\u00f3yate en la <strong>gu\u00eda de alimentaci\u00f3n</strong> y la <strong>app de Meal Tracking</strong>.</li>\n</ul>", "img": ""}]</script>
+  <script id="appm-data" type="application/json">[{"section": "C\u00f3mo funciona la app", "title": "Tu app de entrenamiento", "body": "<p class=\"rh-quote\">Datos reales, <em>decisiones con criterio.</em></p>\n<p>Dentro del programa usamos una app para organizar y dar seguimiento a dos pilares del proceso: <strong>entrenamiento y progreso</strong>.</p>\n<p>No es una app de rutinas gen\u00e9ricas. Es la herramienta de tu <strong>coaching online personalizado</strong>: registrar tu entrenamiento permite basar el proceso en datos reales y tomar decisiones con criterio.</p>\n<p>Aqu\u00ed encontrar\u00e1s tus rutinas con videos, tu calendario y las gr\u00e1ficas de tu progreso.</p>", "img": ""}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "D\u00f3nde encuentras tu rutina del d\u00eda", "body": "<p class=\"rh-quote\">Tu punto de partida <em>diario.</em></p>\n<p>Puedes iniciar tu rutina desde dos lugares: la secci\u00f3n <strong>Home</strong> o la secci\u00f3n <strong>Calendar</strong>, donde se muestra c\u00f3mo est\u00e1 organizada tu semana de entrenamiento.</p>\n<p>All\u00ed seleccionas la <strong>rutina programada para el d\u00eda</strong> e inicias. El Home funciona como tu punto de partida diario: te orienta antes de entrenar.</p>", "img": "img/app-tutorial-01-rutina-del-dia.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "Ejecutar: videos, registro y percepci\u00f3n", "body": "<p>Al abrir la rutina, cada ejercicio incluye un <strong>video demostrativo</strong> y una explicaci\u00f3n textual para guiar su correcta ejecuci\u00f3n.</p>\n<p>El orden responde a una l\u00f3gica de entrenamiento: calentamiento, fuerza, resistencia, movilidad y enfriamiento. <strong>S\u00edguelo como est\u00e1 planteado.</strong></p>\n<p>Durante la sesi\u00f3n registras los <strong>pesos, repeticiones y tu nivel de percepci\u00f3n de esfuerzo</strong>. Esto da trazabilidad real a tu progreso.</p>", "img": "img/app-tutorial-02-ejecucion-videos.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "La galer\u00eda de workouts y tu programa", "body": "<p>En la secci\u00f3n <strong>Workouts</strong> encuentras tu programa completo: las rutinas organizadas por fase, con su duraci\u00f3n estimada y n\u00famero de ejercicios.</p>\n<p>Esta secci\u00f3n es <strong>de consulta</strong>: \u00fasala si quieres visualizar tus ejercicios y videos. Pero lo recomendable es <strong>activar las rutinas desde el Calendar o el Home</strong>, seg\u00fan tu calendario. La galer\u00eda es para consultar, no para iniciar.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">Para llevar</div><ul>\n<li>Inicia tu rutina desde Home o Calendar</li>\n<li>Sigue el orden planteado de la sesi\u00f3n</li>\n<li>Registra pesos, repeticiones y esfuerzo</li>\n</ul></div>", "img": "img/app-tutorial-03-galeria-workouts.png"}, {"section": "Secci\u00f3n 2 \u00b7 Registro peri\u00f3dico de progreso", "title": "Fotos de progreso y composici\u00f3n corporal", "body": "<p class=\"rh-quote\">Medir cambios reales, <em>no percepci\u00f3n.</em></p>\n<p>Para observar tu evoluci\u00f3n, registra <strong>mensualmente</strong> tu peso, porcentaje de grasa corporal y un registro fotogr\u00e1fico.</p>\n<p>Lo haces en las secciones <strong>Body Stats y Photos</strong>, desde el Calendar o desde el men\u00fa de opciones.</p>\n<p>Este registro peri\u00f3dico es lo que permite <strong>medir cambios reales</strong> y ajustar el proceso con datos, no con percepci\u00f3n.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">Para llevar</div><ul>\n<li>Cada mes: peso, % de grasa y fotos</li>\n<li>Se registra en Body Stats y Photos</li>\n</ul></div>", "img": "img/app-tutorial-06-fotos-progreso.png"}, {"section": "Secci\u00f3n 3 \u00b7 Recomendaciones", "title": "Buenas pr\u00e1cticas para aprovechar la app", "body": "<p class=\"rh-quote\">H\u00e1bitos que hacen <em>la diferencia.</em></p>\n<ul class=\"app-modal-list\">\n<li>Revisa el <strong>Home</strong> antes de iniciar tu entrenamiento.</li>\n<li>Sigue las rutinas en el <strong>orden del calendario</strong>.</li>\n<li>Repasa los <strong>videos</strong> de los ejercicios antes de realizarlos.</li>\n<li>Registra <strong>pesos, repeticiones e intensidad</strong> de cada sesi\u00f3n.</li>\n<li>Ap\u00f3yate en la <strong>gu\u00eda de alimentaci\u00f3n</strong> y la <strong>app de Meal Tracking</strong>.</li>\n</ul>\n<div class=\"rh-dark\"><div class=\"rh-dark-kicker\">Cada sesi\u00f3n</div><p class=\"rh-dark-quote\">Tu progreso, <em>con trazabilidad real.</em></p></div>", "img": ""}]</script>
 </div>
 
 <!-- =============================================== -->
@@ -6766,52 +7034,92 @@ body.locked .em-grain{display:none;}
 
     <div class="sub-header sub-anim" style="--d:0s;">
       <div class="sub-eyebrow">01 · Biblioteca</div>
-      <div class="sub-title">GALERÍA DE<br>MATERIAL INFORMATIVO</div>
+      <div class="sub-title">MATERIAL DE<br>APRENDIZAJE</div>
       <div class="sub-intro">
-        Material de consulta para volver cuando lo necesites.
+        Tu curso base y material de consulta para volver cuando lo necesites.
       </div>
     </div>
 
-    <!-- Progress bar (avance del material informativo) -->
-    <div class="hub-progress-bar sub-anim" style="--d:.05s;">
-      <div class="hub-progress-label">
-        <span class="hub-progress-eyebrow">Tu avance en el material informativo</span>
-        <span class="hub-progress-count"><strong id="bib-ga-done">0</strong> <span style="opacity:.5;">/</span> <span id="bib-ga-total">15</span> capítulos leídos</span>
+    <!-- GUÍA DE ALIMENTACIÓN · el curso base (card destacada) -->
+    <div class="bib-feat sub-anim" style="--d:.05s;" onclick="go('s-guia-alimentacion')" role="button" tabindex="0">
+      <div class="bib-feat-top">
+        <svg class="bib-feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 7.1C10.1 5.4 6.9 5.1 4.2 6.1v11.7c2.7-1 5.9-.7 7.8 1 1.9-1.7 5.1-2 7.8-1V6.1c-2.7-1-5.9-.7-7.8 1z"/>
+          <path d="M12 7.1v11.7"/>
+          <path d="M6.6 9.6c1.6-.3 2.8-.25 3.9.15M14.9 9.75c1.1-.4 2.3-.45 3.9-.15" opacity=".55"/>
+        </svg>
+        <div class="bib-feat-head">
+          <div class="bib-feat-eyebrow">Guía esencial · Curso base</div>
+          <div class="bib-feat-title">Guía de alimentación</div>
+        </div>
       </div>
-      <div class="hub-progress-track">
-        <div class="hub-progress-fill" id="bib-ga-fill"></div>
+      <div class="bib-feat-desc">Cómo gestionar tu alimentación adaptada a tu vida. Lee a tu ritmo, sin prisa.</div>
+      <div class="bib-feat-progress">
+        <div class="bib-feat-progress-label">
+          <span class="bib-feat-progress-eyebrow">Tu avance</span>
+          <span class="bib-feat-progress-count"><strong id="bib-ga-done">0</strong> <span style="opacity:.5;">/</span> <span id="bib-ga-total">15</span> capítulos leídos</span>
+        </div>
+        <div class="hub-progress-track">
+          <div class="hub-progress-fill" id="bib-ga-fill"></div>
+        </div>
+      </div>
+      <div class="bib-feat-foot">
+        <span class="bib-feat-count"><span id="bib-ga-foot-done">0</span>/<span id="bib-ga-foot-total">15</span> capítulos</span>
+        <span class="bib-feat-dot">·</span>
+        <span>Lee a tu ritmo</span>
+        <span class="bib-feat-arr">Continuar →</span>
       </div>
     </div>
 
-    <!-- CONTENIDO DISPONIBLE -->
-    <div class="bib-cards sub-anim" style="--d:.10s;">
+    <!-- GALERÍA DE CONTENIDOS (demo de cómo se verá el material) -->
+    <div class="bib-gal sub-anim" style="--d:.10s;">
 
-      <!-- GUÍA DE ALIMENTACIÓN (card destacada, glass tinted) -->
-      <div class="hub-card hub-card-featured" data-section="guia" onclick="go('s-guia-alimentacion')">
-        <div class="hub-card-wm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5a2 2 0 0 1 2-2h6v17H6a2 2 0 0 0-2 2V5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M20 5a2 2 0 0 0-2-2h-6v17h6a2 2 0 0 1 2 2V5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
-        <div class="hub-card-eyebrow">Guía esencial</div>
-        <div class="hub-card-title">Guía de alimentación</div>
-        <div class="hub-card-desc">Cómo gestionar tu alimentación adaptada a tu vida. Lee a tu ritmo, sin prisa.</div>
-        <div class="hub-card-foot">
-          <span class="hub-card-time"><span id="bib-ga-foot-done">0</span>/<span id="bib-ga-foot-total">15</span> capítulos</span>
-          <span class="hub-card-dot">·</span>
-          <span>Lee a tu ritmo</span>
-          <span class="hub-card-arr">→</span>
-        </div>
+      <div class="bib-gal-head">Nutrición práctica</div>
+      <div class="bib-gal-items">
+        <a class="bib-item" href="#" onclick="return false;">
+          <svg class="bib-item-ico" style="color:#8A9558" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5v4.5a2 2 0 0 0 4 0V3.5M7 3.5V21"/><circle cx="15.5" cy="12" r="6"/><circle cx="15.5" cy="12" r="2.5"/></svg>
+          <span class="bib-item-txt"><strong>Proteína: cuánta y cuándo</strong><small>Clip · 3 min</small></span>
+          <span class="bib-item-new">Nuevo</span>
+          <span class="bib-item-arr">→</span>
+        </a>
+        <a class="bib-item" href="#" onclick="return false;">
+          <svg class="bib-item-ico" style="color:#4A5238" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4"/><path d="M12 3.4v2M12 18.6v2M3.4 12h2M18.6 12h2" opacity=".55"/></svg>
+          <span class="bib-item-txt"><strong>Cómo armar un plato con criterio</strong><small>Clip · 4 min</small></span>
+          <span class="bib-item-arr">→</span>
+        </a>
+        <a class="bib-item" href="#" onclick="return false;">
+          <svg class="bib-item-ico" style="color:#8B887C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v2a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7z"/><path d="M8 7c0-1.2 1-1.6 1-2.8M12.5 7c0-1.2 1-1.6 1-2.8" opacity=".55"/></svg>
+          <span class="bib-item-txt"><strong>Salir a comer sin salirte del plan</strong><small>Guía corta · 2 min</small></span>
+          <span class="bib-item-arr">→</span>
+        </a>
       </div>
 
-      <!-- FAQ -->
-      <div class="hub-card" data-section="faq" onclick="go('s-faq')">
-        <div class="hub-card-wm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M9.6 9.2a2.4 2.4 0 1 1 3.6 2c-.8.5-1.2 1-1.2 1.8M12 16v.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
-        <div class="hub-card-eyebrow">Dudas resueltas</div>
-        <div class="hub-card-title">Preguntas frecuentes</div>
-        <div class="hub-card-desc">Resuelve las dudas más comunes del programa en un solo lugar.</div>
-        <div class="hub-card-foot">
-          <span class="hub-card-time">Búsqueda rápida</span>
-          <span class="hub-card-dot">·</span>
-          <span>Por categoría</span>
-          <span class="hub-card-arr">→</span>
-        </div>
+      <div class="bib-gal-head">Entrenamiento</div>
+      <div class="bib-gal-items">
+        <a class="bib-item" href="#" onclick="return false;">
+          <svg class="bib-item-ico" style="color:#4A5238" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5v5M6 7.5v9M21 9.5v5M18 7.5v9M6 12h12"/></svg>
+          <span class="bib-item-txt"><strong>El orden de los ejercicios importa</strong><small>Clip · 3 min</small></span>
+          <span class="bib-item-arr">→</span>
+        </a>
+        <a class="bib-item" href="#" onclick="return false;">
+          <svg class="bib-item-ico" style="color:#A9B478" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.5V12l3 2"/></svg>
+          <span class="bib-item-txt"><strong>RPE: medir el esfuerzo sin adivinar</strong><small>Clip · 5 min</small></span>
+          <span class="bib-item-arr">→</span>
+        </a>
+      </div>
+
+      <div class="bib-gal-head">Hábitos y descanso</div>
+      <div class="bib-gal-items">
+        <a class="bib-item" href="#" onclick="return false;">
+          <svg class="bib-item-ico" style="color:#8A9558" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13.5A8 8 0 1 1 10.5 4a6.5 6.5 0 0 0 9.5 9.5z"/></svg>
+          <span class="bib-item-txt"><strong>Dormir es entrenar</strong><small>Clip · 3 min</small></span>
+          <span class="bib-item-arr">→</span>
+        </a>
+        <a class="bib-item" href="#" onclick="return false;">
+          <svg class="bib-item-ico" style="color:#8B887C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 3.5v17h17"/><path d="M7 14.5l3.5-4 3 2.5 6-7" ></path></svg>
+          <span class="bib-item-txt"><strong>Cómo leer tu % de grasa</strong><small>Guía corta · 4 min</small></span>
+          <span class="bib-item-arr">→</span>
+        </a>
       </div>
 
     </div>
@@ -6929,8 +7237,9 @@ body.locked .em-grain{display:none;}
       <!-- 01 · Programa -->
       <div class="hub-card hub-anim" style="--d:.12s;" data-section="programa" onclick="goSection('s-programa','programa')">
         <div class="hub-card-wm">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M3 9v6M6 7v10M21 9v6M18 7v10M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="8.8"/>
+            <path d="M15.6 8.4l-1.9 5.3-5.3 1.9 1.9-5.3z"/>
           </svg>
         </div>
         <div class="hub-card-status" data-status-for="programa">
@@ -6950,9 +7259,9 @@ body.locked .em-grain{display:none;}
       <!-- 02 · App -->
       <div class="hub-card hub-anim" style="--d:.18s;" data-section="app" onclick="goSection('s-app-train','app')">
         <div class="hub-card-wm">
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="6" y="2" width="12" height="20" rx="2.5" stroke="currentColor" stroke-width="2"/>
-            <path d="M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="6.6" y="2.6" width="10.8" height="18.8" rx="2.8"/>
+            <path d="M10.6 18.4h2.8"/>
           </svg>
         </div>
         <div class="hub-card-status" data-status-for="app">
@@ -6972,9 +7281,10 @@ body.locked .em-grain{display:none;}
       <!-- 03 · Meal Tracking -->
       <div class="hub-card hub-anim" style="--d:.24s;" data-section="meal-tracker" onclick="openMealTrackerGuide()">
         <div class="hub-card-wm">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M17 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4 2.5-1 2.5-4-1-5-2.5-5zM17 12v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.6 3.4v4.4a2.1 2.1 0 0 0 4.2 0V3.4M6.7 3.4v17.2"/>
+            <circle cx="15.2" cy="12" r="6.4"/>
+            <circle cx="15.2" cy="12" r="2.7"/>
           </svg>
         </div>
         <div class="hub-card-status" data-status-for="meal-tracker">
@@ -6994,10 +7304,10 @@ body.locked .em-grain{display:none;}
       <!-- 04 · Journey -->
       <div class="hub-card hub-anim" style="--d:.30s;" data-section="journey" onclick="goSection('s-journey','journey')">
         <div class="hub-card-wm">
-          <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
-            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
-            <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="8.8"/>
+            <circle cx="12" cy="12" r="4.9"/>
+            <circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/>
           </svg>
         </div>
         <div class="hub-card-status" data-status-for="journey">
@@ -7447,6 +7757,16 @@ function goToOnboarding(event) {
     }
   } catch(e) {}
 })();
+
+// ─── CERRAR SESIÓN ──────────────────────────────────────────────────────
+// Borra SOLO la sesión (em_client) y recarga mostrando el login.
+// NUNCA borra el progreso de lectura: em_hub_read_sections, em_ga_read,
+// em_read_sections y demás claves quedan intactas — al volver a entrar,
+// el cliente retoma exactamente donde iba.
+function emLogout() {
+  try { localStorage.removeItem(CLIENT_KEY); } catch(e) {}
+  window.location.reload();
+}
 
 // ─── PUENTE CON EL MEAL TRACKER ─────────────────────────────────────────
 // El botón "Aprendizaje" del Meal Tracker abre este centro con la identidad
