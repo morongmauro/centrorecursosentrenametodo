@@ -6141,6 +6141,186 @@ body.locked .em-grain{display:none;}
 }
 /* La subsección "Próximamente" hereda su divisor; solo la separamos de la galería */
 #s-biblioteca .bib-subsection{margin-top:2rem;}
+
+/* ═══ v11 · Eyebrows de card: tracking discreto (adiós plantilla) ═══ */
+/* Solo letricas DENTRO de cards; los divisores de página (em-sec-head,
+   sub/hub-eyebrow de cabecera) conservan su tracking editorial. */
+.hub-card-eyebrow{letter-spacing:.07em !important;font-weight:600 !important;}
+#s-programa .progm-block-eyebrow,
+#s-app-train .progm-block-eyebrow{letter-spacing:.07em !important;font-weight:600 !important;}
+.jrn-timeline > .jrn-phase .jrn-card-eyebrow{letter-spacing:.07em !important;font-weight:600 !important;}
+#s-programa .progm-block::before,
+#s-app-train .progm-block::before{letter-spacing:.08em !important;font-weight:600 !important;}
+.jrn-timeline > .jrn-phase .jrn-card-num{letter-spacing:.08em !important;font-weight:600 !important;}
+#s-programa .rh-take-label,#s-app-train .rh-take-label,#s-journey .rh-take-label{letter-spacing:.08em;font-weight:600;}
+#s-programa .rh-kicker{letter-spacing:.08em;font-weight:600;}
+.jrn-steps-label{letter-spacing:.08em !important;font-weight:600 !important;}
+.hub-card-state{letter-spacing:.07em !important;}
+#s-biblioteca .bib-feat-eyebrow{letter-spacing:.08em;font-weight:600;}
+
+/* ═══ v11 · Anclas de pilar (s-programa): grandes, tópicas, doble línea ═══ */
+#s-programa .progm-blocks .progm-block .progm-block-icon{
+  display:flex !important;
+  width:80px !important;height:80px !important;
+  align-items:center;justify-content:center;
+  background:transparent !important;box-shadow:none !important;border-radius:0 !important;
+  margin:4px 0 18px !important;
+  position:relative !important;top:auto !important;left:auto !important;right:auto !important;
+}
+#s-programa .progm-block-icon svg{width:80px !important;height:80px !important;}
+#s-programa .progm-block-icon svg *{stroke-width:1.35 !important;}
+#s-programa .progm-block-icon .pg-f{stroke:currentColor;}
+#s-programa .progm-block-icon .pg-b{stroke:var(--olive-chip);opacity:.55;}
+
+/* ═══ v11 · Iconos sin superposición: fila propia en journey y app ═══ */
+#s-journey .jrn-timeline > .jrn-phase .jrn-card-wm,
+#s-app-train .progm-block .appt-badge{
+  position:relative !important;
+  top:auto !important;left:auto !important;right:auto !important;bottom:auto !important;
+  margin:2px 0 14px !important;
+}
+
+/* ═══ v11 · Iconografía de botones: más grande, trazo fino, halo tonal ═══ */
+.em-lin,
+#s-onboarding .hub-card .hub-card-wm,
+#s-biblioteca .bib-feat-ico{
+  background:radial-gradient(circle closest-side, color-mix(in srgb, currentColor 10%, transparent) 0%, color-mix(in srgb, currentColor 4%, transparent) 62%, transparent 100%);
+  border-radius:50%;
+}
+.em-lin{padding:5px;}
+.em-lin-sm{width:58px;height:58px;}
+.em-lin-xs{width:54px;height:54px;}
+#s-onboarding .hub-cards .hub-card{padding-left:88px !important;}
+#s-onboarding .hub-card .hub-card-wm{
+  width:56px !important;height:56px !important;
+  margin-top:-28px !important;left:1rem;
+  padding:5px;
+}
+#s-onboarding .hub-card .hub-card-wm svg{width:46px !important;height:46px !important;}
+#s-onboarding .hub-card .hub-card-wm svg *{stroke-width:1.35 !important;}
+#s-onboarding .hub-card.compact .hub-card-wm{width:50px !important;height:50px !important;margin-top:-25px !important;}
+#s-onboarding .hub-card.compact .hub-card-wm svg{width:40px !important;height:40px !important;}
+#s-biblioteca .bib-feat-ico{width:56px;height:56px;padding:6px;color:var(--olive);}
+
+/* ═══ v11 · Biblioteca: hero oscuro + divisores + cápsulas + lightbox ═══ */
+#s-biblioteca .sub-header{
+  position:relative;overflow:hidden;
+  background:var(--black);
+  margin:-32px -1rem 1.4rem;
+  padding:32px 22px 30px !important;
+}
+#s-biblioteca .sub-header::before{
+  content:'';position:absolute;top:-70px;right:-50px;width:230px;height:230px;
+  border-radius:50%;background:rgba(138,149,88,.28);filter:blur(60px);
+  pointer-events:none;display:block;
+}
+#s-biblioteca .sub-header > *{position:relative;}
+#s-biblioteca .sub-eyebrow{color:var(--olive-chip) !important;}
+#s-biblioteca .sub-title{color:#F3EFE4 !important;font-size:44px;line-height:.95;margin-bottom:.7rem;}
+#s-biblioteca .sub-intro{color:rgba(243,239,228,.65) !important;font-size:13px;line-height:1.55;}
+#s-biblioteca .sub-back{
+  background:rgba(255,255,255,.12) !important;
+  border-color:transparent !important;
+  color:#F3EFE4 !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+#s-biblioteca .sub-back:hover{color:#fff !important;}
+/* Divisor principal (patrón em-sec-head) */
+#s-biblioteca .bib-sec{
+  display:flex;align-items:baseline;gap:14px;margin:4px 0 12px;
+  font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--olive-dark);
+}
+#s-biblioteca .bib-sec::after{content:"";flex:1;height:1px;background:var(--border);transform:translateY(-3px);}
+#s-biblioteca .bib-feat + .bib-sec, #s-biblioteca .bib-sec-soon{margin-top:30px;}
+#s-biblioteca .bib-cap-note{
+  margin:-4px 0 14px;font-size:12.5px;color:var(--text-mute);line-height:1.5;
+}
+#s-biblioteca .bib-cap-note-soon{margin-top:0;}
+/* Subdivisor de categoría (mismo patrón, un paso más discreto) */
+#s-biblioteca .bib-cap-cat{
+  display:flex;align-items:baseline;gap:12px;margin:20px 0 10px;
+  font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#8B887C;
+}
+#s-biblioteca .bib-cap-cat:first-child{margin-top:6px;}
+#s-biblioteca .bib-cap-cat::after{content:"";flex:1;height:1px;background:var(--border-soft);transform:translateY(-2px);}
+/* Cápsula: mini-portada editorial 4:5 */
+#s-biblioteca .bib-cap-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
+}
+#s-biblioteca .bib-cap{
+  position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;
+  aspect-ratio:4/5;padding:14px 14px 13px;
+  border:1px solid rgba(0,0,0,.03);border-radius:var(--radius-card);
+  box-shadow:0 1px .5px rgba(0,0,0,.1),0 10px 28px rgba(74,82,56,.12);
+  cursor:pointer;overflow:hidden;
+  font-family:'Inter',sans-serif;
+  transition:transform .3s cubic-bezier(0.34,1.56,0.64,1), box-shadow .3s ease;
+}
+#s-biblioteca .bib-cap:hover{transform:translateY(-3px);}
+#s-biblioteca .bib-cap:active{transform:scale(.97);}
+.bib-cap.cap-a{background:linear-gradient(165deg,#FDFCF8 0%,#F4F1E6 100%);}
+.bib-cap.cap-b{background:linear-gradient(165deg,#F4F6E9 0%,var(--olive-soft) 100%);}
+.bib-cap.cap-a::after,.bib-cap.cap-b::after{
+  content:'';position:absolute;top:-46px;right:-46px;width:130px;height:130px;border-radius:50%;
+  background:radial-gradient(circle, rgba(138,149,88,.13) 0%, transparent 70%);
+  pointer-events:none;
+}
+.bib-cap .bib-cap-kicker{
+  font-size:8.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--olive-dark);opacity:.75;
+}
+.bib-cap .bib-cap-rule{display:block;width:22px;height:1.5px;background:var(--olive);margin:8px 0 0;border-radius:2px;}
+.bib-cap .bib-cap-title{
+  margin-top:auto;padding-top:10px;
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:21px;line-height:1;letter-spacing:.02em;color:var(--text);
+}
+.bib-cap .bib-cap-foot{
+  margin-top:8px;font-size:9.5px;font-weight:500;color:var(--text-mute);letter-spacing:.02em;
+}
+.bib-cap .bib-cap-new{
+  position:absolute;top:10px;right:10px;z-index:2;
+  padding:4px 9px;border-radius:100px;
+  background:rgba(224,142,132,.15);color:#C4685D;
+  font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+}
+/* Lightbox */
+.bib-cap-lb{
+  position:fixed;inset:0;z-index:400;display:none;
+  align-items:center;justify-content:center;padding:30px 24px;
+  background:rgba(20,20,20,.9);
+}
+.bib-cap-lb.open{display:flex;animation:fadeIn .22s ease;}
+.bib-cap-lb-x{
+  position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,.12);color:#F3EFE4;border:none;cursor:pointer;
+  font-size:24px;line-height:1;display:grid;place-content:center;
+}
+.bib-cap-lb-card{
+  position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;
+  width:min(340px,86vw);aspect-ratio:4/5;padding:26px 24px 22px;
+  border-radius:var(--radius-card);overflow:hidden;
+  background:linear-gradient(165deg,#FDFCF8 0%,#F4F1E6 100%);
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+  animation:slideUp .3s cubic-bezier(.16,.84,.3,1);
+}
+.bib-cap-lb-card.cap-b{background:linear-gradient(165deg,#F4F6E9 0%,var(--olive-soft) 100%);}
+.bib-cap-lb-card::after{
+  content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle, rgba(138,149,88,.14) 0%, transparent 70%);
+  pointer-events:none;
+}
+.bib-cap-lb-card .bib-cap-kicker{
+  font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--olive-dark);opacity:.8;
+}
+.bib-cap-lb-card .bib-cap-rule{display:block;width:30px;height:1.5px;background:var(--olive);margin:12px 0 0;border-radius:2px;}
+.bib-cap-lb-card .bib-cap-title{
+  margin-top:auto;padding-top:14px;
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:40px;line-height:.98;letter-spacing:.02em;color:var(--text);
+}
+.bib-cap-lb-card .bib-cap-foot{
+  margin-top:12px;font-size:11px;font-weight:500;color:var(--text-mute);
+}
 </style>
 </head>
 <body class="locked">
@@ -6342,10 +6522,9 @@ body.locked .em-grain{display:none;}
       <div class="em-sec-head">¿Nuevo aquí? — Entra acá</div>
       <p class="em-sec-sub">Tu punto de partida: el método explicado una sola vez, en orden.</p>
       <a class="em-new" onclick="go('s-onboarding')" style="cursor:pointer">
-        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="color:#8A9558" aria-hidden="true">
+        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="color:#8A9558" aria-hidden="true">
           <path d="M8.3 11.4C7 7.6 9 5 12 5s5 2.6 3.7 6.4"/>
           <circle cx="12" cy="15.4" r="5.3"/>
-          <path d="M9.3 16.6c.8.55 1.7.85 2.7.85s1.9-.3 2.7-.85" opacity=".6"/>
         </svg>
         <span class="em-new-txt">
           <strong>El onboarding del programa</strong>
@@ -6360,10 +6539,9 @@ body.locked .em-grain{display:none;}
       <div class="em-sec-head">Aprendizaje</div>
       <p class="em-sec-sub">Para cuando termines tu ruta de inicio. Consulta libre, a tu ritmo.</p>
       <a class="em-new" onclick="go('s-biblioteca')" style="cursor:pointer">
-        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="color:#4A5238" aria-hidden="true">
+        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="color:#4A5238" aria-hidden="true">
           <path d="M12 7.1C10.1 5.4 6.9 5.1 4.2 6.1v11.7c2.7-1 5.9-.7 7.8 1 1.9-1.7 5.1-2 7.8-1V6.1c-2.7-1-5.9-.7-7.8 1z"/>
           <path d="M12 7.1v11.7"/>
-          <path d="M6.6 9.6c1.6-.3 2.8-.25 3.9.15M14.9 9.75c1.1-.4 2.3-.45 3.9-.15" opacity=".55"/>
         </svg>
         <span class="em-new-txt">
           <strong>Material de aprendizaje</strong>
@@ -6380,16 +6558,16 @@ body.locked .em-grain{display:none;}
       <p class="em-sec-sub">Respuestas rápidas y el grupo del programa.</p>
       <div class="em-also">
         <div class="em-also-row" onclick="go('s-faq')" style="cursor:pointer">
-          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="color:#8B887C" aria-hidden="true">
+          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="color:#8B887C" aria-hidden="true">
             <circle cx="12" cy="12" r="8.6"/>
             <path d="M9.5 9.7a2.55 2.55 0 1 1 3.7 2.3c-.8.45-1.2.95-1.2 1.8v.3"/>
-            <path d="M12 16.9v.01" stroke-width="2.2"/>
+            <path d="M12 16.9v.01" stroke-width="1.9"/>
           </svg>
           <span class="em-also-txt"><strong>Preguntas frecuentes</strong><small>Resuelve dudas rápido</small></span>
           <span class="em-also-arr">→</span>
         </div>
         <a href="https://ig.me/j/AbYeQwBuaYR8SlZZ/" target="_blank" rel="noopener" class="em-also-row">
-          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="color:#A9B478" aria-hidden="true">
+          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="color:#A9B478" aria-hidden="true">
             <rect x="4.2" y="4.2" width="15.6" height="15.6" rx="5"/>
             <circle cx="12" cy="12" r="3.6"/>
             <circle cx="16.6" cy="7.4" r="1" fill="currentColor" stroke="none"/>
@@ -6451,7 +6629,7 @@ body.locked .em-grain{display:none;}
     <div class="progm-blocks">
       <div class="progm-block">
         <div class="progm-block-num">00</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI1"><circle cx="12" cy="12" r="9.2"/><path d="M15.9 8.1l-2 5.8-5.8 2 2-5.8z"/></g></defs><use href="#pgI1" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI1" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <radialGradient id="rhG1" cx=".5" cy=".4" r=".65">
@@ -6477,7 +6655,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">01</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9v6M6 7v10M21 9v6M18 7v10M6 12h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI2"><path d="M8.3 11.2C7 7.4 9 4.8 12 4.8s5 2.6 3.7 6.4"/><circle cx="12" cy="15.3" r="5.4"/></g></defs><use href="#pgI2" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI2" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG2" x1="0" y1="0" x2="0" y2="1">
@@ -6501,7 +6679,7 @@ body.locked .em-grain{display:none;}
 <p class="rh-quote">Progresar sin comprometer <em>la recuperación.</em></p>
 <p>Los primeros días construyen la base: asimilar pesos, mejorar la técnica y preparar el cuerpo.</p>
 <p>El entrenamiento se organiza en bloques de <strong>movilidad, fuerza, tren inferior y superior, core y cardio</strong>. En la app tienes las rutinas, el orden de ejecución y los videos.</p>
-<div class="rh-takeaway"><div class="rh-take-label">Para llevar</div><ul>
+<div class="rh-takeaway"><div class="rh-take-label">En esencia</div><ul>
 <li>3 a 6 días por semana · sesiones de 45–90 min</li>
 <li>El estímulo se ajusta según tu desempeño</li>
 <li>Rutinas, orden y videos: en la app</li>
@@ -6509,7 +6687,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">02</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18M18 3c-1.5 1-2.5 3-2.5 6s1 4 2.5 5v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI3"><path d="M4.3 3.6v4.6a2.1 2.1 0 0 0 4.2 0V3.6M6.4 3.6v17"/><circle cx="15.6" cy="12" r="6.6"/><circle cx="15.6" cy="12" r="2.8"/></g></defs><use href="#pgI3" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI3" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG3" x1="0" y1="0" x2="0" y2="1">
@@ -6530,7 +6708,7 @@ body.locked .em-grain{display:none;}
 <p>El objetivo no es seguir menús rígidos, sino aprender a tomar <strong>decisiones alineadas con tu objetivo</strong>.</p>
 <p>Los alimentos son tu base: energía, recuperación y rendimiento. Lo que haces fuera del entrenamiento impacta directamente el resultado.</p>
 <p>Tendrás una <strong>meta nutricional diaria</strong> y herramientas: guía de alimentación y una app de registro simple con <strong>recetas inteligentes</strong>.</p>
-<div class="rh-takeaway"><div class="rh-take-label">Para llevar</div><ul>
+<div class="rh-takeaway"><div class="rh-take-label">En esencia</div><ul>
 <li>Meta nutricional diaria + guía + app de registro</li>
 <li>Decisiones alineadas con tu objetivo, no menús rígidos</li>
 <li>No buscamos perfección: buscamos consistencia</li>
@@ -6538,7 +6716,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">03</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI4"><rect x="3.4" y="3.4" width="7.6" height="7.6" rx="2.4"/><rect x="13" y="3.4" width="7.6" height="7.6" rx="2.4"/><rect x="3.4" y="13" width="7.6" height="7.6" rx="2.4"/><rect x="13" y="13" width="7.6" height="7.6" rx="2.4"/></g></defs><use href="#pgI4" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI4" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG4" x1="0" y1="0" x2="0" y2="1">
@@ -6565,7 +6743,7 @@ body.locked .em-grain{display:none;}
 <li><strong>Centro de Recursos (web app).</strong> Todo el material informativo y las guías de aprendizaje en un solo lugar.</li>
 <li><strong>Chat de grupo privado en Instagram.</strong> Comunidad del programa: contenido y acompañamiento.</li>
 </ul>
-<div class="rh-takeaway"><div class="rh-take-label">Para llevar</div><ul>
+<div class="rh-takeaway"><div class="rh-take-label">En esencia</div><ul>
 <li>Cada herramienta cumple un rol específico</li>
 <li>Dudas y ajustes: chat 1:1 por WhatsApp</li>
 <li>Material y guías: aquí, en el Centro de Recursos</li>
@@ -6573,7 +6751,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">04</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7 14l3.5-4 3 2.5L20 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI5"><path d="M4 4v16h16"/><path d="M7.6 15.4l3.6-4.2 3 2.5 5.6-6.6"/><path d="M16.6 7.1h3.2v3.2"/></g></defs><use href="#pgI5" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI5" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG5" x1="0" y1="0" x2="0" y2="1">
@@ -6601,10 +6779,9 @@ body.locked .em-grain{display:none;}
 <li><strong>Tus comidas</strong> en la app de registro de comidas (no en la app de entrenamiento).</li>
 <li><strong>Tu avance de lectura</strong> de la guía, aquí en el Centro de Recursos.</li>
 </ul>
-<p class="progm-note-soft">Nota: la app de entrenamiento muestra una sección de comidas/recetas, pero <strong>el registro de lo que comes NO se hace ahí</strong> — eso va en la app de registro de comidas.</p>
 <div class="rh-kicker">Registro mensual</div>
-<p>Y una vez al <strong>mes</strong>, actualizas tu <strong>registro corporal: peso y % de grasa</strong>, más un <strong>registro fotográfico</strong> (opcional, pero muy recomendado).</p>
-<div class="rh-takeaway"><div class="rh-take-label">Para llevar</div><ul>
+<p>Y una vez al <strong>mes</strong>, actualizas tu <strong>registro corporal: peso y % de grasa</strong>, y tu <strong>foto de progreso</strong>.</p>
+<div class="rh-takeaway"><div class="rh-take-label">En esencia</div><ul>
 <li>Entrenos → app de entrenamiento</li>
 <li>Comidas → app de registro de comidas</li>
 <li>Cada mes: peso, % de grasa y fotos</li>
@@ -6612,7 +6789,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">05</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v5M12 16v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI6"><path d="M12 3.2l7 2.7v5.5c0 4.5-2.9 7.4-7 9.4-4.1-2-7-4.9-7-9.4V5.9z"/><path d="M8.9 11.6l2.3 2.3 4-4.5"/></g></defs><use href="#pgI6" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI6" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG6" x1="0" y1="0" x2="0" y2="1">
@@ -6634,7 +6811,7 @@ body.locked .em-grain{display:none;}
 <li>Si deseas salir, avisa <strong>antes de la fecha de corte mensual</strong> para evitar cobros. Las pausas temporales son posibles por viajes o condición médica.</li>
 <li>El programa funciona como <strong>suscripción mensual</strong> desde la fecha de inicio.</li>
 </ul>
-<div class="rh-takeaway"><div class="rh-take-label">Para llevar</div><ul>
+<div class="rh-takeaway"><div class="rh-take-label">En esencia</div><ul>
 <li>Acceso personal e intransferible</li>
 <li>Para salir: avisa antes del corte mensual</li>
 <li>Pausas posibles por viaje o condición médica</li>
@@ -6863,7 +7040,7 @@ body.locked .em-grain{display:none;}
     <img id="appm-zoom-img" src="" alt="">
   </div>
 
-  <script id="appm-data" type="application/json">[{"section": "C\u00f3mo funciona la app", "title": "Tu app de entrenamiento", "body": "<p class=\"rh-quote\">Datos reales, <em>decisiones con criterio.</em></p>\n<p>Dentro del programa usamos una app para organizar y dar seguimiento a dos pilares del proceso: <strong>entrenamiento y progreso</strong>.</p>\n<p>No es una app de rutinas gen\u00e9ricas. Es la herramienta de tu <strong>coaching online personalizado</strong>: registrar tu entrenamiento permite basar el proceso en datos reales y tomar decisiones con criterio.</p>\n<p>Aqu\u00ed encontrar\u00e1s tus rutinas con videos, tu calendario y las gr\u00e1ficas de tu progreso.</p>", "img": ""}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "D\u00f3nde encuentras tu rutina del d\u00eda", "body": "<p class=\"rh-quote\">Tu punto de partida <em>diario.</em></p>\n<p>Puedes iniciar tu rutina desde dos lugares: la secci\u00f3n <strong>Home</strong> o la secci\u00f3n <strong>Calendar</strong>, donde se muestra c\u00f3mo est\u00e1 organizada tu semana de entrenamiento.</p>\n<p>All\u00ed seleccionas la <strong>rutina programada para el d\u00eda</strong> e inicias. El Home funciona como tu punto de partida diario: te orienta antes de entrenar.</p>", "img": "img/app-tutorial-01-rutina-del-dia.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "Ejecutar: videos, registro y percepci\u00f3n", "body": "<p>Al abrir la rutina, cada ejercicio incluye un <strong>video demostrativo</strong> y una explicaci\u00f3n textual para guiar su correcta ejecuci\u00f3n.</p>\n<p>El orden responde a una l\u00f3gica de entrenamiento: calentamiento, fuerza, resistencia, movilidad y enfriamiento. <strong>S\u00edguelo como est\u00e1 planteado.</strong></p>\n<p>Durante la sesi\u00f3n registras los <strong>pesos, repeticiones y tu nivel de percepci\u00f3n de esfuerzo</strong>. Esto da trazabilidad real a tu progreso.</p>", "img": "img/app-tutorial-02-ejecucion-videos.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "La galer\u00eda de workouts y tu programa", "body": "<p>En la secci\u00f3n <strong>Workouts</strong> encuentras tu programa completo: las rutinas organizadas por fase, con su duraci\u00f3n estimada y n\u00famero de ejercicios.</p>\n<p>Esta secci\u00f3n es <strong>de consulta</strong>: \u00fasala si quieres visualizar tus ejercicios y videos. Pero lo recomendable es <strong>activar las rutinas desde el Calendar o el Home</strong>, seg\u00fan tu calendario. La galer\u00eda es para consultar, no para iniciar.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">Para llevar</div><ul>\n<li>Inicia tu rutina desde Home o Calendar</li>\n<li>Sigue el orden planteado de la sesi\u00f3n</li>\n<li>Registra pesos, repeticiones y esfuerzo</li>\n</ul></div>", "img": "img/app-tutorial-03-galeria-workouts.png"}, {"section": "Secci\u00f3n 2 \u00b7 Registro peri\u00f3dico de progreso", "title": "Fotos de progreso y composici\u00f3n corporal", "body": "<p class=\"rh-quote\">Medir cambios reales, <em>no percepci\u00f3n.</em></p>\n<p>Para observar tu evoluci\u00f3n, registra <strong>mensualmente</strong> tu peso, porcentaje de grasa corporal y un registro fotogr\u00e1fico.</p>\n<p>Lo haces en las secciones <strong>Body Stats y Photos</strong>, desde el Calendar o desde el men\u00fa de opciones.</p>\n<p>Este registro peri\u00f3dico es lo que permite <strong>medir cambios reales</strong> y ajustar el proceso con datos, no con percepci\u00f3n.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">Para llevar</div><ul>\n<li>Cada mes: peso, % de grasa y fotos</li>\n<li>Se registra en Body Stats y Photos</li>\n</ul></div>", "img": "img/app-tutorial-06-fotos-progreso.png"}, {"section": "Secci\u00f3n 3 \u00b7 Recomendaciones", "title": "Buenas pr\u00e1cticas para aprovechar la app", "body": "<p class=\"rh-quote\">H\u00e1bitos que hacen <em>la diferencia.</em></p>\n<ul class=\"app-modal-list\">\n<li>Revisa el <strong>Home</strong> antes de iniciar tu entrenamiento.</li>\n<li>Sigue las rutinas en el <strong>orden del calendario</strong>.</li>\n<li>Repasa los <strong>videos</strong> de los ejercicios antes de realizarlos.</li>\n<li>Registra <strong>pesos, repeticiones e intensidad</strong> de cada sesi\u00f3n.</li>\n<li>Ap\u00f3yate en la <strong>gu\u00eda de alimentaci\u00f3n</strong> y la <strong>app de Meal Tracking</strong>.</li>\n</ul>\n<div class=\"rh-dark\"><div class=\"rh-dark-kicker\">Cada sesi\u00f3n</div><p class=\"rh-dark-quote\">Tu progreso, <em>con trazabilidad real.</em></p></div>", "img": ""}]</script>
+  <script id="appm-data" type="application/json">[{"section": "C\u00f3mo funciona la app", "title": "Tu app de entrenamiento", "body": "<p class=\"rh-quote\">Datos reales, <em>decisiones con criterio.</em></p>\n<p>Dentro del programa usamos una app para organizar y dar seguimiento a dos pilares del proceso: <strong>entrenamiento y progreso</strong>.</p>\n<p>No es una app de rutinas gen\u00e9ricas. Es la herramienta de tu <strong>coaching online personalizado</strong>: registrar tu entrenamiento permite basar el proceso en datos reales y tomar decisiones con criterio.</p>\n<p>Aqu\u00ed encontrar\u00e1s tus rutinas con videos, tu calendario y las gr\u00e1ficas de tu progreso.</p>", "img": ""}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "D\u00f3nde encuentras tu rutina del d\u00eda", "body": "<p class=\"rh-quote\">Tu punto de partida <em>diario.</em></p>\n<p>Puedes iniciar tu rutina desde dos lugares: la secci\u00f3n <strong>Home</strong> o la secci\u00f3n <strong>Calendar</strong>, donde se muestra c\u00f3mo est\u00e1 organizada tu semana de entrenamiento.</p>\n<p>All\u00ed seleccionas la <strong>rutina programada para el d\u00eda</strong> e inicias. El Home funciona como tu punto de partida diario: te orienta antes de entrenar.</p>", "img": "img/app-tutorial-01-rutina-del-dia.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "Ejecutar: videos, registro y percepci\u00f3n", "body": "<p>Al abrir la rutina, cada ejercicio incluye un <strong>video demostrativo</strong> y una explicaci\u00f3n textual para guiar su correcta ejecuci\u00f3n.</p>\n<p>El orden responde a una l\u00f3gica de entrenamiento: calentamiento, fuerza, resistencia, movilidad y enfriamiento. <strong>S\u00edguelo como est\u00e1 planteado.</strong></p>\n<p>Durante la sesi\u00f3n registras los <strong>pesos, repeticiones y tu nivel de percepci\u00f3n de esfuerzo</strong>. Esto da trazabilidad real a tu progreso.</p>", "img": "img/app-tutorial-02-ejecucion-videos.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "La galer\u00eda de workouts y tu programa", "body": "<p>En la secci\u00f3n <strong>Workouts</strong> encuentras tu programa completo: las rutinas organizadas por fase, con su duraci\u00f3n estimada y n\u00famero de ejercicios.</p>\n<p>Esta secci\u00f3n es <strong>de consulta</strong>: \u00fasala si quieres visualizar tus ejercicios y videos. Pero lo recomendable es <strong>activar las rutinas desde el Calendar o el Home</strong>, seg\u00fan tu calendario. La galer\u00eda es para consultar, no para iniciar.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">En esencia</div><ul>\n<li>Inicia tu rutina desde Home o Calendar</li>\n<li>Sigue el orden planteado de la sesi\u00f3n</li>\n<li>Registra pesos, repeticiones y esfuerzo</li>\n</ul></div>", "img": "img/app-tutorial-03-galeria-workouts.png"}, {"section": "Secci\u00f3n 2 \u00b7 Registro peri\u00f3dico de progreso", "title": "Fotos de progreso y composici\u00f3n corporal", "body": "<p class=\"rh-quote\">Medir cambios reales, <em>no percepci\u00f3n.</em></p>\n<p>Para observar tu evoluci\u00f3n, registra <strong>mensualmente</strong> tu peso, porcentaje de grasa corporal y un registro fotogr\u00e1fico.</p>\n<p>Lo haces en las secciones <strong>Body Stats y Photos</strong>, desde el Calendar o desde el men\u00fa de opciones.</p>\n<p>Este registro peri\u00f3dico es lo que permite <strong>medir cambios reales</strong> y ajustar el proceso con datos, no con percepci\u00f3n.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">En esencia</div><ul>\n<li>Cada mes: peso, % de grasa y fotos</li>\n<li>Se registra en Body Stats y Photos</li>\n</ul></div>", "img": "img/app-tutorial-06-fotos-progreso.png"}, {"section": "Secci\u00f3n 3 \u00b7 Recomendaciones", "title": "Buenas pr\u00e1cticas para aprovechar la app", "body": "<p class=\"rh-quote\">H\u00e1bitos que hacen <em>la diferencia.</em></p>\n<ul class=\"app-modal-list\">\n<li>Revisa el <strong>Home</strong> antes de iniciar tu entrenamiento.</li>\n<li>Sigue las rutinas en el <strong>orden del calendario</strong>.</li>\n<li>Repasa los <strong>videos</strong> de los ejercicios antes de realizarlos.</li>\n<li>Registra <strong>pesos, repeticiones e intensidad</strong> de cada sesi\u00f3n.</li>\n<li>Ap\u00f3yate en la <strong>gu\u00eda de alimentaci\u00f3n</strong> y la <strong>app de Meal Tracking</strong>.</li>\n</ul>\n<div class=\"rh-dark\"><div class=\"rh-dark-kicker\">Cada sesi\u00f3n</div><p class=\"rh-dark-quote\">Tu progreso, <em>con trazabilidad real.</em></p></div>", "img": ""}]</script>
 </div>
 
 <!-- =============================================== -->
@@ -7040,13 +7217,15 @@ body.locked .em-grain{display:none;}
       </div>
     </div>
 
+    <!-- ── Divisor 1: el curso base ── -->
+    <div class="bib-sec sub-anim" style="--d:.04s;">Guía de alimentación</div>
+
     <!-- GUÍA DE ALIMENTACIÓN · el curso base (card destacada) -->
     <div class="bib-feat sub-anim" style="--d:.05s;" onclick="go('s-guia-alimentacion')" role="button" tabindex="0">
       <div class="bib-feat-top">
-        <svg class="bib-feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg class="bib-feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 7.1C10.1 5.4 6.9 5.1 4.2 6.1v11.7c2.7-1 5.9-.7 7.8 1 1.9-1.7 5.1-2 7.8-1V6.1c-2.7-1-5.9-.7-7.8 1z"/>
           <path d="M12 7.1v11.7"/>
-          <path d="M6.6 9.6c1.6-.3 2.8-.25 3.9.15M14.9 9.75c1.1-.4 2.3-.45 3.9-.15" opacity=".55"/>
         </svg>
         <div class="bib-feat-head">
           <div class="bib-feat-eyebrow">Guía esencial · Curso base</div>
@@ -7071,113 +7250,67 @@ body.locked .em-grain{display:none;}
       </div>
     </div>
 
-    <!-- GALERÍA DE CONTENIDOS (demo de cómo se verá el material) -->
-    <div class="bib-gal sub-anim" style="--d:.10s;">
+    <!-- ── Divisor 2: cápsulas informativas ── -->
+    <div class="bib-sec sub-anim" style="--d:.08s;">Cápsulas informativas</div>
+    <p class="bib-cap-note sub-anim" style="--d:.09s;">Mini-slides para repasar ideas clave en un minuto. Toca una cápsula para ampliarla.</p>
 
-      <div class="bib-gal-head">Nutrición práctica</div>
-      <div class="bib-gal-items">
-        <a class="bib-item" href="#" onclick="return false;">
-          <svg class="bib-item-ico" style="color:#8A9558" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5v4.5a2 2 0 0 0 4 0V3.5M7 3.5V21"/><circle cx="15.5" cy="12" r="6"/><circle cx="15.5" cy="12" r="2.5"/></svg>
-          <span class="bib-item-txt"><strong>Proteína: cuánta y cuándo</strong><small>Clip · 3 min</small></span>
-          <span class="bib-item-new">Nuevo</span>
-          <span class="bib-item-arr">→</span>
-        </a>
-        <a class="bib-item" href="#" onclick="return false;">
-          <svg class="bib-item-ico" style="color:#4A5238" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4"/><path d="M12 3.4v2M12 18.6v2M3.4 12h2M18.6 12h2" opacity=".55"/></svg>
-          <span class="bib-item-txt"><strong>Cómo armar un plato con criterio</strong><small>Clip · 4 min</small></span>
-          <span class="bib-item-arr">→</span>
-        </a>
-        <a class="bib-item" href="#" onclick="return false;">
-          <svg class="bib-item-ico" style="color:#8B887C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v2a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7z"/><path d="M8 7c0-1.2 1-1.6 1-2.8M12.5 7c0-1.2 1-1.6 1-2.8" opacity=".55"/></svg>
-          <span class="bib-item-txt"><strong>Salir a comer sin salirte del plan</strong><small>Guía corta · 2 min</small></span>
-          <span class="bib-item-arr">→</span>
-        </a>
+    <!-- GALERÍA DE CÁPSULAS (demo: luego serán miniaturas <img> reales) -->
+    <div class="bib-cap-gal sub-anim" style="--d:.10s;">
+
+      <div class="bib-cap-cat">Nutrición</div>
+      <div class="bib-cap-grid">
+        <button class="bib-cap cap-a" type="button" onclick="capOpen(this)">
+          <span class="bib-cap-new">Nuevo</span>
+          <span class="bib-cap-kicker">Nutrición</span>
+          <span class="bib-cap-rule" aria-hidden="true"></span>
+          <span class="bib-cap-title">Proteína: cuánta y cuándo</span>
+          <span class="bib-cap-foot">Cápsula · 4 láminas</span>
+        </button>
+        <button class="bib-cap cap-b" type="button" onclick="capOpen(this)">
+          <span class="bib-cap-kicker">Nutrición</span>
+          <span class="bib-cap-rule" aria-hidden="true"></span>
+          <span class="bib-cap-title">El plato balanceado, en 3 pasos</span>
+          <span class="bib-cap-foot">Cápsula · 5 láminas</span>
+        </button>
       </div>
 
-      <div class="bib-gal-head">Entrenamiento</div>
-      <div class="bib-gal-items">
-        <a class="bib-item" href="#" onclick="return false;">
-          <svg class="bib-item-ico" style="color:#4A5238" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5v5M6 7.5v9M21 9.5v5M18 7.5v9M6 12h12"/></svg>
-          <span class="bib-item-txt"><strong>El orden de los ejercicios importa</strong><small>Clip · 3 min</small></span>
-          <span class="bib-item-arr">→</span>
-        </a>
-        <a class="bib-item" href="#" onclick="return false;">
-          <svg class="bib-item-ico" style="color:#A9B478" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.5V12l3 2"/></svg>
-          <span class="bib-item-txt"><strong>RPE: medir el esfuerzo sin adivinar</strong><small>Clip · 5 min</small></span>
-          <span class="bib-item-arr">→</span>
-        </a>
+      <div class="bib-cap-cat">Entrenamiento</div>
+      <div class="bib-cap-grid">
+        <button class="bib-cap cap-b" type="button" onclick="capOpen(this)">
+          <span class="bib-cap-kicker">Entrenamiento</span>
+          <span class="bib-cap-rule" aria-hidden="true"></span>
+          <span class="bib-cap-title">El orden de los ejercicios importa</span>
+          <span class="bib-cap-foot">Cápsula · 4 láminas</span>
+        </button>
+        <button class="bib-cap cap-a" type="button" onclick="capOpen(this)">
+          <span class="bib-cap-kicker">Entrenamiento</span>
+          <span class="bib-cap-rule" aria-hidden="true"></span>
+          <span class="bib-cap-title">RPE: entrena con percepción</span>
+          <span class="bib-cap-foot">Cápsula · 6 láminas</span>
+        </button>
       </div>
 
-      <div class="bib-gal-head">Hábitos y descanso</div>
-      <div class="bib-gal-items">
-        <a class="bib-item" href="#" onclick="return false;">
-          <svg class="bib-item-ico" style="color:#8A9558" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13.5A8 8 0 1 1 10.5 4a6.5 6.5 0 0 0 9.5 9.5z"/></svg>
-          <span class="bib-item-txt"><strong>Dormir es entrenar</strong><small>Clip · 3 min</small></span>
-          <span class="bib-item-arr">→</span>
-        </a>
-        <a class="bib-item" href="#" onclick="return false;">
-          <svg class="bib-item-ico" style="color:#8B887C" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 3.5v17h17"/><path d="M7 14.5l3.5-4 3 2.5 6-7" ></path></svg>
-          <span class="bib-item-txt"><strong>Cómo leer tu % de grasa</strong><small>Guía corta · 4 min</small></span>
-          <span class="bib-item-arr">→</span>
-        </a>
-      </div>
-
-    </div>
-
-    <!-- SUBSECCIÓN: Material gráfico / esquemas visuales (Próximamente) -->
-    <div class="bib-subsection sub-anim" style="--d:.18s;">
-      <div class="bib-subsection-eyebrow">Próximamente</div>
-      <div class="bib-subsection-title">Material gráfico e informativo</div>
-      <div class="bib-subsection-desc">Slides, esquemas visuales y resúmenes que estarán disponibles para reforzar lo aprendido.</div>
-    </div>
-
-    <div class="bib-cards bib-cards-soon sub-anim" style="--d:.22s;">
-
-      <div class="hub-card hub-card-soon" data-section="entrenamiento">
-        <div class="hub-card-wm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9v6M6 7v10M21 9v6M18 7v10M6 12h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
-        <div class="hub-card-eyebrow">Próximamente</div>
-        <div class="hub-card-title">Entrenamiento</div>
-        <div class="hub-card-desc">Fuerza, técnica y progresión. Material extra para profundizar.</div>
-        <div class="hub-card-foot">
-          <span class="hub-card-time">En preparación</span>
-          <span class="hub-card-arr"></span>
-        </div>
-      </div>
-
-      <div class="hub-card hub-card-soon" data-section="nutricion">
-        <div class="hub-card-wm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3v7a3 3 0 0 0 6 0V3M9 3v18M18 3c-1.5 1-2.5 3-2.5 6s1 4 2.5 5v7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="hub-card-eyebrow">Próximamente</div>
-        <div class="hub-card-title">Nutrición</div>
-        <div class="hub-card-desc">Recetas, hábitos y criterio para tomar decisiones alineadas con tu objetivo.</div>
-        <div class="hub-card-foot">
-          <span class="hub-card-time">En preparación</span>
-          <span class="hub-card-arr"></span>
-        </div>
-      </div>
-
-      <div class="hub-card hub-card-soon" data-section="movilidad">
-        <div class="hub-card-wm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M7.5 8.5 4 12l3.5 3.5M16.5 8.5 20 12l-3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="hub-card-eyebrow">Próximamente</div>
-        <div class="hub-card-title">Movilidad</div>
-        <div class="hub-card-desc">Rango, control y postura. Cuidar cómo te mueves.</div>
-        <div class="hub-card-foot">
-          <span class="hub-card-time">En preparación</span>
-          <span class="hub-card-arr"></span>
-        </div>
-      </div>
-
-      <div class="hub-card hub-card-soon" data-section="recuperacion">
-        <div class="hub-card-wm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 13.5A8 8 0 1 1 10.5 4a6.5 6.5 0 0 0 9.5 9.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
-        <div class="hub-card-eyebrow">Próximamente</div>
-        <div class="hub-card-title">Recuperación</div>
-        <div class="hub-card-desc">Descanso, sueño y energía. El otro lado del rendimiento.</div>
-        <div class="hub-card-foot">
-          <span class="hub-card-time">En preparación</span>
-          <span class="hub-card-arr"></span>
-        </div>
+      <div class="bib-cap-cat">Hábitos</div>
+      <div class="bib-cap-grid">
+        <button class="bib-cap cap-a" type="button" onclick="capOpen(this)">
+          <span class="bib-cap-kicker">Hábitos</span>
+          <span class="bib-cap-rule" aria-hidden="true"></span>
+          <span class="bib-cap-title">Dormir es entrenar</span>
+          <span class="bib-cap-foot">Cápsula · 3 láminas</span>
+        </button>
+        <button class="bib-cap cap-b" type="button" onclick="capOpen(this)">
+          <span class="bib-cap-kicker">Hábitos</span>
+          <span class="bib-cap-rule" aria-hidden="true"></span>
+          <span class="bib-cap-title">Pasos diarios: el cardio invisible</span>
+          <span class="bib-cap-foot">Cápsula · 4 láminas</span>
+        </button>
       </div>
 
     </div>
+
+    <!-- ── Cierre: próximamente ── -->
+    <div class="bib-sec bib-sec-soon sub-anim" style="--d:.14s;">Próximamente</div>
+    <p class="bib-cap-note bib-cap-note-soon sub-anim" style="--d:.15s;">Nuevas cápsulas cada mes: movilidad, recuperación y más material visual del método.</p>
 
     <div class="footer">
       <div class="footer-brand">ENTRENA CON MÉTODO</div>
@@ -7185,7 +7318,42 @@ body.locked .em-grain{display:none;}
       <div class="footer-rights">© 2026 Mauro Morón · Acceso personal e intransferible</div>
     </div>
   </div>
+
+  <!-- Lightbox de cápsulas: la miniatura se amplía centrada sobre overlay oscuro -->
+  <div class="bib-cap-lb" id="bib-cap-lb" onclick="capClose(event)" aria-hidden="true">
+    <button class="bib-cap-lb-x" type="button" onclick="capClose(event, true)" aria-label="Cerrar">×</button>
+    <div class="bib-cap-lb-card" id="bib-cap-lb-card"></div>
+  </div>
 </div>
+
+<script>
+// ── Lightbox de cápsulas (biblioteca) ─────────────────────────────────
+// Amplía la miniatura tocada; listo para cuando las cápsulas sean <img>
+// reales (se clona el contenido de la card tal cual).
+function capOpen(el) {
+  try {
+    var lb = document.getElementById('bib-cap-lb');
+    var card = document.getElementById('bib-cap-lb-card');
+    if (!lb || !card || !el) return;
+    var variant = (el.className.match(/cap-[a-z]\b/) || [''])[0];
+    card.className = 'bib-cap-lb-card ' + variant;
+    card.innerHTML = el.innerHTML;
+    var n = card.querySelector('.bib-cap-new');
+    if (n) n.remove();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  } catch (e) {}
+}
+function capClose(ev, force) {
+  if (!force && ev && ev.target && ev.target.closest && ev.target.closest('.bib-cap-lb-card')) return;
+  var lb = document.getElementById('bib-cap-lb');
+  if (lb) lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') capClose(null, true);
+});
+</script>
 
 <!-- =============================================== -->
 <!-- ============ GUÍA DE ALIMENTACIÓN =============== -->
