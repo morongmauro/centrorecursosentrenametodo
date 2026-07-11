@@ -1459,3 +1459,163 @@
 .ga-track-ch-check.just-read {
   animation: gaCheckPop .45s cubic-bezier(.5,1.6,.5,1);
 }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* ═══ v12 · Premium 2026: asistente compacto, ritmo entre capítulos, ═══ */
+/* ═══ "En esencia" en grafito y tracking de marca apretado           ═══ */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Asistente de lectura: patrón .em-assist de la home, compacto ── */
+.ga-resume{
+  padding: 13px 15px 12px;
+  margin: .9rem 0 1.15rem;
+  border-radius: 22px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px .5px rgba(0,0,0,.1), 0 10px 28px rgba(74,82,56,.12);
+}
+.ga-resume-eyebrow{
+  display: flex; align-items: center; gap: 7px;
+  font-size: 9px; font-weight: 700; letter-spacing: .08em;
+  color: var(--olive-dark);
+  margin: 0 0 10px 2px;
+}
+.ga-resume-eyebrow::before{
+  content: '';
+  width: 10px; height: 12px; flex: none;
+  background: #E08E84;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 26l-7-5-7 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 26l-7-5-7 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ga-resume-row{display: flex; align-items: center; gap: 13px;}
+.ga-resume-body{flex: 1; min-width: 0;}
+.ga-resume-hi{
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px; font-weight: 600; letter-spacing: -.01em;
+  line-height: 1.3; color: var(--text);
+  margin: 0 0 2px;
+}
+/* "Siguiente capítulo" pasa a ser la línea meta bajo el título */
+.ga-resume-next{
+  background: transparent; border: none; border-radius: 0;
+  padding: 0; margin: 0;
+  display: flex; align-items: baseline; gap: 5px; flex-wrap: wrap;
+}
+.ga-resume-next-label{display: none;}
+.ga-resume-next-title{
+  font-size: 11.5px; font-weight: 500; color: var(--text-mute); line-height: 1.4;
+}
+.ga-resume-next-time{
+  font-size: 10.5px; color: var(--text-mute); opacity: .8; margin-top: 0;
+}
+/* Botón circular oliva 42px con flecha (el texto vive para lectores de pantalla) */
+.ga-resume-actions{margin: 0; flex: none;}
+.ga-resume-btn-primary{
+  width: 42px; height: 42px; padding: 0;
+  border-radius: 50%;
+  background: var(--olive);
+  display: grid; place-content: center;
+}
+.ga-resume-btn-primary:hover{background: var(--olive-dark);}
+.ga-resume-btn-primary #ga-resume-btn-primary-text{
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.ga-resume-btn-primary .arr{font-size: 17px; line-height: 1;}
+/* Progreso: barra fina integrada abajo */
+.ga-resume-progress-block{
+  margin: 11px 0 0; padding-top: 10px;
+  border-top: 1px solid rgba(0,0,0,.05);
+}
+.ga-resume-bar{height: 4px; border-radius: 100px; background: rgba(74,82,56,.10);}
+.ga-resume-progress-row{margin: 6px 0 0; gap: 5px; align-items: baseline;}
+.ga-resume-pct{
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 700; color: var(--olive-dark);
+}
+.ga-resume-pct-label{font-size: 10px; letter-spacing: .06em;}
+.ga-resume-count{font-size: 10.5px; letter-spacing: 0;}
+/* Pills de track fuera: los desplegables "Por leer/Leídos" ya cubren el detalle */
+.ga-resume-tracks{display: none;}
+.ga-resume-collapse{margin-top: 8px; border-radius: 12px;}
+.ga-resume-collapse-head{padding: 9px 12px;}
+.ga-resume-collapse-body{padding: 0 12px 8px;}
+
+/* ── 2 · Ritmo vertical: ~40% menos aire entre capítulos ── */
+.ga-section{margin-bottom: .9rem; padding-top: .3rem;}
+.ga-h1-wrap{margin: 1.2rem 0 .85rem; padding-top: .8rem;}
+.ga-h2{margin: 1.4rem 0 .8rem;}
+.ga-h3{margin: 1.1rem 0 .5rem;}
+.ga-takeaway + .ga-takeaway{margin-top: .7rem;}
+
+/* ── 3 · Portada compacta ── */
+.ga-cover{padding: 1.1rem 0 .9rem; margin-bottom: .9rem;}
+.ga-cover-eyebrow{margin-bottom: .7rem;}
+.ga-cover-title{margin-bottom: .65rem;}
+.ga-cover-line{margin-bottom: .95rem;}
+.ga-cover-statement{margin-bottom: 1.1rem;}
+.ga-cover-meta{margin-bottom: 1rem;}
+.ga-cover-tip{margin: .3rem 0 .8rem;}
+
+/* ── 4 · "En esencia": grafito compacto, texto crema, check oliva ── */
+.ga-takeaway{
+  margin: 1.4rem 0 .9rem;
+  padding: 1.05rem 1.15rem .95rem;
+  background: #141414;
+  color: #F3EFE4;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(20,20,20,.18);
+}
+.ga-takeaway::before{display: none;}
+.ga-takeaway-label{
+  font-size: 10px; letter-spacing: .08em;
+  color: rgba(243,239,228,.55);
+  font-weight: 700;
+  margin-bottom: .7rem; padding: 0;
+  border-bottom: none;
+}
+.ga-takeaway-section{margin-bottom: 1rem;}
+.ga-takeaway-title{
+  font-size: 11px; letter-spacing: .06em;
+  color: #F3EFE4;
+  margin-bottom: .55rem;
+}
+.ga-takeaway-list li{
+  font-size: 13px; line-height: 1.5;
+  color: rgba(243,239,228,.92);
+  margin-bottom: .5rem;
+  padding-left: 20px;
+}
+.ga-takeaway-list li strong{color: #fff;}
+.ga-takeaway-list li::before{
+  content: '✓';
+  background: transparent;
+  width: auto; height: auto; border-radius: 0;
+  top: 0;
+  font-size: 12.5px; font-weight: 800;
+  color: var(--olive-light);
+}
+.ga-takeaway-list-num li{padding-left: 26px;}
+.ga-takeaway-list-num li::before{
+  content: counter(takeaway-n, decimal-leading-zero);
+  font-size: 10.5px; letter-spacing: .04em;
+  color: var(--olive-light);
+  top: 2px;
+}
+
+/* ── 5 · Tracking de marca: kickers y subtítulos a .06–.08em ── */
+.ga-cover-eyebrow,
+.ga-cover-tip-label,
+.ga-h1-time,
+.ga-h3,
+.ga-toc-status,
+.ga-toc-group-label,
+.ga-toc-time,
+.ga-resume-where-label,
+.ga-resume-collapse-label,
+.ga-track-name,
+.ga-tracks-intro,
+.ga-mark-read,
+.ga-progress-info{letter-spacing: .07em !important;}
+
+/* El asistente arranca despejado del pill fijo "Volver atrás" */
+.ga-resume{margin-top: 2.4rem;}
