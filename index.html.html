@@ -6489,6 +6489,107 @@ body.locked .em-grain{display:none;}
 #s-programa .progm-blocks > .progm-block,
 #s-app-train .progm-blocks > .progm-block{padding-top:13px !important;}
 #s-journey .jrn-timeline > .jrn-phase .jrn-body{padding-top:13px !important;}
+
+/* ═══ v15 · Anclas: tonalidad clara única por icono (salvia/gris cálido claros) ═══ */
+#s-programa .progm-blocks .progm-block:nth-child(1) .progm-block-icon{color:#A9B478 !important;}
+#s-programa .progm-blocks .progm-block:nth-child(2) .progm-block-icon{color:#BCC594 !important;}
+#s-programa .progm-blocks .progm-block:nth-child(3) .progm-block-icon{color:#C9C6B8 !important;}
+#s-programa .progm-blocks .progm-block:nth-child(4) .progm-block-icon{color:#B5B2A4 !important;}
+#s-programa .progm-blocks .progm-block:nth-child(5) .progm-block-icon{color:#C6CFA2 !important;}
+#s-programa .progm-blocks .progm-block:nth-child(6) .progm-block-icon{color:#CFCCBE !important;}
+#s-app-train .progm-blocks > .progm-block:nth-child(1) .appt-badge{color:#B4BC8E !important;}
+#s-app-train .progm-blocks > .progm-block:nth-child(2) .appt-badge{color:#C3CDA3 !important;}
+#s-app-train .progm-blocks > .progm-block:nth-child(3) .appt-badge{color:#C2BFB0 !important;}
+#s-app-train .progm-blocks > .progm-block:nth-child(4) .appt-badge{color:#BEC7AA !important;}
+#s-app-train .progm-blocks > .progm-block:nth-child(5) .appt-badge{color:#CBD3AF !important;}
+#s-app-train .progm-blocks > .progm-block:nth-child(6) .appt-badge{color:#B9B6A8 !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(1) .jrn-card-wm{color:#ADB89E !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(2) .jrn-card-wm{color:#C0C9A0 !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(3) .jrn-card-wm{color:#BDBAAB !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(4) .jrn-card-wm{color:#C7D0A8 !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(5) .jrn-card-wm{color:#CCD4B5 !important;}
+#s-journey .jrn-timeline > .jrn-phase:nth-child(6) .jrn-card-wm{color:#B1BC86 !important;}
+
+/* ═══ v15 · Cards: el texto arranca pegado al borde superior (~9px) ═══ */
+#s-programa .progm-blocks > .progm-block,
+#s-app-train .progm-blocks > .progm-block{padding-top:9px !important;}
+#s-journey .jrn-timeline > .jrn-phase .jrn-body{padding-top:9px !important;}
+/* el interior del journey reservaba 64px para el badge viejo: fuera */
+#s-journey .jrn-timeline > .jrn-phase .jrn-card{padding-top:0 !important;}
+#s-programa .progm-block-eyebrow,
+#s-app-train .progm-block-eyebrow{margin-top:0 !important;line-height:1.4 !important;}
+#s-journey .jrn-timeline > .jrn-phase .jrn-card-eyebrow{margin-top:0 !important;line-height:1.4 !important;}
+
+/* ═══ v15 · Carrusel acentuado DE VERDAD (programa + app + journey) ═══ */
+/* !important es obligatorio: la animación de entrada jrn-anim (fill forwards)
+   pisa opacity/transform declarados en cascada normal — solo las declaraciones
+   important le ganan a una animación. Además, slides al 80% para que las
+   laterales se asomen lo suficiente como para apreciar el contraste. */
+#s-programa .progm-blocks > .progm-block,
+#s-app-train .progm-blocks > .progm-block,
+#s-journey .jrn-timeline > .jrn-phase{
+  flex:0 0 80% !important;
+  filter:blur(3px) !important;
+  opacity:.3 !important;
+  transform:scale(.9) !important;
+  transition:filter .4s ease, opacity .4s ease, transform .45s cubic-bezier(.22,.9,.34,1) !important;
+}
+#s-programa .progm-blocks > .progm-block.is-active,
+#s-app-train .progm-blocks > .progm-block.is-active,
+#s-journey .jrn-timeline > .jrn-phase.is-active{
+  filter:none !important;
+  opacity:1 !important;
+  transform:scale(1) !important;
+}
+
+/* ═══ v15 · Fuera el botón "Más"; barrita de scroll sutil en el borde derecho ═══ */
+/* Nota: ".has-more .scroll-cue{display:flex !important}" es más específico que
+   ".scroll-cue" a secas — hay que igualar la especificidad para ganarle. Además
+   el cue era sticky EN FLUJO: ocupaba ~26px arriba de cada card (el "vacío"). */
+.scroll-cue,
+.has-more .scroll-cue,
+#s-programa .scroll-cue,
+#s-app-train .scroll-cue,
+#s-journey .scroll-cue{display:none !important;}
+/* Barrita vertical propia (JS): riel olive-soft 3px + thumb gris cálido que
+   sigue el scroll de la card. Elemento sticky de altura 0 → no ocupa flujo
+   (a diferencia del cue viejo) y queda anclado dentro del borde derecho.
+   Los scrollbars nativos overlay no se pintan de forma fiable, por eso JS. */
+.em-rail{position:sticky;top:16px;height:0;z-index:6;pointer-events:none;display:none;}
+.em-rail.on{display:block;}
+.em-rail::before{
+  content:'';position:absolute;right:-12px;top:0;width:3px;
+  height:var(--railh,120px);
+  background:var(--olive-soft);border-radius:99px;
+}
+.em-rail i{
+  position:absolute;right:-12px;top:0;width:3px;border-radius:99px;
+  background:#8B887C;opacity:.75;
+}
+
+/* ═══ v15 · FAQ: hero oscuro compacto (mismo patrón que las demás subpáginas) ═══ */
+#s-faq .sub-header{
+  position:relative;overflow:hidden;
+  background:var(--black);
+  margin:-32px -1rem 1.4rem;
+  padding:32px 22px 30px !important;
+}
+#s-faq .sub-header::before{
+  content:'';position:absolute;top:-70px;right:-50px;width:230px;height:230px;
+  border-radius:50%;background:rgba(138,149,88,.28);filter:blur(60px);
+  pointer-events:none;display:block;
+}
+#s-faq .sub-header > *{position:relative;}
+#s-faq .sub-eyebrow{color:var(--olive-chip) !important;}
+#s-faq .sub-title{color:#F3EFE4 !important;font-size:44px;line-height:.95;margin-bottom:.7rem;}
+#s-faq .sub-intro{color:rgba(243,239,228,.65) !important;font-size:13px;line-height:1.55;}
+#s-faq .sub-back{
+  background:rgba(255,255,255,.12) !important;
+  border-color:transparent !important;
+  color:#F3EFE4 !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+#s-faq .sub-back:hover{color:#fff !important;}
 </style>
 </head>
 <body class="locked">
@@ -6817,11 +6918,11 @@ body.locked .em-grain{display:none;}
         </svg>
         <div class="progm-block-eyebrow">Cómo funciona el programa</div>
         <div class="progm-block-title">Tu progreso, con método</div>
-        <div class="progm-block-text"><p class="progm-welcome">Bienvenido. Tomaste una decisión seria con tu cuerpo, y aquí la vamos a tratar con la misma seriedad.</p>
-<p>Aquí tu progreso deja de ser aleatorio y empieza a responder a un método.</p>
-<p>Se acabó la improvisación: de ahora en adelante <strong>ejecutas con criterio</strong>. Entrenamiento, alimentación y hábitos trabajan en conjunto.</p>
-<p>Tómate unos minutos para entender cómo funciona.</p>
-<div class="rh-dark"><div class="rh-dark-kicker">Desde hoy</div><p class="rh-dark-quote">Acá empieza <em>tu proceso.</em></p></div></div>
+        <div class="progm-block-text"><p class="progm-welcome">Estás por empezar un programa construido sobre un principio simple: <strong>los resultados no se persiguen — se construyen</strong>.</p>
+<p>Cada rutina, cada meta nutricional y cada registro que verás aquí responde a una lógica que la evidencia respalda: entrenamiento, alimentación y descanso funcionando como <strong>un solo sistema</strong>.</p>
+<p>Tu parte no es hacerlo perfecto. Es entender cómo funciona y <strong>ejecutarlo con criterio</strong>.</p>
+<p>Estos minutos de lectura son la mejor inversión de tu primera semana.</p>
+<div class="rh-dark"><div class="rh-dark-kicker">Desde hoy</div><p class="rh-dark-quote">Tu progreso tiene <em>método.</em></p></div></div>
       </div>
       <div class="progm-block">
         <div class="progm-block-num">01</div>
@@ -10292,6 +10393,56 @@ function initBlurCarousel(scroller){
   document.addEventListener('DOMContentLoaded', function(){ setTimeout(emSyncAll, 250); });
   setTimeout(emSyncAll, 500);
   setTimeout(emSyncAll, 1500);
+})();
+</script>
+
+<script>
+// ── Barrita de scroll de las cards (programa / app / journey) ───────────
+// Aditivo: crea un riel sutil dentro del borde derecho de cada card con
+// scroll interno y mueve el thumb con la posición real del scroll. El botón
+// "Más" (scroll-cue) quedó oculto por CSS; esto lo reemplaza visualmente.
+(function () {
+  var SLIDES = '#s-programa .progm-blocks > .progm-block,' +
+               '#s-app-train .progm-blocks > .progm-block,' +
+               '#s-journey .jrn-timeline > .jrn-phase';
+  function railInit(slide) {
+    if (slide._railInit) return;
+    slide._railInit = true;
+    var rail = document.createElement('div');
+    rail.className = 'em-rail';
+    var thumb = document.createElement('i');
+    rail.appendChild(thumb);
+    slide.insertBefore(rail, slide.firstChild);
+    function upd() {
+      var sc = slide.scrollHeight, ch = slide.clientHeight;
+      var scrollable = sc > ch + 12;
+      rail.classList.toggle('on', scrollable);
+      if (!scrollable) return;
+      var railH = Math.max(60, ch - 40);
+      rail.style.setProperty('--railh', railH + 'px');
+      // thumb proporcional pero acotado: siempre debe LEERSE que hay más abajo
+      var th = Math.max(26, Math.min(railH * ch / sc, railH * .45));
+      var maxT = railH - th;
+      var t = maxT * (slide.scrollTop / (sc - ch || 1));
+      thumb.style.height = th + 'px';
+      thumb.style.transform = 'translateY(' + t + 'px)';
+    }
+    slide.addEventListener('scroll', function () { window.requestAnimationFrame(upd); }, { passive: true });
+    [].forEach.call(slide.querySelectorAll('img'), function (im) { im.addEventListener('load', upd); });
+    [80, 300, 800].forEach(function (t) { setTimeout(upd, t); });
+    window.addEventListener('resize', upd, { passive: true });
+    slide._railUpd = upd;
+  }
+  function railScan() {
+    [].forEach.call(document.querySelectorAll(SLIDES), railInit);
+  }
+  var prevGo = window.go;
+  window.go = function (id) {
+    prevGo(id);
+    if (id === 's-programa' || id === 's-app-train' || id === 's-journey') setTimeout(railScan, 160);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', railScan);
+  else railScan();
 })();
 </script>
 </body>
