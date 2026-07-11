@@ -6396,6 +6396,64 @@ body.locked .em-grain{display:none;}
 /* ═══ v12 · Tracking apretado en kickers remanentes (los divisores conservan) ═══ */
 #s-programa .rh-dark-kicker,#s-app-train .rh-dark-kicker,#s-journey .rh-dark-kicker{letter-spacing:.08em;font-weight:600;}
 .bib-cap .bib-cap-kicker,.bib-cap-lb-card .bib-cap-kicker{letter-spacing:.07em;}
+
+/* ═══ v13 · Onboarding como camino paso a paso + iconos premium ═══ */
+/* Contenedor del camino: línea punteada serpenteante detrás de las cards */
+#s-onboarding .hub-cards{position:relative;counter-reset:emstep;}
+#s-onboarding .hub-path-line{
+  position:absolute;top:4px;left:0;
+  width:100%;height:calc(100% - 8px);
+  z-index:0;pointer-events:none;display:block;
+}
+#s-onboarding .hub-cards > .hub-card{
+  position:relative;z-index:1;
+  counter-increment:emstep;
+  overflow:visible !important;
+}
+/* Cards escalonadas: pasos alternos izquierda/derecha */
+#s-onboarding .hub-cards > .hub-card:nth-of-type(odd){margin-right:30px;}
+#s-onboarding .hub-cards > .hub-card:nth-of-type(even){margin-left:30px;}
+/* Número de paso (Bebas) sobre el camino; check oliva en los leídos */
+#s-onboarding .hub-cards > .hub-card::after{
+  content:counter(emstep, decimal-leading-zero);
+  position:absolute;top:50%;margin-top:-13px;
+  width:26px;height:26px;z-index:2;
+  display:flex !important;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:.06em;
+  color:var(--olive-dark);
+  background:var(--bg);
+  border-radius:50%;
+  box-shadow:0 0 0 4px var(--bg),0 2px 8px rgba(74,82,56,.18);
+}
+#s-onboarding .hub-cards > .hub-card:nth-of-type(odd)::after{right:-32px;}
+#s-onboarding .hub-cards > .hub-card:nth-of-type(even)::after{left:-32px;}
+#s-onboarding .hub-cards > .hub-card.read::after{
+  content:'✓';
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:800;letter-spacing:0;
+  color:#fff;background:var(--olive);
+  box-shadow:0 0 0 4px var(--bg),0 2px 8px rgba(74,82,56,.3);
+}
+/* Icono de card: disco glass discreto + trazo degradado con sombra leve */
+#s-onboarding .hub-cards .hub-card{padding-left:78px !important;}
+#s-onboarding .hub-card .hub-card-wm{
+  width:46px !important;height:46px !important;
+  margin-top:-23px !important;left:1.05rem;
+  padding:0 !important;
+  background:linear-gradient(150deg, rgba(247,244,237,.85) 0%, rgba(241,243,229,.6) 100%) !important;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.95);
+  border-radius:50% !important;
+  box-shadow:0 1px 0 rgba(255,255,255,.95) inset,0 6px 16px rgba(74,82,56,.18);
+}
+#s-onboarding .hub-card .hub-card-wm svg{
+  width:32px !important;height:32px !important;
+  filter:drop-shadow(0 1px 1px rgba(74,82,56,.25));
+}
+#s-onboarding .hub-card .hub-card-wm svg *{stroke-width:1.75 !important;}
+#s-onboarding .hub-card.compact .hub-card-wm{width:44px !important;height:44px !important;margin-top:-22px !important;}
+#s-onboarding .hub-card.compact .hub-card-wm svg{width:30px !important;height:30px !important;}
+/* En la card protagonista (paso siguiente), el icono acompaña al título */
+#s-onboarding .hub-card.hub-card-next .hub-card-wm{top:4.9rem !important;margin-top:0 !important;}
 </style>
 </head>
 <body class="locked">
@@ -6597,9 +6655,11 @@ body.locked .em-grain{display:none;}
       <div class="em-sec-head">¿Nuevo aquí? — Entra acá</div>
       <p class="em-sec-sub">Tu punto de partida: el método explicado una sola vez, en orden.</p>
       <a class="em-new" onclick="go('s-onboarding')" style="cursor:pointer">
-        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="color:#8A9558" aria-hidden="true">
-          <path d="M8.3 11.4C7 7.6 9 5 12 5s5 2.6 3.7 6.4"/>
-          <circle cx="12" cy="15.4" r="5.3"/>
+        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color:#8A9558" aria-hidden="true">
+          <path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/>
+          <path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/>
+          <path d="M16 17h4"/>
+          <path d="M4 13h4"/>
         </svg>
         <span class="em-new-txt">
           <strong>El onboarding del programa</strong>
@@ -6614,9 +6674,9 @@ body.locked .em-grain{display:none;}
       <div class="em-sec-head">Aprendizaje</div>
       <p class="em-sec-sub">Para cuando termines tu ruta de inicio. Consulta libre, a tu ritmo.</p>
       <a class="em-new" onclick="go('s-biblioteca')" style="cursor:pointer">
-        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="color:#4A5238" aria-hidden="true">
-          <path d="M12 7.1C10.1 5.4 6.9 5.1 4.2 6.1v11.7c2.7-1 5.9-.7 7.8 1 1.9-1.7 5.1-2 7.8-1V6.1c-2.7-1-5.9-.7-7.8 1z"/>
-          <path d="M12 7.1v11.7"/>
+        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color:#4A5238" aria-hidden="true">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
         </svg>
         <span class="em-new-txt">
           <strong>Material de aprendizaje</strong>
@@ -6633,19 +6693,19 @@ body.locked .em-grain{display:none;}
       <p class="em-sec-sub">Respuestas rápidas y el grupo del programa.</p>
       <div class="em-also">
         <div class="em-also-row" onclick="go('s-faq')" style="cursor:pointer">
-          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="color:#8B887C" aria-hidden="true">
-            <circle cx="12" cy="12" r="8.6"/>
-            <path d="M9.5 9.7a2.55 2.55 0 1 1 3.7 2.3c-.8.45-1.2.95-1.2 1.8v.3"/>
-            <path d="M12 16.9v.01" stroke-width="1.9"/>
+          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color:#8B887C" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <path d="M12 17h.01"/>
           </svg>
           <span class="em-also-txt"><strong>Preguntas frecuentes</strong><small>Resuelve dudas rápido</small></span>
           <span class="em-also-arr">→</span>
         </div>
         <a href="https://ig.me/j/AbYeQwBuaYR8SlZZ/" target="_blank" rel="noopener" class="em-also-row">
-          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" style="color:#A9B478" aria-hidden="true">
-            <rect x="4.2" y="4.2" width="15.6" height="15.6" rx="5"/>
-            <circle cx="12" cy="12" r="3.6"/>
-            <circle cx="16.6" cy="7.4" r="1" fill="currentColor" stroke="none"/>
+          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color:#A9B478" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <path d="M17.5 6.5h.01"/>
           </svg>
           <span class="em-also-txt"><strong>Chat grupal de Instagram</strong><small>Comunidad del programa</small></span>
           <span class="em-also-arr">→</span>
@@ -6704,7 +6764,7 @@ body.locked .em-grain{display:none;}
     <div class="progm-blocks">
       <div class="progm-block">
         <div class="progm-block-num">00</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI1"><circle cx="12" cy="12" r="9.2"/><path d="M15.9 8.1l-2 5.8-5.8 2 2-5.8z"/></g></defs><use href="#pgI1" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI1" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI1"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></g></defs><use href="#pgI1" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI1" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <radialGradient id="rhG1" cx=".5" cy=".4" r=".65">
@@ -6730,7 +6790,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">01</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI2"><path d="M8.3 11.2C7 7.4 9 4.8 12 4.8s5 2.6 3.7 6.4"/><circle cx="12" cy="15.3" r="5.4"/></g></defs><use href="#pgI2" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI2" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI2"><path d="M3 9v6"/><path d="M6 6.5v11"/><path d="M18 6.5v11"/><path d="M21 9v6"/><path d="M6 12h12"/></g></defs><use href="#pgI2" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI2" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG2" x1="0" y1="0" x2="0" y2="1">
@@ -6762,7 +6822,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">02</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI3"><path d="M4.3 3.6v4.6a2.1 2.1 0 0 0 4.2 0V3.6M6.4 3.6v17"/><circle cx="15.6" cy="12" r="6.6"/><circle cx="15.6" cy="12" r="2.8"/></g></defs><use href="#pgI3" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI3" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI3"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></g></defs><use href="#pgI3" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI3" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG3" x1="0" y1="0" x2="0" y2="1">
@@ -6791,7 +6851,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">03</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI4"><rect x="3.4" y="3.4" width="7.6" height="7.6" rx="2.4"/><rect x="13" y="3.4" width="7.6" height="7.6" rx="2.4"/><rect x="3.4" y="13" width="7.6" height="7.6" rx="2.4"/><rect x="13" y="13" width="7.6" height="7.6" rx="2.4"/></g></defs><use href="#pgI4" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI4" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI4"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></g></defs><use href="#pgI4" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI4" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG4" x1="0" y1="0" x2="0" y2="1">
@@ -6826,7 +6886,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">04</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI5"><path d="M4 4v16h16"/><path d="M7.6 15.4l3.6-4.2 3 2.5 5.6-6.6"/><path d="M16.6 7.1h3.2v3.2"/></g></defs><use href="#pgI5" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI5" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 18"/><polyline points="16 7 22 7 22 13"/></g></defs><use href="#pgI5" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI5" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG5" x1="0" y1="0" x2="0" y2="1">
@@ -6864,7 +6924,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">05</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI6"><path d="M12 3.2l7 2.7v5.5c0 4.5-2.9 7.4-7 9.4-4.1-2-7-4.9-7-9.4V5.9z"/><path d="M8.9 11.6l2.3 2.3 4-4.5"/></g></defs><use href="#pgI6" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI6" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI6"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></g></defs><use href="#pgI6" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI6" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG6" x1="0" y1="0" x2="0" y2="1">
@@ -6935,7 +6995,7 @@ body.locked .em-grain{display:none;}
         <div class="jrn-body">
           <div class="jrn-card">
             <div class="jrn-card-num">00</div>
-            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
             <div class="jrn-card-head">
               <div class="jrn-card-eyebrow">Fase 00 · Inicio</div>
               <div class="jrn-card-title">Diagnóstico y claridad</div>
@@ -6959,7 +7019,7 @@ body.locked .em-grain{display:none;}
         <div class="jrn-body">
           <div class="jrn-card">
             <div class="jrn-card-num">01</div>
-            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
             <div class="jrn-card-head">
               <div class="jrn-card-eyebrow">Fase 01 · Arranque</div>
               <div class="jrn-card-title">Activación</div>
@@ -6983,7 +7043,7 @@ body.locked .em-grain{display:none;}
         <div class="jrn-body">
           <div class="jrn-card">
             <div class="jrn-card-num">02</div>
-            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5a2 2 0 0 1 2-2h6v17H6a2 2 0 0 0-2 2V5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 5a2 2 0 0 0-2-2h-6v17h6a2 2 0 0 1 2 2V5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
             <div class="jrn-card-head">
               <div class="jrn-card-eyebrow">Fase 02 · Comprensión</div>
               <div class="jrn-card-title">Aprendizaje</div>
@@ -7007,7 +7067,7 @@ body.locked .em-grain{display:none;}
         <div class="jrn-body">
           <div class="jrn-card">
             <div class="jrn-card-num">03</div>
-            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9v6M6 7v10M21 9v6M18 7v10M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6"/><path d="M6 6.5v11"/><path d="M18 6.5v11"/><path d="M21 9v6"/><path d="M6 12h12"/></svg></div>
             <div class="jrn-card-head">
               <div class="jrn-card-eyebrow">Fase 03 · Aplicación</div>
               <div class="jrn-card-title">Ejecución y estructura</div>
@@ -7031,7 +7091,7 @@ body.locked .em-grain{display:none;}
         <div class="jrn-body">
           <div class="jrn-card">
             <div class="jrn-card-num">04</div>
-            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></div>
+            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
             <div class="jrn-card-head">
               <div class="jrn-card-eyebrow">Fase 04 · Autonomía</div>
               <div class="jrn-card-title">Desarrollo de criterio</div>
@@ -7055,7 +7115,7 @@ body.locked .em-grain{display:none;}
         <div class="jrn-body">
           <div class="jrn-card">
             <div class="jrn-card-num">05</div>
-            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.7 1.4 6.8L12 17.8 5.9 21.3l1.4-6.8L2.2 9.7l6.9-.7L12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+            <div class="jrn-card-wm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
             <div class="jrn-card-head">
               <div class="jrn-card-eyebrow">Fase 05 · Maestría</div>
               <div class="jrn-card-title">Dominio del método</div>
@@ -7298,7 +7358,7 @@ body.locked .em-grain{display:none;}
     <!-- GUÍA DE ALIMENTACIÓN · el curso base (card destacada) -->
     <div class="bib-feat sub-anim" style="--d:.05s;" onclick="go('s-guia-alimentacion')" role="button" tabindex="0">
       <p class="bib-feat-tag">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7.1C10.1 5.4 6.9 5.1 4.2 6.1v11.7c2.7-1 5.9-.7 7.8 1 1.9-1.7 5.1-2 7.8-1V6.1c-2.7-1-5.9-.7-7.8 1zM12 7.1v11.7"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         Guía esencial · Curso base
       </p>
       <div class="bib-feat-row">
@@ -7463,19 +7523,33 @@ document.addEventListener('keydown', function (e) {
 
     <!-- Banner cálido para recién llegados (JS lo muestra solo si no ha leído nada) -->
     <div class="hub-firsttime hub-anim" id="hub-firsttime" style="--d:.08s;">
-      <span class="hub-ft-emoji" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" width="16" height="16"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v5M12 15.5v.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+      <span class="hub-ft-emoji" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" width="16" height="16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
       <span>¿Primera vez? <strong>Sigue el orden 1 → 2 → 3 → 4.</strong> Toma menos de 15 min y vas a entenderlo todo.</span>
     </div>
 
-    <!-- 4 SECCIONES -->
+    <!-- 4 SECCIONES · camino paso a paso -->
     <div class="hub-cards">
+
+      <!-- Degradado compartido de los iconos + línea punteada del camino -->
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+          <linearGradient id="emOgGrad" gradientUnits="userSpaceOnUse" x1="3" y1="3" x2="21" y2="21">
+            <stop offset="0" stop-color="#8A9558"/>
+            <stop offset="1" stop-color="#4A5238"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <svg class="hub-path-line" viewBox="0 0 382 570" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M371 39 C320 78, 70 92, 11 129 C-45 168, 360 232, 371 330 C378 404, 100 478, 11 531"
+              fill="none" stroke="#D4DAB8" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="0.5 8"/>
+      </svg>
 
       <!-- 01 · Programa -->
       <div class="hub-card hub-anim" style="--d:.12s;" data-section="programa" onclick="goSection('s-programa','programa')">
         <div class="hub-card-wm">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="8.8"/>
-            <path d="M15.6 8.4l-1.9 5.3-5.3 1.9 1.9-5.3z"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#emOgGrad)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
           </svg>
         </div>
         <div class="hub-card-status" data-status-for="programa">
@@ -7495,9 +7569,9 @@ document.addEventListener('keydown', function (e) {
       <!-- 02 · App -->
       <div class="hub-card hub-anim" style="--d:.18s;" data-section="app" onclick="goSection('s-app-train','app')">
         <div class="hub-card-wm">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="6.6" y="2.6" width="10.8" height="18.8" rx="2.8"/>
-            <path d="M10.6 18.4h2.8"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#emOgGrad)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+            <path d="M12 18h.01"/>
           </svg>
         </div>
         <div class="hub-card-status" data-status-for="app">
@@ -7517,10 +7591,10 @@ document.addEventListener('keydown', function (e) {
       <!-- 03 · Meal Tracking -->
       <div class="hub-card hub-anim" style="--d:.24s;" data-section="meal-tracker" onclick="openMealTrackerGuide()">
         <div class="hub-card-wm">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4.6 3.4v4.4a2.1 2.1 0 0 0 4.2 0V3.4M6.7 3.4v17.2"/>
-            <circle cx="15.2" cy="12" r="6.4"/>
-            <circle cx="15.2" cy="12" r="2.7"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#emOgGrad)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+            <path d="M7 2v20"/>
+            <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
           </svg>
         </div>
         <div class="hub-card-status" data-status-for="meal-tracker">
@@ -7540,10 +7614,10 @@ document.addEventListener('keydown', function (e) {
       <!-- 04 · Journey -->
       <div class="hub-card hub-anim" style="--d:.30s;" data-section="journey" onclick="goSection('s-journey','journey')">
         <div class="hub-card-wm">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="8.8"/>
-            <circle cx="12" cy="12" r="4.9"/>
-            <circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#emOgGrad)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="19" r="3"/>
+            <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/>
+            <circle cx="18" cy="5" r="3"/>
           </svg>
         </div>
         <div class="hub-card-status" data-status-for="journey">
@@ -9447,18 +9521,18 @@ function apptBuild() {
       var s = (sec || '').toLowerCase();
       if (s.indexOf('cómo funciona la app') !== -1 || s.indexOf('como funciona la app') !== -1)
         return { key:'intro',    callout:'Tu centro de control diario',
-                 svg:'<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M9 7h6M9 11h6M9 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' };
+                 svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>' };
       if (s.indexOf('iniciar tu rutina') !== -1)
         return { key:'rutina',   callout:'Activa la rutina desde Home o Calendar',
-                 svg:'<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' };
+                 svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>' };
       if (s.indexOf('progreso') !== -1)
         return { key:'progreso', callout:'Mide para optimizar',
-                 svg:'<svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 14l3.5-4 3 2.5L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' };
+                 svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></svg>' };
       if (s.indexOf('recomendaciones') !== -1)
         return { key:'reco',     callout:'Hábitos que multiplican tu progreso',
-                 svg:'<svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>' };
+                 svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' };
       return { key:'intro', callout:'',
-               svg:'<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/></svg>' };
+               svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>' };
     }
     let html = '';
     appmCards.forEach(function(c, i){
