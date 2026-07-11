@@ -6590,6 +6590,23 @@ body.locked .em-grain{display:none;}
   box-shadow:0 4px 14px rgba(0,0,0,.22);
 }
 #s-faq .sub-back:hover{color:#fff !important;}
+
+/* ═══ v16 · Anclas s-programa: trazo ÚNICO con degradado (fuera la línea doble) ═══ */
+#s-programa .progm-block-icon .pg-b{display:none !important;}
+#s-programa .progm-block-icon svg{filter:none !important;} /* la sombra offset dura era otra "segunda línea" */
+#s-programa .progm-blocks .progm-block:nth-child(1) .pg-f{stroke:url(#pgG1) !important;}
+#s-programa .progm-blocks .progm-block:nth-child(2) .pg-f{stroke:url(#pgG2) !important;}
+#s-programa .progm-blocks .progm-block:nth-child(3) .pg-f{stroke:url(#pgG3) !important;}
+#s-programa .progm-blocks .progm-block:nth-child(4) .pg-f{stroke:url(#pgG4) !important;}
+#s-programa .progm-blocks .progm-block:nth-child(5) .pg-f{stroke:url(#pgG5) !important;}
+#s-programa .progm-blocks .progm-block:nth-child(6) .pg-f{stroke:url(#pgG6) !important;}
+
+/* ═══ v16 · Barrita de scroll: visible al montar y bajo el icono ancla ═══ */
+/* El icono watermark vive top-right (sangra -12/-14px, ~100px): el riel
+   arranca debajo de esa zona para no cruzarse con él ni con el texto. */
+.em-rail{top:96px;}
+#s-journey .em-rail::before,
+#s-journey .em-rail i{right:6px;} /* .jrn-phase no tiene padding: riel dentro del borde */
 </style>
 </head>
 <body class="locked">
@@ -6607,6 +6624,9 @@ body.locked .em-grain{display:none;}
     if (params.get('demo') === '1') {
       localStorage.setItem('em_client', JSON.stringify({name:'Ana Pérez', t:Date.now()}));
       localStorage.setItem('em_hub_read_sections', JSON.stringify(['programa','app']));
+      // Estado de DEMO: queda a nombre de la persona demo. Si después entra
+      // un cliente real, emAdoptProgress limpia estas lecturas de mentira.
+      localStorage.setItem('em_progress_owner', 'Ana Pérez');
       document.addEventListener('DOMContentLoaded', function(){
         document.body.classList.remove('locked');
         try { if (typeof setWelcomeName === 'function') setWelcomeName('Ana Pérez'); } catch(e){}
@@ -6626,6 +6646,8 @@ body.locked .em-grain{display:none;}
         try {
           localStorage.setItem('em_client', JSON.stringify({name:'Ana Pérez', t:Date.now()}));
           localStorage.setItem('em_hub_read_sections', JSON.stringify(['programa','app']));
+          // Estado de DEMO/tour a nombre de la persona demo (ver emAdoptProgress)
+          localStorage.setItem('em_progress_owner', 'Ana Pérez');
         } catch(err){}
         document.body.classList.remove('locked');
         try { if (typeof setWelcomeName === 'function') setWelcomeName('Ana Pérez'); } catch(err){}
@@ -6900,7 +6922,7 @@ body.locked .em-grain{display:none;}
     <div class="progm-blocks">
       <div class="progm-block">
         <div class="progm-block-num">00</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI1"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></g></defs><use href="#pgI1" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI1" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="pgG1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A9B478"/><stop offset="1" stop-color="#CDD6AC"/></linearGradient><g id="pgI1"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></g></defs><use href="#pgI1" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI1" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <radialGradient id="rhG1" cx=".5" cy=".4" r=".65">
@@ -6926,7 +6948,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">01</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI2"><path d="M3 9v6"/><path d="M6 6.5v11"/><path d="M18 6.5v11"/><path d="M21 9v6"/><path d="M6 12h12"/></g></defs><use href="#pgI2" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI2" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="pgG2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BCC594"/><stop offset="1" stop-color="#DAE0BF"/></linearGradient><g id="pgI2"><path d="M3 9v6"/><path d="M6 6.5v11"/><path d="M18 6.5v11"/><path d="M21 9v6"/><path d="M6 12h12"/></g></defs><use href="#pgI2" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI2" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG2" x1="0" y1="0" x2="0" y2="1">
@@ -6958,7 +6980,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">02</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI3"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></g></defs><use href="#pgI3" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI3" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="pgG3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C9C6B8"/><stop offset="1" stop-color="#E3E1D7"/></linearGradient><g id="pgI3"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></g></defs><use href="#pgI3" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI3" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG3" x1="0" y1="0" x2="0" y2="1">
@@ -6987,7 +7009,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">03</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI4"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></g></defs><use href="#pgI4" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI4" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="pgG4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B5B2A4"/><stop offset="1" stop-color="#D6D4C9"/></linearGradient><g id="pgI4"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></g></defs><use href="#pgI4" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI4" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG4" x1="0" y1="0" x2="0" y2="1">
@@ -7022,7 +7044,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">04</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 18"/><polyline points="16 7 22 7 22 13"/></g></defs><use href="#pgI5" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI5" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="pgG5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C6CFA2"/><stop offset="1" stop-color="#E1E7C8"/></linearGradient><g id="pgI5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 18"/><polyline points="16 7 22 7 22 13"/></g></defs><use href="#pgI5" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI5" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG5" x1="0" y1="0" x2="0" y2="1">
@@ -7060,7 +7082,7 @@ body.locked .em-grain{display:none;}
       </div>
       <div class="progm-block">
         <div class="progm-block-num">05</div>
-        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><g id="pgI6"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></g></defs><use href="#pgI6" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI6" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
+        <div class="progm-block-icon"><svg viewBox="0 0 26 26" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="pgG6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CFCCBE"/><stop offset="1" stop-color="#E8E6DD"/></linearGradient><g id="pgI6"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></g></defs><use href="#pgI6" class="pg-b" transform="translate(2.2 2.2)"/><use href="#pgI6" class="pg-f" transform="translate(0.6 0.6)"/></svg></div>
         <svg class="rh-clay" viewBox="0 0 120 120" aria-hidden="true">
           <defs>
             <linearGradient id="rhG6" x1="0" y1="0" x2="0" y2="1">
@@ -8046,9 +8068,6 @@ const AUTHORIZED_USERS = [
   "Carlos Martinez",
   "Carlos Pirela",
   "David Forero",
-  'Alejandra Borbón',
-  'Juan Sebastian Mariño',
-  'Camilo Castro',
   "Diana Tovar",
   "Julio Dieguez",
   "Laura Lorena Cardenas",
@@ -8062,6 +8081,42 @@ const AUTHORIZED_USERS = [
 ];
 const CLIENT_KEY = 'em_client';
 const FTB_KEY = 'em_ftb_dismissed';
+
+// ─── PROPIEDAD DEL PROGRESO LOCAL (fix "onboarding ya leído") ───────────
+// El avance guardado en ESTE navegador pertenece a UN cliente
+// (em_progress_owner). Antes, las claves de lectura eran globales por
+// navegador: si el navegador traía estado de demo/tour (?demo=1 marcaba
+// 'programa' y 'app') o el avance de OTRO cliente, el que entraba las
+// heredaba y el backfill las subía a la nube con su nombre. Ahora, al
+// abrir sesión con un nombre distinto al dueño del avance local, se
+// limpia SOLO el avance local (la nube nunca se toca aquí): el cliente
+// nuevo arranca en 0 y el que ya leía recupera lo suyo vía emCloudRestore
+// (que filtra por su client_name).
+const PROGRESS_KEYS = ['em_hub_read_sections','em_ga_read','em_read_sections',
+  'em_ga_last_slug','em_ga_last_visit','em_synced_hub','em_synced_ga',
+  'em_synced_legacy','em_cloud_backfilled'];
+function emAdoptProgress(name, freshLogin){
+  try {
+    var owner = localStorage.getItem('em_progress_owner');
+    if (owner && normalize(owner) === normalize(name)) return;
+    var hasProgress = PROGRESS_KEYS.some(function(k){
+      try { return !!localStorage.getItem(k); } catch(e){ return false; }
+    });
+    // Se limpia si el avance era de otro cliente, o si en un login fresco
+    // hay avance de origen desconocido (demo/tour viejos, sin dueño).
+    if (hasProgress && (owner || freshLogin)) {
+      PROGRESS_KEYS.forEach(function(k){ try { localStorage.removeItem(k); } catch(e){} });
+      try { sessionStorage.removeItem('em_cloud_restored'); } catch(e){}
+      // Repintar la UI ya sin las lecturas heredadas (sin esperar recarga)
+      setTimeout(function(){
+        try { if (typeof hubApplyReadStates === 'function') hubApplyReadStates(); } catch(e){}
+        try { if (typeof homeApplyOrientation === 'function') homeApplyOrientation(); } catch(e){}
+        try { if (typeof bibApplyGuiaProgress === 'function') bibApplyGuiaProgress(); } catch(e){}
+      }, 40);
+    }
+    localStorage.setItem('em_progress_owner', name);
+  } catch(e){}
+}
 
 function openTrainingApp(event) {
   // Detecta el sistema operativo y abre el store correcto
@@ -8131,6 +8186,7 @@ function doLogin() {
   const found = AUTHORIZED_USERS.find(u => normalize(u) === nameN);
 
   const proceed = (canonical, via) => {
+    emAdoptProgress(canonical, true);
     try { localStorage.setItem(CLIENT_KEY, JSON.stringify({name: canonical, t: Date.now(), via: via || 'login'})); } catch(e) {}
     setWelcomeName(canonical);
     // Trae el avance guardado en la nube para ESTE cliente (otro
@@ -8254,6 +8310,9 @@ function goToOnboarding(event) {
       // sesiones existentes siguen activas tal cual. La pausa del CRM la
       // aplica sessionGuard (más abajo), sin cerrar la sesión.
       const canonical = AUTHORIZED_USERS.find(u => normalize(u) === normalize(data.name)) || data.name;
+      // Adopción (sin limpiar): la sesión ya venía abierta en este navegador,
+      // así que el avance local existente pertenece a este cliente.
+      emAdoptProgress(canonical, false);
       document.body.classList.remove('locked');
       setWelcomeName(canonical);
       checkFirstTimeBanner();
@@ -8284,6 +8343,7 @@ function emLogout() {
     if (!mtName) return;
     const mtUser = params.get('mt_user') || null;
     const enter = (canonical) => {
+      emAdoptProgress(canonical, true);
       try {
         localStorage.setItem(CLIENT_KEY, JSON.stringify({
           name: canonical, t: Date.now(), via: 'mealtracker', mt_user: mtUser,
@@ -10421,7 +10481,10 @@ function initBlurCarousel(scroller){
       var scrollable = sc > ch + 12;
       rail.classList.toggle('on', scrollable);
       if (!scrollable) return;
-      var railH = Math.max(60, ch - 40);
+      // El riel arranca DEBAJO del icono ancla (offset top del CSS) y deja
+      // margen abajo — nunca se cruza con el watermark top-right ni el texto.
+      var topOff = parseFloat(getComputedStyle(rail).top) || 16;
+      var railH = Math.max(48, ch - topOff - 26);
       rail.style.setProperty('--railh', railH + 'px');
       // thumb proporcional pero acotado: siempre debe LEERSE que hay más abajo
       var th = Math.max(26, Math.min(railH * ch / sc, railH * .45));
@@ -10435,9 +10498,25 @@ function initBlurCarousel(scroller){
     [80, 300, 800].forEach(function (t) { setTimeout(upd, t); });
     window.addEventListener('resize', upd, { passive: true });
     slide._railUpd = upd;
+    // Al deslizar el carrusel horizontal, refrescar la barrita de cada slide
+    var par = slide.parentNode;
+    if (par && !par._railHooked) {
+      par._railHooked = true;
+      par.addEventListener('scroll', function () {
+        window.requestAnimationFrame(function () {
+          [].forEach.call(par.children, function (c) { if (c._railUpd) c._railUpd(); });
+        });
+      }, { passive: true });
+    }
   }
   function railScan() {
-    [].forEach.call(document.querySelectorAll(SLIDES), railInit);
+    [].forEach.call(document.querySelectorAll(SLIDES), function (s) {
+      railInit(s);
+      // Recalcular SIEMPRE al mostrar la pantalla: la card pudo montarse
+      // oculta (clientHeight 0) y sin esto la barrita solo aparecía al
+      // scrollear. Así se ve desde que la card aparece.
+      if (s._railUpd) { s._railUpd(); [140, 420, 900].forEach(function (t) { setTimeout(s._railUpd, t); }); }
+    });
   }
   var prevGo = window.go;
   window.go = function (id) {
