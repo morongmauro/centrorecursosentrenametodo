@@ -4971,32 +4971,7 @@ body.kt-transitioning .hero-kettlebell{visibility:hidden;}
   flex-shrink:0;
 }
 
-/* Sticky CTA en mobile (aparece al scrollear) */
-@media (max-width:560px){
-  .home-sticky-cta{
-    position:fixed;
-    left:50%; bottom:14px;
-    transform:translate(-50%,80px);
-    z-index:90;
-    background:var(--text);
-    color:#fff;
-    padding:13px 22px;
-    border-radius:100px;
-    font-size:13.5px; font-weight:600; letter-spacing:.3px;
-    box-shadow:0 14px 34px rgba(0,0,0,.32);
-    display:flex; align-items:center; gap:10px;
-    opacity:0; pointer-events:none;
-    transition:transform .35s cubic-bezier(.16,.84,.3,1), opacity .35s;
-    max-width:90vw;
-  }
-  .home-sticky-cta.show{
-    transform:translate(-50%,0);
-    opacity:1;
-    pointer-events:auto;
-    cursor:pointer;
-  }
-  .home-sticky-cta .cta-arrow{font-size:15px;}
-}
+/* (Sticky CTA móvil retirado: el asistente de lectura arriba lo reemplaza) */
 
 /* ============================================================ */
 /* ============== v8 · ONBOARDING HUB con emoji + olor ========= */
@@ -6631,6 +6606,45 @@ body.locked .em-grain{display:none;}
 #s-programa .progm-blocks .progm-block .progm-block-icon{top:-8px !important;right:-8px !important;}
 #s-app-train .progm-block .appt-badge{top:-8px !important;right:-8px !important;}
 #s-journey .jrn-timeline > .jrn-phase .jrn-card-wm{top:-8px !important;right:-8px !important;}
+
+/* ═══ v18 · Iconos móviles COMPLETOS: sin recorte ovalado ═══ */
+/* El halo usaba border-radius:50% sobre el propio <svg>; el UA stylesheet de
+   los svg trae overflow:hidden y en móvil el trazo quedaba recortado en las
+   esquinas con forma de óvalo. El degradado radial ya se desvanece a
+   transparente en el borde (closest-side), así que el radio era decorativo:
+   se elimina y no puede volver a recortar en ningún navegador. */
+.em-lin{border-radius:0 !important;overflow:visible !important;}
+
+/* ═══ v18 · Asistente: toggle "EN USO Y PENDIENTE — VER TODO" en terracota ═══ */
+.em-assist-toggle{color:#C4685D;}
+.em-assist-toggle .em-assist-chev{color:#C4685D;}
+
+/* ═══ v18 · Buscador de la guía: flash del pasaje encontrado ═══ */
+.ga-hit-flash{animation:gaHitFlash 2.4s ease;border-radius:10px;}
+@keyframes gaHitFlash{
+  0%{background:rgba(138,149,88,.24);box-shadow:0 0 0 8px rgba(138,149,88,.24);}
+  55%{background:rgba(138,149,88,.16);box-shadow:0 0 0 8px rgba(138,149,88,.16);}
+  100%{background:transparent;box-shadow:0 0 0 8px transparent;}
+}
+#s-guia-alimentacion .ga-search-result-snippet mark{
+  background:rgba(138,149,88,.22);color:var(--olive-dark);
+  border-radius:3px;padding:0 2px;
+}
+
+/* ═══ v18 · Barrita de scroll DE PÁGINA (borde derecho del viewport) ═══ */
+.em-page-rail{
+  position:fixed;top:0;right:0;bottom:0;width:3px;z-index:260;
+  pointer-events:none;display:none;
+}
+.em-page-rail.on{display:block;}
+.em-page-rail::before{
+  content:'';position:absolute;inset:0;
+  background:rgba(74,82,56,.10);border-radius:99px;
+}
+.em-page-rail-thumb{
+  position:absolute;right:0;width:3px;border-radius:99px;
+  background:var(--olive);opacity:.9;
+}
 </style>
 </head>
 <body class="locked">
@@ -8835,40 +8849,7 @@ function bibApplyGuiaProgress(){
 document.addEventListener('DOMContentLoaded', bibApplyGuiaProgress);
 setTimeout(bibApplyGuiaProgress, 300);
 
-// ===== Sticky bottom CTA (mobile) =====
-// Aparece cuando el usuario scrollea más allá del orient-card;
-// usa el mismo texto y acción que el CTA del card "Continuar".
-(function initStickyCta(){
-  function setupOnce(){
-    const home = document.getElementById('s-home');
-    if (!home) return;
-    if (document.getElementById('home-sticky-cta')) return; // ya creado
-    const btn = document.createElement('div');
-    btn.id = 'home-sticky-cta';
-    btn.className = 'home-sticky-cta';
-    btn.innerHTML = '<span class="sticky-text">Continuar</span><span class="cta-arrow">→</span>';
-    btn.addEventListener('click', function(){ if (typeof orientContinue === 'function') orientContinue(); });
-    home.appendChild(btn);
-
-    const orient = document.getElementById('home-orient');
-    function update(){
-      if (!home.classList.contains('active')) { btn.classList.remove('show'); return; }
-      if (!orient) return;
-      const rect = orient.getBoundingClientRect();
-      // Mostrar sticky cuando el orient-card ya salio de la pantalla por arriba
-      const visible = rect.bottom < 60;
-      btn.classList.toggle('show', visible);
-      // Sincronizar texto con el CTA principal
-      const txt = document.getElementById('orient-cta-text');
-      const sTxt = btn.querySelector('.sticky-text');
-      if (txt && sTxt) sTxt.textContent = txt.textContent;
-    }
-    window.addEventListener('scroll', function(){ window.requestAnimationFrame(update); }, {passive:true});
-    update();
-  }
-  document.addEventListener('DOMContentLoaded', setupOnce);
-  setTimeout(setupOnce, 300);
-})();
+// (Sticky bottom CTA retirado — reemplazado por el asistente de lectura del hero)
 
 // === Toast "+1 leído" ===
 function showReadToast(message) {
@@ -9512,54 +9493,93 @@ function gaToggleSearch() {
   }
 }
 
+// Normalización 1:1 en longitud (minúsculas + sin acentos). Al conservar la
+// longitud, las posiciones encontradas en el texto normalizado sirven para
+// recortar/resaltar el texto original en los snippets.
+function gaNorm(s) {
+  let out = '';
+  for (const ch of String(s || '')) {
+    const d = ch.normalize('NFD');
+    out += (d[0] || ch).toLowerCase();
+  }
+  return out;
+}
+
 function gaBuildSearchIndex() {
   gaSearchIndex = [];
+  const isHeadingBoundary = (el) =>
+    el.matches('.ga-h1, .ga-h2, .ga-h3, .ga-h1-wrap') ||
+    !!el.querySelector('.ga-h1, .ga-h2, .ga-h3');
   document.querySelectorAll('#s-guia-alimentacion .ga-h1, #s-guia-alimentacion .ga-h2, #s-guia-alimentacion .ga-h3').forEach(h => {
     const level = parseInt(h.tagName.charAt(1));
     const slug = h.id;
-    const title = h.textContent;
-    // Capturar siguientes párrafos hasta el próximo heading
-    let snippet = '';
-    let next = h.nextElementSibling;
-    while (next && !next.matches('.ga-h1, .ga-h2, .ga-h3')) {
-      snippet += ' ' + (next.textContent || '');
-      if (snippet.length > 300) break;
+    const title = h.textContent.replace(/\s+/g, ' ').trim();
+    // FULL-TEXT: todo el contenido (párrafos, listas, captions) hasta el
+    // próximo heading. Los .ga-h1 viven dentro de .ga-h1-wrap: se camina
+    // desde el wrap. Antes se cortaba a ~300 caracteres y por eso términos
+    // como "creatina" o "hierro" no aparecían en la búsqueda.
+    let raw = '';
+    let next = (h.closest('.ga-h1-wrap') || h).nextElementSibling;
+    while (next && !isHeadingBoundary(next)) {
+      if (!next.matches('button, .ga-mark-read')) {
+        raw += ' ' + (next.textContent || '');
+      }
       next = next.nextElementSibling;
     }
-    gaSearchIndex.push({ slug, title, level, text: snippet.toLowerCase().trim() });
+    raw = raw.replace(/\s+/g, ' ').trim();
+    gaSearchIndex.push({ slug, title, level, raw, norm: gaNorm(raw), titleNorm: gaNorm(title) });
   });
 }
 
 function gaSearch(query) {
   const resultsEl = document.getElementById('ga-search-results');
   if (!resultsEl) return;
-  query = query.trim().toLowerCase();
-  if (query.length < 2) {
+  const qRaw = query.trim();
+  const q = gaNorm(qRaw);
+  if (q.length < 2) {
     resultsEl.innerHTML = '';
     return;
   }
-  const matches = gaSearchIndex.filter(item => {
-    return item.title.toLowerCase().includes(query) || item.text.includes(query);
-  }).slice(0, 12);
+  // Coincidencia insensible a mayúsculas Y acentos, sobre título + texto completo
+  const scored = [];
+  for (const item of gaSearchIndex) {
+    const inTitle = item.titleNorm.includes(q);
+    const idx = item.norm.indexOf(q);
+    if (!inTitle && idx < 0) continue;
+    scored.push({ item, inTitle, idx });
+  }
+  scored.sort((a, b) => (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0));
+  const matches = scored.slice(0, 12);
 
   if (matches.length === 0) {
     resultsEl.innerHTML = '<div class="ga-search-empty">No se encontraron resultados.</div>';
     return;
   }
 
-  resultsEl.innerHTML = matches.map(m => {
-    let snippet = m.text.substring(0, 140);
-    const qIdx = snippet.indexOf(query);
-    if (qIdx >= 0) {
-      const start = Math.max(0, qIdx - 30);
-      snippet = (start > 0 ? '...' : '') + snippet.substring(start, start + 120);
-      snippet = snippet.replace(new RegExp(query, 'gi'), m => `<mark>${m}</mark>`);
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  resultsEl.innerHTML = matches.map((m, i) => {
+    let snippet;
+    if (m.idx >= 0) {
+      // Snippet con contexto real alrededor de la coincidencia + <mark>
+      const start = Math.max(0, m.idx - 36);
+      const end = Math.min(m.item.raw.length, m.idx + q.length + 96);
+      snippet = (start > 0 ? '…' : '') +
+        esc(m.item.raw.slice(start, m.idx)) +
+        '<mark>' + esc(m.item.raw.slice(m.idx, m.idx + q.length)) + '</mark>' +
+        esc(m.item.raw.slice(m.idx + q.length, end)) +
+        (end < m.item.raw.length ? '…' : '');
+    } else {
+      snippet = esc(m.item.raw.slice(0, 130)) + (m.item.raw.length > 130 ? '…' : '');
     }
-    return `<div class="ga-search-result" onclick="gaGoToSection('${m.slug}')">
-      <div class="ga-search-result-title">${m.title}</div>
+    return `<div class="ga-search-result" data-slug="${m.item.slug}" data-ri="${i}">
+      <div class="ga-search-result-title">${esc(m.item.title)}</div>
       <div class="ga-search-result-snippet">${snippet}</div>
     </div>`;
   }).join('');
+  // Click: navegar al capítulo y resaltar el pasaje que contiene el término
+  resultsEl.querySelectorAll('.ga-search-result').forEach(el => {
+    el.addEventListener('click', () => gaGoToSection(el.dataset.slug, qRaw));
+  });
 }
 
 function gaClearSearch() {
@@ -9569,7 +9589,7 @@ function gaClearSearch() {
   if (resultsEl) resultsEl.innerHTML = '';
 }
 
-function gaGoToSection(slug) {
+function gaGoToSection(slug, highlight) {
   // Cerrar drawer/search si están abiertos
   const drawer = document.getElementById('ga-toc-drawer');
   if (drawer && drawer.classList.contains('open')) drawer.classList.remove('open');
@@ -9593,7 +9613,30 @@ function gaGoToSection(slug) {
 
   setTimeout(() => {
     const el = document.getElementById(slug);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!el) return;
+    let dest = el;
+    // Si venimos del buscador: aterrizar en el bloque que contiene el término
+    if (highlight) {
+      const q = gaNorm(String(highlight).trim());
+      if (q) {
+        let node = (el.closest('.ga-h1-wrap') || el).nextElementSibling;
+        while (node && !node.matches('.ga-h1, .ga-h2, .ga-h3, .ga-h1-wrap') &&
+               !node.querySelector('.ga-h1, .ga-h2, .ga-h3')) {
+          if (!node.matches('button, .ga-mark-read') && gaNorm(node.textContent || '').includes(q)) {
+            dest = node;
+            break;
+          }
+          node = node.nextElementSibling;
+        }
+      }
+    }
+    dest.scrollIntoView({ behavior: 'smooth', block: dest === el ? 'start' : 'center' });
+    if (highlight) {
+      dest.classList.remove('ga-hit-flash');
+      void dest.offsetWidth;
+      dest.classList.add('ga-hit-flash');
+      setTimeout(() => dest.classList.remove('ga-hit-flash'), 2600);
+    }
   }, 150);
 }
 
@@ -10271,30 +10314,8 @@ function initBlurCarousel(scroller){
   document.addEventListener('DOMContentLoaded', function(){ setTimeout(backfillOnce, 1500); });
   setTimeout(backfillOnce, 4000);
 
-  // ====== Botón de "Forzar sync" para los clientes — esquina inferior derecha ======
-  document.addEventListener('DOMContentLoaded', function(){
-    try {
-      var btn = document.createElement('button');
-      btn.innerHTML = '🔄';
-      btn.title = 'Forzar sync con tu coach';
-      btn.style.cssText = 'position:fixed;bottom:14px;right:14px;width:38px;height:38px;border-radius:50%;border:none;background:rgba(20,20,20,.7);color:#fff;font-size:16px;z-index:200;cursor:pointer;opacity:.5;transition:opacity .2s;box-shadow:0 4px 14px rgba(0,0,0,.2);';
-      btn.onmouseover = function(){ btn.style.opacity = '1'; };
-      btn.onmouseout = function(){ btn.style.opacity = '.5'; };
-      btn.onclick = function(){
-        if (!getClientName()) { alert('Inicia sesión primero'); return; }
-        btn.innerHTML = '…';
-        // Forzar backfill borrando el flag
-        try { localStorage.removeItem('em_cloud_backfilled'); } catch(e){}
-        // Reintentar entry + backfill
-        sendEntryOnce();
-        setTimeout(function(){
-          backfillOnce();
-          setTimeout(function(){ btn.innerHTML = '✓'; setTimeout(function(){ btn.innerHTML = '🔄'; }, 1500); }, 1500);
-        }, 300);
-      };
-      document.body.appendChild(btn);
-    } catch(e){}
-  });
+  // (Botón flotante de "Forzar sync" retirado: pollSync de abajo cubre la
+  //  sincronización automáticamente, sin UI.)
 
   // ====== FALLBACK BULLETPROOF: polling que sincroniza desde localStorage ======
   // Cada 8 segundos compara el localStorage con lo que ya envió y manda lo nuevo.
@@ -10569,6 +10590,56 @@ function initBlurCarousel(scroller){
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', railScan);
   else railScan();
+})();
+</script>
+<script>
+/* ── Barrita de scroll DE PÁGINA (subpáginas largas) ──────────────────────
+   Riel fino (3px) fijo en el borde derecho del viewport que refleja la
+   posición del scroll de la página completa. Distinta de la barrita interna
+   de las cards del carrusel. Visible desde que se abre la pantalla (si hay
+   scroll), se recalcula al navegar, al hacer scroll y al cambiar el layout. */
+(function () {
+  var ON = { 's-programa': 1, 's-app-train': 1, 's-journey': 1, 's-faq': 1, 's-biblioteca': 1, 's-guia-alimentacion': 1 };
+  var rail = null, thumb = null;
+  function ensure() {
+    if (rail) return;
+    rail = document.createElement('div');
+    rail.className = 'em-page-rail';
+    rail.setAttribute('aria-hidden', 'true');
+    thumb = document.createElement('div');
+    thumb.className = 'em-page-rail-thumb';
+    rail.appendChild(thumb);
+    document.body.appendChild(rail);
+  }
+  function update() {
+    try {
+      ensure();
+      var active = document.querySelector('.screen.active');
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - window.innerHeight;
+      var show = active && ON[active.id] && !document.body.classList.contains('locked') && max > 40;
+      if (!show) { rail.classList.remove('on'); return; }
+      rail.classList.add('on');
+      var vh = window.innerHeight;
+      var h = Math.max(28, Math.round(vh * (vh / doc.scrollHeight)));
+      var top = (vh - h) * (window.scrollY / max);
+      thumb.style.height = h + 'px';
+      thumb.style.top = Math.max(0, Math.min(vh - h, top)) + 'px';
+    } catch (e) {}
+  }
+  window.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
+  window.addEventListener('resize', update);
+  var prevGo = window.go;
+  window.go = function (id) {
+    var r = prevGo.apply(this, arguments);
+    [120, 450, 1000].forEach(function (t) { setTimeout(update, t); });
+    return r;
+  };
+  // Alturas dinámicas (guía cargada por fetch, carruseles, imágenes):
+  // chequeo liviano periódico para mantener el thumb correcto.
+  setInterval(function () { if (!document.hidden) update(); }, 1200);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { update(); setTimeout(update, 400); });
+  else { update(); setTimeout(update, 400); }
 })();
 </script>
 </body>

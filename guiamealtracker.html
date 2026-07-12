@@ -314,6 +314,21 @@
     .nav-btn.secondary:disabled{opacity:.35;cursor:default;}
     .nav-btn.primary{background:var(--black);color:var(--cream);box-shadow:0 6px 18px rgba(0,0,0,.18);}
     .nav-counter{font-size:11px;font-weight:700;color:var(--text-mute);font-variant-numeric:tabular-nums;letter-spacing:.05em;}
+
+    /* ── Barrita de scroll de página (borde derecho, 3px) ── */
+    .em-page-rail{
+      position:fixed;top:0;right:0;bottom:0;width:3px;z-index:260;
+      pointer-events:none;display:none;
+    }
+    .em-page-rail.on{display:block;}
+    .em-page-rail::before{
+      content:'';position:absolute;inset:0;
+      background:rgba(74,82,56,.10);border-radius:99px;
+    }
+    .em-page-rail-thumb{
+      position:absolute;right:0;width:3px;border-radius:99px;
+      background:var(--olive, #8A9558);opacity:.9;
+    }
   </style>
 </head>
 <body>
@@ -712,6 +727,36 @@
         if (e.key === 'ArrowLeft') { if (current > 0) { current--; render(); } }
       });
       render();
+    })();
+  </script>
+  <script>
+    /* Barrita de scroll de página: refleja el scroll del slide activo.
+       Visible desde que se abre (si el slide es más alto que el viewport). */
+    (function () {
+      var rail = document.createElement('div');
+      rail.className = 'em-page-rail';
+      rail.setAttribute('aria-hidden', 'true');
+      var thumb = document.createElement('div');
+      thumb.className = 'em-page-rail-thumb';
+      rail.appendChild(thumb);
+      document.body.appendChild(rail);
+      function update() {
+        try {
+          var doc = document.documentElement;
+          var max = doc.scrollHeight - window.innerHeight;
+          if (max < 40) { rail.classList.remove('on'); return; }
+          rail.classList.add('on');
+          var vh = window.innerHeight;
+          var h = Math.max(28, Math.round(vh * (vh / doc.scrollHeight)));
+          var top = (vh - h) * (window.scrollY / max);
+          thumb.style.height = h + 'px';
+          thumb.style.top = Math.max(0, Math.min(vh - h, top)) + 'px';
+        } catch (e) {}
+      }
+      window.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
+      window.addEventListener('resize', update);
+      setInterval(function () { if (!document.hidden) update(); }, 900);
+      update(); setTimeout(update, 300);
     })();
   </script>
 </body>
