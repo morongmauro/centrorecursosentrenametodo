@@ -315,19 +315,19 @@
     .nav-btn.primary{background:var(--black);color:var(--cream);box-shadow:0 6px 18px rgba(0,0,0,.18);}
     .nav-counter{font-size:11px;font-weight:700;color:var(--text-mute);font-variant-numeric:tabular-nums;letter-spacing:.05em;}
 
-    /* ── Barrita de scroll de página (borde derecho, 3px) ── */
+    /* ── Barrita de scroll de página (gris, 4px, a 2px del borde) ── */
     .em-page-rail{
-      position:fixed;top:0;right:0;bottom:0;width:3px;z-index:260;
+      position:fixed;top:0;right:2px;width:4px;height:100vh;z-index:260;
       pointer-events:none;display:none;
     }
     .em-page-rail.on{display:block;}
     .em-page-rail::before{
       content:'';position:absolute;inset:0;
-      background:rgba(74,82,56,.10);border-radius:99px;
+      background:rgba(0,0,0,.07);border-radius:99px;
     }
     .em-page-rail-thumb{
-      position:absolute;right:0;width:3px;border-radius:99px;
-      background:var(--olive, #8A9558);opacity:.9;
+      position:absolute;left:0;width:4px;border-radius:99px;
+      background:#9A9A9A;opacity:.95;
     }
   </style>
 </head>
@@ -747,6 +747,7 @@
           if (max < 40) { rail.classList.remove('on'); return; }
           rail.classList.add('on');
           var vh = window.innerHeight;
+          rail.style.height = vh + 'px'; /* 100vh poco fiable en iOS */
           var h = Math.max(28, Math.round(vh * (vh / doc.scrollHeight)));
           var top = (vh - h) * (window.scrollY / max);
           thumb.style.height = h + 'px';
@@ -755,6 +756,11 @@
       }
       window.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
       window.addEventListener('resize', update);
+      window.addEventListener('orientationchange', function () { setTimeout(update, 60); });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', update);
+        window.visualViewport.addEventListener('scroll', update);
+      }
       setInterval(function () { if (!document.hidden) update(); }, 900);
       update(); setTimeout(update, 300);
     })();

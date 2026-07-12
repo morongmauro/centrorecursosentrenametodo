@@ -6632,18 +6632,21 @@ body.locked .em-grain{display:none;}
 }
 
 /* ═══ v18 · Barrita de scroll DE PÁGINA (borde derecho del viewport) ═══ */
+/* Gris neutro, 4px, separada 2px del borde físico (curvas/gestos móviles) y
+   con altura fijada por JS via window.innerHeight (100vh es poco fiable en
+   iOS). Montada como hija directa de <body> — sin ancestros con transform. */
 .em-page-rail{
-  position:fixed;top:0;right:0;bottom:0;width:3px;z-index:260;
+  position:fixed;top:0;right:2px;width:4px;height:100vh;z-index:260;
   pointer-events:none;display:none;
 }
 .em-page-rail.on{display:block;}
 .em-page-rail::before{
   content:'';position:absolute;inset:0;
-  background:rgba(74,82,56,.10);border-radius:99px;
+  background:rgba(0,0,0,.07);border-radius:99px;
 }
 .em-page-rail-thumb{
-  position:absolute;right:0;width:3px;border-radius:99px;
-  background:var(--olive);opacity:.9;
+  position:absolute;left:0;width:4px;border-radius:99px;
+  background:#9A9A9A;opacity:.95;
 }
 </style>
 </head>
@@ -10620,7 +10623,10 @@ function initBlurCarousel(scroller){
       var show = active && ON[active.id] && !document.body.classList.contains('locked') && max > 40;
       if (!show) { rail.classList.remove('on'); return; }
       rail.classList.add('on');
+      // Altura real del viewport via JS (100vh es poco fiable en iOS con la
+      // barra de URL colapsable); se refresca en resize/orientation/vv.
       var vh = window.innerHeight;
+      rail.style.height = vh + 'px';
       var h = Math.max(28, Math.round(vh * (vh / doc.scrollHeight)));
       var top = (vh - h) * (window.scrollY / max);
       thumb.style.height = h + 'px';
@@ -10629,6 +10635,11 @@ function initBlurCarousel(scroller){
   }
   window.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
   window.addEventListener('resize', update);
+  window.addEventListener('orientationchange', function () { setTimeout(update, 60); });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', update);
+    window.visualViewport.addEventListener('scroll', update);
+  }
   var prevGo = window.go;
   window.go = function (id) {
     var r = prevGo.apply(this, arguments);
