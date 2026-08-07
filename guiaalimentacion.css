@@ -1,876 +1,1695 @@
+/* ============================================================ */
+/* ============ GUÍA DE ALIMENTACIÓN v3 — Editorial unificado = */
+/* ============================================================ */
 
-  <div class="ga-reader">
-    <div class="bg-halo bg-halo-1"></div>
-    <div class="bg-halo bg-halo-2"></div>
+/* Tipografía coherente con el resto del app: Inter (body) + Bebas Neue (títulos) */
 
-    <div class="sub-back" onclick="gaBack()" style="cursor:pointer">
-      <span class="sub-back-arr">←</span>
-      <span>Volver atrás</span>
-    </div>
+#s-guia-alimentacion {
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+}
+/* Blobs orgánicos visibles pero sin exagerar — mismo lenguaje que el resto del centro */
+#s-guia-alimentacion .bg-halo { opacity: .75; filter: blur(70px); }
+#s-guia-alimentacion .bg-halo-1 {
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(122,140,90,.40) 0%, rgba(122,140,90,.12) 50%, transparent 75%);
+  top: 80px; right: -110px;
+}
+#s-guia-alimentacion .bg-halo-2 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(163,176,122,.34) 0%, rgba(163,176,122,.10) 50%, transparent 75%);
+  top: 620px; left: -130px;
+}
+/* Blob sutil por cada sub-capítulo (ga-section) */
+#s-guia-alimentacion .ga-section { position: relative; }
+#s-guia-alimentacion .ga-section:nth-of-type(odd)::before,
+#s-guia-alimentacion .ga-section:nth-of-type(even)::before {
+  content: '';
+  position: absolute;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: .35;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(122,140,90,.32) 0%, transparent 70%);
+}
+#s-guia-alimentacion .ga-section:nth-of-type(odd)::before { top: 40px; right: -80px; }
+#s-guia-alimentacion .ga-section:nth-of-type(even)::before {
+  top: 80px; left: -100px;
+  background: radial-gradient(circle, rgba(163,176,122,.28) 0%, transparent 70%);
+}
+#s-guia-alimentacion .ga-section > * { position: relative; z-index: 1; }
 
-    <div class="ga-search-modal" id="ga-search-panel" style="display:none;">
-      <div class="ga-search-panel">
-        <div class="ga-search-wrap">
-          <svg viewBox="0 0 24 24" fill="none" class="ga-search-icon"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          <input type="text" class="ga-search-input" id="ga-search-input" placeholder="Buscar palabra o tema..." oninput="gaSearch(this.value)">
-          <div class="ga-search-clear" onclick="gaToggleSearch()" aria-label="Cerrar buscador">×</div>
-        </div>
-        <div class="ga-search-results" id="ga-search-results"></div>
-      </div>
-    </div>
+/* TOPBAR sticky — usando fixed + transform para evitar conflictos */
+#s-guia-alimentacion .ga-topbar {
+  position: sticky !important;
+  top: 44px !important;
+  z-index: 50;
+  background: rgba(250,248,243,.96);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: .5px solid rgba(0,0,0,.06);
+  padding: .65rem 1rem .45rem;
+  margin: 0 -1.25rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+.ga-topbar-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.ga-back {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--text-mute);
+  cursor: pointer;
+  padding: .3rem .3rem .3rem 0;
+  flex-shrink: 0;
+}
+.ga-back:hover { color: var(--text); }
+.ga-back-arr { font-size: 15px; line-height: 1; }
+.ga-back-text { white-space: nowrap; }
 
-    <div class="ga-toc-drawer" id="ga-toc-drawer">
-      <div class="ga-toc-backdrop" onclick="gaToggleToc()"></div>
-      <div class="ga-toc-content">
-        <div class="ga-toc-head">
-          <div class="ga-toc-title">Índice</div>
-          <button class="ga-toc-close" onclick="gaToggleToc()">×</button>
-        </div>
-        <div class="ga-toc-status">
-          <span id="ga-toc-progress-text">Empieza por aquí</span>
-        </div>
-        <nav class="ga-toc-nav" id="ga-toc-nav">
-          <div class="ga-toc-group-label">Lo esencial</div>
-<a href="#no-es-una-decision-aislada-es-un-sistema" class="ga-toc-h1" data-target="no-es-una-decision-aislada-es-un-sistema"><span class="ga-toc-text-wrap"><span class="ga-toc-text">No es una decisión aislada, es un sistema</span><span class="ga-toc-time">1 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#como-leer-esta-guia" class="ga-toc-h1" data-target="como-leer-esta-guia"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Cómo leer esta guía</span><span class="ga-toc-time">2 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#capitulo-1-antes-de-cambiar-tu-alimentacion-entiende-tu-cuer" class="ga-toc-h1" data-target="capitulo-1-antes-de-cambiar-tu-alimentacion-entiende-tu-cuer"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Capítulo 1 — Antes de cambiar tu alimentación, entiende tu cuerpo</span><span class="ga-toc-time">4 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#capitulo-3-como-gestionar-tu-alimentacion-en-la-vida-real" class="ga-toc-h1" data-target="capitulo-3-como-gestionar-tu-alimentacion-en-la-vida-real"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Capítulo 3 — Cómo gestionar tu alimentación en la vida real</span><span class="ga-toc-time">11 min</span></span><span class="ga-toc-check"></span></a>
-<div class="ga-toc-group-label">Profundizar</div>
-<a href="#capitulo-2-nutrientes-y-alimentos-como-tomar-buenas-decision" class="ga-toc-h1" data-target="capitulo-2-nutrientes-y-alimentos-como-tomar-buenas-decision"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Capítulo 2 — Nutrientes y alimentos: cómo tomar buenas decisiones</span><span class="ga-toc-time">15 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#capitulo-4-adherencia-lo-que-sostiene-los-resultados" class="ga-toc-h1" data-target="capitulo-4-adherencia-lo-que-sostiene-los-resultados"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Capítulo 4 — Adherencia: lo que sostiene los resultados</span><span class="ga-toc-time">12 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#capitulo-5-dormir-y-recuperar-el-motor-de-tu-progreso" class="ga-toc-h1" data-target="capitulo-5-dormir-y-recuperar-el-motor-de-tu-progreso"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Capítulo 5 — Dormir y recuperar: el motor de tu progreso</span><span class="ga-toc-time">5 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#capitulo-6-salud-digestiva-funcional" class="ga-toc-h1" data-target="capitulo-6-salud-digestiva-funcional"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Capítulo 6 — Salud digestiva funcional</span><span class="ga-toc-time">4 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#capitulo-7-suplementos-menos-ruido-mas-criterio" class="ga-toc-h1" data-target="capitulo-7-suplementos-menos-ruido-mas-criterio"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Capítulo 7 — Suplementos: menos ruido, más criterio</span><span class="ga-toc-time">6 min</span></span><span class="ga-toc-check"></span></a>
-<div class="ga-toc-group-label">Extra</div>
-<a href="#bonus-1-alcohol-la-variable-subestimada" class="ga-toc-h1" data-target="bonus-1-alcohol-la-variable-subestimada"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Bonus 1 — Alcohol: la variable subestimada</span><span class="ga-toc-time">4 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#bonus-2-ayuno-cuando-tiene-sentido" class="ga-toc-h1" data-target="bonus-2-ayuno-cuando-tiene-sentido"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Bonus 2 — Ayuno: cuándo tiene sentido</span><span class="ga-toc-time">3 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#bonus-3-como-leer-etiquetas-y-no-caer-en-marketing" class="ga-toc-h1" data-target="bonus-3-como-leer-etiquetas-y-no-caer-en-marketing"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Bonus 3 — Cómo leer etiquetas y no caer en marketing</span><span class="ga-toc-time">2 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#cierre-criterio-metodo-y-aplicacion" class="ga-toc-h1" data-target="cierre-criterio-metodo-y-aplicacion"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Cierre: Criterio, método y aplicación</span><span class="ga-toc-time">1 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#aviso-legal-y-uso-del-material" class="ga-toc-h1" data-target="aviso-legal-y-uso-del-material"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Aviso legal y uso del material</span><span class="ga-toc-time">1 min</span></span><span class="ga-toc-check"></span></a>
-<a href="#referencias-y-fuentes" class="ga-toc-h1" data-target="referencias-y-fuentes"><span class="ga-toc-text-wrap"><span class="ga-toc-text">Referencias y fuentes</span><span class="ga-toc-time">2 min</span></span><span class="ga-toc-check"></span></a>
-        </nav>
-      </div>
-    </div>
+.ga-progress-info {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .3px;
+}
+#ga-progress-num {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+}
 
-    <div class="ga-resume" id="ga-resume" style="display:none;">
-      <div class="ga-resume-eyebrow" id="ga-resume-eyebrow">Asistente de lectura</div>
+.ga-topbar-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 100px;
+  padding: 6px 12px;
+  color: var(--text);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.ga-topbar-btn:hover {
+  background: rgba(0,0,0,.04);
+  border-color: rgba(0,0,0,.18);
+}
+.ga-topbar-btn svg { width: 14px; height: 14px; }
+.ga-topbar-btn-label { white-space: nowrap; }
+.ga-topbar-btn-primary {
+  background: var(--text);
+  border-color: var(--text);
+  color: #fff;
+}
+.ga-topbar-btn-primary:hover {
+  background: #000;
+  border-color: #000;
+}
 
-      <div class="ga-resume-row">
-        <div class="ga-resume-body">
-          <div class="ga-resume-hi" id="ga-resume-hi">Continúa tu lectura</div>
-          <div class="ga-resume-next" id="ga-resume-next">
-            <div class="ga-resume-next-label">Siguiente</div>
-            <div class="ga-resume-next-title" id="ga-resume-next-title">—</div>
-            <div class="ga-resume-next-time" id="ga-resume-next-time"></div>
-          </div>
-        </div>
-        <div class="ga-resume-actions">
-          <button class="ga-resume-btn-primary" id="ga-resume-btn-primary" onclick="gaResume()" aria-label="Continuar donde quedé">
-            <span id="ga-resume-btn-primary-text">Continuar donde quedé</span><span class="arr">→</span>
-          </button>
-        </div>
-      </div>
+@media (max-width: 420px) {
+  .ga-topbar-btn-label { display: none; }
+  .ga-back-text { display: none; }
+  .ga-topbar-btn { padding: 7px 9px; }
+}
 
-      <div class="ga-resume-progress-block">
-        <div class="ga-resume-bar"><div class="ga-resume-bar-fill" id="ga-resume-bar-fill"></div></div>
-        <div class="ga-resume-progress-row">
-          <span class="ga-resume-pct" id="ga-resume-pct">0%</span>
-          <span class="ga-resume-pct-label">leído</span>
-          <span class="ga-resume-count" id="ga-resume-count">0 / 0 capítulos</span>
-        </div>
-      </div>
+.ga-progress-track {
+  margin-top: .55rem;
+  height: 3px;
+  background: rgba(0,0,0,.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ga-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--text);
+  border-radius: 2px;
+  transition: width .4s cubic-bezier(.16,.84,.3,1);
+}
 
-      <div class="ga-resume-tracks" id="ga-resume-tracks"></div>
+/* SEARCH — barra sticky bajo el header del centro de aprendizaje */
+/* !important para vencer al `#s-guia .ga-reader > *:not(.bg-halo){position:relative}` */
+#s-guia-alimentacion .ga-search-modal {
+  position: fixed !important;
+  top: 44px;          /* justo debajo del .cr-header (44px) */
+  left: 0; right: 0;
+  z-index: 300 !important;
+  padding: .75rem 1.25rem;
+  background: rgba(245,243,238,.96);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: .5px solid rgba(0,0,0,.08);
+  box-shadow: 0 10px 28px rgba(0,0,0,.10);
+  animation: gaSlideDown .22s cubic-bezier(.16,.84,.3,1);
+}
+.ga-search-backdrop {
+  /* click-outside opcional: clic en el resto de la pantalla cierra */
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  background: transparent;
+}
+.ga-search-panel {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  animation: none;
+}
+.ga-search-results {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-top: .5rem;
+}
+@keyframes gaSlideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes gaFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.ga-search-wrap {
+  display: flex; align-items: center; gap: 10px;
+  background: #fff;
+  border: .5px solid rgba(0,0,0,.1);
+  border-radius: 100px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.05);
+}
+.ga-search-icon { width: 18px; height: 18px; flex-shrink: 0; color: var(--text); }
+.ga-search-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-family: 'Inter', sans-serif; font-size: 14px;
+  color: var(--text); font-weight: 400;
+}
+.ga-search-input::placeholder { color: var(--text-mute); }
+.ga-search-clear {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(0,0,0,.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; cursor: pointer; line-height: 1;
+}
+.ga-search-results {
+  margin-top: .75rem;
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.ga-search-result {
+  background: #fff;
+  border: .5px solid rgba(0,0,0,.06);
+  border-radius: 10px;
+  padding: .7rem .9rem;
+  cursor: pointer;
+  transition: all .2s;
+}
+.ga-search-result:hover {
+  background: #f5f3ee;
+  border-color: rgba(0,0,0,.1);
+}
+.ga-search-result-title {
+  font-size: 13px; font-weight: 600;
+  color: var(--text); margin-bottom: 2px;
+}
+.ga-search-result-snippet {
+  font-size: 11.5px; color: var(--text-soft);
+  line-height: 1.45;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ga-search-result mark {
+  background: rgba(0,0,0,.08);
+  color: var(--text); padding: 0 2px; border-radius: 2px;
+  font-weight: 600;
+}
+.ga-search-empty {
+  text-align: center; padding: 1rem;
+  color: var(--text-mute); font-size: 13px;
+}
 
-      <details class="ga-resume-collapse" id="ga-resume-pending">
-        <summary class="ga-resume-collapse-head">
-          <span class="ga-resume-collapse-label">Por leer</span>
-          <span class="ga-resume-collapse-count" id="ga-resume-pending-count">0</span>
-          <span class="ga-resume-collapse-arr">⌄</span>
-        </summary>
-        <div class="ga-resume-collapse-body" id="ga-resume-pending-body"></div>
-      </details>
+/* TOC DRAWER */
+#s-guia-alimentacion .ga-toc-drawer {
+  position: fixed !important;
+  inset: 0;
+  z-index: 200 !important;
+  pointer-events: none; opacity: 0;
+  transition: opacity .25s;
+}
+.ga-toc-drawer.open { pointer-events: auto; opacity: 1; }
+.ga-toc-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.4);
+  backdrop-filter: blur(4px);
+}
+.ga-toc-content {
+  position: absolute; top: 0; right: 0;
+  width: 92%; max-width: 420px; height: 100%;
+  background: #faf8f3;
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .3s cubic-bezier(.16,.84,.3,1);
+  box-shadow: -8px 0 32px rgba(0,0,0,.15);
+}
+.ga-toc-drawer.open .ga-toc-content { transform: translateX(0); }
+.ga-toc-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: .5px solid rgba(0,0,0,.06);
+}
+.ga-toc-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px; letter-spacing: 1.2px;
+  color: var(--text);
+}
+.ga-toc-close {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(0,0,0,.05); border: none;
+  font-size: 20px; color: var(--text);
+  cursor: pointer; line-height: 1;
+}
+.ga-toc-status {
+  padding: .85rem 1.25rem;
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 700;
+  background: #f0eee7;
+  border-bottom: .5px solid rgba(0,0,0,.04);
+}
 
-      <details class="ga-resume-collapse" id="ga-resume-done">
-        <summary class="ga-resume-collapse-head">
-          <span class="ga-resume-collapse-label">Leídos</span>
-          <span class="ga-resume-collapse-count" id="ga-resume-done-count">0</span>
-          <span class="ga-resume-collapse-arr">⌄</span>
-        </summary>
-        <div class="ga-resume-collapse-body" id="ga-resume-done-body"></div>
-      </details>
-    </div>
+.ga-toc-tabs {
+  display: flex; gap: 4px;
+  padding: .75rem 1rem .25rem;
+  border-bottom: .5px solid rgba(0,0,0,.06);
+}
+.ga-toc-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: .6rem .75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-mute);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all .2s;
+}
+.ga-toc-tab.active {
+  background: var(--text);
+  color: #fff;
+}
 
-    <div class="ga-cover">
-      <div class="ga-cover-media" aria-hidden="true">
-        <img src="img/hero-guia.jpg" alt="" loading="eager" onerror="this.parentNode.style.display='none'">
-        <div class="ga-cover-shade"></div>
-      </div>
-      <div class="ga-cover-eyebrow">Biblioteca · Guía esencial</div>
-      <div class="ga-cover-title">GUÍA DE<br>ALIMENTACIÓN</div>
-      <div class="ga-cover-line"></div>
-      <div class="ga-cover-statement">Comer bien no es comer perfecto.<br><strong>Es tener un método.</strong></div>
-      <div class="ga-cover-meta">
-        <div class="ga-cover-meta-row"><strong>Mauro Morón</strong> · ISSA Certified Fitness and Nutrition Coach</div>
-      </div>
-      <div class="ga-cover-tip">
-        <div class="ga-cover-tip-label">Cómo aprovecharla</div>
-        <div class="ga-cover-tip-text">No tienes que leerla toda hoy. <strong>Un capítulo a la vez, sin prisa.</strong> Tu progreso se guarda solo.</div>
-      </div>
-    </div>
+.ga-toc-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: .5rem 0 2rem;
+}
+.ga-toc-h1 {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 1.25rem;
+  text-decoration: none; color: var(--text);
+  font-size: 14px; font-weight: 600; line-height: 1.3;
+  transition: background .15s;
+  border-left: 3px solid transparent;
+}
+.ga-toc-h1:hover { background: rgba(0,0,0,.03); }
+.ga-toc-h1.read {
+  color: var(--text-mute);
+  border-left-color: rgba(0,0,0,.15);
+}
+.ga-toc-h1.current {
+  background: #f0eee7;
+  border-left-color: var(--text);
+  color: var(--text);
+}
+.ga-toc-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px; letter-spacing: 1px;
+  color: var(--text-mute); flex-shrink: 0;
+  font-variant-numeric: tabular-nums; min-width: 22px;
+}
+.ga-toc-text-wrap { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.ga-toc-text { font-weight: 600; }
+.ga-toc-time {
+  font-size: 10.5px; font-weight: 500;
+  color: var(--text-mute);
+  letter-spacing: .3px;
+}
+.ga-toc-check {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,.15);
+  flex-shrink: 0; position: relative;
+  transition: all .2s;
+}
+.ga-toc-h1.read .ga-toc-check {
+  background: var(--text);
+  border-color: var(--text);
+}
+.ga-toc-h1.read .ga-toc-check::after {
+  content: '';
+  position: absolute; left: 5px; top: 3px;
+  width: 5px; height: 9px;
+  border-right: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(45deg);
+}
+.ga-toc-h2 {
+  display: block;
+  padding: 8px 1.25rem 8px 3.2rem;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 12.5px; line-height: 1.4;
+  transition: background .15s, color .15s;
+}
+.ga-toc-h2:hover { background: rgba(0,0,0,.03); color: var(--text); }
 
-    <!-- CONTENIDO COMPLETO -->
-<div class="ga-section" data-section="no-es-una-decision-aislada-es-un-sistema" data-level="1" data-track="1">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">1 min de lectura</span></div>
-<h1 class="ga-h1" id="no-es-una-decision-aislada-es-un-sistema">No es una decisión aislada, es un sistema</h1>
-</div>
-<p class="ga-p">Si comer bien fuera solo una cuestión de fuerza de voluntad, esta guía no existiría.</p>
-<p class="ga-p">La mayoría de las personas sabe qué significa “comer mejor”: priorizar comida real, reducir ultraprocesados, moderar excesos. Saberlo es necesario, pero lo que realmente marca la diferencia es poder sostenerlo en el tiempo.</p>
-<p class="ga-p">La evidencia científica muestra que lo que comes no depende de una única decisión aislada. Responde a la interacción de múltiples factores que actúan al mismo tiempo: la regulación hormonal, la calidad del sueño, el nivel de estrés, el entorno en el que vives, las emociones y los hábitos que has construido.</p>
-<p class="ga-p">Tu cerebro está diseñado para protegerte. Cuando detecta cansancio, amenaza o déficit de energía, activa respuestas automáticas: aumenta la grelina, disminuye la leptina y se eleva el cortisol. En términos simples: más hambre, menos saciedad y mayor impulso hacia alimentos rápidos y altamente gratificantes.</p>
-<p class="ga-p">En ese contexto, tomar decisiones conscientes sobre qué comer deja de ser una prioridad biológica. El cuerpo entra en piloto automático. A esto se suma un entorno moderno saturado de alimentos diseñados para ser baratos, rápidos, altamente gratificantes e inmediatos.</p>
-<p class="ga-p">Comer bien no es solo biología, ni solo motivación, ni solo disciplina; es un sistema.</p>
-<p class="ga-p">Y cuando ese sistema no está ordenado, incluso las mejores intenciones terminan fallando.</p>
-<button class="ga-mark-read" data-mark="no-es-una-decision-aislada-es-un-sistema"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="como-leer-esta-guia" data-level="1" data-track="1">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">2 min de lectura</span></div>
-<h1 class="ga-h1" id="como-leer-esta-guia">Cómo leer esta guía</h1>
-</div>
-<h3 class="ga-h3" id="por-que-existe-esta-guia">Por qué existe esta guía</h3>
-<p class="ga-p">Esta guía existe porque saber qué “deberías” hacer no garantiza que puedas sostenerlo en tu vida real.</p>
-<p class="ga-p">La mayoría de personas no falla por falta de información ni de esfuerzo, sino porque intenta aplicar ideas correctas en contextos que no las soportan. Esta guía nace para cerrar esa brecha: transformar conocimiento en decisiones que se puedan mantener en el tiempo.</p>
-<p class="ga-p">No está pensada para leerse rápido ni para consumirse de una sola vez. Está diseñada para que la entiendas, la conectes con tu día a día y la uses como referencia cuando tengas que decidir. Leerla con calma y volver a ella cuando algo se desordene es parte del proceso.</p>
-<h3 class="ga-h3" id="el-marco-que-define-los-resultados">El marco que define los resultados</h3>
-<p class="ga-p">Entrenar ocupa una o dos horas de tu día: alrededor del 5–8% de tu tiempo diario.</p>
-<p class="ga-p">El resto del resultado se define en el otro 92–95%: cómo te mueves el resto del día, cómo comes, cómo descansas y cuánto sedentarismo combates.</p>
-<p class="ga-p">El progreso no depende de una acción aislada, sino de una ecuación completa, que incluye: actividad física, alimentación y descanso. Estas no compiten entre sí; trabajan en conjunto. Cuando una falla, el resultado se diluye. Cuando se alinean con lógica y constancia, el cuerpo responde.</p>
-<p class="ga-p">Por eso, el foco de esta guía no es solo decirte qué hacer, sino ayudarte a entender por qué hacerlo. Entender es lo que permite sostener. Y sostener es lo que transforma.</p>
-<h3 class="ga-h3" id="desde-donde-te-hablo">Desde dónde te hablo</h3>
-<p class="ga-p">Trabajo como coach en entrenamiento y nutrición, certificado por la International Sports Sciences Association (ISSA), y acompaño a personas con trabajo, familia, estudios, viajes y agendas exigentes, que aun así quieren sentirse mejor y relacionarse de forma más inteligente con la comida.</p>
-<p class="ga-p">Después de ver los mismos errores repetirse —no por falta de ganas, sino por falta de criterio y estructura— decidí reunir en un solo lugar lo esencial: lo que funciona y lo que se puede sostener en la vida real.</p>
-<p class="ga-p">Esta guía no nace de tendencias ni de promesas rápidas. Nace de ciencia aplicada, explicada con claridad y pensada para usarse.</p>
-<h3 class="ga-h3" id="que-puedes-esperar-y-que-no">Qué puedes esperar (y qué no)</h3>
-<p class="ga-p">Aquí vas a entender cómo funciona tu cuerpo, cómo ajustar tu alimentación según tu objetivo y cómo tomar decisiones coherentes cuando el contexto no es ideal.</p>
-<p class="ga-p">No encontrarás reglas rígidas, menús cerrados ni motivación vacía. Encontrarás lógica fisiológica, estructura y herramientas prácticas para gestionar tu alimentación con criterio.</p>
-<p class="ga-p">El objetivo no es que comas perfecto. Es que sepas qué hacer, por qué hacerlo y cómo adaptarlo a tu realidad.</p>
-<p class="ga-p">Con esto claro, podemos avanzar.</p>
-<button class="ga-mark-read" data-mark="como-leer-esta-guia"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="capitulo-1-antes-de-cambiar-tu-alimentacion-entiende-tu-cuer" data-level="1" data-track="1">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">4 min de lectura</span></div>
-<h1 class="ga-h1" id="capitulo-1-antes-de-cambiar-tu-alimentacion-entiende-tu-cuer">Capítulo 1 — Antes de cambiar tu alimentación, entiende tu cuerpo</h1>
-</div>
-<h2 class="ga-h2" id="11-como-tu-cuerpo-usa-los-alimentos">1.1. Cómo tu cuerpo usa los alimentos</h2>
-<h3 class="ga-h3" id="metabolismo-explicado-de-forma-simple">Metabolismo explicado de forma simple</h3>
-<p class="ga-p">Todo lo que haces —pensar, moverte, entrenar, concentrarte o dormir— requiere energía.</p>
-<p class="ga-p">En el cuerpo, esa energía se expresa en una sola moneda: ATP (Adenosín trifosfato).</p>
-<p class="ga-p">No necesitas memorizar procesos bioquímicos para comer mejor. Lo importante es entender qué rol cumple la comida en tu funcionamiento diario.</p>
-<p class="ga-p">Comer no sirve solo para “tener energía” ni es un acto únicamente placentero. Sirve para que el cuerpo funcione bien: pensar con claridad, sostener el movimiento, entrenar, recuperarse y regular el hambre a lo largo del día.</p>
-<p class="ga-p">Cuando comes, los alimentos cumplen tres funciones fundamentales:</p>
-<ul class="ga-list"><li><strong>Proveer energía: </strong>Los carbohidratos y las grasas se transforman en glucosa y ácidos grasos, que el cuerpo utiliza como combustible. Cuando la energía es insuficiente, baja el rendimiento y el hambre se vuelve desordenada. No es falta de disciplina; es falta de combustible.</li></ul>
-<ul class="ga-list"><li><strong>Construir y mantener tejido: </strong>Las proteínas se descomponen en aminoácidos, necesarios para reparar músculo, mantener órganos y producir enzimas y estructuras celulares. Si faltan aminoácidos, el cuerpo no puede adaptarse correctamente, incluso con calorías suficientes.</li></ul>
-<ul class="ga-list"><li><strong>Regular funciones clave: </strong>Los alimentos participan en la producción hormonal, las señales de hambre y saciedad y la integración de múltiples sistemas. Por eso no basta con “comer calorías”: la calidad y el tipo de alimento importan.</li></ul>
-<h3 class="ga-h3" id="entonces-que-es-el-metabolismo">Entonces, ¿qué es el metabolismo?</h3>
-<p class="ga-p">El metabolismo es el conjunto de procesos que permiten que el cuerpo obtenga energía, mantenga su estructura y se regule internamente.</p>
-<p class="ga-p">No es algo que se rapido o lento, ni un rasgo fijo. Aunque existen diferencias entre personas, el metabolismo responde principalmente a hábitos repetidos: cómo comes, cómo te mueves, cómo duermes y cómo manejas el estrés.</p>
-<p class="ga-p">Funciona como un sistema adaptable. Entender esto cambia la relación con la comida: deja de ser una lucha contra tu cuerpo y pasa a ser una estrategia a favor de él.</p>
-<h2 class="ga-h2" id="12-el-marco-que-explica-tus-resultados-fisicos">1.2. El marco que explica tus resultados físicos</h2>
-<p class="ga-p">Una vez entiendes para qué usa tu cuerpo los alimentos, el siguiente paso es entender cuánta energía necesita.</p>
-<p class="ga-p">Aquí se define el resultado físico.</p>
-<p class="ga-p">No lo determina el tipo de dieta, el horario ni los suplementos. Lo define la relación entre energía que entra y energía que sale.</p>
-<p class="ga-p">Este es el principio base. Es simple, pero no negociable.</p>
-<p class="ga-p">Tu cuerpo está en equilibrio energético cuando la energía que consumes es igual a la que gastas. Ese gasto incluye funciones básicas, movimiento diario, entrenamiento y recuperación. La energía mínima necesaria en reposo se conoce como Tasa Metabólica Basal; a partir de ahí se suma todo lo que haces durante el día.</p>
-<p class="ga-p">Desde este marco solo existen tres escenarios energéticos:</p>
-<ul class="ga-list"><li>Comer menos de lo que gastas</li></ul>
-<ul class="ga-list"><li>Comer lo mismo que gastas</li></ul>
-<ul class="ga-list"><li>Comer más de lo que gastas</li></ul>
-<p class="ga-p">De ahí se explican los cuatro posibles resultados corporales: déficit, superávit, recomposición y mantenimiento.</p>
-<p class="ga-caption">Los cuatro escenarios energéticos</p>
-<h3 class="ga-h3" id="deficit-energetico-prioriza-perdida-de-grasa">Déficit energético (prioriza pérdida de grasa)</h3>
-<p class="ga-p">Ocurre cuando ingieres menos energía de la que gastas. El cuerpo utiliza reservas, principalmente grasa corporal.</p>
-<p class="ga-p">Déficit no es “comer poco”. Déficits mal planteados generan fatiga, hambre desordenada, bajo rendimiento y pérdida muscular.</p>
-<p class="ga-p">Por eso se utilizan déficits moderados, generalmente del 10–20% por debajo del gasto energético total.</p>
-<p class="ga-p">El objetivo no es aguantar hambre, sino usar grasa como combustible sin comprometer energía ni adherencia.</p>
-<h3 class="ga-h3" id="mantenimiento-energetico-prioriza-estabilidad-y-control">Mantenimiento energético (prioriza estabilidad y control)</h3>
-<p class="ga-p">Cuando la ingesta cubre el gasto, el peso suele mantenerse estable, con mejor energía y recuperación.</p>
-<p class="ga-p">Mantenimiento no es estancamiento: con entrenamiento de fuerza y suficiente proteína, la composición corporal puede mejorar de forma gradual.</p>
-<p class="ga-p">Es un estado útil para consolidar hábitos y preparar el cuerpo para una siguiente fase.</p>
-<h3 class="ga-h3" id="recomposicion-corporal-pierdes-grasa-y-ganas-musculo">Recomposición corporal (pierdes grasa y ganas músculo)</h3>
-<p class="ga-p">La recomposición ocurre cerca del equilibrio energético, con déficits o superávits leves (5–10%), según el contexto.</p>
-<p class="ga-p">El progreso no siempre se refleja en el peso, sino en fuerza, rendimiento, apariencia y estabilidad del hambre.</p>
-<h3 class="ga-h3" id="superavit-energetico-prioriza-ganancia-muscular">Superávit energético (prioriza ganancia muscular)</h3>
-<p class="ga-p">Cuando comes más de lo que gastas, se facilita la ganancia muscular, siempre que exista un estímulo de fuerza adecuado.</p>
-<p class="ga-p">Superávits excesivos no aceleran el progreso y sí aumentan grasa innecesaria y desorden del apetito.</p>
-<p class="ga-p">Por eso se utilizan superávits moderados, generalmente del 10–15%.</p>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">A partir de hoy</div><ul class="ga-takeaway-list ga-takeaway-list-num"><li>Define un objetivo principal: perder grasa, recomponer, mantener o priorizar ganancia muscular.</li><li>Alinea tus decisiones diarias con ese objetivo, cuidando alimentos y proporciones.</li><li>Evalúa el progreso por tendencias de semanas (energía, rendimiento, peso), no por un día aislado.</li></ul></div></div>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">Ideas clave</div><ul class="ga-takeaway-list"><li>Comer mejor no depende de motivación, sino de estructura.</li><li>Tu cuerpo responde a hábitos repetidos, no a esfuerzos aislados.</li><li>El resultado físico se define por el balance entre lo que comes y lo que gastas.</li></ul></div></div>
-<button class="ga-mark-read" data-mark="capitulo-1-antes-de-cambiar-tu-alimentacion-entiende-tu-cuer"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="capitulo-2-nutrientes-y-alimentos-como-tomar-buenas-decision" data-level="1" data-track="2">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">15 min de lectura</span></div>
-<h1 class="ga-h1" id="capitulo-2-nutrientes-y-alimentos-como-tomar-buenas-decision">Capítulo 2 — Nutrientes y alimentos: cómo tomar buenas decisiones</h1>
-</div>
-<h2 class="ga-h2" id="21-macronutrientes">2.1. Macronutrientes</h2>
-<h3 class="ga-h3" id="que-son-y-por-que-importan">Qué son y por qué importan</h3>
-<p class="ga-p">Los macronutrientes son los nutrientes que el cuerpo necesita en mayor cantidad porque cumplen tres funciones esenciales: aportar energía, construir estructura y regular el organismo. Se dividen en tres grupos: proteínas, carbohidratos y grasas.</p>
-<p class="ga-p">Cada uno cumple un rol distinto y complementario. No compiten entre sí ni deberían eliminarse. El problema no es consumirlos, sino no entender cuándo y cómo usarlos según el contexto y el objetivo.</p>
-<p class="ga-p">Es importante aclarar algo desde el inicio: los alimentos no son “puros”. La mayoría aporta más de un macronutriente al mismo tiempo. Por eso, cuando hablamos de fuentes de proteína, fuentes de carbohidratos o fuentes de grasa, nos referimos a alimentos en los que uno de ellos predomina y cumple un rol principal dentro de la comida.</p>
-<p class="ga-p">Más adelante aprenderás a ajustar proporciones. Por ahora, el foco es entender para qué sirve cada macronutriente y cómo elegir alimentos con criterio.</p>
-<h3 class="ga-h3" id="211-proteinas-adaptacion-estructura-y-saciedad">2.1.1. Proteínas — Adaptación, estructura y saciedad</h3>
-<p class="ga-p">Las proteínas cumplen un rol central en el cuerpo humano. A diferencia de los carbohidratos y las grasas, su función principal no es aportar energía, sino permitir que el cuerpo se construya, se repare y se adapte al estrés del entrenamiento y de la vida diaria.</p>
-<p class="ga-p">Cuando consumes proteína, el cuerpo la descompone en aminoácidos, las piezas básicas con las que se mantienen los tejidos, se repara músculo, se producen enzimas, hormonas y neurotransmisores, y se sostiene la función inmune.</p>
-<p class="ga-p">Si el cuerpo no dispone de suficientes aminoácidos, no puede adaptarse correctamente, incluso cuando la ingesta calórica total es adecuada.</p>
-<p class="ga-p"><strong>Aminoácidos: lo esencial que debes entender</strong></p>
-<p class="ga-p">Desde un punto de vista práctico, los aminoácidos se dividen en esenciales y no esenciales.</p>
-<p class="ga-p">Los esenciales no pueden ser producidos por el cuerpo y deben obtenerse a través de la alimentación. Los no esenciales pueden sintetizarse a partir de otros compuestos.</p>
-<p class="ga-p">Los aminoácidos esenciales son clave para la reparación muscular y la respuesta al entrenamiento. Por esta razón, no todas las fuentes de proteína generan el mismo efecto, incluso cuando aportan cantidades similares en gramos. Importa cuánto comes y qué tan bien esa proteína aporta los aminoácidos que el cuerpo necesita.</p>
-<p class="ga-p"><strong>Aminoácidos y suplementos</strong></p>
-<p class="ga-p">Los aminoácidos no son suplementos mágicos. Son simplemente las piezas que forman la proteína.</p>
-<p class="ga-p">Cuando consumes alimentos ricos en proteína de buena calidad, ya estás aportando todos los aminoácidos que tu cuerpo necesita en proporciones adecuadas.</p>
-<p class="ga-p">En personas que cubren sus requerimientos de proteína a través de alimentos reales, no es necesario consumir aminoácidos aislados para mejorar la recuperación o el progreso físico.</p>
-<p class="ga-p"><strong>Por qué la proteína es prioritaria en personas activas</strong></p>
-<p class="ga-p">Una ingesta adecuada de proteína favorece la recuperación, protege la masa muscular, mejora la respuesta al entrenamiento y contribuye de forma clara a la saciedad.</p>
-<p class="ga-p">Cuando la proteína es insuficiente, suelen aparecer señales comunes: hambre persistente, recuperación lenta, pérdida de masa muscular y estancamiento, incluso en personas que sienten que “comen bien”.</p>
-<p class="ga-p">La proteína es el macronutriente que más contribuye a la saciedad, lo que facilita el control del apetito y la adherencia, especialmente en personas con días largos y exigentes.</p>
-<p class="ga-p"><strong>Cuánta proteína necesitas y cómo elegir fuentes</strong></p>
-<p class="ga-p">No existe una cifra única válida para todas las personas. Sin embargo, para la mayoría de personas activas, un rango cercano a 1,6–2,2 gramos por kilo de peso corporal suele ser funcional, ajustándose según objetivo y contexto.</p>
-<p class="ga-p">Al elegir alimentos, conviene priorizar aquellos con buen contenido proteico, perfil adecuado de aminoácidos, buena digestibilidad y bajo nivel de procesamiento.</p>
-<p class="ga-p"><strong>En la práctica: fuentes que suelen funcionar mejor</strong></p>
-<p class="ga-p">Más allá de teorías, en el día a día con personas activas, estos alimentos suelen facilitar una ingesta adecuada de proteína sin complicar la alimentación.</p>
-<p class="ga-p"><strong>Fuentes de origen animal:</strong></p>
-<p class="ga-p">Huevos; pollo y pavo; carnes magras; pescados blancos y pescados grasos como salmón, sardina y atún; mariscos; yogurt natural o griego; quesos frescos poco procesados.</p>
-<p class="ga-p">Estas fuentes aportan proteínas completas, con buena disponibilidad de aminoácidos esenciales.</p>
-<p class="ga-p"><strong>Fuentes de origen vegetal:</strong></p>
-<p class="ga-p">Lentejas, garbanzos, fríjoles, arvejas, soya y derivados mínimamente procesados, quinoa, frutos secos y semillas.</p>
-<p class="ga-p">En el caso de las proteínas vegetales, no todas contienen todos los aminoácidos esenciales en cantidades suficientes. Por eso, la variedad a lo largo del día es lo que permite cubrir el perfil completo: legumbres, cereales, frutos secos, semillas y derivados de soya rotando entre comidas.</p>
-<p class="ga-p">No es necesario combinarlos en el mismo plato (lentejas con arroz, garbanzos con pan). El cuerpo dispone de un fondo de aminoácidos que se completa con lo que comes en el día, no en una sola comida. Lo que importa es la variedad sostenida, no la combinación exacta en cada comida.</p>
-<h3 class="ga-h3" id="212-carbohidratos-energia-estable">2.1.2. Carbohidratos — Energía estable</h3>
-<p class="ga-p">Los carbohidratos tienen como función principal proveer energía. Al consumirlos, el cuerpo los transforma en glucosa, el combustible preferido del cerebro, del sistema nervioso y del músculo durante el movimiento y el entrenamiento.</p>
-<p class="ga-p">Parte de esa glucosa se utiliza de forma inmediata y otra parte se almacena como glucógeno en el músculo y el hígado para ser utilizada más adelante. Por esta razón, para la mayoría de personas activas, los carbohidratos no son opcionales: son una herramienta clave para rendir y recuperarte.</p>
-<p class="ga-p">La presencia de glucosa en sangre no es negativa. Se vuelve problemática cuando ocurre de forma abrupta y frecuente a partir de alimentos ultraprocesados.</p>
-<p class="ga-p"><strong>Absorción y energía</strong></p>
-<p class="ga-p">Más que clasificarlos como “buenos” o “malos”, conviene entender cómo se absorben.</p>
-<p class="ga-p">Los carbohidratos de absorción más lenta tienden a generar energía más estable y mayor saciedad. Los de absorción rápida aportan energía inmediata, pero son más fáciles de consumir en exceso.</p>
-<p class="ga-p">En el día a día, suele ser más conveniente priorizar carbohidratos de absorción gradual.</p>
-<p class="ga-p"><strong>Cuántos carbohidratos necesitas</strong></p>
-<p class="ga-p">Las necesidades varían según el nivel de actividad y el objetivo. En personas activas, una proporción cercana al 35–40% de las calorías diarias suele funcionar bien como punto de partida, ajustando según rendimiento, hambre y estabilidad energética.</p>
-<p class="ga-p">Para la base de la alimentación, conviene priorizar carbohidratos poco procesados, ricos en fibra y micronutrientes, como verduras, frutas enteras, legumbres, tubérculos y cereales poco procesados.</p>
-<p class="ga-p"><strong>Ultraprocesados y frecuencia</strong></p>
-<p class="ga-p">Gaseosas, dulces, panadería industrial y snacks no son el problema por sí mismos. El problema es la frecuencia con la que aparecen.</p>
-<p class="ga-p">Cuando pasan de ser una excepción consciente a convertirse en la base habitual de la alimentación comprometen la salud. No se trata de prohibirlos, sino de ponerlos en su lugar.</p>
-<p class="ga-p"><strong>En la práctica: fuentes que suelen funcionar mejor</strong></p>
-<p class="ga-p">Por su contenido de fibra y estructura, estos carbohidratos se absorben de forma más gradual, lo que se traduce en energía estable y mejor regulación del apetito.</p>
-<ul class="ga-list"><li><strong>Verduras: </strong>Espinaca, brócoli, zanahoria, calabacín, coliflor, pimentón, tomate, lechuga, acelga, repollo, berenjena, espárragos, champiñones.</li></ul>
-<ul class="ga-list"><li><strong>Frutas: </strong>Manzana, pera, naranja, frutos rojos, mango, piña, kiwi, ciruela, durazno, papaya, granada.</li></ul>
-<ul class="ga-list"><li><strong>Legumbres: </strong>Lentejas, garbanzos, fríjoles, arvejas, habas, soya y derivados mínimamente procesados (como tofu).</li></ul>
-<ul class="ga-list"><li><strong>Tubérculos: </strong>Papa, batata, yuca, ñame, arracacha, remolacha.</li></ul>
-<ul class="ga-list"><li><strong>Cereales y granos: </strong>Arroz (especialmente integral), avena, quinoa, maíz en formas poco procesadas.</li></ul>
-<p class="ga-p">En general, los carbohidratos que vienen de alimentos enteros, con fibra y mínima industrialización, tienden a absorberse de forma más gradual y a favorecer una energía más estable.</p>
-<h3 class="ga-h3" id="213-grasas-regulacion-y-saciedad">2.1.3. Grasas — Regulación y saciedad</h3>
-<p class="ga-p">Las grasas son uno de los macronutrientes esenciales y cumplen funciones que van mucho más allá de aportar energía. El cuerpo las necesita para mantener su equilibrio interno y sostener procesos regulatorios clave.</p>
-<p class="ga-p">Cuando consumes grasa, el organismo la transforma en ácidos grasos, que participan en la producción hormonal, la estructura de las membranas celulares, la función del sistema nervioso y la absorción de vitaminas liposolubles A, D, E y K.</p>
-<p class="ga-p">A diferencia de los carbohidratos, las grasas aportan energía de forma más lenta y sostenida. No están diseñadas para esfuerzos intensos inmediatos.</p>
-<p class="ga-p"><strong>Un error común: confundir grasa con grasa corporal</strong></p>
-<p class="ga-p">Consumir grasa no equivale automáticamente a ganar grasa corporal.</p>
-<p class="ga-p">El aumento de grasa depende del balance energético total, no de un solo macronutriente.</p>
-<p class="ga-p">En la práctica, los problemas aparecen por exceso calórico sostenido, mala calidad de las grasas y su combinación frecuente con alimentos ultraprocesados, no por el consumo de grasa en sí.</p>
-<p class="ga-p"><strong>Tipos de grasa: una distinción útil (sin complicarlo)</strong></p>
-<p class="ga-p">No necesitas memorizar bioquímica, pero sí entender las grasas con criterio.</p>
-<p class="ga-p">Las grasas insaturadas suelen funcionar mejor como base de la alimentación. Incluyen las monoinsaturadas y poliinsaturadas, participan en la regulación hormonal, la salud cardiovascular y la función celular, y se encuentran principalmente en alimentos poco procesados como aceite de oliva, aguacate, frutos secos, semillas y pescados grasos.</p>
-<p class="ga-p">Las grasas saturadas no son tóxicas ni deben eliminarse, pero sí moderarse. Cumplen funciones estructurales y hormonales, aunque en exceso pueden desplazar grasas más favorables. Aparecen en carnes, lácteos enteros, mantequilla y yema de huevo. La clave no es evitarlas, sino mantenerlas en proporciones adecuadas.</p>
-<p class="ga-p">Las grasas trans conviene evitarlas de forma sistemática. No cumplen una función fisiológica útil y se asocian con efectos negativos sobre la salud metabólica y cardiovascular. Se encuentran principalmente en productos ultraprocesados, panadería industrial, frituras y snacks empaquetados.</p>
-<p class="ga-p"><strong>Cuánta grasa necesitas y cómo elegir mejores fuentes</strong></p>
-<p class="ga-p">Las necesidades de grasa varían según el nivel de actividad, el tipo de entrenamiento y cómo el cuerpo regula el apetito y la energía.</p>
-<p class="ga-p">Las grasas cumplen un rol regulador clave. Cuando su aporte es demasiado bajo, el sistema suele volverse inestable: aumenta el hambre, disminuye la saciedad y se vuelve difícil sostener una alimentación ordenada, incluso con calorías suficientes. No es falta de voluntad, es señalización fisiológica.</p>
-<p class="ga-p">Como referencia general, una proporción cercana al 25–30% de la energía diaria proveniente de grasas suele funcionar bien en la mayoría de personas activas. Este rango permite sostener regulación hormonal, saciedad y absorción de vitaminas.</p>
-<p class="ga-p"><strong>Grasas ultraprocesadas y frecuencia real</strong></p>
-<p class="ga-p">Frituras industriales, productos de panadería industrial, snacks empaquetados y comidas rápidas suelen consumirse fácilmente en exceso, aportar poca saciedad y venir combinadas con azúcares y harinas refinadas.</p>
-<p class="ga-p">Un consumo ocasional es compatible con una alimentación saludable; un consumo frecuente desordena el sistema. No se trata de prohibirlas, sino de ubicarlas correctamente dentro del conjunto de la dieta.</p>
-<p class="ga-p"><strong>En la práctica: fuentes que suelen funcionar mejor</strong></p>
-<p class="ga-p">Para la base de tu alimentación, conviene priorizar grasas que provengan de alimentos naturales, estén poco procesadas y aporten beneficios regulatorios y metabólicos.</p>
-<p class="ga-p">En la práctica, suelen funcionar bien:</p>
-<p class="ga-p"><strong>Fuentes de origen vegetal:</strong></p>
-<p class="ga-p">Aceite de oliva extra virgen (preferiblemente en crudo o a baja temperatura), aguacate, frutos secos como almendras, nueces, maní, pistachos y semillas (como chía, linaza, ajonjolí y semillas de calabaza).</p>
-<p class="ga-p">Estas fuentes aportan principalmente grasas insaturadas, asociadas a mejor regulación hormonal, salud cardiovascular y mayor estabilidad del apetito cuando se consumen en porciones adecuadas.</p>
-<p class="ga-p"><strong>Fuentes de origen animal:</strong></p>
-<p class="ga-p">Pescados grasos (como salmón, sardina, caballa y atún), huevo, lácteos naturales poco procesados (como yogurt natural, yogurt griego y algunos quesos frescos.</p>
-<p class="ga-p">Estas opciones aportan ácidos grasos esenciales, vitaminas liposolubles y compuestos que el cuerpo utiliza para la función celular, la salud metabólica y la regulación hormonal.</p>
-<h2 class="ga-h2" id="22-micronutrientes">2.2. Micronutrientes</h2>
-<h3 class="ga-h3" id="vitaminas-y-minerales-el-segundo-plano-que-sostiene-el-siste">Vitaminas y minerales: el segundo plano que sostiene el sistema</h3>
-<p class="ga-p">Los micronutrientes son vitaminas y minerales que el cuerpo necesita en pequeñas cantidades, pero que cumplen funciones críticas. No aportan energía directa, pero permiten que todos los procesos metabólicos, hormonales y estructurales funcionen correctamente.</p>
-<p class="ga-p">Una persona puede cubrir calorías y proteína, entrenar de forma consistente y aun así rendir mal si su aporte de micronutrientes es insuficiente. Por eso operan en segundo plano: no se notan cuando están presentes, pero su ausencia afecta la energía, la recuperación y la salud general.</p>
-<p class="ga-p"><strong>Vitaminas y minerales: qué hacen realmente</strong></p>
-<p class="ga-p">Las vitaminas son compuestos orgánicos que facilitan reacciones metabólicas, la producción de energía, la síntesis hormonal y la función inmune. El cuerpo no las produce en cantidades suficientes, por lo que deben obtenerse a través de la alimentación.</p>
-<p class="ga-p">Los minerales cumplen funciones estructurales y eléctricas. Participan en la contracción muscular, la transmisión nerviosa, el equilibrio de líquidos y la salud ósea, formando parte directa de tejidos y sistemas del organismo.</p>
-<p class="ga-p">En conjunto, vitaminas y minerales intervienen en prácticamente todos los procesos relevantes para el rendimiento físico y la salud.</p>
-<p class="ga-p"><strong>Micronutrientes en la práctica</strong></p>
-<p class="ga-p">No necesitas memorizar listas ni dosis. Necesitas variedad.</p>
-<p class="ga-p">Una alimentación que incluya alimentos poco procesados, frutas y verduras de distintos colores y fuentes variadas de origen vegetal y animal suele cubrir adecuadamente los requerimientos micronutricionales.</p>
-<p class="ga-p">La diversidad alimentaria es la estrategia más simple y efectiva.</p>
-<p class="ga-p">Hay algunos micronutrientes que son de mayor impacto en personas activas:</p>
-<ul class="ga-list"><li><strong>Hierro (mineral): </strong>transporte de oxígeno y producción de energía (carnes, legumbres, verduras de hoja verde).</li></ul>
-<ul class="ga-list"><li><strong>Magnesio (mineral): </strong>función muscular, sistema nervioso y recuperación (frutos secos, semillas, legumbres, verduras).</li></ul>
-<ul class="ga-list"><li><strong>Calcio (mineral): </strong>contracción muscular y salud ósea (lácteos, pescados, verduras verdes).</li></ul>
-<ul class="ga-list"><li><strong>Potasio (mineral): </strong>equilibrio de líquidos y función muscular (frutas, verduras, tubérculos).</li></ul>
-<ul class="ga-list"><li><strong>Zinc (mineral): </strong>sistema inmune y procesos de recuperación (carnes, semillas, legumbres).</li></ul>
-<ul class="ga-list"><li><strong>Vitaminas del complejo B: </strong>metabolismo energético (cereales, legumbres, carnes, huevos).</li></ul>
-<ul class="ga-list"><li><strong>Vitamina D: </strong>función muscular, ósea e inmune (exposición solar, pescados, huevos, lácteos).</li></ul>
-<ul class="ga-list"><li><strong>Vitamina C: </strong>soporte inmunológico (frutas cítricas, frutos rojos, kiwi, pimentón).</li></ul>
-<ul class="ga-list"><li><strong>Vitamina K: </strong>salud ósea y correcta coagulación sanguínea (verduras de hoja verde como espinaca, acelga y brócoli).</li></ul>
-<p class="ga-p"><strong>El error común: pensar que los suplementos reemplazan la alimentación</strong></p>
-<p class="ga-p">Las deficiencias de micronutrientes se desarrollan de forma progresiva y suelen manifestarse como cansancio persistente, mala recuperación o bajo rendimiento.</p>
-<p class="ga-p">Los suplementos pueden ser útiles en contextos específicos, pero no sustituyen una alimentación diversa. La mayoría de los micronutrientes se absorben mejor a partir de alimentos completos, acompañados de fibra y otros compuestos bioactivos.</p>
-<p class="ga-p">La prioridad es construir una base sólida, no depender de suplementos.</p>
-<h2 class="ga-h2" id="23-hidratacion">2.3. Hidratación</h2>
-<h3 class="ga-h3" id="agua-minerales-y-equilibrio">Agua, minerales y equilibrio</h3>
-<p class="ga-p">Hidratarse no es solo beber agua. El estado real de hidratación depende del equilibrio entre líquidos y minerales, especialmente sodio, potasio y magnesio (electrolitos), que permiten que el agua se distribuya correctamente y se mantenga dentro de las células.</p>
-<p class="ga-p">En personas sanas con una alimentación variada, este equilibrio suele lograrse de forma natural a través del consumo de agua y alimentos reales, sin necesidad de productos especiales.</p>
-<p class="ga-p"><strong>Cuánta agua necesitas</strong></p>
-<p class="ga-p">Las necesidades de hidratación varían según el tamaño corporal, el nivel de actividad, el clima y la carga diaria.</p>
-<p class="ga-p">Como referencia general de <strong>ingesta total</strong> (incluyendo agua, bebidas y agua contenida en alimentos), en hombres suelen situarse alrededor de 3,0–3,7 litros diarios y en mujeres alrededor de 2,0–2,7 litros diarios. De ese total, aproximadamente un 20–30% suele venir de los alimentos, por lo que el agua a beber se ubica en rangos algo menores.</p>
-<p class="ga-p">Estas cifras son orientativas, no objetivos rígidos.</p>
-<p class="ga-p"><strong>Ajustes según el contexto</strong></p>
-<p class="ga-p">Las necesidades aumentan cuando hay mayor volumen de entrenamiento, sudoración elevada, altas temperaturas, consumo de alcohol o jornadas prolongadas.</p>
-<p class="ga-p">En estos escenarios puede ser necesario no solo beber más agua, sino prestar atención al aporte de electrolitos, especialmente si aparecen señales como fatiga persistente, dolor de cabeza o caída del rendimiento a pesar de ingerir líquidos.</p>
-<p class="ga-p"><strong>Señales prácticas de una hidratación adecuada</strong></p>
-<p class="ga-p">Más útil que contar litros es observar la respuesta del cuerpo.</p>
-<p class="ga-p">Orina de color claro, energía relativamente estable, baja sensación de sed y buen rendimiento físico y mental suelen indicar una hidratación adecuada.</p>
-<p class="ga-p">Cuando estas señales se mantienen de forma consistente, la hidratación suele estar bien resuelta sin necesidad de cálculos exactos.</p>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">A partir de hoy</div><ul class="ga-takeaway-list ga-takeaway-list-num"><li>Elige alimentos por su función.</li><li>Usa alimentos poco procesados o sin procesar como base.</li><li>Asegura proteína en tus comidas principales.</li><li>Incluye carbohidratos y grasas según tu contexto.</li><li>Prioriza constancia y criterio antes que perfección.</li><li>La variedad de alimentos es la mejor estrategia micronutricional.</li></ul></div></div>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">Ideas clave</div><ul class="ga-takeaway-list"><li>Comer es entender cómo funcionan los nutrientes y elegir con criterio.</li><li>Los macronutrientes no compiten: proteína, carbohidratos y grasas se complementan.</li><li>Priorizar proteína facilita la recuperación, la saciedad y el progreso.</li><li>Los carbohidratos bien elegidos aportan energía estable y mejor rendimiento.</li><li>Las grasas de buena calidad sostienen la regulación hormonal, la saciedad y la salud metabólica.</li><li>Los micronutrientes permiten que todo el sistema funcione.</li><li>La hidratación depende del agua y del equilibrio de minerales.</li></ul></div></div>
-<button class="ga-mark-read" data-mark="capitulo-2-nutrientes-y-alimentos-como-tomar-buenas-decision"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="capitulo-3-como-gestionar-tu-alimentacion-en-la-vida-real" data-level="1" data-track="1">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">11 min de lectura</span></div>
-<h1 class="ga-h1" id="capitulo-3-como-gestionar-tu-alimentacion-en-la-vida-real">Capítulo 3 — Cómo gestionar tu alimentación en la vida real</h1>
-</div>
-<h2 class="ga-h2" id="31-que-significa-comer-balanceado">3.1. Qué significa comer balanceado</h2>
-<h3 class="ga-h3" id="metodo-sin-complicarlo">Método sin complicarlo</h3>
-<p class="ga-p">El problema no es que la nutrición sea compleja; es que se ha vuelto confusa. Cada día alguien afirma que algo es bueno, otro dice lo contrario; que “esto sí”, “esto no”; que comas esto y evites aquello. La exposición constante a mensajes contradictorios hace que muchas personas acumulen reglas sin criterio, más que principios útiles.</p>
-<p class="ga-p">La fisiología humana no cambia cada semana. Por eso, en lugar de sumar restricciones nuevas, lo más efectivo es volver a principios nutricionales estables, respaldados por ciencia y aplicables a la vida real.</p>
-<p class="ga-p">Comer balanceado no es comer perfecto, ni seguir una fórmula rígida, ni vivir contando todo lo que comes. Comer balanceado significa darle al cuerpo lo que necesita, en proporciones razonables, de forma consistente y dentro de tu contexto real. El balance no es rigidez, es coherencia. No todas las personas comen igual ni todas las comidas se ven iguales. Lo que se mantiene constante no es la forma exacta, sino la lógica fisiológica detrás de las decisiones.</p>
-<p class="ga-p">Desde la fisiología, una alimentación balanceada cumple cuatro funciones esenciales: aportar proteína para mantener tejidos, proporcionar energía suficiente, sostener procesos hormonales y estructurales, y cubrir micronutrientes e hidratación para que todo funcione. Estas necesidades existen todos los días, entrenes o no entrenes.</p>
-<h3 class="ga-h3" id="formas-de-alimentacion-balanceada-y-cuando-tienen-sentido">Formas de alimentación balanceada y cuándo tienen sentido</h3>
-<p class="ga-p">Existen distintas formas de estructurar una alimentación balanceada. Algunas priorizan más carbohidratos, otras más grasas o proteína. Estas variaciones responden a objetivos específicos o a contextos particulares.</p>
-<p class="ga-p">Para la mayoría de personas activas que buscan mejorar su composición corporal y su salud general, una estructura balanceada clásica suele ser la opción más práctica y sostenible.</p>
-<p class="ga-p">En la práctica, la proteína se ajusta primero según peso corporal y objetivo (rangos cercanos a 1,6–2,2 g/kg/día), y el resto de la energía se reparte entre carbohidratos y grasas según contexto, preferencia y rendimiento. Distribuciones cercanas a 25–30% proteína, 35–45% carbohidratos y 25–30% grasas funcionan bien como referencia general, pero no son una fórmula fija.</p>
-<h3 class="ga-h3" id="dietas-modelos-y-la-decision-correcta">Dietas, modelos y la decisión correcta</h3>
-<p class="ga-p">Existen múltiples modelos de alimentación: mediterránea, vegetariana, baja en carbohidratos, keto, entre otros. El error común no es elegir un modelo, sino casarse con el nombre y olvidar el contenido.</p>
-<p class="ga-p">Una alimentación funciona cuando cubre necesidades fisiológicas, aporta micronutrientes suficientes, se adapta a la persona y puede sostenerse en el tiempo. Desde ese punto de vista, el nombre importa poco; lo que importa es la coherencia del sistema.</p>
-<h2 class="ga-h2" id="32-niveles-de-gestion-alimentaria">3.2. Niveles de gestión alimentaria</h2>
-<p class="ga-p">No existe una única forma correcta de gestionar la alimentación. Existen distintos niveles de estructura, cada uno con ventajas, limitaciones y momentos en los que tiene más sentido.</p>
-<p class="ga-p">El cuerpo responde a lo que recibe de forma consistente, no al método que elijas para gestionarlo. Lo que cambia entre niveles no es la biología, sino la forma en que traduces esa biología en decisiones diarias. Por eso, este capítulo no propone un único camino, sino tres niveles de gestión. No son jerárquicos ni obligatorios. Son herramientas que puedes usar, combinar o alternar según el momento de tu proceso.</p>
-<p class="ga-caption">Los tres niveles de gestión alimentaria</p>
-<h3 class="ga-h3" id="321-nivel-1-el-camino-exacto">3.2.1. Nivel 1: El camino exacto</h3>
-<p class="ga-p"><strong>Precisión, aprendizaje y dirección clara</strong></p>
-<p class="ga-p">Este nivel se basa en el uso de herramientas cuantitativas para gestionar la alimentación. Aquí las decisiones no se toman por intuición, sino a partir de referencias matemáticas claras de calorías, macronutrientes y porciones.</p>
-<p class="ga-p">Desde el punto de vista fisiológico, es el enfoque más preciso para dirigir cambios en la composición corporal, porque reduce al mínimo la diferencia entre lo que el cuerpo necesita y lo que realmente recibe.</p>
-<p class="ga-p">La base de este nivel es una meta nutricional diaria; esta define cuánta energía y cuántos macronutrientes conviene consumir según el objetivo, el nivel de actividad y el contexto individual. No es una cifra rígida ni arbitraria, sino una referencia que permite evaluar decisiones y corregir el rumbo con criterio.</p>
-<p class="ga-p">Por esta razón, deportistas y atletas lo utilizan.</p>
-<p class="ga-p"><strong>Herramientas para este nivel</strong></p>
-<p class="ga-p">Existen aplicaciones digitales en el mercado que pueden facilitar este proceso, pero pueden generar impaciencia registrar una a una cada alimento que consumes. Sin embargo, son herramientas, no requisitos.</p>
-<p class="ga-p">Teniendo esto en cuenta, este programa ha desarrollado una herramienta propia basada en inteligencia artificial: una app de meal tracking que permite:</p>
-<ul class="ga-list"><li>Calcula calorías y macronutrientes.</li></ul>
-<ul class="ga-list"><li>Lleva el acumulado diario, semanal y mensual.</li></ul>
-<ul class="ga-list"><li>Compara tu consumo con tu meta nutricional personalizada.</li></ul>
-<ul class="ga-list"><li>Además, puede ayudarte a estimar porciones y ajustar comidas según los alimentos disponibles o de preferencia.</li></ul>
-<p class="ga-p">No reemplaza tu criterio. Lo facilita.</p>
-<p class="ga-p"><strong>Cuándo tiene sentido usar este nivel</strong></p>
-<p class="ga-p">El camino exacto es especialmente útil cuando el margen de error importa.</p>
-<p class="ga-p">Funciona bien en etapas de pérdida de grasa controlada, ganancia muscular planificada, preparación para eventos específicos o cuando se necesita entender con claridad cómo responde el cuerpo a distintos niveles de ingesta.</p>
-<p class="ga-p">También es una herramienta educativa potente. Al medir y registrar, muchas personas aprenden a reconocer porciones reales, densidad calórica y distribución de macronutrientes, habilidades que luego pueden aplicar sin necesidad de seguir midiendo todo.</p>
-<p class="ga-p">Este nivel no está diseñado para usarse de forma permanente. Aplicarlo sin flexibilidad, durante largos periodos o en contextos caóticos suele generar fatiga mental y pérdida de adherencia.</p>
-<p class="ga-p">Un error frecuente es confundir precisión con obsesión.</p>
-<p class="ga-p"><strong>Ventajas reales del enfoque exacto</strong></p>
-<p class="ga-p">La principal ventaja de este nivel es la precisión. Permite identificar rápidamente si un estancamiento se debe a un desajuste energético, a una mala distribución de macronutrientes o simplemente a expectativas poco realistas.</p>
-<p class="ga-p">El aprendizaje que deja es su mayor valor: entender cuánto necesita realmente tu cuerpo y cómo se ve eso en la práctica.</p>
-<p class="ga-p">Además, reduce la toma de decisiones impulsivas.</p>
-<h3 class="ga-h3" id="322-nivel-2-el-camino-visual">3.2.2. Nivel 2: El camino visual</h3>
-<p class="ga-p"><strong>Estructura simple y decisiones rápidas</strong></p>
-<p class="ga-p">Este nivel reemplaza los números por referencias visuales y proporciones prácticas. No busca exactitud matemática, sino estructura suficiente para comer bien de forma consistente sin convertir cada comida en un cálculo.</p>
-<p class="ga-p">Desde el punto de vista fisiológico, el cuerpo no necesita precisión perfecta para funcionar bien; necesita coherencia. El camino visual funciona porque reduce la fricción mental, facilita la adherencia y permite mantener un patrón alimentario ordenado en contextos reales.</p>
-<p class="ga-p">No es improvisación ni “comer intuitivo” sin criterio. Es una forma simplificada de aplicar los mismos principios nutricionales cuando medir todo no es viable o no es prioritario.</p>
-<p class="ga-p"><strong>Herramienta 1 de este nivel: La regla de la mano</strong></p>
-<p class="ga-p">La regla de la mano es un método práctico de estimación de porciones utilizado desde hace años en nutrición aplicada y deportiva.</p>
-<p class="ga-p">Funciona porque la mano escala de forma natural con el tamaño corporal, evitando el uso de porciones estándar irreales para contextos distintos. La estructura general es:</p>
-<ul class="ga-list"><li><strong>Proteína (cocida): </strong>1 palma (mujeres) / 2 palmas (hombres).</li></ul>
-<ul class="ga-list"><li><strong>Carbohidratos densos: </strong>1 puño en cuenco (mujeres) / 2 puños (hombres).</li></ul>
-<ul class="ga-list"><li><strong>Vegetales: </strong>1 puño (mujeres) / 2 puños (hombres).</li></ul>
-<ul class="ga-list"><li><strong>Grasas: </strong>1 pulgar (mujeres) / 2 pulgares (hombres).</li></ul>
-<p class="ga-p">Este método no busca exactitud en gramos. Busca dar orden y coherencia cuando medir no es viable.</p>
-<p class="ga-p"><strong>Herramienta 2 de este nivel: Estructura del plato (MyPlate)</strong></p>
-<p class="ga-p">El modelo MyPlate fue desarrollado como herramienta oficial de educación nutricional para la población general. Propone, de forma visual:</p>
-<ul class="ga-list"><li>Aproximadamente la mitad del plato en verduras y frutas.</li></ul>
-<ul class="ga-list"><li>Una porción de proteína (alimento cocido).</li></ul>
-<ul class="ga-list"><li>Una porción de carbohidratos.</li></ul>
-<ul class="ga-list"><li>Grasas incluidas de forma moderada.</li></ul>
-<p class="ga-p">No busca precisión calórica. Busca comprensión práctica del balance y de las proporciones dentro de una comida.</p>
-<p class="ga-p"><strong>Cuándo este nivel tiene más sentido</strong></p>
-<p class="ga-p">El camino visual es especialmente útil cuando la prioridad es la sostenibilidad. Funciona bien en personas con agendas exigentes, comidas frecuentes fuera de casa, viajes, etapas de mantenimiento o momentos en los que el control exacto resulta innecesario o desgastante.</p>
-<p class="ga-p">También es una buena opción para principiantes que aún no necesitan precisión fina, pero sí una estructura clara que ordene sus decisiones diarias.</p>
-<p class="ga-p">El camino visual no ofrece la misma precisión que el control exacto. Por eso, no es la mejor herramienta cuando el objetivo requiere ajustes finos, como etapas avanzadas de definición o ganancia muscular muy controlada.</p>
-<p class="ga-p">Un error frecuente es usarlo sin conciencia de contexto, asumiendo que “todo vale” mientras se vea razonable. Sin criterio, el enfoque visual puede derivar en porciones sistemáticamente mayores o menores a las necesarias.</p>
-<p class="ga-p">La simplicidad funciona solo cuando se mantiene la lógica fisiológica detrás de las decisiones.</p>
-<p class="ga-p"><strong>Ventajas reales del enfoque visual</strong></p>
-<p class="ga-p">La principal ventaja de este nivel es la facilidad de aplicación. Reduce el cansancio mental, permite mayor flexibilidad social y hace más probable que la persona sostenga el plan en el tiempo.</p>
-<p class="ga-p">También favorece la autonomía. Al no depender de mediciones constantes, la alimentación se integra mejor a la rutina diaria.</p>
-<h3 class="ga-h3" id="323-nivel-3-el-camino-flexible">3.2.3. Nivel 3: El camino flexible</h3>
-<p class="ga-p"><strong>Precisión cuando importa, simplicidad cuando la vida manda</strong></p>
-<p class="ga-p">El camino flexible integra lo mejor del control exacto y del enfoque visual.</p>
-<p class="ga-p">No es ausencia de método ni “comer sin reglas”. Es la capacidad de aplicar la herramienta adecuada según el contexto, manteniendo coherencia fisiológica.</p>
-<p class="ga-p">Desde el punto de vista del cuerpo, la perfección diaria no es necesaria. El organismo responde a patrones sostenidos en el tiempo, no a días aislados.</p>
-<p class="ga-p">Este nivel funciona porque prioriza consistencia sobre rigidez, permitiendo adaptarse a la vida real sin perder dirección.</p>
-<p class="ga-p">Aquí no se improvisa. Se decide con criterio. Hay momentos donde la precisión importa y otros donde una estructura visual bien aplicada es suficiente. Ambos enfoques responden a la misma lógica fisiológica; lo que cambia es el nivel de control requerido por el contexto.</p>
-<p class="ga-p"><strong>Cuándo tiene sentido usar este nivel</strong></p>
-<p class="ga-p">El camino flexible tiene sentido cuando la vida no es lineal. Funciona especialmente bien en personas con semanas variables, compromisos sociales frecuentes, viajes o agendas poco predecibles.</p>
-<p class="ga-p">También es el enfoque más adecuado cuando ya existe una base de aprendizaje previa: entender porciones, reconocer señales de hambre y saciedad, y saber cómo responde el cuerpo a distintos niveles de ingesta.</p>
-<p class="ga-p">Su principal limitación aparece cuando se usa sin fundamentos. Sin referencias claras previas, la percepción suele fallar y la flexibilidad puede convertirse en desorden. No es el mejor punto de partida para quien nunca ha estructurado su alimentación.</p>
-<p class="ga-p"><strong>Ventajas reales del enfoque flexible</strong></p>
-<p class="ga-p">La principal ventaja de este nivel es la sostenibilidad. Reduce el desgaste mental, disminuye la sensación de restricción constante y permite mantener resultados sin vivir en modo control permanente.</p>
-<p class="ga-p">También mejora la relación con la comida. Al salir del esquema de “todo o nada”, las decisiones se vuelven más racionales y menos reactivas, lo que facilita la adherencia a largo plazo.</p>
-<p class="ga-p">En la práctica, es el nivel que mejor se adapta a procesos largos, etapas de mantenimiento y objetivos de salud sostenibles, sin sacrificar resultados por falta de estructura.</p>
-<p class="ga-p">Este enfoque reconoce que el contexto también es una variable fisiológica. Estrés, horarios, sueño y entorno influyen en la regulación del apetito, el gasto energético y la toma de decisiones. Ignorarlos no mejora los resultados; integrarlos, sí.</p>
-<p class="ga-p">La flexibilidad bien aplicada no debilita el proceso: lo hace más inteligente. Permite sostener hábitos incluso cuando las condiciones no son ideales, sin romper la lógica global del sistema.</p>
-<p class="ga-p">En este nivel, el progreso no se mide por la perfección diaria, sino por la capacidad de volver rápidamente a una estructura funcional después de cada ajuste.</p>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">A partir de hoy</div><ul class="ga-takeaway-list ga-takeaway-list-num"><li>Deja de improvisar tu alimentación y elige conscientemente el nivel de gestión que mejor encaje con tu contexto actual.</li><li>Aplica estructura incluso en días ocupados.</li><li>Usa la flexibilidad como una herramienta estratégica, no como una excusa para perder coherencia.</li><li>Recuerda: la disciplina no es rigidez; es coherencia sostenida en el tiempo.</li></ul></div></div>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">Ideas clave</div><ul class="ga-takeaway-list"><li>No existe una única forma correcta de gestionar la alimentación; existen distintos niveles de estructura, y todos pueden ser válidos según el momento.</li><li>El cuerpo responde a lo que recibe de forma consistente.</li><li>El camino exacto aporta precisión y aprendizaje; el visual aporta simplicidad y adherencia; el flexible integra ambos para la vida real.</li><li>Contar no es obsesión, y no contar no es improvisar.</li><li>La mayoría de personas no necesita vivir siempre en el control exacto, pero sí beneficiarse de haberlo usado durante algunos periodos.</li><li>La sostenibilidad no viene de hacerlo perfecto, sino de mantener coherencia incluso cuando el contexto no es ideal.</li></ul></div></div>
-<button class="ga-mark-read" data-mark="capitulo-3-como-gestionar-tu-alimentacion-en-la-vida-real"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="capitulo-4-adherencia-lo-que-sostiene-los-resultados" data-level="1" data-track="2">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">12 min de lectura</span></div>
-<h1 class="ga-h1" id="capitulo-4-adherencia-lo-que-sostiene-los-resultados">Capítulo 4 — Adherencia: lo que sostiene los resultados</h1>
-</div>
-<h2 class="ga-h2" id="41-el-sistema-antes-que-la-perfeccion">4.1. El sistema antes que la perfección</h2>
-<h3 class="ga-h3" id="el-enfoque-8020">El enfoque 80/20</h3>
-<p class="ga-p">Comer bien no es improvisar ni “hacer lo que se pueda”. Es seguir un sistema claro la mayor parte del tiempo, incluso cuando el día no es ideal.</p>
-<p class="ga-p">El enfoque 80/20 no es una excusa para desordenar la alimentación, sino una proporción operativa para sostenerla en la vida real. No se trata de “portarse bien” y luego “relajarse”, sino de definir con claridad qué es no negociable y qué es flexible dentro del mismo sistema.</p>
-<p class="ga-caption">El sistema 80/20: estructura y flexibilidad</p>
-<h3 class="ga-h3" id="el-80-la-estructura-que-define-los-resultados">El 80%: la estructura que define los resultados</h3>
-<p class="ga-p">El 80% es el bloque que sostiene el progreso. En la práctica, se construye a partir de una estructura base repetible: proteína presente en cada comida principal, frutas y/o verduras de forma diaria, alimentos mínimamente procesados como base y porciones coherentes con el objetivo.</p>
-<p class="ga-p">También implica mantener horarios y patrones similares la mayoría de los días, y tomar decisiones alimentarias antes de llegar a hambre extrema. Este bloque no se negocia por cansancio, antojos o estrés.</p>
-<p class="ga-p">El 80% no depende de motivación. Depende de preparación, disponibilidad y repetición.</p>
-<p class="ga-p">Si este bloque no está bien armado, no existe margen real para el 20%.</p>
-<h3 class="ga-h3" id="el-20-flexibilidad-planificada-no-desorden">El 20%: flexibilidad planificada, no desorden</h3>
-<p class="ga-p">El 20% no es caos ni compensación. Es una zona de flexibilidad con límites claros.</p>
-<p class="ga-p">Se utiliza en contextos específicos como comidas sociales, celebraciones, viajes o eventos puntuales. No se acumula durante varios días, no reemplaza la estructura del día completo y no se usa para “arreglar” días mal organizados.</p>
-<p class="ga-p">Una comida fuera de estructura no convierte el día en un día perdido. El resto del día vuelve al sistema.</p>
-<p class="ga-p">El 20% convive con la estructura, no la reemplaza.</p>
-<h3 class="ga-h3" id="reglas-simples-que-protegen-el-sistema">Reglas simples que protegen el sistema</h3>
-<p class="ga-p">Para evitar que el 20% se coma al 80%, funcionan bien reglas simples: no perder dos comidas seguidas, no perder dos días seguidos y no usar el 20% para justificar desorden semanal.</p>
-<p class="ga-p">La corrección ocurre en la siguiente decisión, no “el lunes”. Estas reglas no son rígidas; son protectores del proceso.</p>
-<p class="ga-p">Una alimentación disciplinada tiene estructura clara, tolera excepciones sin romperse y no necesita culpa para corregirse.</p>
-<p class="ga-p">La idea central es clara: el enfoque 80/20 funciona solo cuando el 80% está bien construido, el 20% está claramente delimitado y ambos forman parte del mismo sistema. Esto no es relajo; es gestión consciente.</p>
-<h2 class="ga-h2" id="42-habitos-sostenibles">4.2. Hábitos sostenibles</h2>
-<h3 class="ga-h3" id="la-estructura-que-si-se-sostiene-en-el-tiempo">La estructura que sí se sostiene en el tiempo</h3>
-<p class="ga-p">Comer bien de forma consistente no depende de cuánto te controles, sino de cómo está diseñado tu día.</p>
-<p class="ga-p">La fuerza de voluntad es limitada y se desgasta con el trabajo, el estrés, la toma constante de decisiones y el cansancio. Pretender sostener una buena alimentación solo desde el control mental es poner toda la responsabilidad en el momento en que menos recursos tienes.</p>
-<p class="ga-p">Por eso, las personas que logran adherencia real no son las más estrictas, sino las que han construido una estructura que funciona incluso cuando no hay motivación.</p>
-<p class="ga-p">Comer bien es un problema de diseño, no de carácter.</p>
-<p class="ga-p">La pregunta equivocada acá es: “¿Tengo suficiente disciplina para comer bien hoy?”</p>
-<p class="ga-p">La pregunta correcta es: “¿Mi entorno y mi estructura diaria facilitan comer bien?”</p>
-<p class="ga-p">Cuando el sistema está bien diseñado, las decisiones correctas ocurren con menos esfuerzo, el desgaste mental disminuye y la constancia aumenta sin necesidad de pelear contigo mismo.</p>
-<p class="ga-caption">Los cuatro pilares de la adherencia</p>
-<p class="ga-p">Una estructura alimentaria sostenible se apoya en tres pilares: previsibilidad, repetición y anticipación. No se trata de controlar cada comida, sino de reducir la cantidad de decisiones críticas que debes tomar a lo largo del día.</p>
-<h3 class="ga-h3" id="previsibilidad-darle-estabilidad-al-sistema">Previsibilidad (darle estabilidad al sistema)</h3>
-<p class="ga-p">El cuerpo responde mejor cuando existen patrones. Las personas que comen bien de forma consistente suelen tener horarios aproximados similares, un número de comidas relativamente estable y una lógica clara de qué es una comida bien armada.</p>
-<p class="ga-p">Esto no es rigidez. Es evitar que el sistema empiece desde cero todos los días.</p>
-<p class="ga-p">La previsibilidad ayuda a regular el hambre, la energía y la toma de decisiones alimentarias, incluso en días exigentes.</p>
-<h3 class="ga-h3" id="repeticion-deliberada-menos-variedad-mas-adherencia">Repetición deliberada (menos variedad, más adherencia)</h3>
-<p class="ga-p">Uno de los errores más comunes es creer que comer bien requiere variedad diaria. En la práctica, la repetición es una herramienta.</p>
-<p class="ga-p">Repetir desayunos base, almuerzos funcionales o combinaciones que ya sabes que te funcionan reduce la carga mental y aumenta la adherencia. La variedad no desaparece; se ubica donde no rompe el sistema.</p>
-<p class="ga-p">Menos decisiones diarias suelen traducirse en más constancia semanal.</p>
-<h3 class="ga-h3" id="el-entorno-manda-mas-que-la-intencion">El entorno manda más que la intención</h3>
-<p class="ga-p">No comes lo que sabes que deberías comer. Comes lo que está disponible cuando aparece el hambre.</p>
-<p class="ga-p">Por eso, el entorno es una de las herramientas más potentes para sostener hábitos.</p>
-<p class="ga-p">Alimentos base visibles y accesibles, proteína fácil de preparar y opciones pensadas para momentos críticos hacen que la buena decisión sea la más fácil, no la que requiere más control.</p>
-<h3 class="ga-h3" id="anticipar-siempre-gana-a-reaccionar">Anticipar siempre gana a reaccionar</h3>
-<p class="ga-p">La mayoría de malas decisiones alimentarias ocurren por hambre desordenada.</p>
-<p class="ga-p">Cuando llegas a ese punto, la lógica baja y la urgencia manda.</p>
-<p class="ga-p">Anticipar mínimamente cambia el resultado: saber qué vas a comer en la siguiente comida, llevar una opción contigo o decidir antes de que el hambre tome el control.</p>
-<p class="ga-p">No necesitas planificación extrema. Necesitas estar un paso adelante, no diez.</p>
-<h2 class="ga-h2" id="43-comer-fuera-viajes-y-contextos-sociales">4.3. Comer fuera, viajes y contextos sociales</h2>
-<h3 class="ga-h3" id="cuando-el-sistema-se-pone-a-prueba">Cuándo el sistema se pone a prueba</h3>
-<p class="ga-p">La mayoría de personas no falla en su alimentación cuando come en casa. Falla cuando sale, viaja o entra en contextos sociales que no controla. Por eso, una guía honesta no puede limitarse a explicar cómo comer en casa: tiene que dar marco operativo para los momentos donde el entorno empuja en otra dirección.</p>
-<p class="ga-p">Comer fuera no rompe el sistema. Lo que rompe el sistema es no tener criterio para decidir cuando el contexto cambia.</p>
-<h3 class="ga-h3" id="el-marco-basico-tres-niveles-de-contexto">El marco básico: tres niveles de contexto</h3>
-<p class="ga-p">No todos los momentos fuera de casa son iguales. Confundirlos lleva a dos errores: aplicar control rígido en eventos que pedían flexibilidad, o aplicar flexibilidad total en situaciones que pedían orden.</p>
-<ul class="ga-list"><li><strong>Contexto ordinario </strong>(almuerzo de trabajo, cena casual entre semana, restaurante habitual): se aplica la misma estructura que en casa, adaptada a lo que el menú permite. Proteína presente, vegetales si los hay, porciones coherentes, decisiones similares a las de un día normal. No es un evento; no requiere flexibilidad especial.</li></ul>
-<ul class="ga-list"><li><strong>Contexto social puntual </strong>(cena con amigos, comida familiar de fin de semana, celebración pequeña): se aplica el 20% del enfoque 80/20. Hay margen, pero no es desorden. Se mantiene la lógica general (proteína, no llegar con hambre extrema, hidratación) y se permite salir de la estructura sin justificarlo después.</li></ul>
-<ul class="ga-list"><li><strong>Contexto extraordinario </strong>(viaje largo, evento de varios días, vacaciones, boda, festividad): se acepta que la estructura habitual no aplica al 100% y se reemplaza por una estructura mínima. No se busca controlar; se busca no perder el ritmo del todo.</li></ul>
-<p class="ga-p">Identificar en cuál de los tres estás antes de la comida cambia la decisión. La mayoría de errores ocurre por confundir ordinario con social, o social con extraordinario.</p>
-<h3 class="ga-h3" id="reglas-operativas-para-comer-fuera">Reglas operativas para comer fuera</h3>
-<ul class="ga-list"><li><strong>Decide antes de llegar al menú. </strong>Si ya tienes claro qué tipo de comida buscas (plato con proteína + vegetales, algo más libre, etc.), el menú deja de ser una trampa.</li></ul>
-<ul class="ga-list"><li><strong>Proteína primero. </strong>En cualquier restaurante, identificar primero la fuente de proteína ordena el resto del plato. Si la proteína está cubierta, las decisiones siguientes son secundarias.</li></ul>
-<ul class="ga-list"><li><strong>No llegues con hambre extrema. </strong>Llegar a una comida fuera con hambre acumulada de 6–8 horas garantiza decisiones reactivas. Una pequeña comida o snack 1–2 horas antes cambia completamente el resultado.</li></ul>
-<ul class="ga-list"><li><strong>Hidratación antes que bebida. </strong>Empezar con agua reduce la sensación de hambre y disminuye el consumo de bebidas con calorías líquidas, que es donde la mayoría de personas se descontrola sin notarlo.</li></ul>
-<ul class="ga-list"><li><strong>Una decisión a la vez. </strong>No es necesario optimizar entrada, plato principal, bebida y postre. Elige dónde quieres flexibilizar y mantén estructura en el resto.</li></ul>
-<h3 class="ga-h3" id="viajes-la-estructura-minima">Viajes: la estructura mínima</h3>
-<p class="ga-p">En viajes, el error común es uno de dos extremos: intentar mantener el plan exacto (insostenible) o abandonarlo por completo (desordena el sistema una semana después de regresar).</p>
-<p class="ga-p">La estructura mínima en viaje se reduce a tres puntos:</p>
-<ul class="ga-list"><li>Proteína presente en al menos dos comidas al día.</li></ul>
-<ul class="ga-list"><li>Hidratación constante (los viajes deshidratan más de lo que parece, especialmente en avión y climas distintos).</li></ul>
-<ul class="ga-list"><li>Movimiento diario, aunque sea caminar. No reemplaza entrenamiento, pero mantiene el sistema activo.</li></ul>
-<p class="ga-p">Lo demás (horarios, distribución exacta, calidad de cada alimento) se flexibiliza sin culpa. Volver al sistema completo al regresar es parte del proceso, no una excepción.</p>
-<h3 class="ga-h3" id="eventos-sociales-la-regla-del-antes-y-el-despues">Eventos sociales: la regla del antes y el después</h3>
-<p class="ga-p">En eventos puntuales (cenas largas, celebraciones, comidas familiares), lo que más impacta no es la comida del evento sino las decisiones del antes y el después.</p>
-<ul class="ga-list"><li><strong>Antes: </strong>mantener la estructura del día completo. No “ahorrar calorías” saltándose comidas (suele generar hambre extrema y peores decisiones en el evento).</li></ul>
-<ul class="ga-list"><li><strong>Durante: </strong>flexibilidad consciente, no control rígido ni desorden total.</li></ul>
-<ul class="ga-list"><li><strong>Después: </strong>la siguiente comida vuelve al sistema. No se compensa, no se castiga, no se acumula desorden hacia el día siguiente.</li></ul>
-<p class="ga-p">Una comida fuera de estructura no requiere correcciones. La corrección ocurre en la siguiente decisión, no al día siguiente ni el lunes.</p>
-<h2 class="ga-h2" id="44-senales-de-alerta-cuando-replantear">4.4. Señales de alerta: cuándo replantear</h2>
-<h3 class="ga-h3" id="por-que-importa-leer-al-cuerpo">Por qué importa leer al cuerpo</h3>
-<p class="ga-p">El progreso no es lineal y no se mide solo por el peso. Un sistema bien diseñado funciona la mayor parte del tiempo, pero todos los procesos largos pasan por momentos donde algo deja de cuadrar. Lo que diferencia a quien progresa de quien se estanca no es evitar esos momentos, sino reconocerlos a tiempo y replantear con criterio.</p>
-<p class="ga-p">Muchas personas siguen aplicando el mismo plan durante semanas sin notar que el cuerpo ya está pidiendo un ajuste. Otras corrigen demasiado rápido y rompen procesos que solo necesitaban más tiempo. Saber leer las señales evita ambos errores.</p>
-<h3 class="ga-h3" id="las-cinco-senales-de-alerta">Las cinco señales de alerta</h3>
-<p class="ga-p">No todas las señales tienen el mismo peso. Algunas son normales en ciertos contextos (déficit, fase de adaptación) y otras indican que el sistema necesita un cambio real. Lo importante es observar el patrón, no un día aislado.</p>
-<ul class="ga-list"><li><strong>Energía sostenidamente baja. </strong>Una mala noche o un día cansado no son señales. Una caída de energía mantenida durante 2–3 semanas, sin causa clara (mal sueño, estrés agudo, enfermedad), suele indicar déficit energético excesivo, proteína insuficiente o falta de carbohidratos en relación al volumen de entrenamiento.</li></ul>
-<ul class="ga-list"><li><strong>Hambre desordenada y persistente. </strong>Tener hambre antes de las comidas es normal. Tener hambre intensa fuera de horarios, antojos repetidos hacia alimentos muy densos en energía, o despertarse con hambre, suele indicar déficit demasiado agresivo, proteína baja, grasa muy reducida, o mal descanso.</li></ul>
-<ul class="ga-list"><li><strong>Estancamiento real en rendimiento o composición. </strong>Estancamiento de una semana no es estancamiento. Cuatro o más semanas sin progreso en fuerza, resistencia, medidas o composición, con adherencia consistente, sí lo es. Indica que el cuerpo se adaptó al estímulo actual y el plan necesita ajuste, no más esfuerzo.</li></ul>
-<ul class="ga-list"><li><strong>Recuperación lenta entre sesiones. </strong>Si las agujetas duran demasiado, las cargas habituales se sienten más pesadas, o entrenas con sensación constante de fatiga acumulada, el problema rara vez es el entrenamiento. Suele ser sueño, alimentación insuficiente o exceso de estrés total.</li></ul>
-<ul class="ga-list"><li><strong>Relación con la comida que se vuelve tensa. </strong>Pensar en comida todo el día, sentir culpa frecuente, oscilar entre control extremo y desorden, o evitar contextos sociales por miedo a “romper el plan” son señales claras de que el plan necesita ajuste, aunque los números cuadren. Un sistema sostenible no produce esa tensión.</li></ul>
-<h3 class="ga-h3" id="como-replantear-sin-romper-el-proceso">Cómo replantear sin romper el proceso</h3>
-<p class="ga-p">Detectar una señal no significa cambiar todo. Significa revisar con criterio antes de actuar. La mayoría de ajustes correctos son pequeños.</p>
-<ul class="ga-list"><li><strong>Primero: revisa el contexto, no el plan. </strong>¿Cómo estás durmiendo? ¿Cuál es tu nivel de estrés real? ¿Hay algo en la vida (trabajo, viaje, evento personal) que esté afectando? Muchas señales se explican antes de tocar la alimentación o el entrenamiento.</li></ul>
-<ul class="ga-list"><li><strong>Después: identifica qué variable parece estar fuera. </strong>Energía baja sostenida suele apuntar a calorías o carbohidratos. Hambre persistente suele apuntar a proteína, grasas o déficit. Estancamiento físico suele apuntar a estímulo (entrenamiento) o margen energético insuficiente.</li></ul>
-<ul class="ga-list"><li><strong>Ajusta una variable a la vez. </strong>Cambiar simultáneamente calorías, distribución de macros y entrenamiento garantiza que no sabrás qué funcionó. Un ajuste, evaluado durante 2–3 semanas, deja datos reales.</li></ul>
-<ul class="ga-list"><li><strong>Da tiempo al ajuste. </strong>El cuerpo no responde en 48 horas. Un ajuste necesita al menos dos semanas de aplicación consistente para evaluar si funcionó.</li></ul>
-<h3 class="ga-h3" id="cuando-no-es-momento-de-replantear">Cuándo no es momento de replantear</h3>
-<p class="ga-p">Tan importante como saber cuándo ajustar es saber cuándo no.</p>
-<ul class="ga-list"><li>Una sola semana floja no es una señal; es una semana floja.</li></ul>
-<ul class="ga-list"><li>Una mala noche no justifica replantear el plan al día siguiente.</li></ul>
-<ul class="ga-list"><li>Un evento social que rompió la estructura no requiere corrección estructural; solo volver al sistema.</li></ul>
-<ul class="ga-list"><li>El peso fluctúa por hidratación, sueño, estrés y ciclo hormonal. Variaciones de 1–2 kg en pocos días no son progreso ni retroceso; son ruido.</li></ul>
-<p class="ga-p">La mayoría de ajustes innecesarios ocurren por reaccionar a ruido en lugar de a señal.</p>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">A partir de hoy</div><ul class="ga-takeaway-list ga-takeaway-list-num"><li>Diseña tu entorno y tus horarios para que la buena decisión sea la más fácil.</li><li>Define comidas base que te funcionen y repítelas.</li><li>Anticipa los momentos críticos antes de que el hambre tome el control.</li><li>Antes de cada comida fuera, identifica en qué nivel de contexto estás: ordinario, social puntual o extraordinario.</li><li>Observa patrones de 2–4 semanas, no días aislados.</li><li>Cuando ajustes, mueve una variable a la vez y dale al menos dos semanas.</li><li>Cuando pierdas el ritmo, vuelve al sistema en la siguiente decisión, no mañana ni el lunes.</li><li>Recuerda: la disciplina no es exigirte más, es diseñar mejor tu sistema.</li></ul></div></div>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">Ideas clave</div><ul class="ga-takeaway-list"><li>Comer bien no depende de fuerza de voluntad constante, sino de una estructura diaria bien diseñada.</li><li>Los hábitos sostenibles se construyen reduciendo decisiones.</li><li>La repetición, la anticipación y el entorno influyen más en tu alimentación que la motivación momentánea.</li><li>Comer fuera no rompe el sistema; confundir el tipo de contexto sí.</li><li>El progreso real se evalúa por tendencias, no por días.</li><li>Distinguir ruido de señal protege el proceso tanto como saber cuándo intervenir.</li><li>La adherencia real se basa en sistemas que toleran imperfecciones sin romperse.</li></ul></div></div>
-<button class="ga-mark-read" data-mark="capitulo-4-adherencia-lo-que-sostiene-los-resultados"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="capitulo-5-dormir-y-recuperar-el-motor-de-tu-progreso" data-level="1" data-track="2">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">5 min de lectura</span></div>
-<h1 class="ga-h1" id="capitulo-5-dormir-y-recuperar-el-motor-de-tu-progreso">Capítulo 5 — Dormir y recuperar: el motor de tu progreso</h1>
-</div>
-<h2 class="ga-h2" id="51-el-papel-del-sueno-en-tu-rendimiento-y-composicion-corpor">5.1. El papel del sueño en tu rendimiento y composición corporal</h2>
-<p class="ga-p">Dormir no es tiempo perdido. Es uno de los procesos más activos del cuerpo.</p>
-<p class="ga-p">Mientras duermes, el organismo no se apaga: repara tejidos, regula hormonas y ajusta cómo va a usar la energía al día siguiente. Por eso, el sueño no solo influye en el rendimiento físico, sino también en el apetito, las decisiones alimentarias y los cambios en la composición corporal.</p>
-<p class="ga-p">Un descanso insuficiente altera el sistema desde múltiples frentes. Dormir bien no garantiza resultados por sí solo, pero dormir mal puede frenar el progreso incluso cuando el entrenamiento y la alimentación están bien planteados.</p>
-<h3 class="ga-h3" id="sueno-y-decisiones-alimentarias">Sueño y decisiones alimentarias</h3>
-<p class="ga-p">Cuando duermes poco o mal, el cuerpo entra en un estado de alerta. A nivel fisiológico aumentan la grelina, hormona asociada al hambre, y el cortisol, mientras disminuye la leptina, relacionada con la saciedad.</p>
-<p class="ga-p">El resultado es predecible: más hambre, menor sensación de saciedad y mayor tendencia a buscar alimentos rápidos y densos en energía. Después de una mala noche, las decisiones alimentarias suelen volverse más impulsivas.</p>
-<p class="ga-p">En muchos casos, el problema no es falta de conocimiento, sino un sistema hormonal desregulado por un descanso insuficiente.</p>
-<h3 class="ga-h3" id="sueno-y-composicion-corporal">Sueño y composición corporal</h3>
-<p class="ga-p">Dormir bien influye directamente en cómo el cuerpo distribuye la energía entre músculo y grasa. Con descanso insuficiente se reduce la capacidad de preservar masa muscular, se dificulta la pérdida de grasa y se altera la sensibilidad a la insulina.</p>
-<p class="ga-p">Incluso con una alimentación bien diseñada en el papel, un mal descanso puede limitar los resultados. El sueño no quema grasa, pero permite que la alimentación y el entrenamiento cumplan su función.</p>
-<h3 class="ga-h3" id="sueno-y-rendimiento">Sueño y rendimiento</h3>
-<p class="ga-p">Desde el punto de vista del rendimiento, dormir poco reduce la fuerza, empeora la coordinación, aumenta la percepción de esfuerzo y enlentece la recuperación.</p>
-<p class="ga-p">Esto suele generar un círculo vicioso: menos energía conduce a entrenamientos de menor calidad, mayor fatiga acumulada, peor descanso y decisiones alimentarias cada vez más desordenadas. En la práctica, romper este ciclo casi siempre empieza por mejorar el sueño.</p>
-<h2 class="ga-h2" id="52-estrategias-practicas-para-mejorar-tu-descanso">5.2. Estrategias prácticas para mejorar tu descanso</h2>
-<p class="ga-p">Muchas personas intentan “arreglar” su sueño con soluciones aisladas, cuando en realidad pequeños ajustes consistentes en los hábitos diarios tienen un impacto profundo en la calidad del descanso, el apetito y la energía.</p>
-<h3 class="ga-h3" id="regularidad-antes-que-perfeccion">Regularidad antes que perfección</h3>
-<p class="ga-p">El cuerpo funciona con ritmos biológicos. Dormirte y despertarte a horas similares ayuda a regular el hambre, la energía durante el día y la facilidad para conciliar el sueño.</p>
-<p class="ga-p">No necesitas horarios rígidos ni exactos, sino patrones relativamente predecibles. La regularidad envía señales claras al sistema nervioso y facilita dormir mejor sin añadir estrés innecesario.</p>
-<h3 class="ga-h3" id="la-luz-como-senal-principal">La luz como señal principal</h3>
-<p class="ga-p">La luz es uno de los reguladores más potentes del ciclo sueño–vigilia. Exponerte a luz natural en la mañana mejora la alerta diurna, mientras que reducir la luz artificial por la noche facilita el inicio del sueño.</p>
-<p class="ga-p">Bajar la intensidad de las luces, reducir pantallas antes de dormir y evitar trabajar desde la cama no es una recomendación estética; es regulación hormonal aplicada.</p>
-<h3 class="ga-h3" id="cafeina-util-pero-con-estrategia">Cafeína: útil, pero con estrategia</h3>
-<p class="ga-p">La cafeína puede mejorar el rendimiento y el enfoque, pero su efecto se prolonga varias horas y varía mucho entre personas.</p>
-<p class="ga-p">Como referencia general, muchas personas duermen mejor cuando reducen o evitan la cafeína en la segunda mitad del día, ajustando según tolerancia individual. Dormir mal por cafeína suele generar un ciclo conocido: más cansancio, más café, peor descanso y mayor apetito.</p>
-<p class="ga-p">Usada con criterio, la cafeína apoya tu día. Mal usada, sabotea tu noche.</p>
-<h3 class="ga-h3" id="la-ultima-comida-tambien-influye">La última comida también influye</h3>
-<p class="ga-p">No existe una hora prohibida para cenar. Lo que más influye es el volumen, la digestibilidad y cómo responde tu cuerpo.</p>
-<p class="ga-p">Para muchas personas, dejar algo de margen entre la última comida y el momento de dormir favorece el descanso.</p>
-<p class="ga-p">Comidas muy pesadas suelen dificultar el sueño, pero irse a la cama con hambre también puede provocar despertares nocturnos y mayor estrés. En general funcionan mejor, cenas completas, fáciles de digerir y sin excesos de volumen ni alcohol.</p>
-<p class="ga-p">Una cena bien ajustada mejora el descanso y facilita el control del apetito al día siguiente.</p>
-<h3 class="ga-h3" id="el-entorno-importa-mas-de-lo-que-parece">El entorno importa más de lo que parece</h3>
-<p class="ga-p">El cerebro asocia espacios con funciones. Para facilitar el descanso, ayuda que la habitación sea oscura, fresca y silenciosa —o con ruido constante suave— y que la cama se reserve principalmente para dormir.</p>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">A partir de hoy</div><ul class="ga-takeaway-list ga-takeaway-list-num"><li>Empieza a ver el sueño como una pieza activa de tu estrategia nutricional, no como algo separado.</li><li>Ajusta cafeína, horarios y cenas para facilitar el descanso.</li><li>Si un día comes peor de lo esperado, revisa primero cómo dormiste antes de culparte.</li><li>Recuerda: cuando el descanso está en orden, comer bien deja de sentirse como una lucha constante.</li></ul></div></div>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">Ideas clave</div><ul class="ga-takeaway-list"><li>El sueño no es un complemento: es un regulador central del apetito, la energía y la composición corporal.</li><li>Dormir mal dificulta comer bien, incluso cuando sabes exactamente qué hacer.</li><li>Un descanso adecuado facilita la adherencia a cualquier plan de alimentación y entrenamiento.</li><li>La recuperación real ocurre cuando sueño, alimentación y carga diaria están alineados.</li><li>Ordenar el descanso reduce la necesidad de depender de la fuerza de voluntad durante el día.</li></ul></div></div>
-<button class="ga-mark-read" data-mark="capitulo-5-dormir-y-recuperar-el-motor-de-tu-progreso"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="capitulo-6-salud-digestiva-funcional" data-level="1" data-track="2">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">4 min de lectura</span></div>
-<h1 class="ga-h1" id="capitulo-6-salud-digestiva-funcional">Capítulo 6 — Salud digestiva funcional</h1>
-</div>
-<h3 class="ga-h3" id="como-apoyar-el-sistema">Cómo apoyar el sistema</h3>
-<p class="ga-p">La salud digestiva no es un tema aislado ni un protocolo clínico. Es parte del sistema que permite regular apetito, absorción de nutrientes, energía y bienestar general.</p>
-<p class="ga-p">Cuando la digestión funciona bien, el resto del plan se vuelve más fácil de sostener. Cuando no, incluso una buena alimentación puede sentirse cuesta arriba.</p>
-<p class="ga-p">La salud digestiva no se construye con hacks ni productos aislados. Se construye con coherencia: la fibra es la base, la microbiota se adapta, el movimiento regula, el sistema nervioso condiciona y los suplementos son contextuales.</p>
-<h3 class="ga-h3" id="diversidad-vegetal-y-fibra-la-base-real-del-sistema">Diversidad vegetal y fibra: la base real del sistema</h3>
-<p class="ga-p">La salud digestiva desde la alimentación se construye sobre dos elementos que van juntos: la diversidad de alimentos vegetales y la fibra que aportan. No son un suplemento ni una moda; son una característica de los alimentos reales.</p>
-<p class="ga-p">La evidencia reciente muestra que la cantidad y variedad de plantas que consumes a lo largo de la semana (verduras, frutas, legumbres, cereales integrales, frutos secos, semillas) tiene un impacto más profundo en la microbiota intestinal que la cantidad bruta de fibra aislada. La fibra importa, pero la diversidad importa más.</p>
-<p class="ga-p">Desde la fisiología, la fibra:</p>
-<ul class="ga-list"><li>Mejora la saciedad.</li></ul>
-<ul class="ga-list"><li>Modula la respuesta glucémica.</li></ul>
-<ul class="ga-list"><li>Favorece el tránsito intestinal.</li></ul>
-<ul class="ga-list"><li>Sirve de sustrato para bacterias intestinales beneficiosas.</li></ul>
-<p class="ga-p">La mayoría de las personas consume poca fibra por baja presencia de frutas, verduras, legumbres, cereales integrales y semillas en su alimentación diaria.</p>
-<p class="ga-p">Si la mayoría de tus comidas incluye alimentos vegetales reales, la fibra suele cubrirse sin necesidad de cálculos ni suplementos.</p>
-<h3 class="ga-h3" id="microbiota-intestinal-un-sistema-adaptable">Microbiota intestinal: un sistema adaptable</h3>
-<p class="ga-p">La microbiota intestinal es el conjunto de microorganismos que viven en el intestino y participan en procesos digestivos, metabólicos e inmunológicos.</p>
-<p class="ga-p">No existe una microbiota ideal ni universal. Es un sistema dinámico, que responde principalmente a patrones sostenidos: qué comes, cuánta variedad hay en tu dieta, cómo duermes, cuánto te mueves y cómo manejas el estrés.</p>
-<p class="ga-p">Cambios consistentes en el estilo de vida generan cambios consistentes en la microbiota.</p>
-<p class="ga-p">Por eso, la diversidad alimentaria real y el orden general del sistema importan.</p>
-<h3 class="ga-h3" id="movimiento-un-regulador-digestivo-subestimado">Movimiento: un regulador digestivo subestimado</h3>
-<p class="ga-p">La digestión no ocurre solo en el plato. Ocurre también con el movimiento.</p>
-<p class="ga-p">El intestino depende del movimiento corporal para mantener un tránsito adecuado. El sedentarismo prolongado enlentece el tránsito intestinal, incluso cuando la alimentación es correcta.</p>
-<p class="ga-p">Caminar a diario, entrenar fuerza y moverte a lo largo del día ayuda a que el tránsito intestinal sea más fluido, mejora cómo toleras las comidas y reduce molestias frecuentes como hinchazón, pesadez o estreñimiento.</p>
-<p class="ga-p">No se trata de entrenar más, sino de moverte mejor y con regularidad.</p>
-<h3 class="ga-h3" id="estres-y-sistema-nervioso-la-conexion-clave">Estrés y sistema nervioso: la conexión clave</h3>
-<p class="ga-p">El sistema digestivo está profundamente regulado por el sistema nervioso. El estrés crónico altera la digestión y la percepción de síntomas.</p>
-<p class="ga-p">En contextos de estrés elevado, el cuerpo prioriza supervivencia, no digestión. Esto explica por qué muchas molestias digestivas aparecen o empeoran en etapas de alta carga mental, mal descanso o presión constante.</p>
-<p class="ga-p">Cuidar el sueño, regular el estrés y respetar momentos de comida sin prisa no es un detalle menor.</p>
-<h3 class="ga-h3" id="prebioticos-y-probioticos-herramientas">Prebióticos y probióticos: herramientas</h3>
-<p class="ga-p">Los prebióticos son fibras que alimentan bacterias intestinales beneficiosas y se obtienen principalmente de alimentos reales.</p>
-<p class="ga-p">Los probióticos son microorganismos vivos presentes en alimentos fermentados o suplementos.</p>
-<p class="ga-p">En personas sanas, comer variado, incluir fibra y algunos alimentos fermentados suele ser suficiente para cuidar la microbiota. Los probióticos en suplemento pueden tener sentido en contextos específicos, pero no son obligatorios ni reemplazan la base alimentaria.</p>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">Ideas clave</div><ul class="ga-takeaway-list"><li>La salud digestiva es parte del sistema, no un tema aislado.</li><li>Diversidad vegetal y fibra son la base; la microbiota responde a patrones sostenidos.</li><li>Movimiento, sueño y estrés condicionan la digestión tanto como la alimentación.</li><li>Los suplementos digestivos son herramientas contextuales, no obligatorios.</li></ul></div></div>
-<button class="ga-mark-read" data-mark="capitulo-6-salud-digestiva-funcional"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="capitulo-7-suplementos-menos-ruido-mas-criterio" data-level="1" data-track="2">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">6 min de lectura</span></div>
-<h1 class="ga-h1" id="capitulo-7-suplementos-menos-ruido-mas-criterio">Capítulo 7 — Suplementos: menos ruido, más criterio</h1>
-</div>
-<h2 class="ga-h2" id="71-el-rol-real-de-los-suplementos">7.1. El rol real de los suplementos</h2>
-<h3 class="ga-h3" id="que-son-y-como-funcionan">Qué son y cómo funcionan</h3>
-<p class="ga-p">Un suplemento es una herramienta nutricional diseñada para complementar la alimentación y apoyar procesos fisiológicos específicos. No sustituye la comida, el entrenamiento ni el descanso, pero tampoco es irrelevante cuando se utiliza con criterio y dentro de un sistema bien estructurado.</p>
-<p class="ga-p">En un contexto adecuado, los suplementos cumplen un rol claro: ayudan a cubrir requerimientos que la vida real no siempre permite alcanzar solo con alimentos, o a optimizar ciertos procesos cuando las demandas físicas, el entrenamiento o el entorno lo justifican.</p>
-<p class="ga-p">Por eso, el orden importa. Primero se construye la base: una alimentación suficiente y de calidad, entrenamiento coherente y descanso adecuado.</p>
-<p class="ga-p">Cuando esa base está en su lugar, el suplemento puede aportar valor. Antes de eso, su impacto es limitado.</p>
-<p class="ga-p">Un suplemento puede facilitar el cumplimiento de requerimientos nutricionales, apoyar la recuperación, mejorar el rendimiento o corregir déficits específicos. En estos escenarios no es un “extra innecesario”, sino una herramienta práctica que reduce fricción y mejora la consistencia del plan.</p>
-<p class="ga-p">Entender qué no es un suplemento es igual de importante: no es una solución rápida, no compensa una mala alimentación, no genera resultados por sí solo, ni arregla un plan mal armado; solo lo vuelve más costoso.</p>
-<p class="ga-p">Son herramientas secundarias, pero legítimas, dentro de una estrategia bien pensada.</p>
-<h2 class="ga-h2" id="72-uso-responsable-dosis-momentos-y-seguridad">7.2. Uso responsable: dosis, momentos y seguridad</h2>
-<p class="ga-p">No todos los suplementos tienen el mismo peso, no todos se usan al mismo tiempo y no todos son necesarios para todas las personas. Para facilitar decisiones y evitar confusión, se organizan por líneas de prioridad según impacto real y contexto de uso.</p>
-<p class="ga-p">Los suplementos incluidos aquí son los más relevantes en la práctica, porque son aquellos que con mayor frecuencia pueden aportar valor a personas activas en contextos reales.</p>
-<p class="ga-p">La mayoría de vitaminas y minerales se cubren adecuadamente con una alimentación variada y bien estructurada. Cuando la base está en orden, no es necesario suplementar “por si acaso”. Cuando existe una deficiencia específica o un contexto claro que lo justifique, la suplementación se individualiza y se enfoca solo en ese nutriente.</p>
-<p class="ga-p">No necesitas memorizar dosis complejas ni convertirte en experto. En la práctica, basta con leer la etiqueta, identificar la cantidad por porción y compararla con rangos orientativos. El objetivo no es afinar miligramos, sino saber si un suplemento aporta una dosis útil o una cantidad irrelevante.</p>
-<p class="ga-caption">Jerarquía de suplementos por línea de prioridad</p>
-<h3 class="ga-h3" id="primera-linea-base-solida-alta-evidencia">Primera línea: base sólida, alta evidencia</h3>
-<p class="ga-p">Son suplementos con respaldo fuerte y utilidad clara cuando la base ya está bien armada.</p>
-<p class="ga-p"><strong>Proteína en polvo:</strong></p>
-<p class="ga-p">Se utiliza para facilitar el cumplimiento del requerimiento diario de proteína cuando, por tiempo, apetito o logística, no es sencillo cubrirlo solo con alimentos. No es mejor que la comida, es más práctica en ciertos contextos. La dosis se ajusta para completar el total diario según peso y objetivo. En la mayoría de personas activas, el rango suele situarse alrededor de 1,6–2,2 g/kg/día, considerando alimentos y suplemento. El momento del día no es determinante, el mejor es el que se te facilite.</p>
-<p class="ga-p"><strong>Creatina monohidratada:</strong></p>
-<p class="ga-p">Apoya la fuerza, la potencia y la ganancia de masa muscular. Es uno de los suplementos más estudiados y consistentes. La dosis habitual es de 3–5 g diarios. El momento del día no es determinante; lo importante es la constancia.</p>
-<p class="ga-p"><strong>Cafeína:</strong></p>
-<p class="ga-p">Mejora el rendimiento y el enfoque. Su efecto depende de la dosis y de la tolerancia individual. De forma orientativa, se utilizan 2–5 mg/kg antes de entrenamientos o tareas exigentes. No se recomienda cerca del horario de sueño y requiere ajuste personal según sensibilidad.</p>
-<h3 class="ga-h3" id="segunda-linea-salud-recuperacion-y-regulacion">Segunda línea: salud, recuperación y regulación</h3>
-<p class="ga-p">Buscan apoyar el funcionamiento general del organismo cuando el contexto lo justifica.</p>
-<p class="ga-p"><strong>Omega-3 (EPA/DHA):</strong></p>
-<p class="ga-p">Contribuyen a la salud cardiovascular, la modulación de procesos inflamatorios y la recuperación. La dosis habitual suele situarse entre 1–2 g diarios de EPA + DHA combinados (busca estas siglas en la etiqueta) salvo en personas que consuman pescado varias veces por semana. Se recomienda tomarlos con comidas, ya que la presencia de grasa mejora su absorción.</p>
-<p class="ga-p"><strong>Vitamina D:</strong></p>
-<p class="ga-p">Apoya la función inmune, muscular y la salud ósea. En adultos, suelen utilizarse 1.000–2.000 UI/día, según exposición solar y contexto individual. No se recomiendan megadosis prolongadas sin criterio.</p>
-<p class="ga-p"><strong>Magnesio:</strong></p>
-<p class="ga-p">Participa en la función neuromuscular, el descanso y la recuperación. Las dosis habituales rondan 200–400 mg diarios. Suele tomarse por la noche. Dosis excesivas pueden causar molestias gastrointestinales.</p>
-<p class="ga-p"><strong>Electrolitos:</strong></p>
-<p class="ga-p">Útiles en entrenamientos prolongados, climas calurosos o personas con alta sudoración. No son necesarios de forma automática en sesiones cortas o actividad cotidiana. Su uso debe responder al contexto.</p>
-<h3 class="ga-h3" id="tercera-linea-contexto-especifico">Tercera línea: contexto específico</h3>
-<p class="ga-p">Algunos suplementos tienen sentido solo en situaciones puntuales, no como parte habitual del sistema. Incluir más no mejora resultados; suele aumentar gasto y diluir el foco.</p>
-<p class="ga-p"><strong>Adaptógenos (ashwagandha, ginseng y otros):</strong></p>
-<p class="ga-p">Pueden ofrecer apoyo modesto en manejo del estrés o sensación de energía, pero no sustituyen descanso, alimentación ni gestión del estrés real. La evidencia es mixta y los efectos varían entre personas. No se recomiendan como parte habitual; se evalúan caso a caso.</p>
-<p class="ga-p"><strong>Multivitamínicos y multiminerales:</strong></p>
-<p class="ga-p">Pueden tener sentido en dietas muy restrictivas, viajes frecuentes prolongados o baja variedad alimentaria sostenida. No reemplazan una alimentación diversa y no son necesarios cuando la base está cubierta.</p>
-<p class="ga-p"><strong>Zinc, hierro y calcio:</strong></p>
-<p class="ga-p">Solo se suplementan cuando hay sospecha o confirmación de déficit, no de forma preventiva. El uso prolongado sin justificación puede generar desequilibrios entre minerales. Si hay sospecha real, conviene confirmar con análisis antes de suplementar.</p>
-<p class="ga-p">En esta línea, la regla operativa es simple: si no hay un contexto claro que lo justifique, el suplemento no entra al sistema. Sumar suplementos “por si acaso” es la forma más común de gastar dinero sin mejorar resultados.</p>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">A partir de hoy</div><ul class="ga-takeaway-list ga-takeaway-list-num"><li>Piensa los suplementos como un complemento estratégico, no como una solución aislada.</li><li>Elige pocos, con respaldo real, y úsalos de forma consistente.</li></ul></div></div>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">Ideas clave</div><ul class="ga-takeaway-list"><li>Los suplementos son herramientas útiles, pero solo cuando se utilizan con un propósito claro.</li><li>Funcionan mejor cuando la base ya está bien construida: alimentación suficiente, entrenamiento coherente y descanso adecuado.</li><li>No todos los suplementos tienen el mismo impacto; priorizar bien simplifica y evita gastos innecesarios.</li></ul></div></div>
-<button class="ga-mark-read" data-mark="capitulo-7-suplementos-menos-ruido-mas-criterio"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="bonus-1-alcohol-la-variable-subestimada" data-level="1" data-track="3">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">4 min de lectura</span></div>
-<h1 class="ga-h1" id="bonus-1-alcohol-la-variable-subestimada">Bonus 1 — Alcohol: la variable subestimada</h1>
-</div>
-<h3 class="ga-h3" id="por-que-importa-hablar-de-esto">Por qué importa hablar de esto</h3>
-<p class="ga-p">El alcohol es probablemente la variable que más impacta la composición corporal de adultos activos y, al mismo tiempo, la que menos se aborda con criterio. La mayoría de guías lo ignora o lo prohíbe. Ninguna de las dos opciones es útil.</p>
-<p class="ga-p">Para tu contexto real (vida social, viajes, cenas, eventos), tomar una decisión informada sobre el alcohol pesa más que ajustar al gramo el resto del plan.</p>
-<h3 class="ga-h3" id="que-es-el-alcohol-desde-la-fisiologia">Qué es el alcohol desde la fisiología</h3>
-<p class="ga-p">El alcohol no es un macronutriente, pero aporta energía: 7 kcal por gramo, casi el doble que las proteínas o carbohidratos (4 kcal/g) y cerca de las grasas (9 kcal/g). Esa energía no se usa igual que la de los alimentos.</p>
-<p class="ga-p">Cuando consumes alcohol, el cuerpo lo prioriza sobre todas las demás fuentes de energía. El hígado lo metaboliza primero porque, en cantidades altas, es tóxico. Mientras esto ocurre, el cuerpo posterga el uso de grasa y carbohidratos como combustible.</p>
-<p class="ga-p">Esto tiene tres consecuencias prácticas:</p>
-<ul class="ga-list"><li>La quema de grasa se reduce mientras hay alcohol en el sistema.</li></ul>
-<ul class="ga-list"><li>La energía no usada de los alimentos consumidos junto al alcohol tiene mayor probabilidad de almacenarse.</li></ul>
-<ul class="ga-list"><li>La síntesis proteica muscular puede verse comprometida en consumos elevados, especialmente cerca del entrenamiento.</li></ul>
-<p class="ga-p">No es que el alcohol “engorde” por sí solo. Es que altera el orden en que el cuerpo usa los combustibles disponibles.</p>
-<h3 class="ga-h3" id="el-impacto-real-va-mas-alla-de-las-calorias">El impacto real va más allá de las calorías</h3>
-<p class="ga-p">Si solo fuera por calorías, el alcohol sería manejable contándolo dentro del total diario. El problema es que afecta varios sistemas a la vez:</p>
-<ul class="ga-list"><li><strong>Sueño: </strong>incluso cantidades moderadas reducen la calidad del sueño profundo y REM. Puedes dormir las mismas horas y descansar peor.</li></ul>
-<ul class="ga-list"><li><strong>Recuperación: </strong>disminuye la síntesis proteica y altera la regulación hormonal post-entrenamiento.</li></ul>
-<ul class="ga-list"><li><strong>Decisiones alimentarias: </strong>baja la inhibición y suele venir acompañado de comidas densas en energía. La “cena con vino” rara vez es solo el vino.</li></ul>
-<ul class="ga-list"><li><strong>Hidratación: </strong>el alcohol es diurético. Más líquido perdido, peor recuperación.</li></ul>
-<ul class="ga-list"><li><strong>Adherencia al día siguiente: </strong>mal sueño + deshidratación + resaca leve = peores decisiones alimentarias y menor capacidad de entrenamiento.</li></ul>
-<p class="ga-p">El impacto del alcohol no se mide solo en el momento del consumo. Se mide en las 24–48 horas siguientes.</p>
-<h3 class="ga-h3" id="como-gestionarlo-con-criterio">Cómo gestionarlo con criterio</h3>
-<p class="ga-p">Eliminarlo no es la única opción válida ni necesariamente la más realista. Para la mayoría de personas, una gestión inteligente funciona mejor que una prohibición absoluta.</p>
-<ul class="ga-list"><li><strong>Frecuencia antes que cantidad. </strong>Una copa frecuente impacta más que una cena social puntual con varias copas. Reducir frecuencia suele tener más efecto que reducir cantidad por evento.</li></ul>
-<ul class="ga-list"><li><strong>Distancia con el entrenamiento. </strong>Consumir alcohol en las horas posteriores a entrenar fuerza compromete la adaptación. Si vas a beber, intenta que sea en días alejados de sesiones clave.</li></ul>
-<ul class="ga-list"><li><strong>Acompáñalo con proteína y agua. </strong>Una cena con proteína suficiente y agua entre copas reduce el impacto sobre el apetito al día siguiente y mejora la recuperación.</li></ul>
-<ul class="ga-list"><li><strong>Cuenta el alcohol, no lo ignores. </strong>Si estás en una etapa de pérdida de grasa o ganancia controlada, el alcohol entra en el cómputo energético del día. Ignorarlo es la razón más común de estancamientos sin explicación aparente.</li></ul>
-<ul class="ga-list"><li><strong>Identifica el patrón, no el evento. </strong>Una cena al mes con varias copas no rompe nada. Tres copas la mayoría de noches sí. Lo que define el impacto es la frecuencia sostenida.</li></ul>
-<h3 class="ga-h3" id="cuando-conviene-reducirlo-o-suspenderlo">Cuándo conviene reducirlo o suspenderlo</h3>
-<p class="ga-p">Hay etapas donde reducir o suspender el consumo deja resultados claros y rápidos:</p>
-<ul class="ga-list"><li>Etapas de pérdida de grasa controlada.</li></ul>
-<ul class="ga-list"><li>Ganancia muscular planificada con entrenamiento exigente.</li></ul>
-<ul class="ga-list"><li>Periodos de mal descanso o estrés alto sostenido.</li></ul>
-<ul class="ga-list"><li>Estancamiento real con todo lo demás bien planteado.</li></ul>
-<ul class="ga-list"><li>Cuando la frecuencia se vuelve diaria o casi diaria sin notarlo.</li></ul>
-<p class="ga-p">No es necesario eliminarlo de forma permanente. Es necesario saber cuándo dejarlo fuera del sistema y cuándo puede convivir con él.</p>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">A partir de hoy</div><ul class="ga-takeaway-list ga-takeaway-list-num"><li>Identifica tu frecuencia real de consumo (semana típica, no semana ideal).</li><li>Si está alineada con tu objetivo, mantén la gestión actual.</li><li>Si no, ajusta primero la frecuencia, después la cantidad.</li><li>En etapas exigentes, considéralo dentro del cómputo energético del día.</li><li>Recuerda: el problema rara vez es una copa; suele ser un patrón sostenido que no se está mirando.</li></ul></div></div>
-<div class="ga-takeaway"><div class="ga-takeaway-label">En esencia</div><div class="ga-takeaway-section"><div class="ga-takeaway-title">Ideas clave</div><ul class="ga-takeaway-list"><li>El alcohol aporta 7 kcal por gramo y altera el orden en que el cuerpo usa los combustibles.</li><li>Su impacto real se mide en las 24–48 horas siguientes, no solo en el momento.</li><li>Frecuencia pesa más que cantidad puntual.</li><li>Es la causa más común de estancamientos cuando “todo lo demás está bien”.</li><li>Gestión con criterio funciona mejor que prohibición absoluta para la mayoría de personas.</li></ul></div></div>
-<button class="ga-mark-read" data-mark="bonus-1-alcohol-la-variable-subestimada"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="bonus-2-ayuno-cuando-tiene-sentido" data-level="1" data-track="3">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">3 min de lectura</span></div>
-<h1 class="ga-h1" id="bonus-2-ayuno-cuando-tiene-sentido">Bonus 2 — Ayuno: cuándo tiene sentido</h1>
-</div>
-<h3 class="ga-h3" id="que-es-el-ayuno-sin-mistica">Qué es el ayuno (sin mística)</h3>
-<p class="ga-p">El ayuno es un periodo voluntario sin ingesta calórica, en el que la alimentación se concentra dentro de una ventana de tiempo determinada. En la práctica, suele implicar alargar el tiempo entre la última comida del día y la primera del día siguiente.</p>
-<p class="ga-p">Ayunar no es dejar de comer ni “aguantarse el hambre”. Es una forma de organizar cuándo comes, no cuánto comes por definición. Una persona que ayuna correctamente sigue cubriendo sus requerimientos diarios de energía y nutrientes.</p>
-<p class="ga-p">La diferencia está en la distribución horaria, no en la intención de comer menos.</p>
-<h3 class="ga-h3" id="que-dice-la-ciencia-sobre-el-ayuno">Qué dice la ciencia sobre el ayuno</h3>
-<p class="ga-p">Desde el punto de vista científico, el ayuno no cambia las reglas de balance energético corporal: cuánta energía consumes en relación con la que gastas.</p>
-<p class="ga-p">Por eso, el ayuno no es superior a otras estrategias bien estructuradas para bajar grasa. Sin embargo, la evidencia muestra que el ayuno puede aportar beneficios en salud metabólica cuando forma parte de un sistema bien armado.</p>
-<h3 class="ga-h3" id="que-beneficios-puede-aportar-el-ayuno">Qué beneficios puede aportar el ayuno</h3>
-<p class="ga-p">El ayuno puede modular el entorno metabólico y hormonal.</p>
-<p class="ga-p">Se ha observado que puede mejorar la sensibilidad a la insulina, reducir picos frecuentes de glucosa, permitir periodos más prolongados de uso de grasa como combustible y favorecer señales hormonales más estables relacionadas con hambre y saciedad.</p>
-<p class="ga-p">También se ha asociado con la estimulación de procesos de mantenimiento celular como la autofagia y, en ciertos casos, con mayor claridad mental o una relación más ordenada con la comida.</p>
-<p class="ga-p">Estos efectos no son automáticos ni universales. Dependen del contexto individual, del nivel de actividad, del descanso, del estrés. Por eso, es más correcto decir que el ayuno puede apoyar la salud metabólica, no que sea una solución metabólica en sí misma.</p>
-<h3 class="ga-h3" id="lo-que-el-ayuno-puede-y-no-puede-hacer">Lo que el ayuno puede y no puede hacer</h3>
-<p class="ga-p">El ayuno no garantiza pérdida de grasa por sí solo, no compensa una alimentación desordenada, no sustituye el entrenamiento ni el descanso y no es obligatorio para estar saludable.</p>
-<p class="ga-p">No es un atajo fisiológico. Es una herramienta de organización.</p>
-<p class="ga-p">Puede ser una opción válida cuando: no sientes hambre temprano en el día, prefieres menos comidas estructuradas, reduce el “ruido” mental con la comida y encaja bien con tu entrenamiento, tu descanso y tu vida diaria.</p>
-<p class="ga-p">En estos casos, el ayuno no es sacrificio. Es simplificación del sistema.</p>
-<h3 class="ga-h3" id="cuando-el-ayuno-no-conviene">Cuándo el ayuno NO conviene</h3>
-<p class="ga-p">El ayuno no es una estrategia universal y no debe aplicarse de forma automática.</p>
-<p class="ga-p">El ayuno no es recomendable cuando genera ansiedad, se utiliza como castigo o como forma de compensar desorden, o existen antecedentes de trastornos de la conducta alimentaria.</p>
-<p class="ga-p">También conviene evaluarlo con criterio en personas que entrenan fuerza con frecuencia. Una ventana de alimentación muy estrecha puede dificultar distribuir la proteína en al menos 3–4 tomas a lo largo del día, lo que es relevante para sostener la síntesis proteica muscular. No es un impedimento absoluto, pero requiere planificación específica.</p>
-<p class="ga-p">Siempre que se decida implementar ayuno, es fundamental asegurarse de que no exista una condición patológica de base que pueda verse afectada por la restricción temporal de la ingesta: personas con patologías como diabetes, alteraciones del control glicémico, trastornos hormonales no controlados, bajo peso clínico, embarazo o lactancia, o condiciones médicas que implican medicación asociada a las comidas, debe evaluarse de forma individual, idealmente con acompañamiento profesional.</p>
-<button class="ga-mark-read" data-mark="bonus-2-ayuno-cuando-tiene-sentido"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="bonus-3-como-leer-etiquetas-y-no-caer-en-marketing" data-level="1" data-track="3">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">2 min de lectura</span></div>
-<h1 class="ga-h1" id="bonus-3-como-leer-etiquetas-y-no-caer-en-marketing">Bonus 3 — Cómo leer etiquetas y no caer en marketing</h1>
-</div>
-<h3 class="ga-h3" id="que-mirar-realmente-cuando-lees-una-etiqueta">Qué mirar realmente cuando lees una etiqueta</h3>
-<p class="ga-p">Leer es para no equivocarte siempre en los mismos puntos cuando compras alimentos procesados.</p>
-<p class="ga-p">Solo recuerdas esto: el frente del empaque no informa, vende. Y la parte de atrás es la que decide.</p>
-<p class="ga-p">Cuando tomas un producto procesado, casi toda la información útil se concentra en tres partes:</p>
-<p class="ga-p"><strong>Los ingredientes:</strong></p>
-<p class="ga-p">Dicen qué es realmente el producto. Están listados de mayor a menor cantidad, y los primeros tres suelen definir la base. Funcionan mejor listas cortas, ingredientes reconocibles y alimentos reales como punto de partida. Cuando azúcares, jarabes, maltodextrina, dextrosa o aceites refinados aparecen al inicio, el producto deja de ser una buena base frecuente.</p>
-<p class="ga-p"><strong>La porción:</strong></p>
-<p class="ga-p">Define si los números tienen sentido. Todo lo que aparece en la tabla nutricional depende del tamaño de la porción declarada, no del empaque completo. Un error común es asumir que el paquete equivale a una porción. Antes de analizar calorías o macros, pregúntate si esa porción refleja realmente lo que comerías. Si la porción es irreal, los números pierden valor práctico.</p>
-<p class="ga-p"><strong>La tabla nutricional:</strong></p>
-<p class="ga-p">Se interpreta con contexto, no como juez. Las calorías indican densidad energética, no calidad. Sirven para comparar productos. En proteína, cantidades muy bajas son decorativas; cantidades razonables empiezan a sumar, pero no reemplazan comida real. En carbohidratos, conviene prestar atención a los azúcares añadidos, ya que su consumo frecuente compromete la salud. En grasas, importa más el tipo que la cantidad total: grasas trans idealmente cero y saturadas con moderación.</p>
-<h3 class="ga-h3" id="errores-mas-comunes">Errores más comunes</h3>
-<p class="ga-p">Aquí es donde más personas se confunden: los mensajes del frente. “Sin azúcar” no significa sin impacto metabólico. “Light” puede ser bajo en grasa y alto en azúcar o aditivos. “Integral” a veces representa una fracción mínima de harina integral. Aunque el frente promete; son los ingredientes quienes confirman.</p>
-<h3 class="ga-h3" id="regla-final-para-decidir-rapido">Regla final para decidir rápido</h3>
-<p class="ga-p">Antes de comprar, hazte una sola pregunta: ¿este producto suma como base frecuente o solo encaja como consumo ocasional?</p>
-<p class="ga-p">Si suma como base, debe pasar el filtro de ingredientes y coherencia. Si es ocasional, no necesita ser perfecto en su lectura de etiqueta e ingredientes.</p>
-<button class="ga-mark-read" data-mark="bonus-3-como-leer-etiquetas-y-no-caer-en-marketing"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="cierre-criterio-metodo-y-aplicacion" data-level="1" data-track="3">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">1 min de lectura</span></div>
-<h1 class="ga-h1" id="cierre-criterio-metodo-y-aplicacion">Cierre: Criterio, método y aplicación</h1>
-</div>
-<h3 class="ga-h3" id="lo-que-te-llevas-de-esta-guia">Lo que te llevas de esta guía</h3>
-<p class="ga-p">A esta altura ya tienes lo esencial: información correcta, un marco claro y un método para tomar decisiones.</p>
-<p class="ga-p">Esta guía no buscó darte reglas rígidas, buscó algo más útil: enseñarte cómo gestionar tu alimentación con criterio.</p>
-<p class="ga-p">Es un marco flexible, pensado para adaptarse a tu realidad y acompañarte en el tiempo, no para competir contra ella.</p>
-<h3 class="ga-h3" id="como-usar-esta-guia-a-partir-de-ahora">Cómo usar esta guía a partir de ahora</h3>
-<p class="ga-p">No necesitas releer todo cada semana. Usa esta guía como referencia cuando algo se desordene.</p>
-<p class="ga-p">Vuelve a ella cuando dudes si un enfoque realmente te conviene o cuando el entorno empiece a ganar terreno.</p>
-<p class="ga-p">Esta guía no reemplaza tu criterio. Lo ordena y te ayuda a tomar mejores decisiones.</p>
-<h3 class="ga-h3" id="el-compromiso-real">El compromiso real</h3>
-<p class="ga-p">Comprometerte con este método no es hacerlo perfecto. Es aplicarlo de forma consistente, ajustar cuando sea necesario y evaluar con calma.</p>
-<p class="ga-p">El progreso no viene de acertar siempre, sino de entender qué estás haciendo, saber por qué lo haces y sostenerlo en el tiempo.</p>
-<h3 class="ga-h3" id="la-idea-final">La idea final</h3>
-<p class="ga-p">Comer mejor es cuestión de gestión.</p>
-<p class="ga-p">Cuando tienes información clara, criterio y método, la alimentación deja de ser confusa y se convierte en una herramienta predecible a tu favor.</p>
-<p class="ga-p">Eso es exactamente lo que esta guía buscó darte.</p>
-<button class="ga-mark-read" data-mark="cierre-criterio-metodo-y-aplicacion"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="aviso-legal-y-uso-del-material" data-level="1" data-track="3">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">1 min de lectura</span></div>
-<h1 class="ga-h1" id="aviso-legal-y-uso-del-material">Aviso legal y uso del material</h1>
-</div>
-<p class="ga-p">La información contenida en esta guía tiene fines educativos y de orientación general. No aborda el diagnóstico, ni tratamiento de condiciones médicas, ni sustituye la evaluación de un profesional de la salud. Ante la presencia de condiciones médicas, o situaciones especiales de salud, se recomienda consultar con un profesional de la salud.</p>
-<p class="ga-p">Este material es de uso personal y exclusivo para clientes activos del programa de coaching. Queda prohibida su reproducción total o parcial, distribución, modificación o comercialización sin la autorización expresa del autor.</p>
-<p class="ga-p">© Mauro Morón — Todos los derechos reservados.</p>
-<button class="ga-mark-read" data-mark="aviso-legal-y-uso-del-material"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
-<div class="ga-section" data-section="referencias-y-fuentes" data-level="1" data-track="3">
-<div class="ga-h1-wrap">
-<div class="ga-h1-meta"><span class="ga-h1-time">2 min de lectura</span></div>
-<h1 class="ga-h1" id="referencias-y-fuentes">Referencias y fuentes</h1>
-</div>
-<h3 class="ga-h3" id="sobre-el-respaldo-de-esta-guia">Sobre el respaldo de esta guía</h3>
-<p class="ga-p">El contenido de esta guía se fundamenta en la formación recibida a través de la International Sports Sciences Association (ISSA), institución que sustenta sus materiales y certificaciones en evidencia científica consolidada en fisiología humana, metabolismo energético, nutrición deportiva, composición corporal, sueño y conducta alimentaria.</p>
-<p class="ga-p">Las decisiones técnicas, rangos y principios aplicados a lo largo de esta guía provienen del marco de trabajo de las siguientes formaciones ISSA:</p>
-<ul class="ga-list"><li>Certified Personal Trainer (CPT)</li></ul>
-<ul class="ga-list"><li>Certified Nutritionist</li></ul>
-<ul class="ga-list"><li>Certified Strength and Conditioning Coach</li></ul>
-<ul class="ga-list"><li>Certified Corrective Exercise Specialist</li></ul>
-<ul class="ga-list"><li>Certified Online Coach</li></ul>
-<h3 class="ga-h3" id="literatura-cientifica-que-sustenta-el-marco-issa">Literatura científica que sustenta el marco ISSA</h3>
-<p class="ga-p">A continuación se incluyen referencias seleccionadas que forman parte del cuerpo de evidencia citado en los materiales de formación ISSA y que respaldan los principios aplicados en esta guía:</p>
-<ul class="ga-list"><li>Hill, J. O., Wyatt, H. R., &amp; Peters, J. C. (2012). Energy balance and obesity. Circulation.</li></ul>
-<ul class="ga-list"><li>Hall, K. D., et al. (2016). Energy balance and its components: implications for body weight regulation. The American Journal of Clinical Nutrition.</li></ul>
-<ul class="ga-list"><li>Phillips, S. M., &amp; Van Loon, L. J. (2011). Dietary protein for athletes: from requirements to metabolic advantage. Journal of Sports Sciences.</li></ul>
-<ul class="ga-list"><li>Morton, R. W., et al. (2018). Protein intake to maximize muscle mass. British Journal of Sports Medicine.</li></ul>
-<ul class="ga-list"><li>National Academies of Sciences, Engineering, and Medicine. (2005). Dietary Reference Intakes for Energy, Carbohydrate, Fat, Protein, and Amino Acids.</li></ul>
-<ul class="ga-list"><li>Spiegel, K., Leproult, R., &amp; Van Cauter, E. (2004). Impact of sleep debt on metabolic and endocrine function.</li></ul>
-<ul class="ga-list"><li>Broussard, J. L., &amp; Van Cauter, E. (2016). Disturbances of sleep and circadian rhythms and metabolism. Endocrine Reviews.</li></ul>
-<ul class="ga-list"><li>Jeukendrup, A. E. (2014). Carbohydrate intake during exercise. Sports Medicine.</li></ul>
-<ul class="ga-list"><li>Anton, S. D., et al. (2018). Flipping the metabolic switch: intermittent fasting. Obesity.</li></ul>
-<ul class="ga-list"><li>Wing, R. R., &amp; Phelan, S. (2005). Long-term weight loss maintenance. The American Journal of Clinical Nutrition.</li></ul>
-<h3 class="ga-h3" id="nota-sobre-el-uso-de-referencias">Nota sobre el uso de referencias</h3>
-<p class="ga-p">Esta guía es un material de aplicación práctica, no un documento académico. Las referencias se incluyen para mostrar la base científica del marco de trabajo, no como respaldo individualizado de cada afirmación. Las decisiones operativas se construyen sobre la integración de este cuerpo de evidencia, traducido a contexto real de aplicación.</p>
-<button class="ga-mark-read" data-mark="referencias-y-fuentes"><span class="check-icon"></span><span class="ga-mark-read-label">Marcar como leído</span></button>
-</div>
+.ga-toc-bookmarks-empty {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--text-mute);
+  font-size: 13px;
+  line-height: 1.5;
+}
 
-    <div class="sub-next" onclick="go('s-biblioteca')">
-      <div class="sub-next-eyebrow">Volver a</div>
-      <div class="sub-next-title">Biblioteca</div>
-      <div class="sub-next-arr">→</div>
-    </div>
+/* READER */
+.ga-reader {
+  padding: 0 1.25rem 2rem;
+  max-width: 100%;
+  position: relative;
+}
+#s-guia-alimentacion .ga-reader > *:not(.bg-halo):not(.ga-search-modal):not(.ga-toc-drawer){ position: relative; z-index: 1; }
 
-    <div class="footer">
-      <div class="footer-brand">ENTRENA CON MÉTODO</div>
-      <div class="footer-tagline">Mauro Morón · ISSA Training and Nutrition Coach</div>
-      <div class="footer-rights">© 2026 Mauro Morón · Acceso personal e intransferible</div>
-    </div>
-  </div>
+/* ============ PANEL CONTINUAR LEYENDO (al volver) ============ */
+.ga-resume {
+  background: #ffffff;
+  color: var(--text);
+  border-radius: 20px;
+  padding: 1.6rem 1.4rem;
+  margin: 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 10px 28px rgba(20,20,20,.06);
+  animation: gaResumeIn .5s cubic-bezier(.16,.84,.3,1);
+}
+@keyframes gaResumeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ga-resume-eyebrow {
+  font-size: 10.5px; letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--olive);
+  font-weight: 700;
+  margin-bottom: .75rem;
+}
+.ga-resume-hi {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+}
+.ga-resume-progress-block {
+  margin-bottom: 1.25rem;
+}
+.ga-resume-progress-row {
+  display: flex; align-items: baseline; gap: 10px;
+  margin-bottom: .65rem;
+}
+.ga-resume-pct {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.ga-resume-pct-label {
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 600;
+}
+.ga-resume-bar {
+  height: 4px;
+  background: rgba(0,0,0,.07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ga-resume-bar-fill {
+  height: 100%;
+  background: var(--olive);
+  border-radius: 2px;
+  transition: width .8s cubic-bezier(.16,.84,.3,1);
+}
+.ga-resume-status { display: none; }
 
-  <div class="ga-fab-stack" id="ga-fab-stack">
-    <button class="ga-fab-btn ga-fab-btn-round" onclick="gaToggleSearch()" aria-label="Buscar">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-      <span class="ga-fab-tooltip">Buscar</span>
-    </button>
-    <button class="ga-fab-btn ga-fab-btn-primary ga-fab-btn-pill" onclick="gaToggleAssistant()" aria-label="Asistente de lectura">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a4 4 0 0 0-4 4v1H6a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h.5M12 3a4 4 0 0 1 4 4v1h2a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-.5M9 12v2a3 3 0 0 0 3 3 3 3 0 0 0 3-3v-2M9 17v1a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="ga-fab-btn-label">Asistente de lectura</span>
-    </button>
-  </div>
+/* Conteo de capítulos al lado del % */
+.ga-resume-count {
+  margin-left: auto;
+  font-size: 11.5px;
+  letter-spacing: .3px;
+  color: var(--text-mute);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
 
-  <!-- Modal del Asistente de lectura (clona el contenido de #ga-resume) -->
-  <div class="ga-assistant-modal" id="ga-assistant-modal" style="display:none;">
-    <div class="ga-assistant-backdrop" onclick="gaToggleAssistant()"></div>
-    <div class="ga-assistant-content">
-      <button class="ga-assistant-close" onclick="gaToggleAssistant()" aria-label="Cerrar">×</button>
-      <div id="ga-assistant-body"></div>
-    </div>
-  </div>
+/* Pills por track (Lo esencial / Profundizar / Extra) */
+.ga-resume-tracks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+.ga-resume-track-pill {
+  background: var(--bg-soft, #faf9f5);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  padding: .7rem .65rem;
+  text-align: left;
+  transition: background .2s, border-color .2s;
+}
+.ga-resume-track-pill.done {
+  background: rgba(122,140,90,.10);
+  border-color: rgba(122,140,90,.35);
+}
+.ga-resume-track-pill-label {
+  font-size: 9.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 700;
+  margin-bottom: .35rem;
+  line-height: 1.1;
+}
+.ga-resume-track-pill-count {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: .5px;
+}
+.ga-resume-track-pill.done .ga-resume-track-pill-count { color: var(--olive-dark); }
+.ga-resume-track-pill-count .ga-resume-track-pill-total {
+  font-size: 13px;
+  color: var(--text-mute);
+  margin-left: 2px;
+}
 
+/* "Siguiente capítulo" — destacado con olivo de marca */
+.ga-resume-next {
+  background: rgba(122,140,90,.08);
+  border: 1px solid rgba(122,140,90,.25);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+}
+.ga-resume-next-label {
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--olive-dark);
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+.ga-resume-next-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.ga-resume-next-time {
+  font-size: 11.5px;
+  color: var(--text-mute);
+  margin-top: .35rem;
+  font-weight: 500;
+}
+
+/* Estado "guía completada" */
+.ga-resume.is-done .ga-resume-where,
+.ga-resume.is-done .ga-resume-next { display: none; }
+.ga-resume-where {
+  background: var(--bg-soft, #faf9f5);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+}
+.ga-resume-where-label {
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+.ga-resume-where-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.ga-resume-actions {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.ga-resume-btn-primary {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--text);
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px; font-weight: 600; letter-spacing: .3px;
+  cursor: pointer;
+  transition: transform .15s;
+}
+.ga-resume-btn-primary:active { transform: scale(.98); }
+.ga-resume-btn-primary .arr {
+  font-size: 15px;
+  transition: transform .2s;
+}
+.ga-resume-btn-primary:hover .arr { transform: translateX(3px); }
+
+.ga-resume-btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(0,0,0,.12);
+  padding: 13px 20px;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px; font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+}
+.ga-resume-btn-secondary:hover {
+  background: rgba(0,0,0,.03);
+}
+
+/* Collapsibles "Por leer" / "Leídos" dentro del asistente */
+.ga-resume-collapse {
+  margin-top: 12px;
+  background: var(--bg-soft, #faf9f5);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.ga-resume-collapse[open] { background: #fff; }
+.ga-resume-collapse-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: .85rem 1rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.ga-resume-collapse-head::-webkit-details-marker { display: none; }
+.ga-resume-collapse-label {
+  flex: 1;
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--olive-dark);
+  font-weight: 700;
+}
+.ga-resume-collapse-count {
+  font-size: 12px;
+  color: var(--text-mute);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ga-resume-collapse-arr {
+  color: var(--text-mute);
+  font-size: 14px;
+  transition: transform .25s;
+  line-height: 1;
+}
+.ga-resume-collapse[open] .ga-resume-collapse-arr { transform: rotate(180deg); }
+.ga-resume-collapse-body {
+  padding: 0 .75rem .25rem;
+}
+.ga-resume-ch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: .65rem .35rem;
+  border-top: .5px solid rgba(0,0,0,.06);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: background .15s;
+  border-radius: 6px;
+}
+.ga-resume-ch:first-child { border-top: none; }
+.ga-resume-ch:hover { background: rgba(122,140,90,.06); }
+.ga-resume-ch-check {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,.2);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.ga-resume-ch.done .ga-resume-ch-check {
+  background: var(--olive);
+  border-color: var(--olive);
+}
+.ga-resume-ch.done .ga-resume-ch-check::after {
+  content: '';
+  width: 4px; height: 7px;
+  border-right: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+.ga-resume-ch.next .ga-resume-ch-check {
+  border-color: var(--olive);
+  box-shadow: 0 0 0 3px rgba(122,140,90,.18);
+}
+.ga-resume-ch-text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.35;
+}
+.ga-resume-ch.done .ga-resume-ch-text { color: var(--text-soft); }
+.ga-resume-ch.next .ga-resume-ch-text { font-weight: 700; }
+.ga-resume-ch-time {
+  font-size: 10.5px;
+  color: var(--text-mute);
+  font-weight: 600;
+  flex-shrink: 0;
+  letter-spacing: .2px;
+}
+.ga-resume-ch-empty {
+  padding: .8rem .35rem 1rem;
+  font-size: 12.5px;
+  color: var(--text-mute);
+  text-align: center;
+}
+
+/* ============ ASISTENTE DE LECTURA — Modal overlay ============ */
+.ga-assistant-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 1rem 1rem;
+  animation: gaFadeIn .2s ease;
+  overflow-y: auto;
+}
+.ga-assistant-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(20,20,20,.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.ga-assistant-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 24px 56px rgba(0,0,0,.22);
+  padding: 1.6rem 1.4rem 1.4rem;
+  animation: gaSlideDown .3s cubic-bezier(.16,.84,.3,1);
+}
+.ga-assistant-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.05);
+  border: none;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+}
+.ga-assistant-close:hover { background: rgba(0,0,0,.1); }
+/* Dentro del modal, el ga-resume no necesita borde duplicado ni sombra propia */
+.ga-assistant-content .ga-resume {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  animation: none;
+}
+
+/* ============ FAB Stack ====== */
+.ga-fab-stack {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  animation: gaFabIn .5s cubic-bezier(.16,1.5,.5,1) .3s both;
+}
+@keyframes gaFabIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.ga-fab-btn {
+  background: #fff;
+  color: var(--text);
+  border: 1px solid rgba(0,0,0,.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.04);
+  transition: transform .2s, box-shadow .2s, background .2s;
+  position: relative;
+}
+.ga-fab-btn-round { width: 46px; height: 46px; border-radius: 50%; }
+.ga-fab-btn-pill {
+  padding: 12px 18px 12px 14px;
+  border-radius: 100px;
+  gap: 8px;
+}
+.ga-fab-btn-pill .ga-fab-btn-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  white-space: nowrap;
+}
+.ga-fab-btn:hover {
+  transform: translateX(-2px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(0,0,0,.14), 0 2px 6px rgba(0,0,0,.06);
+}
+.ga-fab-btn-round:hover { background: #faf8f3; }
+.ga-fab-btn:active { transform: scale(.97); }
+.ga-fab-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.ga-fab-btn-primary {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+.ga-fab-btn-primary:hover {
+  background: #000;
+}
+
+/* Tooltip al hover */
+.ga-fab-tooltip {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--text);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .3px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+.ga-fab-btn:hover .ga-fab-tooltip {
+  opacity: 1;
+}
+/* En mobile táctil no se muestran tooltips */
+@media (hover: none) {
+  .ga-fab-tooltip { display: none; }
+}
+
+/* ELIMINAR FAB viejo */
+.ga-fab, .ga-fab-pct, .ga-fab-label { display: none !important; }
+
+/* ELIMINAR botones bookmark (descartados) */
+.ga-bookmark { display: none !important; }
+
+/* COVER editorial sin redundancia */
+.ga-cover {
+  padding: 2rem 0 1.25rem;
+  border-bottom: none;
+  margin-bottom: 1.25rem;
+}
+.ga-cover-eyebrow {
+  font-size: 10.5px; letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-mute); font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.ga-cover-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 60px; line-height: .9;
+  letter-spacing: 1.5px;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.ga-cover-line {
+  width: 56px; height: 2px;
+  background: var(--text);
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+}
+.ga-cover-statement {
+  font-family: 'Inter', sans-serif;
+  font-size: 21px;
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 2rem;
+  letter-spacing: -.3px;
+}
+.ga-cover-statement strong { font-weight: 700; }
+.ga-cover-statement strong {
+  font-style: normal;
+  font-weight: 700;
+}
+.ga-cover-image-slot,
+.ga-cover-image-placeholder { display: none !important; }
+.ga-cover-image-placeholder-hidden {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.ga-cover-meta {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 2rem;
+}
+.ga-cover-meta-row {
+  font-size: 13px;
+  color: var(--text-mute);
+  line-height: 1.5;
+}
+.ga-cover-meta-row strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* TIP de cómo aprovechar la guía — nota minimalista, no card */
+.ga-cover-tip {
+  background: transparent;
+  border-left: none;
+  padding: 0;
+  border-radius: 0;
+  margin: .5rem 0 1.25rem;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ga-cover-tip-label {
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--olive-dark);
+  margin: 0;
+  flex-shrink: 0;
+}
+.ga-cover-tip-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-mute);
+  font-weight: 400;
+  margin: 0;
+  flex: 1 1 100%;
+}
+.ga-cover-tip-text strong { font-weight: 600; color: var(--text-soft); }
+
+/* H1 wrap con número, tiempo, bookmark */
+.ga-section {
+  margin-bottom: 1.5rem;
+  padding-top: .5rem;
+  scroll-margin-top: 90px;
+  position: relative;
+}
+.ga-h1-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 2rem 0 1.1rem;
+  padding-top: 1.25rem;
+  border-top: .5px solid rgba(0,0,0,.08);
+  scroll-margin-top: 90px;
+}
+.ga-section:first-of-type .ga-h1-wrap {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+/* Título primero, tiempo después */
+.ga-h1-wrap .ga-h1 { order: 1; }
+.ga-h1-wrap .ga-h1-meta { order: 2; }
+.ga-h1-wrap .ga-bookmark { order: 3; align-self: flex-end; margin-top: -34px; }
+.ga-h1-meta {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.ga-h1-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--olive);
+  font-variant-numeric: tabular-nums;
+}
+.ga-h1-time {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 600;
+}
+.ga-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--text);
+  flex: 1;
+  margin: 0;
+  scroll-margin-top: 90px;
+}
+
+.ga-bookmark {
+  background: transparent;
+  border: none;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  color: rgba(0,0,0,.25);
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+  margin-top: 2px;
+}
+.ga-bookmark:hover {
+  background: rgba(0,0,0,.04);
+  color: var(--text);
+}
+.ga-bookmark svg { width: 18px; height: 18px; }
+.ga-bookmark.saved {
+  color: var(--text);
+}
+.ga-bookmark.saved svg path {
+  fill: var(--text);
+}
+
+/* H2 — sub-sección, con línea olivo de marca */
+.ga-h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+  margin: 2.25rem 0 1rem;
+  letter-spacing: -.2px;
+  padding-top: .75rem;
+  border-top: 2px solid var(--olive);
+  scroll-margin-top: 90px;
+}
+/* H3 — bloque interno, eyebrow color olivo en mayúsculas */
+.ga-h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--olive-dark);
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  margin: 1.75rem 0 .65rem;
+  scroll-margin-top: 90px;
+}
+
+/* CUERPO Inter 16px — lectura larga limpia, sin cursiva */
+.ga-p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 1.1rem;
+  font-weight: 400;
+  letter-spacing: -.1px;
+}
+.ga-p strong {
+  font-weight: 700;
+  color: var(--text);
+}
+.ga-p em {
+  font-style: normal;
+  color: var(--olive-dark);
+  font-weight: 600;
+}
+.ga-caption { display: none !important; }
+.ga-caption-old-hidden {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-mute);
+  font-weight: 500;
+  margin: 0 0 1rem;
+  text-align: center;
+  letter-spacing: .2px;
+}
+.ga-list {
+  list-style: none;
+  padding: 0;
+  margin: .5rem 0 1.4rem;
+}
+.ga-list li {
+  position: relative;
+  padding: 0 0 0 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: .7rem;
+  font-weight: 400;
+}
+.ga-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--olive);
+}
+.ga-list li strong { font-weight: 700; }
+.ga-list li em { font-style: normal; color: var(--olive-dark); font-weight: 600; }
+
+/* PULL QUOTE ELIMINADO */
+.ga-pullquote { display: none !important; }
+
+/* ============ "PARA LLEVAR" — editorial premium minimalista ====== */
+.ga-takeaway {
+  margin: 2.5rem 0 1rem;
+  padding: 2rem 1.6rem 1.75rem;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfaf5 100%);
+  border: none;
+  border-radius: 18px;
+  color: var(--text);
+  box-shadow: 0 14px 40px rgba(20,20,20,.06), 0 2px 8px rgba(20,20,20,.03);
+  position: relative;
+}
+.ga-takeaway::before {
+  content: '';
+  position: absolute;
+  top: 1.6rem; left: 1.6rem;
+  width: 28px; height: 2px;
+  background: var(--olive);
+  border-radius: 2px;
+}
+.ga-takeaway-label {
+  font-size: 11px;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+  color: var(--olive);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  padding-top: .65rem;
+  padding-bottom: 1rem;
+  border-bottom: .5px solid rgba(0,0,0,.06);
+}
+.ga-takeaway-section {
+  margin-bottom: 1.75rem;
+}
+.ga-takeaway-section:last-child { margin-bottom: 0; }
+.ga-takeaway-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+.ga-takeaway-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: takeaway-n;
+}
+.ga-takeaway-list li {
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: .85rem;
+  padding-left: 18px;
+  position: relative;
+}
+.ga-takeaway-list li:last-child { margin-bottom: 0; }
+.ga-takeaway-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 9px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--olive);
+}
+.ga-takeaway-list li strong { color: var(--text); font-weight: 700; }
+
+/* Lista numerada con números limpios sin círculo */
+.ga-takeaway-list-num {
+  counter-reset: takeaway-n;
+}
+.ga-takeaway-list-num li {
+  counter-increment: takeaway-n;
+  padding-left: 32px;
+}
+.ga-takeaway-list-num li::before {
+  content: counter(takeaway-n, decimal-leading-zero);
+  background: transparent;
+  border-radius: 0;
+  width: auto; height: auto;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+  color: var(--olive);
+  opacity: 1;
+  top: 4px;
+  left: 0;
+  text-align: left;
+  display: block;
+}
+
+/* BOTÓN "marcar como leído" al final de cada capítulo */
+.ga-mark-read {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 1.75rem auto 1.25rem;
+  padding: 14px 28px;
+  background: rgba(122,140,90,.10);
+  border: 1.5px solid var(--olive);
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--olive-dark);
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .3px;
+  box-shadow: 0 4px 14px rgba(122,140,90,.18);
+}
+.ga-mark-read:hover {
+  background: rgba(122,140,90,.18);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(122,140,90,.25);
+}
+.ga-mark-read .check-icon {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  position: relative;
+  flex-shrink: 0;
+}
+.ga-mark-read.read {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+.ga-mark-read.read .check-icon {
+  background: #fff;
+  border-color: #fff;
+}
+.ga-mark-read.read .check-icon::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 2px;
+  width: 4px; height: 7px;
+  border-right: 1.5px solid var(--text);
+  border-bottom: 1.5px solid var(--text);
+  transform: rotate(45deg);
+}
+
+/* Sin manchas de fondo dentro de la guía */
+#s-guia-alimentacion .sub-area::before,
+#s-guia-alimentacion .sub-area::after { display: none !important; }
+
+/* ============================================================ */
+/* ============ TRACKS — 3 caminos colapsables ================ */
+/* ============================================================ */
+.ga-tracks {
+  margin: 0 0 2.5rem;
+}
+.ga-tracks-intro {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-left: .25rem;
+}
+.ga-track {
+  background: #fff;
+  border: .5px solid rgba(0,0,0,.07);
+  border-radius: 16px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,.025), 0 6px 18px rgba(0,0,0,.035);
+}
+.ga-track-head {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 1.25rem 1.3rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+.ga-track-head-main { flex: 1; min-width: 0; }
+.ga-track-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: .8px;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.ga-track-desc {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.ga-track-meta {
+  font-size: 11px;
+  color: var(--text-mute);
+  font-weight: 500;
+  letter-spacing: .3px;
+}
+.ga-track-count { font-weight: 600; color: var(--text-soft); }
+.ga-track-toggle {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: #f0eee7;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: transform .3s cubic-bezier(.16,.84,.3,1), background .2s;
+}
+.ga-track-toggle svg { width: 16px; height: 16px; color: var(--text); }
+.ga-track.open .ga-track-toggle {
+  transform: rotate(180deg);
+  background: var(--text);
+}
+.ga-track.open .ga-track-toggle svg { color: #fff; }
+
+/* Barra de progreso del track */
+.ga-track-progress {
+  height: 3px;
+  background: rgba(0,0,0,.05);
+  margin: 0 1.3rem;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ga-track-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--text);
+  border-radius: 2px;
+  transition: width .6s cubic-bezier(.16,.84,.3,1);
+}
+
+/* Body colapsable */
+.ga-track-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s cubic-bezier(.16,.84,.3,1);
+}
+.ga-track.open .ga-track-body {
+  max-height: 800px;
+}
+.ga-track-ch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 1.3rem;
+  text-decoration: none;
+  color: var(--text);
+  border-top: .5px solid rgba(0,0,0,.05);
+  transition: background .15s;
+}
+.ga-track-ch:first-child { border-top: .5px solid rgba(0,0,0,.07); margin-top: .6rem; }
+.ga-track-ch:hover { background: #faf8f3; }
+.ga-track-ch-check {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,.15);
+  flex-shrink: 0;
+  position: relative;
+  transition: all .25s cubic-bezier(.5,1.6,.5,1);
+}
+.ga-track-ch.read .ga-track-ch-check {
+  background: var(--text);
+  border-color: var(--text);
+}
+.ga-track-ch.read .ga-track-ch-check::after {
+  content: '';
+  position: absolute;
+  left: 5px; top: 3px;
+  width: 5px; height: 9px;
+  border-right: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(45deg);
+}
+.ga-track-ch-text {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text);
+}
+.ga-track-ch.read .ga-track-ch-text {
+  color: var(--text-mute);
+}
+.ga-track-ch-time {
+  font-size: 11px;
+  color: var(--text-mute);
+  font-weight: 500;
+  flex-shrink: 0;
+  letter-spacing: .2px;
+}
+
+/* Label de grupo en el drawer del índice */
+.ga-toc-group-label {
+  font-size: 10.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 700;
+  padding: 1.25rem 1.25rem .5rem;
+}
+.ga-toc-group-label:first-child { padding-top: .75rem; }
+
+/* ============ FADE-IN sutil al hacer scroll ================= */
+.ga-section {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .6s cubic-bezier(.16,.84,.3,1), transform .6s cubic-bezier(.16,.84,.3,1);
+}
+.ga-section.ga-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* La primera sección y los tracks siempre visibles (no fade) */
+.ga-tracks, .ga-cover {
+  opacity: 1;
+}
+
+/* ============ MICRO-ANIMACIÓN al marcar leído =============== */
+@keyframes gaCheckPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.ga-mark-read.just-marked {
+  animation: gaMarkPulse .5s ease;
+}
+@keyframes gaMarkPulse {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+.ga-mark-read.read .check-icon {
+  animation: gaCheckPop .4s cubic-bezier(.5,1.6,.5,1);
+}
+.ga-track-ch-check.just-read {
+  animation: gaCheckPop .45s cubic-bezier(.5,1.6,.5,1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* ═══ v12 · Premium 2026: asistente compacto, ritmo entre capítulos, ═══ */
+/* ═══ "En esencia" en grafito y tracking de marca apretado           ═══ */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Asistente de lectura: patrón .em-assist de la home, compacto ── */
+.ga-resume{
+  padding: 13px 15px 12px;
+  margin: .9rem 0 1.15rem;
+  border-radius: 22px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px .5px rgba(0,0,0,.1), 0 10px 28px rgba(74,82,56,.12);
+}
+.ga-resume-eyebrow{
+  display: flex; align-items: center; gap: 7px;
+  font-size: 9px; font-weight: 700; letter-spacing: .08em;
+  color: var(--olive-dark);
+  margin: 0 0 10px 2px;
+}
+.ga-resume-eyebrow::before{
+  content: '';
+  width: 10px; height: 12px; flex: none;
+  background: #E08E84;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 26l-7-5-7 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 26l-7-5-7 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ga-resume-row{display: flex; align-items: center; gap: 13px;}
+.ga-resume-body{flex: 1; min-width: 0;}
+.ga-resume-hi{
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px; font-weight: 600; letter-spacing: -.01em;
+  line-height: 1.3; color: var(--text);
+  margin: 0 0 2px;
+}
+/* "Siguiente capítulo" pasa a ser la línea meta bajo el título */
+.ga-resume-next{
+  background: transparent; border: none; border-radius: 0;
+  padding: 0; margin: 0;
+  display: flex; align-items: baseline; gap: 5px; flex-wrap: wrap;
+}
+.ga-resume-next-label{display: none;}
+.ga-resume-next-title{
+  font-size: 11.5px; font-weight: 500; color: var(--text-mute); line-height: 1.4;
+}
+.ga-resume-next-time{
+  font-size: 10.5px; color: var(--text-mute); opacity: .8; margin-top: 0;
+}
+/* Botón circular oliva 42px con flecha (el texto vive para lectores de pantalla) */
+.ga-resume-actions{margin: 0; flex: none;}
+.ga-resume-btn-primary{
+  width: 42px; height: 42px; padding: 0;
+  border-radius: 50%;
+  background: var(--olive);
+  display: grid; place-content: center;
+}
+.ga-resume-btn-primary:hover{background: var(--olive-dark);}
+.ga-resume-btn-primary #ga-resume-btn-primary-text{
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.ga-resume-btn-primary .arr{font-size: 17px; line-height: 1;}
+/* Progreso: barra fina integrada abajo */
+.ga-resume-progress-block{
+  margin: 11px 0 0; padding-top: 10px;
+  border-top: 1px solid rgba(0,0,0,.05);
+}
+.ga-resume-bar{height: 4px; border-radius: 100px; background: rgba(74,82,56,.10);}
+.ga-resume-progress-row{margin: 6px 0 0; gap: 5px; align-items: baseline;}
+.ga-resume-pct{
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 700; color: var(--olive-dark);
+}
+.ga-resume-pct-label{font-size: 10px; letter-spacing: .06em;}
+.ga-resume-count{font-size: 10.5px; letter-spacing: 0;}
+/* Pills de track fuera: los desplegables "Por leer/Leídos" ya cubren el detalle */
+.ga-resume-tracks{display: none;}
+.ga-resume-collapse{margin-top: 8px; border-radius: 12px;}
+.ga-resume-collapse-head{padding: 9px 12px;}
+.ga-resume-collapse-body{padding: 0 12px 8px;}
+
+/* ── 2 · Ritmo vertical: ~40% menos aire entre capítulos ── */
+.ga-section{margin-bottom: .9rem; padding-top: .3rem;}
+.ga-h1-wrap{margin: 1.2rem 0 .85rem; padding-top: .8rem;}
+.ga-h2{margin: 1.4rem 0 .8rem;}
+.ga-h3{margin: 1.1rem 0 .5rem;}
+.ga-takeaway + .ga-takeaway{margin-top: .7rem;}
+
+/* ── 3 · Portada compacta ── */
+.ga-cover{padding: 1.1rem 0 .9rem; margin-bottom: .9rem;}
+.ga-cover-eyebrow{margin-bottom: .7rem;}
+.ga-cover-title{margin-bottom: .65rem;}
+.ga-cover-line{margin-bottom: .95rem;}
+.ga-cover-statement{margin-bottom: 1.1rem;}
+.ga-cover-meta{margin-bottom: 1rem;}
+.ga-cover-tip{margin: .3rem 0 .8rem;}
+
+/* ── 4 · "En esencia": grafito compacto, texto crema, check oliva ── */
+.ga-takeaway{
+  margin: 1.4rem 0 .9rem;
+  padding: 1.05rem 1.15rem .95rem;
+  background: #141414;
+  color: #F3EFE4;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(20,20,20,.18);
+}
+.ga-takeaway::before{display: none;}
+.ga-takeaway-label{
+  font-size: 10px; letter-spacing: .08em;
+  color: rgba(243,239,228,.55);
+  font-weight: 700;
+  margin-bottom: .7rem; padding: 0;
+  border-bottom: none;
+}
+.ga-takeaway-section{margin-bottom: 1rem;}
+.ga-takeaway-title{
+  font-size: 11px; letter-spacing: .06em;
+  color: #F3EFE4;
+  margin-bottom: .55rem;
+}
+.ga-takeaway-list li{
+  font-size: 13px; line-height: 1.5;
+  color: rgba(243,239,228,.92);
+  margin-bottom: .5rem;
+  padding-left: 20px;
+}
+.ga-takeaway-list li strong{color: #fff;}
+.ga-takeaway-list li::before{
+  content: '✓';
+  background: transparent;
+  width: auto; height: auto; border-radius: 0;
+  top: 0;
+  font-size: 12.5px; font-weight: 800;
+  color: var(--olive-light);
+}
+.ga-takeaway-list-num li{padding-left: 26px;}
+.ga-takeaway-list-num li::before{
+  content: counter(takeaway-n, decimal-leading-zero);
+  font-size: 10.5px; letter-spacing: .04em;
+  color: var(--olive-light);
+  top: 2px;
+}
+
+/* ── 5 · Tracking de marca: kickers y subtítulos a .06–.08em ── */
+.ga-cover-eyebrow,
+.ga-cover-tip-label,
+.ga-h1-time,
+.ga-h3,
+.ga-toc-status,
+.ga-toc-group-label,
+.ga-toc-time,
+.ga-resume-where-label,
+.ga-resume-collapse-label,
+.ga-track-name,
+.ga-tracks-intro,
+.ga-mark-read,
+.ga-progress-info{letter-spacing: .07em !important;}
+
+/* El asistente arranca despejado del pill fijo "Volver atrás" */
+.ga-resume{margin-top: 2.4rem;}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* ═══ PORTADA CON FOTO — hero como la página entrenametodo.    ═══ */
+/* Foto de marca + velo oscuro; tipografía y tamaños Meal        */
+/* Tracker (Inter + Bebas Neue, acentos oliva). Si la foto no    */
+/* carga, queda la portada oscura con brillo oliva.              */
+/* ═══════════════════════════════════════════════════════════════ */
+.ga-cover{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 85% 12%, rgba(169,180,120,.38), rgba(169,180,120,.12) 40%, transparent 65%),
+    radial-gradient(ellipse at 10% 100%, rgba(138,149,88,.26), transparent 60%),
+    var(--black, #141414);
+  border-radius:22px;
+  padding:120px 22px 22px;
+  margin:0 0 1.5rem;
+  border-bottom:none;
+}
+.ga-cover-media{position:absolute;inset:0;pointer-events:none;}
+.ga-cover-media img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:64% 32%;
+}
+.ga-cover-shade{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(20,20,20,.44) 0%, rgba(20,20,20,.20) 34%, rgba(20,20,20,.60) 66%, rgba(20,20,20,.90) 100%);
+}
+.ga-cover > *:not(.ga-cover-media){position:relative;}
+.ga-cover-eyebrow{color:var(--olive-chip, #D4DAB8);margin-bottom:1rem;text-shadow:0 1px 12px rgba(0,0,0,.45);}
+.ga-cover-title{color:#F3EFE4;text-shadow:0 2px 22px rgba(0,0,0,.4);}
+.ga-cover-line{background:var(--olive-light, #A9B478);}
+.ga-cover-statement{color:rgba(243,239,228,.92);margin-bottom:1.4rem;text-shadow:0 1px 12px rgba(0,0,0,.5);}
+.ga-cover-statement strong{color:#F3EFE4;}
+.ga-cover-meta{margin-bottom:1.1rem;}
+.ga-cover-meta-row{color:rgba(243,239,228,.6);}
+.ga-cover-meta-row strong{color:#F3EFE4;}
+/* tip como tarjeta glass sobre la foto (hero-card de entrenametodo) */
+.ga-cover-tip{
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.22);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);
+  border-radius:16px;
+  padding:12px 14px;
+  margin:0;
+  box-shadow:0 8px 30px rgba(0,0,0,.14);
+}
+.ga-cover-tip-label{color:var(--olive-chip, #D4DAB8);}
+.ga-cover-tip-text{color:rgba(243,239,228,.85);}
+.ga-cover-tip-text strong{color:#fff;}
+/* el título de portada escala en pantallas angostas para no desbordar la tarjeta */
+.ga-cover-title{font-size:clamp(42px, 12.5vw, 60px);}
+
+/* ── Capa de marca Meal Tracker: escala tipográfica de la app ── */
+.ga-cover-title{font-size:clamp(34px, 10vw, 42px);}
+.ga-cover-statement{font-size:17px;line-height:1.4;}
+.ga-cover-eyebrow{font-size:10px;font-weight:600;}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* ═══ MARCA MEAL TRACKER — vidrio, sin bordes sólidos ══════════ */
+/* Las tarjetas de la guía siguen el mismo lenguaje que el resto   */
+/* del centro: vidrio translúcido sobre el fondo de manchas, con   */
+/* hairline blanco (brillo del vidrio) en vez de línea de color.   */
+/* ═══════════════════════════════════════════════════════════════ */
+.ga-resume,.ga-resume-next,.ga-resume-where,.ga-resume-collapse,
+.ga-search-wrap,.ga-search-result,.ga-assistant-content,.ga-track,
+.ga-takeaway,.ga-callout,.ga-note,.ga-quote-card,.ga-table-wrap{
+  background:rgba(255,255,255,.62) !important;
+  border:1px solid rgba(255,255,255,.65) !important;
+  box-shadow:0 1px 0 rgba(255,255,255,.85) inset, 0 10px 30px rgba(96,102,72,.12), 0 2px 6px rgba(96,102,72,.05) !important;
+}
+.ga-resume,.ga-resume-next,.ga-assistant-content,.ga-track{border-radius:24px !important;}
+.ga-search-wrap,.ga-resume-track-pill{border-radius:100px !important;}
+/* Botones flotantes: pastilla oscura, sin borde */
+.ga-topbar-btn,.ga-fab-btn,.ga-resume-btn-secondary{border-color:transparent !important;}
