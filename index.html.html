@@ -5447,7 +5447,7 @@ body.locked .em-grain{display:none;}
 
 /* ── 1 · Tokens: todo acento converge al oliva de marca ─────────── */
 #s-programa, #s-journey, #s-app-train, #s-faq,
-#s-onboarding, #s-biblioteca, #s-ea-quickstart{
+#s-onboarding, #s-capsulas, #s-ea-quickstart{
   --accent:var(--olive);
   --accent-dark:var(--olive-dark);
   --accent-soft:var(--olive-soft);
@@ -5471,7 +5471,7 @@ body.locked .em-grain{display:none;}
 #s-app-train .progm-page,
 #s-journey .sub-area,
 #s-faq .sub-area,
-#s-biblioteca .sub-area,
+#s-capsulas .sub-area,
 #s-onboarding .hub-area,
 #s-ea-quickstart .qs-area{ background:var(--bg) !important; }
 #s-journey .bg-halo-1, #s-app-train .bg-halo-1{
@@ -5483,7 +5483,7 @@ body.locked .em-grain{display:none;}
 
 /* ── 3 · Cabeceras editoriales claras ────────────────────────────── */
 #s-programa .sub-eyebrow, #s-journey .sub-eyebrow, #s-app-train .sub-eyebrow,
-#s-faq .sub-eyebrow, #s-biblioteca .sub-eyebrow, #s-onboarding .hub-eyebrow{
+#s-faq .sub-eyebrow, #s-capsulas .sub-eyebrow, #s-onboarding .hub-eyebrow{
   font-size:10.5px; font-weight:600; letter-spacing:.22em;
   text-transform:uppercase; color:var(--olive-dark) !important;
   padding-right:150px; line-height:1.6; /* no pisar el botón Volver (fixed, derecha) */
@@ -5491,10 +5491,10 @@ body.locked .em-grain{display:none;}
 #s-programa .sub-header::after,
 #s-journey  .sub-header::after,
 #s-app-train .sub-header::after{ display:none !important; content:none !important; }
-#s-faq .sub-title-line, #s-biblioteca .sub-title-line,
+#s-faq .sub-title-line, #s-capsulas .sub-title-line,
 #s-onboarding .hub-title-line{ display:none !important; }
-#s-faq .sub-header, #s-biblioteca .sub-header{ padding-bottom:1rem; }
-#s-faq .sub-intro, #s-biblioteca .sub-intro, #s-onboarding .hub-intro{
+#s-faq .sub-header, #s-capsulas .sub-header{ padding-bottom:1rem; }
+#s-faq .sub-intro, #s-capsulas .sub-intro, #s-onboarding .hub-intro{
   font-size:14px; color:var(--text-soft);
 }
 
@@ -5926,13 +5926,13 @@ body.locked .em-grain{display:none;}
 #s-programa .sub-intro strong,#s-app-train .sub-intro strong,#s-journey .sub-intro strong,#s-biblioteca .sub-intro strong{color:#F3EFE4 !important;}
 #s-programa .rh-contract{color:rgba(243,239,228,.5);}
 /* "Volver al onboarding": pill translúcida legible sobre el oscuro */
-#s-programa .sub-back,#s-app-train .sub-back,#s-journey .sub-back,#s-biblioteca .sub-back{
+#s-programa .sub-back,#s-app-train .sub-back,#s-journey .sub-back,#s-capsulas .sub-back{
   background:rgba(20,20,20,.55) !important;
   border-color:transparent !important;
   color:#F3EFE4 !important;
   box-shadow:0 4px 14px rgba(0,0,0,.22);
 }
-#s-programa .sub-back:hover,#s-app-train .sub-back:hover,#s-journey .sub-back:hover,#s-biblioteca .sub-back:hover{color:#fff !important;}
+#s-programa .sub-back:hover,#s-app-train .sub-back:hover,#s-journey .sub-back:hover,#s-capsulas .sub-back:hover{color:#fff !important;}
 
 /* ═══ v10 · Ritmo editorial: s-app-train + s-journey ═══ */
 #s-app-train .rh-quote,#s-journey .rh-quote{
@@ -6187,13 +6187,13 @@ body.locked .em-grain{display:none;}
 #s-biblioteca .sub-eyebrow{color:var(--olive-chip) !important;}
 #s-biblioteca .sub-title{color:#F3EFE4 !important;font-size:44px;line-height:.95;margin-bottom:.7rem;}
 #s-biblioteca .sub-intro{color:rgba(243,239,228,.65) !important;font-size:13px;line-height:1.55;}
-#s-biblioteca .sub-back{
+#s-capsulas .sub-back{
   background:rgba(255,255,255,.12) !important;
   border-color:transparent !important;
   color:#F3EFE4 !important;
   box-shadow:0 4px 14px rgba(0,0,0,.22);
 }
-#s-biblioteca .sub-back:hover{color:#fff !important;}
+#s-capsulas .sub-back:hover{color:#fff !important;}
 /* Divisor principal (patrón em-sec-head) */
 #s-home .bib-sec{
   display:flex;align-items:baseline;gap:14px;margin:4px 0 12px;
@@ -6704,13 +6704,13 @@ body.locked .em-grain{display:none;}
 
 /* full-bleed dentro de cada contenedor */
 #s-programa   .foto-hero{margin:-32px -1.25rem 1.5rem;}
-#s-biblioteca .foto-hero{margin:-32px -1rem 1.4rem;}
+#s-capsulas .foto-hero{margin:-32px -1rem 1.4rem;}
 /* la Biblioteca ya traía su propio header oscuro (v11): dentro del foto-hero
    se vuelve transparente y el fondo lo pone la foto */
-#s-biblioteca .foto-hero .sub-header{
+#s-capsulas .foto-hero .sub-header{
   background:transparent;margin:0;padding:0 !important;overflow:visible;
 }
-#s-biblioteca .foto-hero .sub-header::before{display:none;}
+#s-capsulas .foto-hero .sub-header::before{display:none;}
 
 /* texto de cabecera en claro, mismos tamaños Meal Tracker */
 .foto-hero .hub-header-block,
@@ -6795,7 +6795,7 @@ body.locked .mt-stains{display:none;}
    el crema con #id + !important y de otro modo tapaban las manchas. */
 .content-area,.hub-area,.sub-area,.progm-page,.qs-area,.ga-reader,
 #s-home .content-area,#s-onboarding .hub-area,#s-faq .sub-area,
-#s-biblioteca .sub-area,#s-ea-quickstart .qs-area,#s-programa .progm-page,
+#s-capsulas .sub-area,#s-ea-quickstart .qs-area,#s-programa .progm-page,
 #s-app-train .progm-page,#s-journey .sub-area,#s-guia-alimentacion .ga-reader,
 #s-programa .progm-note-soft{background:transparent !important;}
 /* progm-note-soft vuelve a ser vidrio como el resto de las tarjetas */
@@ -6967,6 +6967,324 @@ body.locked .mt-stains{display:none;}
   .foto-hero-media img,.em-hero-photo img{transition:none;}
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v11 · Centro de recursos — rediseño
+   ─────────────────────────────────────────────────────────────────────
+   Escala tipográfica tomada del Meal Tracker (src/theme.js), para que las
+   dos superficies se lean como UNA app:
+
+     · Display (Bebas Neue) SOLO para cifras y títulos de portada.
+     · Títulos de UI: Inter 600/700, letter-spacing NEGATIVO (-.01/-.02em),
+       line-height apretado (1.1–1.25).
+     · Etiquetas/eyebrows: 9–11px, 700/800, MAYÚSCULAS, tracking POSITIVO
+       (.06–.09em). Es lo único que va en mayúsculas.
+     · Cuerpo: 12.5–13.5px, peso 400, line-height 1.5–1.6, tracking 0.
+     · La negrita dentro de un párrafo es 600 + color de texto pleno; el
+       resto del párrafo va en el gris suave. Nunca dos pesos de negrita.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Sin barra de marca ────────────────────────────────────────── */
+.cr-header, .cr-back, .cr-header-blob, .cr-header-inner{display:none !important;}
+.app-shell{padding-top:0 !important;}
+.mg-frame{height:100vh;height:100dvh;}
+/* Vuelven las pastillas de "volver" propias de cada pantalla */
+.sub-back,.hub-back-link,.mg-back{display:flex !important;}
+.sub-back,.hub-back-link{top:14px !important;}
+.mg-back{position:fixed !important;top:14px !important;right:14px !important;left:auto !important;z-index:70;}
+.sub-area,.hub-area,.progm-page{padding-top:26px !important;}
+
+/* ── 2 · Hero: el titular es el porcentaje leído ───────────────────── */
+.em-hero{padding:34px 22px 44px;}
+.em-hero-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--olive-chip);
+}
+.em-hero-headline{
+  position:relative;z-index:1;margin-top:18px;
+  display:flex;flex-direction:column;gap:2px;
+}
+.em-hero-figure{
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(58px,17vw,76px);line-height:.9;letter-spacing:.01em;
+  color:#F3EFE4;text-shadow:0 2px 22px rgba(0,0,0,.4);
+}
+.em-hero-figure i{font-style:normal;font-size:.44em;color:var(--olive-light);margin-left:.06em;}
+.em-hero-figure-cap{
+  font-size:12.5px;font-weight:500;letter-spacing:-.01em;
+  color:rgba(243,239,228,.62);
+}
+/* Barra fina en vez de aro: el número grande ya dice el porcentaje, y un
+   aro al lado solo lo repetía en pequeño. */
+.em-hero-status{margin-top:16px;flex-direction:column;align-items:stretch;gap:12px;}
+.em-hero-bar{
+  position:relative;width:100%;height:4px;border-radius:100px;
+  background:rgba(243,239,228,.16);overflow:hidden;
+}
+.em-hero-bar-fill{
+  display:block;height:100%;width:0%;border-radius:100px;
+  background:linear-gradient(90deg,var(--olive),var(--olive-light));
+  transition:width 1.2s cubic-bezier(.16,.84,.3,1);
+}
+.em-hero .home-welcome-sub{
+  font-size:12.5px;line-height:1.55;font-weight:400;letter-spacing:0;
+  color:rgba(243,239,228,.6);max-width:32ch;
+}
+.em-hero .home-welcome-sub strong{color:#F3EFE4;font-weight:600;}
+
+/* ── 3 · Botones de sección: un solo patrón para las cinco ─────────── */
+.em-nav{
+  margin-top:22px;display:flex;flex-direction:column;gap:9px;
+}
+.em-nav-item{
+  display:flex;align-items:center;gap:13px;width:100%;text-align:left;
+  padding:14px 15px;border:none;border-radius:18px;cursor:pointer;
+  background:var(--bg-card);color:inherit;font-family:'Inter',sans-serif;
+  box-shadow:0 1px .5px rgba(0,0,0,.05),0 8px 24px rgba(74,82,56,.10);
+  text-decoration:none;
+  transition:transform .14s ease, box-shadow .2s ease;
+}
+.em-nav-item:active{transform:scale(.985);}
+.em-nav-item:hover{box-shadow:0 2px 2px rgba(0,0,0,.05),0 14px 32px rgba(74,82,56,.14);}
+.em-nav-ico{
+  flex:none;width:42px;height:42px;border-radius:13px;
+  display:grid;place-content:center;
+  background:var(--ico,linear-gradient(135deg,#98A465,#4A5238));
+  color:#fff;
+}
+.em-nav-ico svg{width:21px;height:21px;display:block;}
+.em-nav-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.em-nav-txt strong{
+  font-size:14.5px;font-weight:700;letter-spacing:-.015em;line-height:1.2;
+  color:var(--text);
+}
+.em-nav-txt small{
+  font-size:11.5px;font-weight:400;letter-spacing:0;line-height:1.35;
+  color:var(--text-mute);
+}
+.em-nav-arr{
+  flex:none;width:26px;height:26px;border-radius:50%;
+  display:grid;place-content:center;color:var(--olive-dark);
+  background:var(--olive-soft);
+}
+.em-nav-arr svg{width:13px;height:13px;display:block;}
+/* Onboarding ya leído: baja de jerarquía sin desaparecer */
+.em-nav-item.is-done{background:var(--bg-soft);box-shadow:none;border:.5px solid var(--border-soft);}
+.em-nav-item.is-done .em-nav-ico{opacity:.55;}
+.em-nav-item.is-done .em-nav-txt strong{color:var(--text-soft);font-weight:600;}
+
+/* ── 4 · Asistente de lectura por pantalla ─────────────────────────── */
+.pg-assist{
+  display:flex;align-items:center;gap:13px;
+  margin:0 0 18px;padding:12px 14px;
+  background:var(--bg-card);border-radius:18px;
+  box-shadow:0 1px .5px rgba(0,0,0,.05),0 8px 24px rgba(74,82,56,.10);
+  animation-delay:var(--d,0s);
+}
+.pg-assist-ring{position:relative;flex:none;width:46px;height:46px;}
+.pg-assist-ring svg{transform:rotate(-90deg);display:block;}
+.pg-assist-ring .track{stroke:rgba(0,0,0,.07);}
+.pg-assist-ring .arc{stroke:var(--olive);stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.16,.84,.3,1);}
+.pg-assist-pct{
+  position:absolute;inset:0;display:grid;place-content:center;
+  font-size:11px;font-weight:700;letter-spacing:-.02em;color:var(--olive-dark);
+}
+.pg-assist-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;}
+.pg-assist-tag{
+  font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--olive-dark);
+}
+.pg-assist-body strong{
+  font-size:13.5px;font-weight:700;letter-spacing:-.015em;line-height:1.25;
+  color:var(--text);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.pg-assist-body small{font-size:11px;font-weight:400;color:var(--text-mute);}
+.pg-assist-go{
+  flex:none;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;
+  display:grid;place-content:center;background:var(--olive);color:#fff;
+  transition:background .2s,transform .12s;
+}
+.pg-assist-go svg{width:14px;height:14px;display:block;}
+.pg-assist-go:hover{background:var(--olive-dark);}
+.pg-assist-go:active{transform:scale(.92);}
+.pg-assist-go[hidden]{display:none;}
+
+/* ── 5 · Cápsulas: la preview ES la infografía ─────────────────────── */
+.cap-gal{margin-top:4px;animation-delay:var(--d,0s);}
+.cap-cat{
+  margin:22px 0 10px;
+  font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--text-mute);
+  display:flex;align-items:center;gap:10px;
+}
+.cap-cat::after{content:"";flex:1;height:1px;background:var(--border);}
+.cap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.cap-card{
+  display:flex;flex-direction:column;gap:0;padding:0;
+  background:none;border:none;cursor:pointer;text-align:left;
+  font-family:'Inter',sans-serif;
+  transition:transform .14s ease;
+}
+.cap-card:active{transform:scale(.975);}
+.cap-thumb{
+  position:relative;display:block;width:100%;aspect-ratio:4/5;
+  border-radius:16px;overflow:hidden;
+  background:linear-gradient(165deg,#FDFCF8 0%,#F1F3E5 100%);
+  box-shadow:0 1px .5px rgba(0,0,0,.05),0 8px 24px rgba(74,82,56,.12);
+}
+.cap-thumb img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .35s cubic-bezier(.16,.84,.3,1);
+}
+.cap-card:hover .cap-thumb img{transform:scale(1.035);}
+/* Sin imagen todavía: marco vacío legible, nunca un icono roto */
+.cap-card.no-img .cap-thumb img{display:none;}
+.cap-card.no-img .cap-thumb::after{
+  content:"Infografía en camino";
+  position:absolute;inset:0;display:grid;place-content:center;padding:0 14px;
+  text-align:center;font-size:10.5px;font-weight:600;letter-spacing:.02em;
+  color:var(--text-mute);
+}
+.cap-badge{
+  position:absolute;top:9px;left:9px;
+  padding:3px 8px;border-radius:100px;background:var(--olive);color:#fff;
+  font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+}
+.cap-check{
+  position:absolute;top:9px;right:9px;width:20px;height:20px;border-radius:50%;
+  display:grid;place-content:center;background:var(--olive-dark);
+}
+.cap-check svg{width:11px;height:11px;display:block;}
+.cap-kicker{
+  margin-top:9px;
+  font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--olive-dark);
+}
+.cap-title{
+  margin-top:3px;
+  font-size:12.5px;font-weight:600;letter-spacing:-.01em;line-height:1.3;
+  color:var(--text);
+}
+.cap-card.is-read .cap-title{color:var(--text-soft);font-weight:500;}
+.cap-empty{
+  margin:24px 0;padding:20px;border-radius:18px;
+  background:var(--bg-soft);border:.5px dashed var(--border);
+  font-size:12.5px;line-height:1.55;color:var(--text-mute);text-align:center;
+}
+
+/* Lightbox: la infografía a pantalla completa */
+.cap-lb{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(12,12,12,.94);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  flex-direction:column;align-items:center;justify-content:center;
+  padding:56px 14px 74px;
+}
+.cap-lb.open{display:flex;animation:fadeIn .2s ease;}
+.cap-lb-x{
+  position:absolute;top:14px;right:14px;z-index:2;
+  width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#F3EFE4;
+  font-size:22px;line-height:1;
+}
+.cap-lb-fig{
+  margin:0;max-width:100%;max-height:100%;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  overflow:auto;
+}
+.cap-lb-fig img{
+  max-width:100%;max-height:calc(100vh - 150px);
+  object-fit:contain;border-radius:14px;display:block;
+  background:#F7F4ED;
+}
+.cap-lb-fig figcaption{
+  font-size:12.5px;font-weight:500;letter-spacing:-.01em;
+  color:rgba(243,239,228,.72);text-align:center;max-width:34ch;
+}
+.cap-lb-nav{
+  position:absolute;bottom:18px;left:0;right:0;
+  display:flex;align-items:center;justify-content:center;gap:18px;
+}
+.cap-lb-nav button{
+  width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#F3EFE4;font-size:22px;line-height:1;
+}
+.cap-lb-nav button:active{transform:scale(.92);}
+.cap-lb-count{
+  font-size:10px;font-weight:700;letter-spacing:.09em;
+  color:rgba(243,239,228,.55);min-width:52px;text-align:center;
+}
+
+/* ── 6 · FAQ leída ─────────────────────────────────────────────────── */
+.faq-item.is-read .faq-q-num{color:var(--olive-dark);opacity:1;}
+.faq-item.is-read .faq-q-text{color:var(--text-soft);}
+
+/* ── 7 · Pie minimalista: mismo crema de la página, texto pequeño ──── */
+.em-signature{
+  background:transparent !important;color:var(--text-mute) !important;
+  border-radius:0 !important;overflow:visible;
+  margin:34px 0 0 !important;padding:26px 2px 8px !important;
+  border-top:.5px solid var(--border);
+  text-align:left;
+}
+.em-signature .em-hero-glow{display:none !important;}
+.em-sig-quote{
+  font-family:'Inter',sans-serif !important;font-weight:600 !important;
+  font-size:13.5px !important;line-height:1.45 !important;letter-spacing:-.01em !important;
+  color:var(--text-soft) !important;max-width:34ch;
+}
+.em-sig-quote em{font-style:normal;color:var(--olive-dark);font-weight:700;}
+.em-sig-rule{background:var(--border) !important;width:28px !important;margin:14px 0 10px !important;}
+.em-sig-name{font-size:11.5px !important;font-weight:600 !important;letter-spacing:-.01em;color:var(--text-soft) !important;}
+.em-sig-cred{font-size:10px !important;font-weight:400 !important;letter-spacing:.01em !important;color:var(--text-mute) !important;margin:2px 0 0 !important;}
+.em-sig-rights{font-size:9.5px !important;color:var(--text-mute) !important;opacity:.75;margin:12px 0 0 !important;}
+.em-logout{color:var(--text-mute) !important;font-size:10.5px !important;margin-top:12px !important;}
+.em-logout:hover{color:var(--text-soft) !important;}
+
+/* El pie de las subpantallas: mismo criterio, texto más chico */
+.footer{padding:2rem .5rem 1.25rem !important;margin:1.5rem 0 0 !important;text-align:left !important;border-top:.5px solid var(--border);}
+.footer::before{display:none !important;}
+.footer-brand{
+  font-family:'Inter',sans-serif !important;font-size:10px !important;
+  font-weight:800 !important;letter-spacing:.09em !important;text-transform:uppercase;
+  color:var(--text-mute) !important;margin-bottom:.45rem !important;
+}
+.footer-tagline{font-size:11px !important;font-weight:400 !important;letter-spacing:0 !important;color:var(--text-soft) !important;margin-bottom:.5rem !important;text-transform:none !important;}
+.footer-rights{font-size:9.5px !important;color:var(--text-mute) !important;opacity:.75;letter-spacing:0 !important;}
+
+/* ── 8 · Sin cinta que se mueva ────────────────────────────────────── */
+.em-ribbon{display:none !important;}
+
+/* ── 9 · Escala tipográfica compartida con el Meal Tracker ─────────── */
+/* Eyebrows: lo único en mayúsculas, y siempre con tracking positivo. */
+.sub-eyebrow,.hub-eyebrow,.em-sec-head,.bib-sec,.orient-title,.faq-cat-header > span:first-child{
+  font-size:10px !important;font-weight:800 !important;
+  letter-spacing:.09em !important;text-transform:uppercase !important;
+  font-family:'Inter',sans-serif !important;
+  color:var(--text-mute) !important;
+}
+/* Títulos de portada: Bebas, apretados. */
+.sub-title,.hub-title{letter-spacing:.015em;line-height:.98;}
+/* Títulos de UI y cuerpo: Inter, tracking negativo, sin mayúsculas. */
+.sub-intro,.hub-intro,.em-sec-sub{
+  font-size:13px !important;font-weight:400 !important;
+  line-height:1.55 !important;letter-spacing:0 !important;
+}
+.sub-intro strong,.hub-intro strong,.em-sec-sub strong{font-weight:600 !important;}
+.faq-q-text{font-size:13.5px;font-weight:600;letter-spacing:-.01em;line-height:1.3;}
+.faq-a{font-size:12.5px;font-weight:400;line-height:1.6;letter-spacing:0;}
+.faq-a strong{font-weight:600;color:var(--text);}
+.orient-row-label{letter-spacing:-.01em;}
+.ogh-title{font-size:12.5px;font-weight:700;letter-spacing:-.01em;}
+.em-assist-tag{font-size:9px !important;font-weight:800 !important;letter-spacing:.09em !important;text-transform:uppercase !important;}
+.em-assist-body strong{font-size:13.5px !important;font-weight:700 !important;letter-spacing:-.015em !important;}
+
+@media (prefers-reduced-motion: reduce){
+  .cap-thumb img{transition:none !important;}
+  .pg-assist-ring .arc{transition:none !important;}
+}
+
 </style>
 </head>
 <body class="locked">
@@ -7120,22 +7438,9 @@ body.locked .mt-stains{display:none;}
 <!-- ============ APP ============ -->
 <div class="app-shell">
 
-<!-- HEADER DE MARCA GLOBAL (fino, sticky, visible en todas las pantallas menos login) -->
-<header class="cr-header" id="cr-topbar" onclick="go('s-home')" style="cursor:pointer" title="Ir al home">
-  <div class="cr-header-blob"></div>
-  <!-- Volver: circulito discreto DENTRO de la barra — nunca queda encima de
-       una tarjeta ni de otro botón. Su destino lo pone goSyncBack() copiando
-       el del enlace "volver" que trae cada pantalla. -->
-  <button class="cr-back" id="cr-back" type="button" hidden
-          aria-label="Volver" title="Volver"
-          onclick="event.stopPropagation(); crGoBack();">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-  </button>
-  <div class="cr-header-inner">
-    <span class="cr-header-title">CENTRO DE APRENDIZAJE</span>
-    <span class="cr-header-sub">Entrena con Método</span>
-  </div>
-</header>
+<!-- Sin barra de marca: el centro ya vive dentro del Meal Tracker, así que
+     repetir "Centro de aprendizaje" en cada pantalla solo robaba altura.
+     El "volver" vuelve a ser la pastilla propia de cada pantalla. -->
 
 <!-- HOME (única pantalla principal) -->
 <div class="em-grain" aria-hidden="true"></div>
@@ -7149,21 +7454,23 @@ body.locked .mt-stains{display:none;}
     <!-- ============ HERO editorial oscuro ============ -->
     <div class="em-hero">
       <div class="em-hero-photo" aria-hidden="true">
-        <img src="img/hero-home.jpg" alt="" loading="eager" fetchpriority="high" onerror="this.parentNode.style.display='none'">
+        <img src="img/hero-home.png" alt="" loading="eager" fetchpriority="high" onerror="this.parentNode.style.display='none'">
         <div class="em-hero-shade"></div>
       </div>
       <div class="em-hero-glow a" aria-hidden="true"></div>
       <div class="em-hero-glow b" aria-hidden="true"></div>
-      <div class="em-hero-eyebrow">Mauro Morón · Coach</div>
-      <div class="home-welcome-hi"><span id="welcome-greet">Bienvenido</span> <span id="welcome-name">al programa</span></div>
+
+      <!-- Sin "Bienvenido X": el saludo ya lo dio el Hoy del Meal Tracker.
+           Aquí el hero responde a la única pregunta que importa al entrar:
+           cuánto del material de aprendizaje llevas leído. -->
+      <div class="em-hero-eyebrow"><span id="em-hero-hi">Tu aprendizaje</span></div>
+      <div class="em-hero-headline">
+        <span class="em-hero-figure" id="em-hero-figure">0<i>%</i></span>
+        <span class="em-hero-figure-cap">del material leído</span>
+      </div>
       <div class="em-hero-status">
-        <div class="em-hero-ring" role="img" aria-label="Progreso de lectura">
-          <svg width="84" height="84" viewBox="0 0 84 84" fill="none">
-            <circle class="track" cx="42" cy="42" r="36" stroke-width="5"/>
-            <circle class="arc" id="em-hero-arc" cx="42" cy="42" r="36" stroke-width="5"
-                    stroke-dasharray="226.2" stroke-dashoffset="226.2"/>
-          </svg>
-          <div class="em-hero-ring-label"><span id="em-hero-pct">0%</span><small>Ruta</small></div>
+        <div class="em-hero-bar" role="img" aria-label="Progreso de lectura">
+          <span class="em-hero-bar-fill" id="em-hero-bar-fill"></span>
         </div>
         <div class="home-welcome-sub">Todo el método, organizado en un solo lugar.</div>
       </div>
@@ -7209,188 +7516,117 @@ body.locked .mt-stains{display:none;}
     </aside>
 
 
-    <!-- ============ ¿NUEVO AQUÍ? ============ -->
-    <!-- El orden de estas tres secciones lo decide homeApplyOrder(): mientras
-         quede onboarding por leer va primero; cuando está completo, Aprendizaje
-         encabeza el home y el onboarding baja al final como repaso. -->
-    <div class="em-sec reveal" id="home-sec-onboarding">
-      <div class="em-sec-head" id="home-sec-onboarding-head">¿Nuevo aquí? — Entra acá</div>
-      <p class="em-sec-sub" id="home-sec-onboarding-sub">Tu punto de partida: el método explicado una sola vez, en orden.</p>
-      <a class="em-new" onclick="go('s-onboarding')" style="cursor:pointer">
-        <svg class="em-lin em-lin-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="--ico:linear-gradient(135deg,#98A465,#4A5238)" aria-hidden="true">
-          <path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/>
-          <path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/>
-          <path d="M16 17h4"/>
-          <path d="M4 13h4"/>
-        </svg>
-        <span class="em-new-txt">
-          <strong>El onboarding del programa</strong>
-          <small id="home-sec-onboarding-meta">Cómo funciona todo, paso a paso · tu punto de partida</small>
+    <!-- ============ SECCIONES DEL CENTRO ============ -->
+    <!-- Cuatro botones, un solo patrón visual. El orden lo fija
+         homeApplyOrder(): cápsulas · guía · preguntas · chat, con el
+         onboarding arriba mientras quede por leer y abajo cuando ya está
+         completo. Ninguno muestra contador: el avance vive en el aro del
+         hero y dentro de cada pantalla. -->
+    <nav class="em-nav reveal" id="home-nav" aria-label="Secciones del centro">
+
+      <!-- 1 · CÁPSULAS INFORMATIVAS -->
+      <button class="em-nav-item" type="button" id="home-sec-capsulas" onclick="go('s-capsulas')">
+        <span class="em-nav-ico" style="--ico:linear-gradient(135deg,#E09479,#C05E44)" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <circle cx="8.5" cy="8.5" r="1.6"/>
+            <path d="m21 15-4.5-4.5L7 20"/>
+          </svg>
         </span>
-        <span class="em-also-arr">→</span>
-      </a>
-    </div>
+        <span class="em-nav-txt">
+          <strong>Cápsulas informativas</strong>
+          <small>Infografías para repasar una idea en un minuto</small>
+        </span>
+        <span class="em-nav-arr" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
 
-    <!-- ============ APRENDIZAJE ============ -->
-    <!-- El home ES el centro de aprendizaje: la guía y las cápsulas viven
-         aquí mismo. Antes había que pasar por una pantalla intermedia
-         ("Material de aprendizaje") cuyo único contenido era repetir el
-         botón que ya estaba en el home. -->
-    <div class="em-sec reveal" id="home-sec-aprendizaje">
-<!-- ── Divisor 1: el curso base ── -->
-      <div class="bib-sec sub-anim" style="--d:.04s;">Guía de alimentación</div>
+      <!-- 2 · GUÍA DE ALIMENTACIÓN -->
+      <button class="em-nav-item" type="button" id="home-sec-guia" onclick="go('s-guia-alimentacion')">
+        <span class="em-nav-ico" style="--ico:linear-gradient(135deg,#98A465,#4A5238)" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </span>
+        <span class="em-nav-txt">
+          <strong>Guía de alimentación</strong>
+          <small>El curso base, a tu ritmo · con su índice y buscador</small>
+        </span>
+        <span class="em-nav-arr" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
 
-      <!-- GUÍA DE ALIMENTACIÓN · el curso base (card destacada) -->
-      <div class="bib-feat sub-anim" style="--d:.05s;" onclick="go('s-guia-alimentacion')" role="button" tabindex="0">
-        <p class="bib-feat-tag">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          Guía esencial · Curso base
-        </p>
-        <div class="bib-feat-row">
-          <div class="bib-feat-body">
-            <strong>Guía de alimentación</strong>
-            <span class="bib-feat-meta"><span id="bib-ga-foot-done">0</span>/<span id="bib-ga-foot-total">15</span> capítulos · lee a tu ritmo, sin prisa</span>
-          </div>
-          <span class="bib-feat-go" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </span>
-        </div>
-        <div class="bib-feat-progress">
-          <div class="hub-progress-track">
-            <div class="hub-progress-fill" id="bib-ga-fill"></div>
-          </div>
-          <div class="bib-feat-progress-count"><strong id="bib-ga-done">0</strong> <span style="opacity:.5;">/</span> <span id="bib-ga-total">15</span> capítulos leídos</div>
-        </div>
-      </div>
-
-      <!-- ── Divisor 2: cápsulas informativas ── -->
-      <div class="bib-sec sub-anim" style="--d:.08s;">Cápsulas informativas (próximamente)</div>
-      <p class="bib-cap-note sub-anim" style="--d:.09s;">Mini-slides para repasar ideas clave en un minuto. Toca una cápsula para ampliarla.</p>
-
-      <!-- GALERÍA DE CÁPSULAS (demo: luego serán miniaturas <img> reales) -->
-      <div class="bib-cap-gal sub-anim" style="--d:.10s;">
-
-        <div class="bib-cap-cat">Nutrición</div>
-        <div class="bib-cap-grid">
-          <button class="bib-cap" type="button" onclick="capOpen(this)">
-            <span class="bib-cap-new">Nuevo</span>
-            <svg class="bib-cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="--ico:linear-gradient(135deg,#E09479,#C05E44)" aria-hidden="true">
-              <path d="M15 11h.01M11 15h.01M16 16h.01"/>
-              <path d="m2 16 20 6-6-20A20 20 0 0 0 2 16"/>
-              <path d="M5.71 17.11a17.04 17.04 0 0 1 11.4-11.4"/>
-            </svg>
-            <span class="bib-cap-kicker">Nutrición</span>
-            <span class="bib-cap-title">Proteína: cuánta y cuándo</span>
-            <span class="bib-cap-foot">Cápsula · 4 láminas</span>
-          </button>
-          <button class="bib-cap" type="button" onclick="capOpen(this)">
-            <svg class="bib-cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="--ico:linear-gradient(135deg,#E09479,#C05E44)" aria-hidden="true">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 3a9 9 0 0 1 9 9h-9z"/>
-            </svg>
-            <span class="bib-cap-kicker">Nutrición</span>
-            <span class="bib-cap-title">El plato balanceado, en 3 pasos</span>
-            <span class="bib-cap-foot">Cápsula · 5 láminas</span>
-          </button>
-        </div>
-
-        <div class="bib-cap-cat">Entrenamiento</div>
-        <div class="bib-cap-grid">
-          <button class="bib-cap" type="button" onclick="capOpen(this)">
-            <svg class="bib-cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="--ico:linear-gradient(135deg,#98A465,#4A5238)" aria-hidden="true">
-              <path d="M3 9v6M6 6.5v11M18 6.5v11M21 9v6M6 12h12"/>
-            </svg>
-            <span class="bib-cap-kicker">Entrenamiento</span>
-            <span class="bib-cap-title">El orden de los ejercicios importa</span>
-            <span class="bib-cap-foot">Cápsula · 4 láminas</span>
-          </button>
-          <button class="bib-cap" type="button" onclick="capOpen(this)">
-            <svg class="bib-cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="--ico:linear-gradient(135deg,#98A465,#4A5238)" aria-hidden="true">
-              <path d="M3 3v18h18"/>
-              <path d="M7 14l3.5-4 3 2.5L20 6"/>
-            </svg>
-            <span class="bib-cap-kicker">Entrenamiento</span>
-            <span class="bib-cap-title">RPE: entrena con percepción</span>
-            <span class="bib-cap-foot">Cápsula · 6 láminas</span>
-          </button>
-        </div>
-
-        <div class="bib-cap-cat">Hábitos</div>
-        <div class="bib-cap-grid">
-          <button class="bib-cap" type="button" onclick="capOpen(this)">
-            <svg class="bib-cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="--ico:linear-gradient(135deg,#74AECB,#3F81A6)" aria-hidden="true">
-              <path d="M12 3a6.36 6.36 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-            </svg>
-            <span class="bib-cap-kicker">Hábitos</span>
-            <span class="bib-cap-title">Dormir es entrenar</span>
-            <span class="bib-cap-foot">Cápsula · 3 láminas</span>
-          </button>
-          <button class="bib-cap" type="button" onclick="capOpen(this)">
-            <svg class="bib-cap-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="--ico:linear-gradient(135deg,#74AECB,#3F81A6)" aria-hidden="true">
-              <path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/>
-              <path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/>
-            </svg>
-            <span class="bib-cap-kicker">Hábitos</span>
-            <span class="bib-cap-title">Pasos diarios: el cardio invisible</span>
-            <span class="bib-cap-foot">Cápsula · 4 láminas</span>
-          </button>
-        </div>
-
-      </div>
-
-      <!-- ── Cierre: próximamente ── -->
-      <div class="bib-sec bib-sec-soon sub-anim" style="--d:.14s;">Próximamente</div>
-      <p class="bib-cap-note bib-cap-note-soon sub-anim" style="--d:.15s;">Nuevas cápsulas cada mes: movilidad, recuperación y más material visual del método.</p>
-    </div>
-
-
-    <!-- ============ DUDAS Y COMUNIDAD ============ -->
-    <div class="em-sec reveal" id="home-sec-dudas">
-      <div class="em-sec-head">Dudas y comunidad</div>
-      <p class="em-sec-sub">Respuestas rápidas y el grupo del programa.</p>
-      <div class="em-also">
-        <div class="em-also-row" onclick="go('s-faq')" style="cursor:pointer">
-          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="--ico:linear-gradient(135deg,#9A9A8F,#62625A)" aria-hidden="true">
+      <!-- 3 · PREGUNTAS FRECUENTES -->
+      <button class="em-nav-item" type="button" id="home-sec-faq" onclick="go('s-faq')">
+        <span class="em-nav-ico" style="--ico:linear-gradient(135deg,#9A9A8F,#62625A)" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
             <path d="M12 17h.01"/>
           </svg>
-          <span class="em-also-txt"><strong>Preguntas frecuentes</strong><small>Resuelve dudas rápido</small></span>
-          <span class="em-also-arr">→</span>
-        </div>
-        <a href="https://ig.me/j/AbYeQwBuaYR8SlZZ/" target="_blank" rel="noopener" class="em-also-row">
-          <svg class="em-lin em-lin-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="--ico:linear-gradient(135deg,#E09479,#C05E44)" aria-hidden="true">
+        </span>
+        <span class="em-nav-txt">
+          <strong>Preguntas frecuentes</strong>
+          <small>Resuelve dudas rápido, por tema</small>
+        </span>
+        <span class="em-nav-arr" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+
+      <!-- 4 · CHAT GRUPAL DE INSTAGRAM -->
+      <a class="em-nav-item" id="home-sec-ig" href="https://ig.me/j/AbYeQwBuaYR8SlZZ/" target="_blank" rel="noopener">
+        <span class="em-nav-ico" style="--ico:linear-gradient(135deg,#C77BA8,#8B4A78)" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
             <path d="M17.5 6.5h.01"/>
           </svg>
-          <span class="em-also-txt"><strong>Chat grupal de Instagram</strong><small>Comunidad del programa</small></span>
-          <span class="em-also-arr">→</span>
-        </a>
-      </div>
-    </div>
+        </span>
+        <span class="em-nav-txt">
+          <strong>Chat grupal de Instagram</strong>
+          <small>La comunidad del programa · se abre en Instagram</small>
+        </span>
+        <span class="em-nav-arr" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </span>
+      </a>
 
-    <!-- ============ CINTA EDITORIAL ============ -->
-    <div class="em-ribbon" aria-hidden="true">
-      <div class="em-ribbon-track">
-        <span>Método<i>·</i></span><span>Movilidad<i>·</i></span><span>Fuerza<i>·</i></span><span>Composición<i>·</i></span><span>Aprendizaje<i>·</i></span><span>Nutrición<i>·</i></span><span>Constancia<i>·</i></span>
-        <span>Método<i>·</i></span><span>Movilidad<i>·</i></span><span>Fuerza<i>·</i></span><span>Composición<i>·</i></span><span>Aprendizaje<i>·</i></span><span>Nutrición<i>·</i></span><span>Constancia<i>·</i></span>
-      </div>
-    </div>
+      <!-- 5 · ONBOARDING — arriba mientras no esté leído, abajo cuando ya lo está -->
+      <button class="em-nav-item em-nav-item-onb" type="button" id="home-sec-onboarding" onclick="go('s-onboarding')">
+        <span class="em-nav-ico" style="--ico:linear-gradient(135deg,#98A465,#4A5238)" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/>
+            <path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/>
+            <path d="M16 17h4"/><path d="M4 13h4"/>
+          </svg>
+        </span>
+        <span class="em-nav-txt">
+          <strong id="home-sec-onboarding-head">El onboarding del programa</strong>
+          <small id="home-sec-onboarding-meta">Cómo funciona todo, paso a paso · tu punto de partida</small>
+        </span>
+        <span class="em-nav-arr" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
 
-  <!-- FIRMA editorial -->
-  <div class="em-signature">
-    <div class="em-hero-glow c" aria-hidden="true"></div>
-    <p class="em-sig-quote">Comer y entrenar bien no es hacerlo perfecto.<br><em>Es tener un método.</em></p>
+    </nav>
+
+  <!-- FIRMA · pie minimalista sobre el mismo crema de la página -->
+  <footer class="em-signature">
+    <p class="em-sig-quote">Comer y entrenar bien no es hacerlo perfecto. <em>Es tener un método.</em></p>
     <div class="em-sig-rule"></div>
     <p class="em-sig-name">Mauro Morón</p>
-    <p class="em-sig-cred">ISSA CERTIFIED FITNESS AND NUTRITION COACH</p>
-    <p class="em-sig-rights">© 2026 Mauro Morón · Acceso personal e intransferible</p>
+    <p class="em-sig-cred">ISSA Certified Fitness &amp; Nutrition Coach</p>
+    <p class="em-sig-rights">© 2026 · Acceso personal e intransferible</p>
     <button class="em-logout" type="button" onclick="emLogout()" aria-label="Cerrar sesión">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
       Cerrar sesión
     </button>
-  </div>
+  </footer>
   </div>
 </div>
 
@@ -7410,7 +7646,7 @@ body.locked .mt-stains{display:none;}
 
     <div class="foto-hero">
       <div class="foto-hero-media" aria-hidden="true">
-        <img src="img/hero-programa.jpg" alt="" loading="eager" onerror="this.parentNode.style.display='none'">
+        <img src="img/hero-programa.png" alt="" loading="eager" onerror="this.parentNode.style.display='none'">
       </div>
       <div class="foto-hero-overlay" aria-hidden="true"></div>
 
@@ -7865,6 +8101,26 @@ body.locked .mt-stains{display:none;}
       </div>
     </div>
 
+    <!-- ASISTENTE DE LECTURA de esta pantalla -->
+    <aside class="pg-assist sub-anim" style="--d:.04s;" id="faq-assist" aria-label="Tu avance en preguntas frecuentes">
+      <div class="pg-assist-ring" role="img" aria-label="Preguntas abiertas">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+          <circle class="track" cx="23" cy="23" r="19" stroke-width="3.5"/>
+          <circle class="arc" id="faq-assist-arc" cx="23" cy="23" r="19" stroke-width="3.5"
+                  stroke-dasharray="119.4" stroke-dashoffset="119.4"/>
+        </svg>
+        <span class="pg-assist-pct" id="faq-assist-pct">0%</span>
+      </div>
+      <div class="pg-assist-body">
+        <span class="pg-assist-tag">Tu avance aquí</span>
+        <strong id="faq-assist-title">Empieza por la primera pregunta</strong>
+        <small id="faq-assist-meta">0 de 0 leídas · se guarda solo</small>
+      </div>
+      <button class="pg-assist-go" type="button" id="faq-assist-go" onclick="faqContinue()" aria-label="Abrir la siguiente pregunta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </aside>
+
     <!-- Buscador -->
     <div class="faq-search sub-anim" style="--d:.06s;">
       <div class="faq-search-icon">
@@ -7995,9 +8251,12 @@ body.locked .mt-stains{display:none;}
 
 
 <!-- =============================================== -->
-<!-- ============ BIBLIOTECA ======================= -->
+<!-- ============ CÁPSULAS INFORMATIVAS ============ -->
 <!-- =============================================== -->
-<div id="s-biblioteca" class="screen">
+<!-- Cada cápsula es UNA infografía (imagen). La rejilla muestra la preview
+     y el toque la abre a pantalla completa. Las imágenes van en
+     img/capsulas/ — ver el README de esa carpeta para el naming. -->
+<div id="s-capsulas" class="screen">
   <div class="sub-area">
 
     <div class="bg-halo bg-halo-1"></div>
@@ -8010,61 +8269,219 @@ body.locked .mt-stains{display:none;}
 
     <div class="foto-hero sub-anim" style="--d:0s;">
       <div class="foto-hero-media" aria-hidden="true">
-        <img src="img/hero-capsulas.jpg" alt="" loading="eager" onerror="this.parentNode.style.display='none'">
+        <img src="img/hero-capsulas.png" alt="" loading="eager" onerror="this.parentNode.style.display='none'">
       </div>
       <div class="foto-hero-overlay" aria-hidden="true"></div>
-
       <div class="sub-header">
-        <div class="sub-eyebrow">01 · Biblioteca</div>
-        <div class="sub-title">MATERIAL DE<br>APRENDIZAJE</div>
+        <div class="sub-eyebrow">Material visual</div>
+        <div class="sub-title">CÁPSULAS<br>INFORMATIVAS</div>
+        <div class="sub-title-line"></div>
         <div class="sub-intro">
-          Tu curso base y material de consulta para volver cuando lo necesites.
+          Una idea por lámina. <strong>Toca una cápsula para verla en grande.</strong>
         </div>
       </div>
     </div>
 
+    <!-- ASISTENTE DE LECTURA de esta pantalla -->
+    <aside class="pg-assist sub-anim" style="--d:.05s;" id="cap-assist" aria-label="Tu avance en cápsulas">
+      <div class="pg-assist-ring" role="img" aria-label="Cápsulas vistas">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+          <circle class="track" cx="23" cy="23" r="19" stroke-width="3.5"/>
+          <circle class="arc" id="cap-assist-arc" cx="23" cy="23" r="19" stroke-width="3.5"
+                  stroke-dasharray="119.4" stroke-dashoffset="119.4"/>
+        </svg>
+        <span class="pg-assist-pct" id="cap-assist-pct">0%</span>
+      </div>
+      <div class="pg-assist-body">
+        <span class="pg-assist-tag">Tu avance aquí</span>
+        <strong id="cap-assist-title">Empieza por la primera cápsula</strong>
+        <small id="cap-assist-meta">0 de 0 vistas · se guarda solo</small>
+      </div>
+      <button class="pg-assist-go" type="button" id="cap-assist-go" onclick="capContinue()" aria-label="Abrir la siguiente cápsula">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </aside>
+
+    <!-- REJILLA DE CÁPSULAS — la pinta capRender() desde CAPSULAS (abajo) -->
+    <div class="cap-gal sub-anim" style="--d:.08s;" id="cap-gal"></div>
+
+    <p class="cap-empty" id="cap-empty" hidden>
+      Aún no hay cápsulas publicadas. Vuelve pronto: cada mes se suma material nuevo.
+    </p>
 
     <div class="footer">
       <div class="footer-brand">ENTRENA CON MÉTODO</div>
       <div class="footer-tagline">Mauro Morón · ISSA Training and Nutrition Coach</div>
-      <div class="footer-rights">© 2026 Mauro Morón · Acceso personal e intransferible</div>
+      <div class="footer-rights">© 2026 · Acceso personal e intransferible</div>
     </div>
   </div>
 
-  <!-- Lightbox de cápsulas: la miniatura se amplía centrada sobre overlay oscuro -->
-  <div class="bib-cap-lb" id="bib-cap-lb" onclick="capClose(event)" aria-hidden="true">
-    <button class="bib-cap-lb-x" type="button" onclick="capClose(event, true)" aria-label="Cerrar">×</button>
-    <div class="bib-cap-lb-card" id="bib-cap-lb-card"></div>
+  <!-- Lightbox: la infografía a pantalla completa, con zoom por pellizco -->
+  <div class="cap-lb" id="cap-lb" onclick="capClose(event)" aria-hidden="true">
+    <button class="cap-lb-x" type="button" onclick="capClose(event, true)" aria-label="Cerrar">×</button>
+    <figure class="cap-lb-fig" id="cap-lb-fig">
+      <img id="cap-lb-img" src="" alt="">
+      <figcaption id="cap-lb-cap"></figcaption>
+    </figure>
+    <div class="cap-lb-nav">
+      <button type="button" class="cap-lb-prev" onclick="capStep(event,-1)" aria-label="Cápsula anterior">‹</button>
+      <span class="cap-lb-count" id="cap-lb-count"></span>
+      <button type="button" class="cap-lb-next" onclick="capStep(event,1)" aria-label="Cápsula siguiente">›</button>
+    </div>
   </div>
 </div>
 
 <script>
-// ── Lightbox de cápsulas (biblioteca) ─────────────────────────────────
-// Amplía la miniatura tocada; listo para cuando las cápsulas sean <img>
-// reales (se clona el contenido de la card tal cual).
-function capOpen(el) {
-  try {
-    var lb = document.getElementById('bib-cap-lb');
-    var card = document.getElementById('bib-cap-lb-card');
-    if (!lb || !card || !el) return;
-    var variant = (el.className.match(/cap-[a-z]\b/) || [''])[0];
-    card.className = 'bib-cap-lb-card ' + variant;
-    card.innerHTML = el.innerHTML;
-    var n = card.querySelector('.bib-cap-new');
-    if (n) n.remove();
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  } catch (e) {}
+// ── CÁPSULAS INFORMATIVAS ─────────────────────────────────────────────
+// Una cápsula = una infografía. Para publicar una nueva basta con soltar
+// la imagen en img/capsulas/ y agregar su entrada acá: no hay que tocar
+// markup ni CSS. El orden de este array es el orden de la rejilla.
+//
+//   file  → ruta de la imagen (la preview y la ampliación son la MISMA
+//           imagen; el navegador la reusa desde caché al abrir el zoom)
+//   cat   → categoría con la que se agrupa en la rejilla
+//   title → título visible bajo la preview
+//   nuevo → true pinta la etiqueta "Nuevo"
+var CAPSULAS = [
+  { id:'nutricion-proteina',    cat:'Nutrición',     title:'Proteína: cuánta y cuándo',        file:'img/capsulas/nutricion-proteina.png',        nuevo:true },
+  { id:'nutricion-plato',       cat:'Nutrición',     title:'El plato balanceado, en 3 pasos',  file:'img/capsulas/nutricion-plato-balanceado.png' },
+  { id:'entreno-orden',         cat:'Entrenamiento', title:'El orden de los ejercicios importa', file:'img/capsulas/entrenamiento-orden-ejercicios.png' },
+  { id:'entreno-rpe',           cat:'Entrenamiento', title:'RPE: entrena con percepción',      file:'img/capsulas/entrenamiento-rpe.png' },
+  { id:'habitos-sueno',         cat:'Hábitos',       title:'Dormir es entrenar',               file:'img/capsulas/habitos-dormir.png' },
+  { id:'habitos-pasos',         cat:'Hábitos',       title:'Pasos diarios: el cardio invisible', file:'img/capsulas/habitos-pasos-diarios.png' }
+];
+
+const CAP_READ_KEY = 'em_cap_read';
+function capGetRead(){
+  try { return JSON.parse(localStorage.getItem(CAP_READ_KEY) || '[]'); } catch(e){ return []; }
 }
-function capClose(ev, force) {
-  if (!force && ev && ev.target && ev.target.closest && ev.target.closest('.bib-cap-lb-card')) return;
-  var lb = document.getElementById('bib-cap-lb');
-  if (lb) lb.classList.remove('open');
+// El sincronizador de Supabase engancha esta función por nombre en window.
+
+function capMarkRead(id){
+  const read = capGetRead();
+  if (read.indexOf(id) === -1) {
+    read.push(id);
+    try { localStorage.setItem(CAP_READ_KEY, JSON.stringify(read)); } catch(e){}
+    // El envío a Supabase lo engancha wrapReadFunctions() más abajo (mismo
+    // canal que hubMarkRead/gaMarkRead): la lectura viaja con el nombre del
+    // cliente, así el avance sobrevive a otro dispositivo.
+  }
+  capApplyProgress();
+}
+
+// Índice (dentro de CAPSULAS) de la cápsula abierta en el lightbox
+let _capIndex = -1;
+
+function capRender(){
+  const gal = document.getElementById('cap-gal');
+  const empty = document.getElementById('cap-empty');
+  if (!gal) return;
+  if (!CAPSULAS.length) {
+    gal.innerHTML = '';
+    if (empty) empty.hidden = false;
+    return;
+  }
+  if (empty) empty.hidden = true;
+
+  const read = capGetRead();
+  let html = '';
+  let lastCat = null;
+  CAPSULAS.forEach(function(c, i){
+    if (c.cat !== lastCat) {
+      if (lastCat !== null) html += '</div>';
+      html += '<div class="cap-cat">' + c.cat + '</div><div class="cap-grid">';
+      lastCat = c.cat;
+    }
+    const done = read.indexOf(c.id) !== -1;
+    html +=
+      '<button class="cap-card' + (done ? ' is-read' : '') + '" type="button" data-i="' + i + '" onclick="capOpen(' + i + ')">' +
+        '<span class="cap-thumb">' +
+          '<img src="' + c.file + '" alt="' + c.title.replace(/"/g, '&quot;') + '" loading="lazy" ' +
+               'onerror="this.closest(\'.cap-card\').classList.add(\'no-img\')">' +
+          (c.nuevo && !done ? '<span class="cap-badge">Nuevo</span>' : '') +
+          (done ? '<span class="cap-check" aria-label="Vista"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : '') +
+        '</span>' +
+        '<span class="cap-kicker">' + c.cat + '</span>' +
+        '<span class="cap-title">' + c.title + '</span>' +
+      '</button>';
+  });
+  if (lastCat !== null) html += '</div>';
+  gal.innerHTML = html;
+  capApplyProgress();
+}
+
+// Asistente de lectura de la pantalla de cápsulas
+function capApplyProgress(){
+  const total = CAPSULAS.length;
+  const read = capGetRead();
+  const done = CAPSULAS.filter(function(c){ return read.indexOf(c.id) !== -1; }).length;
+  const pct = total ? Math.round(done / total * 100) : 0;
+
+  const arc = document.getElementById('cap-assist-arc');
+  if (arc) arc.style.strokeDashoffset = (119.4 * (1 - pct / 100)).toFixed(1);
+  const pctEl = document.getElementById('cap-assist-pct');
+  if (pctEl) pctEl.textContent = pct + '%';
+
+  const next = CAPSULAS.find(function(c){ return read.indexOf(c.id) === -1; });
+  const title = document.getElementById('cap-assist-title');
+  if (title) {
+    title.textContent = !total ? 'Aún no hay cápsulas publicadas'
+      : next ? (done === 0 ? 'Empieza por: ' : 'Sigue con: ') + next.title
+             : 'Las viste todas — vuelve cuando quieras';
+  }
+  const meta = document.getElementById('cap-assist-meta');
+  if (meta) meta.textContent = done + ' de ' + total + ' vistas · se guarda solo';
+  const go = document.getElementById('cap-assist-go');
+  if (go) go.hidden = !next;
+}
+function capContinue(){
+  const read = capGetRead();
+  const i = CAPSULAS.findIndex(function(c){ return read.indexOf(c.id) === -1; });
+  capOpen(i === -1 ? 0 : i);
+}
+
+function capOpen(i){
+  const c = CAPSULAS[i];
+  if (!c) return;
+  _capIndex = i;
+  const lb = document.getElementById('cap-lb');
+  const img = document.getElementById('cap-lb-img');
+  const cap = document.getElementById('cap-lb-cap');
+  const count = document.getElementById('cap-lb-count');
+  if (!lb || !img) return;
+  img.src = c.file;
+  img.alt = c.title;
+  if (cap) cap.textContent = c.title;
+  if (count) count.textContent = (i + 1) + ' / ' + CAPSULAS.length;
+  lb.classList.add('open');
+  lb.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  capMarkRead(c.id);
+}
+function capStep(ev, dir){
+  if (ev) ev.stopPropagation();
+  if (!CAPSULAS.length) return;
+  const n = CAPSULAS.length;
+  capOpen((_capIndex + dir + n) % n);
+}
+function capClose(ev, force){
+  // Un toque sobre la propia imagen no cierra (se puede ampliar con pellizco)
+  if (!force && ev && ev.target && ev.target.closest && ev.target.closest('.cap-lb-fig, .cap-lb-nav')) return;
+  const lb = document.getElementById('cap-lb');
+  if (lb) { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); }
   document.body.style.overflow = '';
+  _capIndex = -1;
+  capRender();
 }
 document.addEventListener('keydown', function (e) {
+  const lb = document.getElementById('cap-lb');
+  if (!lb || !lb.classList.contains('open')) return;
   if (e.key === 'Escape') capClose(null, true);
+  if (e.key === 'ArrowRight') capStep(null, 1);
+  if (e.key === 'ArrowLeft') capStep(null, -1);
 });
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', capRender);
+else capRender();
 
 // ── Camino del onboarding ─────────────────────────────────────────────
 // Redibuja la ruta de mapa (segmentos rectos + esquinas redondeadas)
@@ -8682,22 +9099,14 @@ function runLoginToHomeTransition(onDone) {
   });
 }
 
-// Género por cliente (para "Bienvenido/Bienvenida"). Por defecto masculino.
-const USER_GENDER = {
-  'andrea angulo':'f', 'diana tovar':'f', 'laura lorena cardenas':'f', 'mar alzate':'f',
-  'amalia rodriguez':'f', 'natalia samper':'f', 'maria alejandra gonzales':'f'
-};
+// El hero ya no da la bienvenida (eso pasa en el Hoy del Meal Tracker):
+// el nombre queda como una firma discreta sobre el porcentaje leído.
 function setWelcomeName(name) {
   const parts = name.trim().split(/\s+/);
   const firstName = parts[0];
   const display = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-  const el = document.getElementById('welcome-name');
-  if (el) el.textContent = display;
-  const greet = document.getElementById('welcome-greet');
-  if (greet) {
-    const g = USER_GENDER[normalize(name)] || 'm';
-    greet.textContent = (g === 'f') ? 'Bienvenida' : 'Bienvenido';
-  }
+  const hi = document.getElementById('em-hero-hi');
+  if (hi) hi.textContent = display ? ('Tu aprendizaje · ' + display) : 'Tu aprendizaje';
 }
 
 function checkFirstTimeBanner() {
@@ -8893,46 +9302,23 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nameInput) nameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') doLogin(); });
 });
 
-// ── Volver: un solo botón, el circulito del header ──────────────────
-// Cada pantalla sigue trayendo su enlace de volver (con su destino y su
-// texto); ahora está oculto y solo actúa como fuente de verdad: el botón
-// del header lo busca en la pantalla activa y le hace click.
-function crBackSource(){
-  const screen = document.querySelector('.screen.active');
-  if (!screen) return null;
-  return screen.querySelector('.sub-back, .hub-back-link, .mg-back');
-}
-function crGoBack(){
-  const src = crBackSource();
-  if (src) src.click();
-  else go('s-home');
-}
-function crSyncBack(){
-  const btn = document.getElementById('cr-back');
-  if (!btn) return;
-  const src = crBackSource();
-  btn.hidden = !src;
-  if (src) {
-    const label = (src.textContent || '').trim();
-    if (label) btn.setAttribute('aria-label', label);
-  }
-}
+// ── Volver ──────────────────────────────────────────────────────────
+// Sin barra superior, cada pantalla vuelve a mostrar su propia pastilla
+// de "volver" (la que ya traía en el markup).
 
 function go(id){
-  // La biblioteca dejó de ser una pantalla: su contenido (la guía y las
-  // cápsulas) vive ahora en el home. Cualquier enlace viejo cae ahí.
-  if (id === 's-biblioteca') id = 's-home';
+  // Las cápsulas dejaron de vivir en el home: tienen pantalla propia.
+  // Cualquier enlace viejo a la biblioteca cae ahí.
+  if (id === 's-biblioteca') id = 's-capsulas';
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const target = document.getElementById(id);
   if (target) {
     target.classList.add('active');
     window.scrollTo(0,0);
   }
-  crSyncBack();
   if (id === 's-home' && typeof homeApplyOrder === 'function') homeApplyOrder();
-  if (id === 's-home' && typeof bibApplyGuiaProgress === 'function') {
-    setTimeout(bibApplyGuiaProgress, 30);
-  }
+  if (id === 's-capsulas' && typeof capRender === 'function') capRender();
+  if (id === 's-faq' && typeof faqApplyProgress === 'function') faqApplyProgress();
 }
 
 function scrollToOnboarding() {
@@ -9068,39 +9454,34 @@ function onboardingDone(){
   return ONB_SECTIONS.every(s => read.includes(s));
 }
 function homeApplyOrder(){
+  const nav = document.getElementById('home-nav');
   const onb = document.getElementById('home-sec-onboarding');
-  const apr = document.getElementById('home-sec-aprendizaje');
-  const dudas = document.getElementById('home-sec-dudas');
-  if (!onb || !apr || !dudas || !onb.parentNode) return;
+  if (!nav || !onb) return;
   const done = onboardingDone();
-  const head = document.getElementById('home-sec-onboarding-head');
-  const sub = document.getElementById('home-sec-onboarding-sub');
-  const meta = document.getElementById('home-sec-onboarding-meta');
-  const aprSub = document.getElementById('home-sec-aprendizaje-sub');
 
-  // Se reinsertan las tres en orden justo antes de la cinta editorial, que
-  // es el ancla estable del final del home. Solo se toca el DOM si el orden
-  // ya no es el correcto: reinsertar un nodo reinicia su transición de
-  // entrada y provocaría un parpadeo en cada repintado.
-  const anchor = onb.parentNode.querySelector('.em-ribbon');
-  const order = done ? [apr, dudas, onb] : [onb, apr, dudas];
-  const current = Array.from(onb.parentNode.children).filter(el => order.includes(el));
-  if (order.some((el, i) => current[i] !== el)) {
-    order.forEach(el => onb.parentNode.insertBefore(el, anchor));
-    // Ya estaban reveladas en su posición anterior: que no reaparezcan en 0
-    order.forEach(el => el.classList.add('in'));
+  // Orden pedido: cápsulas · guía · preguntas · chat. El onboarding es el
+  // único que se mueve: primero mientras quede por leer, último (como
+  // repaso) cuando ya está completo.
+  const fijos = ['home-sec-capsulas', 'home-sec-guia', 'home-sec-faq', 'home-sec-ig']
+    .map(id => document.getElementById(id)).filter(Boolean);
+  const orden = done ? fijos.concat([onb]) : [onb].concat(fijos);
+
+  // Solo se toca el DOM si el orden ya no es el correcto: reinsertar un
+  // nodo reinicia su animación de entrada y provocaría un parpadeo.
+  const actual = Array.from(nav.children).filter(el => orden.includes(el));
+  if (orden.some((el, i) => actual[i] !== el)) {
+    orden.forEach(el => nav.appendChild(el));
   }
 
+  const head = document.getElementById('home-sec-onboarding-head');
+  const meta = document.getElementById('home-sec-onboarding-meta');
+  onb.classList.toggle('is-done', done);
   if (done) {
-    if (head) head.textContent = 'Repasar el método';
-    if (sub) sub.textContent = 'Ya lo leíste completo. Vuelve cuando quieras refrescar una parte.';
-    if (meta) meta.textContent = 'Las cuatro secciones, leídas · repaso libre';
-    if (aprSub) aprSub.textContent = 'Tu guía y las cápsulas. Consulta libre, a tu ritmo.';
+    if (head) head.textContent = 'Repasar el onboarding';
+    if (meta) meta.textContent = 'Ya lo leíste completo · vuelve cuando quieras refrescar algo';
   } else {
-    if (head) head.textContent = '¿Nuevo aquí? — Entra acá';
-    if (sub) sub.textContent = 'Tu punto de partida: el método explicado una sola vez, en orden.';
+    if (head) head.textContent = 'Empieza aquí: el onboarding';
     if (meta) meta.textContent = 'Cómo funciona todo, paso a paso · tu punto de partida';
-    if (aprSub) aprSub.textContent = 'Para cuando termines tu ruta de inicio. Consulta libre, a tu ritmo.';
   }
 }
 
@@ -9161,13 +9542,26 @@ function homeApplyOrientation() {
     meta: gDone + '/' + gTotal,
     go:function(){ go('s-guia-alimentacion'); }
   };
+  // Cápsulas: cuentan como material del centro, igual que los capítulos.
+  const capList = (typeof CAPSULAS !== 'undefined') ? CAPSULAS : [];
+  const capRead = (typeof capGetRead === 'function') ? capGetRead() : [];
+  const cTotal = capList.length;
+  const cDone = capList.filter(function(c){ return capRead.indexOf(c.id) !== -1; }).length;
+  const capsRow = {
+    label:'Cápsulas informativas',
+    done:(cTotal > 0 && cDone >= cTotal),
+    meta: cTotal ? (cDone + '/' + cTotal) : null,
+    go:function(){ go('s-capsulas'); }
+  };
+
   const groups = [
     { id:'inicio', title:'Al empezar · onboarding', items:metodoItems },
     { id:'guia',   title:'Guía de alimentación',    items:[guideRow] }
   ];
+  if (cTotal) groups.push({ id:'capsulas', title:'Cápsulas informativas', items:[capsRow] });
 
-  const total = 4 + gTotal;
-  const done = metodoItems.filter(function(r){return r.done;}).length + gDone;
+  const total = 4 + gTotal + cTotal;
+  const done = metodoItems.filter(function(r){return r.done;}).length + gDone + cDone;
   const pct = total ? Math.round(done/total*100) : 0;
 
   // Determinar siguiente pendiente y su grupo
@@ -9227,7 +9621,8 @@ function homeApplyOrientation() {
       head.className = 'orient-group-head';
       const _ICO_INICIO = '<svg viewBox="0 0 24 24" fill="none"><path d="M5 21V4M5 4h11l-2 4 2 4H5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
       const _ICO_GUIA   = '<svg viewBox="0 0 24 24" fill="none"><path d="M7 3v7a2.5 2.5 0 0 0 5 0V3M9.5 3v18M17 3c-1.3.8-2.2 2.4-2.2 4.8s.9 3.4 2.2 4.2v9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      const ico = grp.id === 'guia' ? _ICO_GUIA : _ICO_INICIO;
+      const _ICO_CAPS   = '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="8.5" r="1.4" stroke="currentColor" stroke-width="1.7"/><path d="m21 15-4.5-4.5L7 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      const ico = grp.id === 'guia' ? _ICO_GUIA : (grp.id === 'capsulas' ? _ICO_CAPS : _ICO_INICIO);
       head.innerHTML =
         '<span class="ogh-ico" aria-hidden="true">'+ico+'</span>' +
         '<span class="ogh-title">'+grp.title+'</span>' +
@@ -9347,13 +9742,18 @@ function jrnReplayAnim() {
 // Aplicar estados al cargar y cada vez que se vuelve al hub
 document.addEventListener('DOMContentLoaded', hubApplyReadStates);
 document.addEventListener('DOMContentLoaded', homeApplyOrder);
-document.addEventListener('DOMContentLoaded', crSyncBack);
 setTimeout(hubApplyReadStates, 100);
 
 // Hook en go() para refrescar el estado cuando se entre al hub
 const _hubOrigGo = go;
 go = function(id) {
   _hubOrigGo(id);
+  if (id === 's-home') {
+    // El aro y el asistente del home tienen que reflejar lo que se acaba
+    // de leer en la subpantalla de la que venimos (cápsulas, FAQ, guía).
+    setTimeout(homeApplyOrientation, 30);
+    setTimeout(homeApplyOrder, 30);
+  }
   if (id === 's-onboarding') {
     setTimeout(hubApplyReadStates, 30);
     setTimeout(qsUpdateHubCard, 30);
@@ -9438,6 +9838,85 @@ function qsUpdateHubCard() {
 }
 document.addEventListener('DOMContentLoaded', qsUpdateHubCard);
 setTimeout(qsUpdateHubCard, 100);
+
+// ============ FAQ — Asistente de lectura ============
+// Cada <details> abierto cuenta como pregunta leída. Es el mismo contrato
+// que el resto del centro: el avance se guarda solo y vive dentro de la
+// pantalla, no en el home.
+const FAQ_READ_KEY = 'em_faq_read';
+function faqGetRead(){
+  try { return JSON.parse(localStorage.getItem(FAQ_READ_KEY) || '[]'); } catch(e){ return []; }
+}
+function faqItems(){
+  return Array.from(document.querySelectorAll('#faq-list .faq-item'));
+}
+// Clave estable por pregunta: su número ("01", "02"…), que no cambia si se
+// reescribe el texto.
+function faqKey(item){
+  const n = item.querySelector('.faq-q-num');
+  return n ? ('q' + n.textContent.trim()) : null;
+}
+function faqMarkRead(item){
+  const key = faqKey(item);
+  if (!key) return;
+  const read = faqGetRead();
+  if (read.indexOf(key) === -1) {
+    read.push(key);
+    try { localStorage.setItem(FAQ_READ_KEY, JSON.stringify(read)); } catch(e){}
+  }
+  faqApplyProgress();
+}
+function faqApplyProgress(){
+  const items = faqItems();
+  const read = faqGetRead();
+  const total = items.length;
+  const done = items.filter(function(it){ return read.indexOf(faqKey(it)) !== -1; }).length;
+  const pct = total ? Math.round(done / total * 100) : 0;
+
+  items.forEach(function(it){
+    it.classList.toggle('is-read', read.indexOf(faqKey(it)) !== -1);
+  });
+
+  const arc = document.getElementById('faq-assist-arc');
+  if (arc) arc.style.strokeDashoffset = (119.4 * (1 - pct / 100)).toFixed(1);
+  const pctEl = document.getElementById('faq-assist-pct');
+  if (pctEl) pctEl.textContent = pct + '%';
+
+  const next = items.find(function(it){ return read.indexOf(faqKey(it)) === -1; });
+  const title = document.getElementById('faq-assist-title');
+  if (title) {
+    if (!total) title.textContent = 'Sin preguntas publicadas';
+    else if (!next) title.textContent = 'Las leíste todas — vuelve cuando surja una duda';
+    else {
+      const t = next.querySelector('.faq-q-text');
+      title.textContent = (done === 0 ? 'Empieza por: ' : 'Sigue con: ') + (t ? t.textContent.trim() : 'la siguiente');
+    }
+  }
+  const meta = document.getElementById('faq-assist-meta');
+  if (meta) meta.textContent = done + ' de ' + total + ' leídas · se guarda solo';
+  const go = document.getElementById('faq-assist-go');
+  if (go) go.hidden = !next;
+}
+function faqContinue(){
+  const read = faqGetRead();
+  const next = faqItems().find(function(it){ return read.indexOf(faqKey(it)) === -1; }) || faqItems()[0];
+  if (!next) return;
+  // Si un filtro lo tiene oculto, se limpia para poder llegar a él.
+  if (next.style.display === 'none') { faqSetCat('all'); faqClearSearch(); }
+  next.open = true;
+  faqMarkRead(next);
+  next.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+function faqInitProgress(){
+  faqItems().forEach(function(it){
+    if (it.__faqBound) return;
+    it.__faqBound = true;
+    it.addEventListener('toggle', function(){ if (it.open) faqMarkRead(it); });
+  });
+  faqApplyProgress();
+}
+document.addEventListener('DOMContentLoaded', faqInitProgress);
+setTimeout(faqInitProgress, 200);
 
 // ============ FAQ — Filtros y buscador ============
 let faqCurrentCat = 'all';
@@ -10679,6 +11158,27 @@ function initBlurCarousel(scroller){
       window.gaMarkRead.__synced = true;
       log('Wrap gaMarkRead OK');
     }
+    if (typeof window.capMarkRead === 'function' && !window.capMarkRead.__synced){
+      var _cap = window.capMarkRead;
+      window.capMarkRead = function(id){
+        var yaEstaba = false;
+        try { yaEstaba = (JSON.parse(localStorage.getItem('em_cap_read') || '[]')).indexOf(id) !== -1; } catch(e){}
+        var r = _cap.apply(this, arguments);
+        // Solo la PRIMERA vez: abrir la misma cápsula diez veces no son
+        // diez lecturas.
+        if (!yaEstaba) {
+          var label = null;
+          try {
+            var c = (window.CAPSULAS || []).find(function(x){ return x.id === id; });
+            if (c) label = c.title;
+          } catch(e){}
+          postEvent('capsula', 'cap:' + id, label);
+        }
+        return r;
+      };
+      window.capMarkRead.__synced = true;
+      log('Wrap capMarkRead OK');
+    }
     if (typeof window.markRead === 'function' && !window.markRead.__synced){
       var _mk = window.markRead;
       window.markRead = function(section, btn){
@@ -10899,7 +11399,6 @@ function initBlurCarousel(scroller){
 <script>
 /* ── Asistente de lectura: refleja el estado real del orient-card ── */
 (function(){
-  var CIRC_HERO = 226.2;
 
   window.emToggleAssist = function(){
     var full = document.getElementById('em-assist-full');
@@ -10922,10 +11421,11 @@ function initBlurCarousel(scroller){
       var total = parseInt(totalEl.textContent, 10) || 0;
       var pct = total ? Math.round(done / total * 100) : 0;
 
-      var arc = document.getElementById('em-hero-arc');
-      if (arc) arc.style.strokeDashoffset = (CIRC_HERO * (1 - pct / 100)).toFixed(1);
-      var pctEl = document.getElementById('em-hero-pct');
-      if (pctEl) pctEl.textContent = pct + '%';
+      // Titular del hero: el porcentaje ES el titular, ya no la bienvenida.
+      var fig = document.getElementById('em-hero-figure');
+      if (fig) fig.innerHTML = pct + '<i>%</i>';
+      var bar = document.getElementById('em-hero-bar-fill');
+      if (bar) bar.style.width = pct + '%';
 
       var title = document.getElementById('em-assist-title');
       var meta = document.getElementById('em-assist-meta');
