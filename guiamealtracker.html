@@ -1,769 +1,1697 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meal Tracker · Cómo usar la app</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --olive:#8A9558;
-      --olive-light:#A9B478;
-      --olive-dark:#4A5238;
-      --olive-soft:#F1F3E5;
-      --olive-chip:#D4DAB8;
-      --black:#141414;
-      --graphite:#1F1F1F;
-      --bg:#F7F4ED;
-      --card:#ffffff;
-      --text:#181818;
-      --text-soft:#5a5a5a;
-      --text-mute:#9a9a9a;
-      --cream:#F3EFE4;
-      --radius:22px;
-      --shadow:0 1px .5px rgba(0,0,0,.1),0 10px 28px rgba(74,82,56,.12);
-    }
-    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-    html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
-    body{max-width:520px;margin:0 auto;min-height:100vh;padding-bottom:96px;}
+/* ============================================================ */
+/* ============ GUÍA DE ALIMENTACIÓN v3 — Editorial unificado = */
+/* ============================================================ */
 
-    /* ── Barra superior + progreso ── */
-    .topbar{
-      position:sticky;top:0;z-index:40;
-      background:rgba(247,244,237,.92);
-      -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
-      border-bottom:1px solid rgba(0,0,0,.05);
-    }
-    .topbar-inner{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:12px 18px 10px;
-    }
-    .brand{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.08em;color:var(--text);}
-    .brand-sub{font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--olive-dark);margin-left:8px;}
-    .step-indicator{
-      font-size:10.5px;font-weight:700;color:var(--olive-dark);
-      font-variant-numeric:tabular-nums;letter-spacing:.06em;
-      background:rgba(138,149,88,.14);padding:4px 10px;border-radius:100px;
-    }
-    .progress-inner{height:2.5px;background:rgba(0,0,0,.05);}
-    .progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--olive) 0%,var(--olive-light) 100%);transition:width .45s cubic-bezier(.16,.84,.3,1);}
+/* Tipografía coherente con el resto del app: Inter (body) + Bebas Neue (títulos) */
 
-    /* ── Slides ── */
-    .slide{display:none;padding:22px 18px 30px;animation:slideIn .4s ease;}
-    .slide.active{display:block;}
-    @keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+#s-guia-alimentacion {
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+}
+/* Blobs orgánicos visibles pero sin exagerar — mismo lenguaje que el resto del centro */
+#s-guia-alimentacion .bg-halo { opacity: .75; filter: blur(70px); }
+#s-guia-alimentacion .bg-halo-1 {
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(122,140,90,.40) 0%, rgba(122,140,90,.12) 50%, transparent 75%);
+  top: 80px; right: -110px;
+}
+#s-guia-alimentacion .bg-halo-2 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(163,176,122,.34) 0%, rgba(163,176,122,.10) 50%, transparent 75%);
+  top: 620px; left: -130px;
+}
+/* Blob sutil por cada sub-capítulo (ga-section) */
+#s-guia-alimentacion .ga-section { position: relative; }
+#s-guia-alimentacion .ga-section:nth-of-type(odd)::before,
+#s-guia-alimentacion .ga-section:nth-of-type(even)::before {
+  content: '';
+  position: absolute;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: .35;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(122,140,90,.32) 0%, transparent 70%);
+}
+#s-guia-alimentacion .ga-section:nth-of-type(odd)::before { top: 40px; right: -80px; }
+#s-guia-alimentacion .ga-section:nth-of-type(even)::before {
+  top: 80px; left: -100px;
+  background: radial-gradient(circle, rgba(163,176,122,.28) 0%, transparent 70%);
+}
+#s-guia-alimentacion .ga-section > * { position: relative; z-index: 1; }
 
-    /* ── Lenguaje editorial ── */
-    .kicker{
-      display:flex;align-items:center;gap:10px;
-      font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
-      color:var(--olive-dark);margin-bottom:10px;
-    }
-    .kicker::before{content:'';width:18px;height:1px;background:var(--olive);}
-    .step-title{
-      font-family:'Bebas Neue',sans-serif;font-weight:400;
-      font-size:38px;line-height:.95;letter-spacing:.02em;color:var(--text);
-      margin-bottom:12px;
-    }
-    .step-lead{font-size:13.5px;line-height:1.6;color:var(--text-soft);margin-bottom:18px;}
-    .step-lead strong{color:var(--text);font-weight:600;}
+/* TOPBAR sticky — usando fixed + transform para evitar conflictos */
+#s-guia-alimentacion .ga-topbar {
+  position: sticky !important;
+  top: 44px !important;
+  z-index: 50;
+  background: rgba(250,248,243,.96);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: .5px solid rgba(0,0,0,.06);
+  padding: .65rem 1rem .45rem;
+  margin: 0 -1.25rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+.ga-topbar-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.ga-back {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--text-mute);
+  cursor: pointer;
+  padding: .3rem .3rem .3rem 0;
+  flex-shrink: 0;
+}
+.ga-back:hover { color: var(--text); }
+.ga-back-arr { font-size: 15px; line-height: 1; }
+.ga-back-text { white-space: nowrap; }
 
-    /* ── Card base de marca ── */
-    .g-card{
-      background:var(--card);
-      border:1px solid rgba(0,0,0,.03);border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:16px 17px 15px;margin-bottom:14px;
-    }
-    .g-card-kick{
-      display:flex;align-items:center;gap:8px;
-      font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
-      color:var(--olive-dark);margin-bottom:9px;
-    }
-    .g-card-kick svg{flex:none;color:var(--olive);}
-    .g-card p{font-size:13px;line-height:1.6;color:var(--text-soft);}
-    .g-card p + p{margin-top:8px;}
-    .g-card p strong{color:var(--text);font-weight:600;}
+.ga-progress-info {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .3px;
+}
+#ga-progress-num {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+}
 
-    /* Burbuja de ejemplo (así se ve en el chat de la app) */
-    .g-chat{margin:2px 0 4px;display:flex;flex-direction:column;gap:8px;}
-    .g-chat .me{
-      align-self:flex-end;max-width:88%;
-      background:var(--black);color:var(--cream);
-      border-radius:16px 16px 4px 16px;padding:9px 13px;
-      font-size:12.5px;line-height:1.5;
-    }
-    .g-chat .app{
-      align-self:flex-start;max-width:90%;
-      background:var(--olive-soft);color:var(--olive-dark);
-      border-radius:16px 16px 16px 4px;padding:9px 13px;
-      font-size:12.5px;line-height:1.55;font-weight:500;
-    }
-    .g-chat .app strong{font-weight:700;color:var(--olive-dark);}
+.ga-topbar-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 100px;
+  padding: 6px 12px;
+  color: var(--text);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.ga-topbar-btn:hover {
+  background: rgba(0,0,0,.04);
+  border-color: rgba(0,0,0,.18);
+}
+.ga-topbar-btn svg { width: 14px; height: 14px; }
+.ga-topbar-btn-label { white-space: nowrap; }
+.ga-topbar-btn-primary {
+  background: var(--text);
+  border-color: var(--text);
+  color: #fff;
+}
+.ga-topbar-btn-primary:hover {
+  background: #000;
+  border-color: #000;
+}
 
-    /* ── Mockup: silueta parcial de teléfono ── */
-    /* Media pantalla: marco grafito fino redondeado + isla arriba,
-       cortado por abajo con fade (frame y contenido se desvanecen juntos). */
-    .ph{
-      position:relative;margin:14px auto 0;width:min(320px,94%);
-      background:#FDFCF9;
-      border:1.5px solid var(--graphite);border-bottom:none;
-      border-radius:38px 38px 0 0;
-      padding:34px 16px 30px;
-      box-shadow:0 14px 34px rgba(74,82,56,.14);
-      -webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 99%);
-      mask-image:linear-gradient(180deg,#000 70%,transparent 99%);
-    }
-    .ph::before{
-      content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);
-      width:72px;height:15px;border-radius:100px;background:var(--graphite);
-    }
-    .ph-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;}
-    .ph-head small{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-mute);}
-    .ph-pill{
-      font-size:8.5px;font-weight:700;color:var(--olive-dark);
-      background:rgba(138,149,88,.14);padding:3px 9px;border-radius:100px;white-space:nowrap;
-    }
-    /* Anillos de meta */
-    .ph-rings{display:flex;justify-content:space-between;gap:4px;}
-    .ph-ring{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0;}
-    .ph-ring svg{display:block;}
-    .ph-ring b{font-size:10px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;margin-top:3px;}
-    .ph-ring small{font-size:7.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-mute);}
-    .ph-cta{
-      margin-top:12px;font-size:10px;font-weight:700;color:var(--olive-dark);
-      display:flex;justify-content:flex-end;
-    }
-    /* Tabs + barras de desempeño */
-    .ph-tabs{display:flex;gap:5px;margin-bottom:12px;}
-    .ph-tab{font-size:9px;font-weight:700;padding:4px 10px;border-radius:100px;background:rgba(0,0,0,.05);color:var(--text-soft);}
-    .ph-tab.on{background:var(--black);color:var(--cream);}
-    .ph-chart-label{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-mute);margin-bottom:7px;}
-    .ph-bars{display:flex;align-items:flex-end;gap:6px;height:58px;}
-    .ph-bars i{flex:1;border-radius:5px 5px 2px 2px;background:rgba(74,82,56,.14);}
-    .ph-bars i.on{background:var(--olive);}
-    .ph-days{display:flex;gap:6px;margin-top:5px;}
-    .ph-days span{flex:1;text-align:center;font-size:7.5px;font-weight:600;color:var(--text-mute);}
-    .ph-stat{
-      margin-top:12px;display:flex;gap:8px;
-    }
-    .ph-stat div{
-      flex:1;background:var(--olive-soft);border-radius:11px;padding:8px 10px;
-    }
-    .ph-stat b{display:block;font-size:11.5px;font-weight:800;color:var(--olive-dark);}
-    .ph-stat span{display:block;font-size:8px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--olive-dark);opacity:.7;margin-top:1px;}
-    /* Filas de comida (planner / recetario) */
-    .ph-meal{
-      display:flex;align-items:center;gap:9px;padding:9px 2px;
-    }
-    .ph-meal + .ph-meal{border-top:1px solid rgba(0,0,0,.05);}
-    .ph-meal .ph-m-txt{flex:1;min-width:0;}
-    .ph-meal b{display:block;font-size:10.5px;font-weight:800;color:var(--text);}
-    .ph-meal span{display:block;font-size:9.5px;color:var(--text-soft);line-height:1.4;}
-    .ph-meal em{font-style:normal;flex:none;font-size:9.5px;font-weight:800;color:var(--olive-dark);font-variant-numeric:tabular-nums;}
-    .ph-meal .ph-fit{
-      flex:none;font-size:7.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
-      color:var(--olive-dark);background:rgba(138,149,88,.16);padding:3px 7px;border-radius:100px;
-    }
-    .ph-actions{display:flex;gap:7px;margin-top:12px;}
-    .ph-actions span{
-      flex:1;text-align:center;font-size:10px;font-weight:700;
-      padding:8px 10px;border-radius:100px;
-      background:rgba(0,0,0,.05);color:var(--text-soft);
-    }
-    .ph-actions span.dark{background:var(--black);color:var(--cream);}
-    /* Pie de foto del mockup */
-    .ph-caption{
-      margin:10px auto 16px;max-width:300px;text-align:center;
-      font-size:10.5px;line-height:1.5;color:var(--text-mute);
-    }
+@media (max-width: 420px) {
+  .ga-topbar-btn-label { display: none; }
+  .ga-back-text { display: none; }
+  .ga-topbar-btn { padding: 7px 9px; }
+}
 
-    /* Cita Bebas */
-    .g-quote{
-      font-family:'Bebas Neue',sans-serif;font-weight:400;
-      font-size:30px;line-height:1.05;letter-spacing:.02em;color:var(--text);
-      margin:20px 2px 16px;max-width:96%;
-    }
-    .g-quote em{font-style:normal;color:var(--olive);}
+.ga-progress-track {
+  margin-top: .55rem;
+  height: 3px;
+  background: rgba(0,0,0,.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ga-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--text);
+  border-radius: 2px;
+  transition: width .4s cubic-bezier(.16,.84,.3,1);
+}
 
-    /* En esencia */
-    .g-take{
-      background:var(--olive-soft);border:1px solid transparent;border-radius:14px;
-      padding:13px 15px 12px;margin-top:4px;
-    }
-    .g-take-label{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--olive-dark);margin-bottom:7px;}
-    .g-take ul{list-style:none;}
-    .g-take li{
-      position:relative;padding-left:20px;margin-bottom:5px;
-      font-size:12.5px;line-height:1.5;color:var(--olive-dark);font-weight:600;
-    }
-    .g-take li:last-child{margin-bottom:0;}
-    .g-take li::before{content:'✓';position:absolute;left:0;top:0;color:var(--olive);font-weight:800;font-size:12.5px;}
+/* SEARCH — barra sticky bajo el header del centro de aprendizaje */
+/* !important para vencer al `#s-guia .ga-reader > *:not(.bg-halo){position:relative}` */
+#s-guia-alimentacion .ga-search-modal {
+  position: fixed !important;
+  top: 44px;          /* justo debajo del .cr-header (44px) */
+  left: 0; right: 0;
+  z-index: 300 !important;
+  padding: .75rem 1.25rem;
+  background: rgba(245,243,238,.96);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: .5px solid rgba(0,0,0,.08);
+  box-shadow: 0 10px 28px rgba(0,0,0,.10);
+  animation: gaSlideDown .22s cubic-bezier(.16,.84,.3,1);
+}
+.ga-search-backdrop {
+  /* click-outside opcional: clic en el resto de la pantalla cierra */
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  background: transparent;
+}
+.ga-search-panel {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  animation: none;
+}
+.ga-search-results {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-top: .5rem;
+}
+@keyframes gaSlideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes gaFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.ga-search-wrap {
+  display: flex; align-items: center; gap: 10px;
+  background: #fff;
+  border: .5px solid rgba(0,0,0,.1);
+  border-radius: 100px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.05);
+}
+.ga-search-icon { width: 18px; height: 18px; flex-shrink: 0; color: var(--text); }
+.ga-search-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-family: 'Inter', sans-serif; font-size: 14px;
+  color: var(--text); font-weight: 400;
+}
+.ga-search-input::placeholder { color: var(--text-mute); }
+.ga-search-clear {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(0,0,0,.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; cursor: pointer; line-height: 1;
+}
+.ga-search-results {
+  margin-top: .75rem;
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.ga-search-result {
+  background: #fff;
+  border: .5px solid rgba(0,0,0,.06);
+  border-radius: 10px;
+  padding: .7rem .9rem;
+  cursor: pointer;
+  transition: all .2s;
+}
+.ga-search-result:hover {
+  background: #f5f3ee;
+  border-color: rgba(0,0,0,.1);
+}
+.ga-search-result-title {
+  font-size: 13px; font-weight: 600;
+  color: var(--text); margin-bottom: 2px;
+}
+.ga-search-result-snippet {
+  font-size: 11.5px; color: var(--text-soft);
+  line-height: 1.45;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ga-search-result mark {
+  background: rgba(0,0,0,.08);
+  color: var(--text); padding: 0 2px; border-radius: 2px;
+  font-weight: 600;
+}
+.ga-search-empty {
+  text-align: center; padding: 1rem;
+  color: var(--text-mute); font-size: 13px;
+}
 
-    /* ── Hero (slide 1) ── */
-    .hero{
-      position:relative;overflow:hidden;
-      background:var(--black);color:var(--cream);
-      margin:-22px -18px 20px;
-      padding:38px 22px 34px;
-    }
-    .hero::before{
-      content:'';position:absolute;top:-70px;right:-50px;width:240px;height:240px;
-      border-radius:50%;background:rgba(138,149,88,.28);filter:blur(60px);pointer-events:none;
-    }
-    .hero > *{position:relative;}
-    .hero-eyebrow{
-      display:flex;align-items:center;gap:12px;
-      font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--olive-chip);
-    }
-    .hero-eyebrow::after{content:'';flex:1;height:1px;background:rgba(212,218,184,.25);}
-    .hero-title{
-      font-family:'Bebas Neue',sans-serif;font-weight:400;
-      font-size:48px;line-height:.95;letter-spacing:.015em;color:var(--cream);
-      margin:14px 0 10px;
-    }
-    .hero-title em{font-style:normal;color:var(--olive-light);}
-    .hero-sub{font-size:13px;line-height:1.6;color:rgba(243,239,228,.65);max-width:34ch;}
-    .hero-sub strong{color:var(--cream);font-weight:600;}
+/* TOC DRAWER */
+#s-guia-alimentacion .ga-toc-drawer {
+  position: fixed !important;
+  inset: 0;
+  z-index: 200 !important;
+  pointer-events: none; opacity: 0;
+  transition: opacity .25s;
+}
+.ga-toc-drawer.open { pointer-events: auto; opacity: 1; }
+.ga-toc-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.4);
+  backdrop-filter: blur(4px);
+}
+.ga-toc-content {
+  position: absolute; top: 0; right: 0;
+  width: 92%; max-width: 420px; height: 100%;
+  background: #faf8f3;
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .3s cubic-bezier(.16,.84,.3,1);
+  box-shadow: -8px 0 32px rgba(0,0,0,.15);
+}
+.ga-toc-drawer.open .ga-toc-content { transform: translateX(0); }
+.ga-toc-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: .5px solid rgba(0,0,0,.06);
+}
+.ga-toc-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px; letter-spacing: 1.2px;
+  color: var(--text);
+}
+.ga-toc-close {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(0,0,0,.05); border: none;
+  font-size: 20px; color: var(--text);
+  cursor: pointer; line-height: 1;
+}
+.ga-toc-status {
+  padding: .85rem 1.25rem;
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 700;
+  background: #f0eee7;
+  border-bottom: .5px solid rgba(0,0,0,.04);
+}
 
-    /* Mini-cards de capacidades */
-    .cap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-bottom:16px;}
-    .cap{
-      background:var(--card);border:1px solid rgba(0,0,0,.03);border-radius:18px;
-      box-shadow:var(--shadow);padding:13px 13px 12px;
-    }
-    .cap svg{display:block;margin-bottom:9px;color:var(--olive);}
-    .cap:nth-child(2) svg{color:var(--olive-dark);}
-    .cap:nth-child(3) svg{color:#8B887C;}
-    .cap:nth-child(4) svg{color:var(--olive-light);}
-    .cap:nth-child(5) svg{color:var(--olive-dark);}
-    .cap:nth-child(6) svg{color:#8B887C;}
-    .cap strong{display:block;font-size:12.5px;font-weight:700;letter-spacing:-.01em;color:var(--text);margin-bottom:3px;}
-    .cap span{display:block;font-size:10.5px;line-height:1.45;color:var(--text-mute);}
+.ga-toc-tabs {
+  display: flex; gap: 4px;
+  padding: .75rem 1rem .25rem;
+  border-bottom: .5px solid rgba(0,0,0,.06);
+}
+.ga-toc-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: .6rem .75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-mute);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all .2s;
+}
+.ga-toc-tab.active {
+  background: var(--text);
+  color: #fff;
+}
 
-    /* Nota honesta */
-    .g-note{
-      background:transparent;border:1px dashed rgba(74,82,56,.25);border-radius:14px;
-      padding:11px 14px;margin-top:2px;
-      font-size:11.5px;line-height:1.55;color:var(--text-soft);
-    }
-    .g-note strong{color:var(--olive-dark);font-weight:700;}
+.ga-toc-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: .5rem 0 2rem;
+}
+.ga-toc-h1 {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 1.25rem;
+  text-decoration: none; color: var(--text);
+  font-size: 14px; font-weight: 600; line-height: 1.3;
+  transition: background .15s;
+  border-left: 3px solid transparent;
+}
+.ga-toc-h1:hover { background: rgba(0,0,0,.03); }
+.ga-toc-h1.read {
+  color: var(--text-mute);
+  border-left-color: rgba(0,0,0,.15);
+}
+.ga-toc-h1.current {
+  background: #f0eee7;
+  border-left-color: var(--text);
+  color: var(--text);
+}
+.ga-toc-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px; letter-spacing: 1px;
+  color: var(--text-mute); flex-shrink: 0;
+  font-variant-numeric: tabular-nums; min-width: 22px;
+}
+.ga-toc-text-wrap { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.ga-toc-text { font-weight: 600; }
+.ga-toc-time {
+  font-size: 10.5px; font-weight: 500;
+  color: var(--text-mute);
+  letter-spacing: .3px;
+}
+.ga-toc-check {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,.15);
+  flex-shrink: 0; position: relative;
+  transition: all .2s;
+}
+.ga-toc-h1.read .ga-toc-check {
+  background: var(--text);
+  border-color: var(--text);
+}
+.ga-toc-h1.read .ga-toc-check::after {
+  content: '';
+  position: absolute; left: 5px; top: 3px;
+  width: 5px; height: 9px;
+  border-right: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(45deg);
+}
+.ga-toc-h2 {
+  display: block;
+  padding: 8px 1.25rem 8px 3.2rem;
+  text-decoration: none;
+  color: var(--text-soft);
+  font-size: 12.5px; line-height: 1.4;
+  transition: background .15s, color .15s;
+}
+.ga-toc-h2:hover { background: rgba(0,0,0,.03); color: var(--text); }
 
-    /* Fila icono+texto (funciones agrupadas) */
-    .g-row{display:flex;align-items:flex-start;gap:12px;padding:11px 2px;}
-    .g-row + .g-row{border-top:1px solid rgba(0,0,0,.04);}
-    .g-row svg{flex:none;margin-top:1px;color:var(--olive);}
-    .g-row div strong{display:block;font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;}
-    .g-row div span{display:block;font-size:12px;line-height:1.5;color:var(--text-soft);}
+.ga-toc-bookmarks-empty {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--text-mute);
+  font-size: 13px;
+  line-height: 1.5;
+}
 
-    /* Chips de atajos */
-    .g-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
-    .g-chips span{
-      font-size:11px;font-weight:600;color:var(--olive-dark);
-      background:rgba(138,149,88,.14);border-radius:100px;padding:5px 11px;
-    }
+/* READER */
+.ga-reader {
+  padding: 0 1.25rem 2rem;
+  max-width: 100%;
+  position: relative;
+}
+#s-guia-alimentacion .ga-reader > *:not(.bg-halo):not(.ga-search-modal):not(.ga-toc-drawer){ position: relative; z-index: 1; }
 
-    /* ── Cierre (slide 10) ── */
-    .end-dark{
-      position:relative;overflow:hidden;
-      background:var(--black);color:var(--cream);
-      border-radius:var(--radius);
-      padding:26px 22px 24px;margin-top:6px;
-    }
-    .end-dark::before{
-      content:'';position:absolute;bottom:-80px;left:-60px;width:220px;height:220px;
-      border-radius:50%;background:rgba(138,149,88,.25);filter:blur(60px);pointer-events:none;
-    }
-    .end-dark > *{position:relative;}
-    .end-kick{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:rgba(243,239,228,.52);margin-bottom:10px;}
-    .end-quote{
-      font-family:'Bebas Neue',sans-serif;font-weight:400;
-      font-size:36px;line-height:1;letter-spacing:.02em;color:var(--cream);margin-bottom:14px;
-    }
-    .end-quote em{font-style:normal;color:var(--olive-light);}
-    .end-cta{
-      display:flex;align-items:center;justify-content:center;gap:9px;
-      background:var(--cream);color:var(--black);
-      border-radius:100px;padding:14px 22px;margin-top:16px;
-      font-size:13.5px;font-weight:700;text-decoration:none;
-      transition:transform .15s;
-    }
-    .end-cta:active{transform:scale(.98);}
+/* ============ PANEL CONTINUAR LEYENDO (al volver) ============ */
+.ga-resume {
+  background: #ffffff;
+  color: var(--text);
+  border-radius: 20px;
+  padding: 1.6rem 1.4rem;
+  margin: 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 10px 28px rgba(20,20,20,.06);
+  animation: gaResumeIn .5s cubic-bezier(.16,.84,.3,1);
+}
+@keyframes gaResumeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ga-resume-eyebrow {
+  font-size: 10.5px; letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--olive);
+  font-weight: 700;
+  margin-bottom: .75rem;
+}
+.ga-resume-hi {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+}
+.ga-resume-progress-block {
+  margin-bottom: 1.25rem;
+}
+.ga-resume-progress-row {
+  display: flex; align-items: baseline; gap: 10px;
+  margin-bottom: .65rem;
+}
+.ga-resume-pct {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.ga-resume-pct-label {
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 600;
+}
+.ga-resume-bar {
+  height: 4px;
+  background: rgba(0,0,0,.07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ga-resume-bar-fill {
+  height: 100%;
+  background: var(--olive);
+  border-radius: 2px;
+  transition: width .8s cubic-bezier(.16,.84,.3,1);
+}
+.ga-resume-status { display: none; }
 
-    /* ── Navegación inferior ── */
-    .nav{
-      position:fixed;bottom:0;left:0;right:0;z-index:50;
-      background:rgba(247,244,237,.94);
-      -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
-      border-top:1px solid rgba(0,0,0,.05);
-    }
-    .nav-inner{
-      max-width:520px;margin:0 auto;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:12px 16px calc(12px + env(safe-area-inset-bottom));
-    }
-    .nav-btn{
-      font-family:'Inter',sans-serif;font-size:12.5px;font-weight:700;
-      border:none;border-radius:100px;padding:12px 20px;cursor:pointer;
-      transition:transform .15s, opacity .2s;
-    }
-    .nav-btn:active{transform:scale(.96);}
-    .nav-btn.secondary{background:rgba(0,0,0,.05);color:var(--text-soft);}
-    .nav-btn.secondary:disabled{opacity:.35;cursor:default;}
-    .nav-btn.primary{background:var(--black);color:var(--cream);box-shadow:0 6px 18px rgba(0,0,0,.18);}
-    .nav-counter{font-size:11px;font-weight:700;color:var(--text-mute);font-variant-numeric:tabular-nums;letter-spacing:.05em;}
+/* Conteo de capítulos al lado del % */
+.ga-resume-count {
+  margin-left: auto;
+  font-size: 11.5px;
+  letter-spacing: .3px;
+  color: var(--text-mute);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
 
-    /* ── Barrita de scroll de página (gris, 4px, a 2px del borde) ── */
-    .em-page-rail{
-      position:fixed;top:0;right:2px;width:4px;height:100vh;z-index:260;
-      pointer-events:none;display:none;
-    }
-    .em-page-rail.on{display:block;}
-    .em-page-rail::before{
-      content:'';position:absolute;inset:0;
-      background:rgba(0,0,0,.07);border-radius:99px;
-    }
-    .em-page-rail-thumb{
-      position:absolute;left:0;width:4px;border-radius:99px;
-      background:#9A9A9A;opacity:.95;
-    }
-  </style>
-</head>
-<body>
+/* Pills por track (Lo esencial / Profundizar / Extra) */
+.ga-resume-tracks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+.ga-resume-track-pill {
+  background: var(--bg-soft, #faf9f5);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  padding: .7rem .65rem;
+  text-align: left;
+  transition: background .2s, border-color .2s;
+}
+.ga-resume-track-pill.done {
+  background: rgba(122,140,90,.10);
+  border-color: rgba(122,140,90,.35);
+}
+.ga-resume-track-pill-label {
+  font-size: 9.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 700;
+  margin-bottom: .35rem;
+  line-height: 1.1;
+}
+.ga-resume-track-pill-count {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: .5px;
+}
+.ga-resume-track-pill.done .ga-resume-track-pill-count { color: var(--olive-dark); }
+.ga-resume-track-pill-count .ga-resume-track-pill-total {
+  font-size: 13px;
+  color: var(--text-mute);
+  margin-left: 2px;
+}
 
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div>
-        <span class="brand">MEAL TRACKER</span>
-        <span class="brand-sub">Cómo usar la app</span>
-      </div>
-      <div class="step-indicator" id="stepIndicator">1 / 10</div>
-    </div>
-    <div class="progress-inner"><div class="progress-bar" id="progressBar"></div></div>
-  </div>
+/* "Siguiente capítulo" — destacado con olivo de marca */
+.ga-resume-next {
+  background: rgba(122,140,90,.08);
+  border: 1px solid rgba(122,140,90,.25);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+}
+.ga-resume-next-label {
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--olive-dark);
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+.ga-resume-next-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.ga-resume-next-time {
+  font-size: 11.5px;
+  color: var(--text-mute);
+  margin-top: .35rem;
+  font-weight: 500;
+}
 
-  <div class="slides" id="slides">
+/* Estado "guía completada" */
+.ga-resume.is-done .ga-resume-where,
+.ga-resume.is-done .ga-resume-next { display: none; }
+.ga-resume-where {
+  background: var(--bg-soft, #faf9f5);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+}
+.ga-resume-where-label {
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+.ga-resume-where-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.ga-resume-actions {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.ga-resume-btn-primary {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--text);
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px; font-weight: 600; letter-spacing: .3px;
+  cursor: pointer;
+  transition: transform .15s;
+}
+.ga-resume-btn-primary:active { transform: scale(.98); }
+.ga-resume-btn-primary .arr {
+  font-size: 15px;
+  transition: transform .2s;
+}
+.ga-resume-btn-primary:hover .arr { transform: translateX(3px); }
 
-    <!-- ═══ Slide 1 · Portada: qué es y qué hace ═══ -->
-    <div class="slide active" data-step="0">
-      <div class="hero">
-        <div class="hero-eyebrow">Entrena con Método · Herramienta</div>
-        <div class="hero-title">MEAL TRACKER:<br>TU REGISTRO,<br><em>SIN FRICCIÓN.</em></div>
-        <div class="hero-sub">Registras lo que comes <strong>como lo dirías en voz alta</strong> y la app calcula calorías y macros reales contra tu meta diaria. Esto es lo que sabe hacer:</div>
-      </div>
+.ga-resume-btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(0,0,0,.12);
+  padding: 13px 20px;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px; font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+}
+.ga-resume-btn-secondary:hover {
+  background: rgba(0,0,0,.03);
+}
 
-      <div class="cap-grid">
-        <div class="cap">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9h-9z"/></svg>
-          <strong>Tu meta, a la vista</strong>
-          <span>Cuatro anillos arriba: calorías, proteína, carbos y grasas del día.</span>
-        </div>
-        <div class="cap">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3.5-4 3 2.5L20 6"/></svg>
-          <strong>Desempeño</strong>
-          <span>Gráficas de tu día, tu semana, tu mes y tu tendencia contra la meta.</span>
-        </div>
-        <div class="cap">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7"/><circle cx="12" cy="13.5" r="3"/><path d="M12 3.5v3"/></svg>
-          <strong>Arma mi día</strong>
-          <span>Te propone el día completo con tus ingredientes, cuadrado a tu meta.</span>
-        </div>
-        <div class="cap">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          <strong>Recetario inteligente</strong>
-          <span>Recetas que caben en tu meta y en lo que ya llevas del día.</span>
-        </div>
-        <div class="cap">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.2 0-2.4-.25-3.4-.7L3 21l1.7-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>
-          <strong>Registro natural</strong>
-          <span>Escribe o dicta por voz lo que comiste. La app entiende y calcula.</span>
-        </div>
-        <div class="cap">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <strong>Coach en vivo</strong>
-          <span>Mauro ve tu avance en tiempo real. No tienes que enviarle nada.</span>
-        </div>
-      </div>
+/* Collapsibles "Por leer" / "Leídos" dentro del asistente */
+.ga-resume-collapse {
+  margin-top: 12px;
+  background: var(--bg-soft, #faf9f5);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.ga-resume-collapse[open] { background: #fff; }
+.ga-resume-collapse-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: .85rem 1rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.ga-resume-collapse-head::-webkit-details-marker { display: none; }
+.ga-resume-collapse-label {
+  flex: 1;
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--olive-dark);
+  font-weight: 700;
+}
+.ga-resume-collapse-count {
+  font-size: 12px;
+  color: var(--text-mute);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ga-resume-collapse-arr {
+  color: var(--text-mute);
+  font-size: 14px;
+  transition: transform .25s;
+  line-height: 1;
+}
+.ga-resume-collapse[open] .ga-resume-collapse-arr { transform: rotate(180deg); }
+.ga-resume-collapse-body {
+  padding: 0 .75rem .25rem;
+}
+.ga-resume-ch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: .65rem .35rem;
+  border-top: .5px solid rgba(0,0,0,.06);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: background .15s;
+  border-radius: 6px;
+}
+.ga-resume-ch:first-child { border-top: none; }
+.ga-resume-ch:hover { background: rgba(122,140,90,.06); }
+.ga-resume-ch-check {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,.2);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.ga-resume-ch.done .ga-resume-ch-check {
+  background: var(--olive);
+  border-color: var(--olive);
+}
+.ga-resume-ch.done .ga-resume-ch-check::after {
+  content: '';
+  width: 4px; height: 7px;
+  border-right: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+.ga-resume-ch.next .ga-resume-ch-check {
+  border-color: var(--olive);
+  box-shadow: 0 0 0 3px rgba(122,140,90,.18);
+}
+.ga-resume-ch-text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.35;
+}
+.ga-resume-ch.done .ga-resume-ch-text { color: var(--text-soft); }
+.ga-resume-ch.next .ga-resume-ch-text { font-weight: 700; }
+.ga-resume-ch-time {
+  font-size: 10.5px;
+  color: var(--text-mute);
+  font-weight: 600;
+  flex-shrink: 0;
+  letter-spacing: .2px;
+}
+.ga-resume-ch-empty {
+  padding: .8rem .35rem 1rem;
+  font-size: 12.5px;
+  color: var(--text-mute);
+  text-align: center;
+}
 
-      <div class="g-note"><strong>Qué es y qué no es:</strong> la app registra, calcula y organiza. No recomienda dietas ni reemplaza la valoración de un profesional — el criterio lo aporta tu coach.</div>
-    </div>
+/* ============ ASISTENTE DE LECTURA — Modal overlay ============ */
+.ga-assistant-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 1rem 1rem;
+  animation: gaFadeIn .2s ease;
+  overflow-y: auto;
+}
+.ga-assistant-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(20,20,20,.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.ga-assistant-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 24px 56px rgba(0,0,0,.22);
+  padding: 1.6rem 1.4rem 1.4rem;
+  animation: gaSlideDown .3s cubic-bezier(.16,.84,.3,1);
+}
+.ga-assistant-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.05);
+  border: none;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+}
+.ga-assistant-close:hover { background: rgba(0,0,0,.1); }
+/* Dentro del modal, el ga-resume no necesita borde duplicado ni sombra propia */
+.ga-assistant-content .ga-resume {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  animation: none;
+}
 
-    <!-- ═══ Slide 2 · Tu meta nutricional diaria ═══ -->
-    <div class="slide" data-step="1">
-      <div class="kicker">01 · Tu meta</div>
-      <h1 class="step-title">TU META, SIEMPRE A LA VISTA</h1>
-      <p class="step-lead">Al abrir la app, arriba de todo está tu <strong>meta nutricional del día</strong>: cuatro anillos que se van llenando con cada comida que registras.</p>
+/* ============ FAB Stack ====== */
+.ga-fab-stack {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  animation: gaFabIn .5s cubic-bezier(.16,1.5,.5,1) .3s both;
+}
+@keyframes gaFabIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.ga-fab-btn {
+  background: #fff;
+  color: var(--text);
+  border: 1px solid rgba(0,0,0,.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.04);
+  transition: transform .2s, box-shadow .2s, background .2s;
+  position: relative;
+}
+.ga-fab-btn-round { width: 46px; height: 46px; border-radius: 50%; }
+.ga-fab-btn-pill {
+  padding: 12px 18px 12px 14px;
+  border-radius: 100px;
+  gap: 8px;
+}
+.ga-fab-btn-pill .ga-fab-btn-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  white-space: nowrap;
+}
+.ga-fab-btn:hover {
+  transform: translateX(-2px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(0,0,0,.14), 0 2px 6px rgba(0,0,0,.06);
+}
+.ga-fab-btn-round:hover { background: #faf8f3; }
+.ga-fab-btn:active { transform: scale(.97); }
+.ga-fab-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
 
-      <div class="ph" aria-hidden="true">
-        <div class="ph-head"><small>Hoy · Viernes</small><span class="ph-pill">5 días seguidos</span></div>
-        <div class="ph-rings">
-          <div class="ph-ring">
-            <svg width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="rgba(74,82,56,.12)" stroke-width="5"/><circle cx="25" cy="25" r="20" fill="none" stroke="#8A9558" stroke-width="5" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="42" transform="rotate(-90 25 25)"/></svg>
-            <b>1480</b><small>Calorías</small>
-          </div>
-          <div class="ph-ring">
-            <svg width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="rgba(74,82,56,.12)" stroke-width="5"/><circle cx="25" cy="25" r="20" fill="none" stroke="#4A5238" stroke-width="5" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="55" transform="rotate(-90 25 25)"/></svg>
-            <b>96g</b><small>Proteína</small>
-          </div>
-          <div class="ph-ring">
-            <svg width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="rgba(74,82,56,.12)" stroke-width="5"/><circle cx="25" cy="25" r="20" fill="none" stroke="#A9B478" stroke-width="5" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="34" transform="rotate(-90 25 25)"/></svg>
-            <b>152g</b><small>Carbos</small>
-          </div>
-          <div class="ph-ring">
-            <svg width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="rgba(74,82,56,.12)" stroke-width="5"/><circle cx="25" cy="25" r="20" fill="none" stroke="#8B887C" stroke-width="5" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="70" transform="rotate(-90 25 25)"/></svg>
-            <b>48g</b><small>Grasas</small>
-          </div>
-        </div>
-        <div class="ph-cta">Ver desempeño →</div>
-      </div>
-      <p class="ph-caption">La card de tu meta, arriba del chat. Al scrollear se compacta en una sola línea.</p>
+.ga-fab-btn-primary {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+.ga-fab-btn-primary:hover {
+  background: #000;
+}
 
-      <div class="g-card">
-        <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>Tu meta se ajusta contigo</div>
-        <p>Con el botón <strong>"Cambiar meta"</strong> actualizas calorías y distribución de macros en segundos, sin perder tu historial.</p>
-        <p>Y cuando <strong>Mauro ajusta tu meta</strong> desde su panel, la app te avisa en el chat y los anillos quedan ajustados solos.</p>
-      </div>
+/* Tooltip al hover */
+.ga-fab-tooltip {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--text);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .3px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+.ga-fab-btn:hover .ga-fab-tooltip {
+  opacity: 1;
+}
+/* En mobile táctil no se muestran tooltips */
+@media (hover: none) {
+  .ga-fab-tooltip { display: none; }
+}
 
-      <div class="g-take">
-        <div class="g-take-label">En esencia</div>
-        <ul>
-          <li>4 anillos: calorías, proteína, carbos y grasas</li>
-          <li>Todo lo que registras suma contra tu meta</li>
-          <li>"Cambiar meta" — o tu coach la ajusta por ti</li>
-        </ul>
-      </div>
-    </div>
+/* ELIMINAR FAB viejo */
+.ga-fab, .ga-fab-pct, .ga-fab-label { display: none !important; }
 
-    <!-- ═══ Slide 3 · Gráficas de desempeño ═══ -->
-    <div class="slide" data-step="2">
-      <div class="kicker">02 · Seguimiento</div>
-      <h1 class="step-title">TU DESEMPEÑO, EN GRÁFICAS</h1>
-      <p class="step-lead">Toca la card de tu meta (o pide <strong>"resumen del día"</strong>) y entra a <strong>Mi desempeño</strong>: cómo te ha ido hoy, esta semana, este mes y en tendencia.</p>
+/* ELIMINAR botones bookmark (descartados) */
+.ga-bookmark { display: none !important; }
 
-      <div class="ph" aria-hidden="true">
-        <div class="ph-head"><small>Mi desempeño</small><span class="ph-pill">En meta ±10%</span></div>
-        <div class="ph-tabs"><span class="ph-tab on">Semana</span><span class="ph-tab">Mes</span><span class="ph-tab">Tendencia</span></div>
-        <div class="ph-chart-label">Calorías · últimos 7 días</div>
-        <div class="ph-bars">
-          <i class="on" style="height:74%"></i><i class="on" style="height:88%"></i><i style="height:52%"></i><i class="on" style="height:81%"></i><i class="on" style="height:95%"></i><i class="on" style="height:69%"></i><i style="height:34%"></i>
-        </div>
-        <div class="ph-days"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
-        <div class="ph-stat">
-          <div><b>6/7 días</b><span>Adherencia</span></div>
-          <div><b>Proteína ↑</b><span>Tendencia</span></div>
-        </div>
-      </div>
-      <p class="ph-caption">"Mi desempeño": barras por macro con tres pestañas — Semana, Mes y Tendencia.</p>
+/* COVER editorial sin redundancia */
+.ga-cover {
+  padding: 2rem 0 1.25rem;
+  border-bottom: none;
+  margin-bottom: 1.25rem;
+}
+.ga-cover-eyebrow {
+  font-size: 10.5px; letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-mute); font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.ga-cover-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 60px; line-height: .9;
+  letter-spacing: 1.5px;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.ga-cover-line {
+  width: 56px; height: 2px;
+  background: var(--text);
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+}
+.ga-cover-statement {
+  font-family: 'Inter', sans-serif;
+  font-size: 21px;
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 2rem;
+  letter-spacing: -.3px;
+}
+.ga-cover-statement strong { font-weight: 700; }
+.ga-cover-statement strong {
+  font-style: normal;
+  font-weight: 700;
+}
+.ga-cover-image-slot,
+.ga-cover-image-placeholder { display: none !important; }
+.ga-cover-image-placeholder-hidden {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.ga-cover-meta {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 2rem;
+}
+.ga-cover-meta-row {
+  font-size: 13px;
+  color: var(--text-mute);
+  line-height: 1.5;
+}
+.ga-cover-meta-row strong {
+  color: var(--text);
+  font-weight: 600;
+}
 
-      <div class="g-card">
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-          <div><strong>Tu día, al detalle</strong><span>El "Resumen del día" desglosa cada comida y el total acumulado de kcal y macros contra tu meta.</span></div>
-        </div>
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3.5-4 3 2.5L20 6"/></svg>
-          <div><strong>Semana y mes</strong><span>Barras por macro día a día, más tu comportamiento: adherencia, hora de inicio del registro y bienestar promedio.</span></div>
-        </div>
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 3 6-7 3 3"/></svg>
-          <div><strong>Tendencia</strong><span>Promedio semanal de los últimos 3 meses: la foto grande de tu proceso, punto por punto.</span></div>
-        </div>
-      </div>
+/* TIP de cómo aprovechar la guía — nota minimalista, no card */
+.ga-cover-tip {
+  background: transparent;
+  border-left: none;
+  padding: 0;
+  border-radius: 0;
+  margin: .5rem 0 1.25rem;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ga-cover-tip-label {
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--olive-dark);
+  margin: 0;
+  flex-shrink: 0;
+}
+.ga-cover-tip-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-mute);
+  font-weight: 400;
+  margin: 0;
+  flex: 1 1 100%;
+}
+.ga-cover-tip-text strong { font-weight: 600; color: var(--text-soft); }
 
-      <div class="g-take">
-        <div class="g-take-label">En esencia</div>
-        <ul>
-          <li>Día: resumen con total acumulado vs meta</li>
-          <li>Semana/Mes: barras por macro + adherencia</li>
-          <li>Tendencia: promedio semanal de 3 meses</li>
-        </ul>
-      </div>
-    </div>
+/* H1 wrap con número, tiempo, bookmark */
+.ga-section {
+  margin-bottom: 1.5rem;
+  padding-top: .5rem;
+  scroll-margin-top: 90px;
+  position: relative;
+}
+.ga-h1-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 2rem 0 1.1rem;
+  padding-top: 1.25rem;
+  border-top: .5px solid rgba(0,0,0,.08);
+  scroll-margin-top: 90px;
+}
+.ga-section:first-of-type .ga-h1-wrap {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+/* Título primero, tiempo después */
+.ga-h1-wrap .ga-h1 { order: 1; }
+.ga-h1-wrap .ga-h1-meta { order: 2; }
+.ga-h1-wrap .ga-bookmark { order: 3; align-self: flex-end; margin-top: -34px; }
+.ga-h1-meta {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.ga-h1-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--olive);
+  font-variant-numeric: tabular-nums;
+}
+.ga-h1-time {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 600;
+}
+.ga-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--text);
+  flex: 1;
+  margin: 0;
+  scroll-margin-top: 90px;
+}
 
-    <!-- ═══ Slide 4 · Arma mi día ═══ -->
-    <div class="slide" data-step="3">
-      <div class="kicker">03 · El planificador</div>
-      <h1 class="step-title">"ARMA MI DÍA"</h1>
-      <p class="step-lead">¿No quieres decidir qué comer? Pídele el día completo: la app propone <strong>desayuno, almuerzo, snack y cena</strong> usando solo tus ingredientes y tus menús favoritos, con gramos que suman tu meta.</p>
+.ga-bookmark {
+  background: transparent;
+  border: none;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  color: rgba(0,0,0,.25);
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+  margin-top: 2px;
+}
+.ga-bookmark:hover {
+  background: rgba(0,0,0,.04);
+  color: var(--text);
+}
+.ga-bookmark svg { width: 18px; height: 18px; }
+.ga-bookmark.saved {
+  color: var(--text);
+}
+.ga-bookmark.saved svg path {
+  fill: var(--text);
+}
 
-      <div class="ph" aria-hidden="true">
-        <div class="ph-head"><small>Arma mi día</small><span class="ph-pill">Meta 2200 kcal</span></div>
-        <div class="ph-meal"><div class="ph-m-txt"><b>Desayuno</b><span>Avena 60 g · 2 huevos · plátano</span></div><em>520 kcal</em></div>
-        <div class="ph-meal"><div class="ph-m-txt"><b>Almuerzo</b><span>Pollo 160 g · arroz 180 g · ensalada</span></div><em>690 kcal</em></div>
-        <div class="ph-meal"><div class="ph-m-txt"><b>Snack</b><span>Yogur griego · fresas · maní 20 g</span></div><em>310 kcal</em></div>
-        <div class="ph-meal"><div class="ph-m-txt"><b>Cena</b><span>Menú favorito: salmón con papa</span></div><em>680 kcal</em></div>
-        <div class="ph-actions"><span class="dark">Registrar</span><span>Otra variante</span></div>
-      </div>
-      <p class="ph-caption">La propuesta usa tus ingredientes y menús favoritos — puedes registrarla, guardarla o pedir otra.</p>
+/* H2 — sub-sección, con línea olivo de marca */
+.ga-h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+  margin: 2.25rem 0 1rem;
+  letter-spacing: -.2px;
+  padding-top: .75rem;
+  border-top: 2px solid var(--olive);
+  scroll-margin-top: 90px;
+}
+/* H3 — bloque interno, eyebrow color olivo en mayúsculas */
+.ga-h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--olive-dark);
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  margin: 1.75rem 0 .65rem;
+  scroll-margin-top: 90px;
+}
 
-      <div class="g-card">
-        <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M12 4v16"/></svg>¿Solo te falta cuadrar un macro?</div>
-        <p>Pide <strong>"ayuda con proporciones"</strong>: dile qué alimentos tienes y te devuelve los <strong>gramos exactos</strong> para cerrar la brecha. Solo matemática — sin recetas ni dietas.</p>
-      </div>
+/* CUERPO Inter 16px — lectura larga limpia, sin cursiva */
+.ga-p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 1.1rem;
+  font-weight: 400;
+  letter-spacing: -.1px;
+}
+.ga-p strong {
+  font-weight: 700;
+  color: var(--text);
+}
+.ga-p em {
+  font-style: normal;
+  color: var(--olive-dark);
+  font-weight: 600;
+}
+.ga-caption { display: none !important; }
+.ga-caption-old-hidden {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-mute);
+  font-weight: 500;
+  margin: 0 0 1rem;
+  text-align: center;
+  letter-spacing: .2px;
+}
+.ga-list {
+  list-style: none;
+  padding: 0;
+  margin: .5rem 0 1.4rem;
+}
+.ga-list li {
+  position: relative;
+  padding: 0 0 0 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: .7rem;
+  font-weight: 400;
+}
+.ga-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--olive);
+}
+.ga-list li strong { font-weight: 700; }
+.ga-list li em { font-style: normal; color: var(--olive-dark); font-weight: 600; }
 
-      <div class="g-take">
-        <div class="g-take-label">En esencia</div>
-        <ul>
-          <li>Distribuye el día completo cuadrado a tu meta</li>
-          <li>Solo usa tus ingredientes y menús favoritos</li>
-          <li>Registrar · guardar como favorito · regenerar</li>
-          <li>Funciona mejor con 4+ ingredientes guardados</li>
-        </ul>
-      </div>
-    </div>
+/* PULL QUOTE ELIMINADO */
+.ga-pullquote { display: none !important; }
 
-    <!-- ═══ Slide 5 · Recetario inteligente ═══ -->
-    <div class="slide" data-step="4">
-      <div class="kicker">04 · Recetas</div>
-      <h1 class="step-title">RECETAS QUE CUADRAN CON TU META</h1>
-      <p class="step-lead">En la parte superior de la app está el <strong>Recetario</strong>: recetas pensadas para tu proceso, que se ajustan a <strong>tu meta y a lo que ya llevas registrado hoy</strong>.</p>
+/* ============ "PARA LLEVAR" — editorial premium minimalista ====== */
+.ga-takeaway {
+  margin: 2.5rem 0 1rem;
+  padding: 2rem 1.6rem 1.75rem;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfaf5 100%);
+  border: none;
+  border-radius: 18px;
+  color: var(--text);
+  box-shadow: 0 14px 40px rgba(20,20,20,.06), 0 2px 8px rgba(20,20,20,.03);
+  position: relative;
+}
+.ga-takeaway::before {
+  content: '';
+  position: absolute;
+  top: 1.6rem; left: 1.6rem;
+  width: 28px; height: 2px;
+  background: var(--olive);
+  border-radius: 2px;
+}
+.ga-takeaway-label {
+  font-size: 11px;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+  color: var(--olive);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  padding-top: .65rem;
+  padding-bottom: 1rem;
+  border-bottom: .5px solid rgba(0,0,0,.06);
+}
+.ga-takeaway-section {
+  margin-bottom: 1.75rem;
+}
+.ga-takeaway-section:last-child { margin-bottom: 0; }
+.ga-takeaway-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+.ga-takeaway-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: takeaway-n;
+}
+.ga-takeaway-list li {
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: .85rem;
+  padding-left: 18px;
+  position: relative;
+}
+.ga-takeaway-list li:last-child { margin-bottom: 0; }
+.ga-takeaway-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 9px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--olive);
+}
+.ga-takeaway-list li strong { color: var(--text); font-weight: 700; }
 
-      <div class="ph" aria-hidden="true">
-        <div class="ph-head"><small>Recetario</small><span class="ph-pill">Te faltan 720 kcal · P 38 g</span></div>
-        <div class="ph-meal"><div class="ph-m-txt"><b>Bowl de pollo y arroz</b><span>610 kcal · P 42 · C 58 · G 18</span></div><span class="ph-fit">Encaja hoy</span></div>
-        <div class="ph-meal"><div class="ph-m-txt"><b>Tortilla de claras con avena</b><span>430 kcal · P 34 · C 41 · G 12</span></div><span class="ph-fit">Encaja hoy</span></div>
-        <div class="ph-meal"><div class="ph-m-txt"><b>Wrap de atún</b><span>520 kcal · P 39 · C 47 · G 17</span></div><em>Ver</em></div>
-      </div>
-      <p class="ph-caption">El Recetario sabe cuánto te falta del día y te muestra lo que cabe en tu meta.</p>
+/* Lista numerada con números limpios sin círculo */
+.ga-takeaway-list-num {
+  counter-reset: takeaway-n;
+}
+.ga-takeaway-list-num li {
+  counter-increment: takeaway-n;
+  padding-left: 32px;
+}
+.ga-takeaway-list-num li::before {
+  content: counter(takeaway-n, decimal-leading-zero);
+  background: transparent;
+  border-radius: 0;
+  width: auto; height: auto;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+  color: var(--olive);
+  opacity: 1;
+  top: 4px;
+  left: 0;
+  text-align: left;
+  display: block;
+}
 
-      <div class="g-card">
-        <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 6"/></svg>Registra desde la receta</div>
-        <p>Elige una receta y <strong>regístrala con un toque</strong>: sus calorías y macros se suman al día como cualquier comida.</p>
-        <p><strong>Ojo:</strong> el chat no da recetas a propósito — para recetas está el Recetario; el chat registra, calcula y cuadra.</p>
-      </div>
+/* BOTÓN "marcar como leído" al final de cada capítulo */
+.ga-mark-read {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 1.75rem auto 1.25rem;
+  padding: 14px 28px;
+  background: rgba(122,140,90,.10);
+  border: 1.5px solid var(--olive);
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--olive-dark);
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .3px;
+  box-shadow: 0 4px 14px rgba(122,140,90,.18);
+}
+.ga-mark-read:hover {
+  background: rgba(122,140,90,.18);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(122,140,90,.25);
+}
+.ga-mark-read .check-icon {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  position: relative;
+  flex-shrink: 0;
+}
+.ga-mark-read.read {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+.ga-mark-read.read .check-icon {
+  background: #fff;
+  border-color: #fff;
+}
+.ga-mark-read.read .check-icon::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 2px;
+  width: 4px; height: 7px;
+  border-right: 1.5px solid var(--text);
+  border-bottom: 1.5px solid var(--text);
+  transform: rotate(45deg);
+}
 
-      <div class="g-take">
-        <div class="g-take-label">En esencia</div>
-        <ul>
-          <li>Botón "Recetario" en la parte superior</li>
-          <li>Ajustado a tu meta y a lo que ya comiste</li>
-          <li>Registra la receta con un toque</li>
-        </ul>
-      </div>
-    </div>
+/* Sin manchas de fondo dentro de la guía */
+#s-guia-alimentacion .sub-area::before,
+#s-guia-alimentacion .sub-area::after { display: none !important; }
 
-    <!-- ═══ Slide 6 · Registrar comidas (texto o voz) ═══ -->
-    <div class="slide" data-step="5">
-      <div class="kicker">05 · Lo esencial</div>
-      <h1 class="step-title">REGISTRA COMO HABLAS</h1>
-      <p class="step-lead">Nada de catálogos ni tablas. <strong>Dicta o escribe lo que comiste</strong> y la app registra cada alimento con calorías y macros reales, asignándolo a desayuno, almuerzo, cena o snack según la hora.</p>
+/* ============================================================ */
+/* ============ TRACKS — 3 caminos colapsables ================ */
+/* ============================================================ */
+.ga-tracks {
+  margin: 0 0 2.5rem;
+}
+.ga-tracks-intro {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-left: .25rem;
+}
+.ga-track {
+  background: #fff;
+  border: .5px solid rgba(0,0,0,.07);
+  border-radius: 16px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,.025), 0 6px 18px rgba(0,0,0,.035);
+}
+.ga-track-head {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 1.25rem 1.3rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+.ga-track-head-main { flex: 1; min-width: 0; }
+.ga-track-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: .8px;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.ga-track-desc {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.ga-track-meta {
+  font-size: 11px;
+  color: var(--text-mute);
+  font-weight: 500;
+  letter-spacing: .3px;
+}
+.ga-track-count { font-weight: 600; color: var(--text-soft); }
+.ga-track-toggle {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: #f0eee7;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: transform .3s cubic-bezier(.16,.84,.3,1), background .2s;
+}
+.ga-track-toggle svg { width: 16px; height: 16px; color: var(--text); }
+.ga-track.open .ga-track-toggle {
+  transform: rotate(180deg);
+  background: var(--text);
+}
+.ga-track.open .ga-track-toggle svg { color: #fff; }
 
-      <div class="ph" aria-hidden="true">
-        <div class="ph-head"><small>Meal Tracker</small><span class="ph-pill">Hoy</span></div>
-        <div class="g-chat">
-          <div class="me">Desayuné 3 arepas, 2 huevos revueltos y un café con leche</div>
-          <div class="app">Registrado: <strong>3 items · 610 kcal</strong> · P 24 g · C 68 g · G 26 g. Vas 610 de 2200 kcal del día.</div>
-          <div class="me">Ah, y se me olvidó el pan</div>
-          <div class="app">Listo, lo sumé a tu desayuno ✓</div>
-        </div>
-      </div>
-      <p class="ph-caption">El chat de la app: registro por texto o por voz, con corrección por contexto.</p>
+/* Barra de progreso del track */
+.ga-track-progress {
+  height: 3px;
+  background: rgba(0,0,0,.05);
+  margin: 0 1.3rem;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ga-track-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--text);
+  border-radius: 2px;
+  transition: width .6s cubic-bezier(.16,.84,.3,1);
+}
 
-      <div class="g-card">
-        <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.4 2.4 0 1 1 3.6 2c-.8.5-1.2 1-1.2 1.8M12 16v.5"/></svg>Pregunta antes de comer</div>
-        <p>¿Decidiendo entre dos opciones? Consulta macros <strong>sin registrar</strong>: "¿calorías de una manzana?" o "¿macros de 100 g de pollo?".</p>
-      </div>
+/* Body colapsable */
+.ga-track-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s cubic-bezier(.16,.84,.3,1);
+}
+.ga-track.open .ga-track-body {
+  max-height: 800px;
+}
+.ga-track-ch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 1.3rem;
+  text-decoration: none;
+  color: var(--text);
+  border-top: .5px solid rgba(0,0,0,.05);
+  transition: background .15s;
+}
+.ga-track-ch:first-child { border-top: .5px solid rgba(0,0,0,.07); margin-top: .6rem; }
+.ga-track-ch:hover { background: #faf8f3; }
+.ga-track-ch-check {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,.15);
+  flex-shrink: 0;
+  position: relative;
+  transition: all .25s cubic-bezier(.5,1.6,.5,1);
+}
+.ga-track-ch.read .ga-track-ch-check {
+  background: var(--text);
+  border-color: var(--text);
+}
+.ga-track-ch.read .ga-track-ch-check::after {
+  content: '';
+  position: absolute;
+  left: 5px; top: 3px;
+  width: 5px; height: 9px;
+  border-right: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(45deg);
+}
+.ga-track-ch-text {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text);
+}
+.ga-track-ch.read .ga-track-ch-text {
+  color: var(--text-mute);
+}
+.ga-track-ch-time {
+  font-size: 11px;
+  color: var(--text-mute);
+  font-weight: 500;
+  flex-shrink: 0;
+  letter-spacing: .2px;
+}
 
-      <div class="g-take">
-        <div class="g-take-label">En esencia</div>
-        <ul>
-          <li>Escribe o dicta natural, sin formato</li>
-          <li>Listas largas: se registran completas</li>
-          <li>"Se me olvidó…" suma a la última comida</li>
-          <li>Puedes consultar macros sin registrar</li>
-        </ul>
-      </div>
-    </div>
+/* Label de grupo en el drawer del índice */
+.ga-toc-group-label {
+  font-size: 10.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  font-weight: 700;
+  padding: 1.25rem 1.25rem .5rem;
+}
+.ga-toc-group-label:first-child { padding-top: .75rem; }
 
-    <!-- ═══ Slide 7 · Favoritos: menús + ingredientes ═══ -->
-    <div class="slide" data-step="6">
-      <div class="kicker">06 · Tu base</div>
-      <h1 class="step-title">MENÚS E INGREDIENTES FAVORITOS</h1>
-      <p class="step-lead">Las comidas que repites y los alimentos que sueles comprar se guardan una vez — y alimentan el planificador todos los días.</p>
+/* ============ FADE-IN sutil al hacer scroll ================= */
+.ga-section {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .6s cubic-bezier(.16,.84,.3,1), transform .6s cubic-bezier(.16,.84,.3,1);
+}
+.ga-section.ga-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* La primera sección y los tracks siempre visibles (no fade) */
+.ga-tracks, .ga-cover {
+  opacity: 1;
+}
 
-      <div class="g-card">
-        <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2-5.6-3.2-5.6 3.2 1.3-6.2L3 9.5l6.3-.7z"/></svg>Menús favoritos</div>
-        <p>Toca la <strong>estrella</strong> en cualquier comida registrada y queda como menú favorito, listo para reutilizar con un tap. También puedes <strong>guardar el día completo</strong> como favorito, o <strong>repetir la comida de ayer</strong>.</p>
-      </div>
+/* ============ MICRO-ANIMACIÓN al marcar leído =============== */
+@keyframes gaCheckPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.ga-mark-read.just-marked {
+  animation: gaMarkPulse .5s ease;
+}
+@keyframes gaMarkPulse {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+.ga-mark-read.read .check-icon {
+  animation: gaCheckPop .4s cubic-bezier(.5,1.6,.5,1);
+}
+.ga-track-ch-check.just-read {
+  animation: gaCheckPop .45s cubic-bezier(.5,1.6,.5,1);
+}
 
-      <div class="g-card">
-        <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Mis ingredientes</div>
-        <div class="g-chat">
-          <div class="me">Mis ingredientes son pollo, arroz, huevos, avena, plátano y aceite de oliva</div>
-          <div class="app">Guardados en tu lista. Los uso cuando me pidas <strong>armar tu día</strong> o cubrir un macro que falte.</div>
-        </div>
-        <p>La app detecta lo que registras con frecuencia y te propone añadirlo a la lista.</p>
-      </div>
+/* ═══════════════════════════════════════════════════════════════════ */
+/* ═══ v12 · Premium 2026: asistente compacto, ritmo entre capítulos, ═══ */
+/* ═══ "En esencia" en grafito y tracking de marca apretado           ═══ */
+/* ═══════════════════════════════════════════════════════════════════ */
 
-      <div class="g-quote">Se guarda una vez. <em>Trabaja todos los días.</em></div>
-    </div>
+/* ── 1 · Asistente de lectura: patrón .em-assist de la home, compacto ── */
+.ga-resume{
+  padding: 13px 15px 12px;
+  margin: .9rem 0 1.15rem;
+  border-radius: 22px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px .5px rgba(0,0,0,.1), 0 10px 28px rgba(74,82,56,.12);
+}
+.ga-resume-eyebrow{
+  display: flex; align-items: center; gap: 7px;
+  font-size: 9px; font-weight: 700; letter-spacing: .08em;
+  color: var(--olive-dark);
+  margin: 0 0 10px 2px;
+}
+.ga-resume-eyebrow::before{
+  content: '';
+  width: 10px; height: 12px; flex: none;
+  background: #E08E84;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 26l-7-5-7 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 28' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 26l-7-5-7 5V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ga-resume-row{display: flex; align-items: center; gap: 13px;}
+.ga-resume-body{flex: 1; min-width: 0;}
+.ga-resume-hi{
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px; font-weight: 600; letter-spacing: -.01em;
+  line-height: 1.3; color: var(--text);
+  margin: 0 0 2px;
+}
+/* "Siguiente capítulo" pasa a ser la línea meta bajo el título */
+.ga-resume-next{
+  background: transparent; border: none; border-radius: 0;
+  padding: 0; margin: 0;
+  display: flex; align-items: baseline; gap: 5px; flex-wrap: wrap;
+}
+.ga-resume-next-label{display: none;}
+.ga-resume-next-title{
+  font-size: 11.5px; font-weight: 500; color: var(--text-mute); line-height: 1.4;
+}
+.ga-resume-next-time{
+  font-size: 10.5px; color: var(--text-mute); opacity: .8; margin-top: 0;
+}
+/* Botón circular oliva 42px con flecha (el texto vive para lectores de pantalla) */
+.ga-resume-actions{margin: 0; flex: none;}
+.ga-resume-btn-primary{
+  width: 42px; height: 42px; padding: 0;
+  border-radius: 50%;
+  background: var(--olive);
+  display: grid; place-content: center;
+}
+.ga-resume-btn-primary:hover{background: var(--olive-dark);}
+.ga-resume-btn-primary #ga-resume-btn-primary-text{
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.ga-resume-btn-primary .arr{font-size: 17px; line-height: 1;}
+/* Progreso: barra fina integrada abajo */
+.ga-resume-progress-block{
+  margin: 11px 0 0; padding-top: 10px;
+  border-top: 1px solid rgba(0,0,0,.05);
+}
+.ga-resume-bar{height: 4px; border-radius: 100px; background: rgba(74,82,56,.10);}
+.ga-resume-progress-row{margin: 6px 0 0; gap: 5px; align-items: baseline;}
+.ga-resume-pct{
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 700; color: var(--olive-dark);
+}
+.ga-resume-pct-label{font-size: 10px; letter-spacing: .06em;}
+.ga-resume-count{font-size: 10.5px; letter-spacing: 0;}
+/* Pills de track fuera: los desplegables "Por leer/Leídos" ya cubren el detalle */
+.ga-resume-tracks{display: none;}
+.ga-resume-collapse{margin-top: 8px; border-radius: 12px;}
+.ga-resume-collapse-head{padding: 9px 12px;}
+.ga-resume-collapse-body{padding: 0 12px 8px;}
 
-    <!-- ═══ Slide 8 · Corrige y revisa ═══ -->
-    <div class="slide" data-step="7">
-      <div class="kicker">07 · Control total</div>
-      <h1 class="step-title">CORRIGE Y REVISA SIN DRAMAS</h1>
-      <p class="step-lead">Te equivocaste de cantidad, repetiste un registro o quieres revisar un día pasado: todo se resuelve en segundos.</p>
+/* ── 2 · Ritmo vertical: ~40% menos aire entre capítulos ── */
+.ga-section{margin-bottom: .9rem; padding-top: .3rem;}
+.ga-h1-wrap{margin: 1.2rem 0 .85rem; padding-top: .8rem;}
+.ga-h2{margin: 1.4rem 0 .8rem;}
+.ga-h3{margin: 1.1rem 0 .5rem;}
+.ga-takeaway + .ga-takeaway{margin-top: .7rem;}
 
-      <div class="g-card">
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
-          <div><strong>Editar cantidades</strong><span>Toca el lápiz en cualquier comida, ajusta los gramos y todo se recalcula solo.</span></div>
-        </div>
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
-          <div><strong>Eliminar y deshacer</strong><span>La papelera borra un item puntual; y tras cada registro tienes un "Deshacer" inmediato.</span></div>
-        </div>
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
-          <div><strong>Reiniciar el día</strong><span>Pide "reiniciar día" y arrancas la jornada en cero (solo borra el día actual).</span></div>
-        </div>
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
-          <div><strong>Calendario</strong><span>Cada día queda guardado: vuelve a cualquier fecha y revisa qué comiste y cómo cerró tu meta.</span></div>
-        </div>
-      </div>
+/* ── 3 · Portada compacta ── */
+.ga-cover{padding: 1.1rem 0 .9rem; margin-bottom: .9rem;}
+.ga-cover-eyebrow{margin-bottom: .7rem;}
+.ga-cover-title{margin-bottom: .65rem;}
+.ga-cover-line{margin-bottom: .95rem;}
+.ga-cover-statement{margin-bottom: 1.1rem;}
+.ga-cover-meta{margin-bottom: 1rem;}
+.ga-cover-tip{margin: .3rem 0 .8rem;}
 
-      <div class="g-quote">Tu historia nutricional, <em>día por día.</em></div>
-    </div>
+/* ── 4 · "En esencia": grafito compacto, texto crema, check oliva ── */
+.ga-takeaway{
+  margin: 1.4rem 0 .9rem;
+  padding: 1.05rem 1.15rem .95rem;
+  background: #141414;
+  color: #F3EFE4;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(20,20,20,.18);
+}
+.ga-takeaway::before{display: none;}
+.ga-takeaway-label{
+  font-size: 10px; letter-spacing: .08em;
+  color: rgba(243,239,228,.55);
+  font-weight: 700;
+  margin-bottom: .7rem; padding: 0;
+  border-bottom: none;
+}
+.ga-takeaway-section{margin-bottom: 1rem;}
+.ga-takeaway-title{
+  font-size: 11px; letter-spacing: .06em;
+  color: #F3EFE4;
+  margin-bottom: .55rem;
+}
+.ga-takeaway-list li{
+  font-size: 13px; line-height: 1.5;
+  color: rgba(243,239,228,.92);
+  margin-bottom: .5rem;
+  padding-left: 20px;
+}
+.ga-takeaway-list li strong{color: #fff;}
+.ga-takeaway-list li::before{
+  content: '✓';
+  background: transparent;
+  width: auto; height: auto; border-radius: 0;
+  top: 0;
+  font-size: 12.5px; font-weight: 800;
+  color: var(--olive-light);
+}
+.ga-takeaway-list-num li{padding-left: 26px;}
+.ga-takeaway-list-num li::before{
+  content: counter(takeaway-n, decimal-leading-zero);
+  font-size: 10.5px; letter-spacing: .04em;
+  color: var(--olive-light);
+  top: 2px;
+}
 
-    <!-- ═══ Slide 9 · Coach en vivo + extras ═══ -->
-    <div class="slide" data-step="8">
-      <div class="kicker">08 · Tu coach, al tanto</div>
-      <h1 class="step-title">MAURO VE TU AVANCE EN VIVO</h1>
-      <p class="step-lead">No tienes que exportar ni enviar nada: al aceptar la sincronización, tu coach ve tu data <strong>en tiempo real</strong> — macros del día, adherencia semanal y tus check-ins.</p>
+/* ── 5 · Tracking de marca: kickers y subtítulos a .06–.08em ── */
+.ga-cover-eyebrow,
+.ga-cover-tip-label,
+.ga-h1-time,
+.ga-h3,
+.ga-toc-status,
+.ga-toc-group-label,
+.ga-toc-time,
+.ga-resume-where-label,
+.ga-resume-collapse-label,
+.ga-track-name,
+.ga-tracks-intro,
+.ga-mark-read,
+.ga-progress-info{letter-spacing: .07em !important;}
 
-      <div class="g-card">
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3 13.5 3 9.5A4.5 4.5 0 0 1 7.5 5c1.8 0 3.4 1 4.5 2.5C13.1 6 14.7 5 16.5 5A4.5 4.5 0 0 1 21 9.5c0 4-4 7.5-9 11.5z"/></svg>
-          <div><strong>Check-in de bienestar</strong><span>Un toque al día: energía, hambre y ánimo. Le da contexto humano a tus números.</span></div>
-        </div>
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg>
-          <div><strong>Racha y día perfecto</strong><span>La app celebra tus días seguidos registrando y tus días clavados en la meta.</span></div>
-        </div>
-        <div class="g-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-          <div><strong>Aprendizaje</strong><span>El botón "Aprendizaje" te trae de vuelta a este Centro de Recursos, con tu material del método.</span></div>
-        </div>
-      </div>
+/* El asistente arranca despejado del pill fijo "Volver atrás" */
+.ga-resume{margin-top: 2.4rem;}
 
-      <div class="g-card">
-        <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 12.5H12l-1 9.5L19.5 11H12z"/></svg>Atajos del chat y herramientas</div>
-        <p>Casi todo se pide con tus palabras, o desde el botón de <strong>Herramientas</strong>:</p>
-        <div class="g-chips">
-          <span>arma mi día</span><span>cambiar meta</span><span>resumen del día</span><span>calendario</span><span>menús favoritos</span><span>mis ingredientes</span><span>reiniciar día</span><span>¿qué puedo hacer?</span>
-        </div>
-      </div>
+/* ═══════════════════════════════════════════════════════════════ */
+/* ═══ PORTADA CON FOTO — hero como la página entrenametodo.    ═══ */
+/* Foto de marca + velo oscuro; tipografía y tamaños Meal        */
+/* Tracker (Inter + Bebas Neue, acentos oliva). Si la foto no    */
+/* carga, queda la portada oscura con brillo oliva.              */
+/* ═══════════════════════════════════════════════════════════════ */
+.ga-cover{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 85% 12%, rgba(169,180,120,.38), rgba(169,180,120,.12) 40%, transparent 65%),
+    radial-gradient(ellipse at 10% 100%, rgba(138,149,88,.26), transparent 60%),
+    var(--black, #141414);
+  border-radius:22px;
+  padding:120px 22px 22px;
+  margin:0 0 1.5rem;
+  border-bottom:none;
+}
+.ga-cover-media{position:absolute;inset:0;pointer-events:none;}
+.ga-cover-media img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:64% 32%;
+}
+.ga-cover-shade{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(20,20,20,.44) 0%, rgba(20,20,20,.20) 34%, rgba(20,20,20,.60) 66%, rgba(20,20,20,.90) 100%);
+}
+.ga-cover > *:not(.ga-cover-media){position:relative;}
+.ga-cover-eyebrow{color:var(--olive-chip, #D4DAB8);margin-bottom:1rem;text-shadow:0 1px 12px rgba(0,0,0,.45);}
+.ga-cover-title{color:#F3EFE4;text-shadow:0 2px 22px rgba(0,0,0,.4);}
+.ga-cover-line{background:var(--olive-light, #A9B478);}
+.ga-cover-statement{color:rgba(243,239,228,.92);margin-bottom:1.4rem;text-shadow:0 1px 12px rgba(0,0,0,.5);}
+.ga-cover-statement strong{color:#F3EFE4;}
+.ga-cover-meta{margin-bottom:1.1rem;}
+.ga-cover-meta-row{color:rgba(243,239,228,.6);}
+.ga-cover-meta-row strong{color:#F3EFE4;}
+/* tip como tarjeta glass sobre la foto (hero-card de entrenametodo) */
+.ga-cover-tip{
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.22);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);
+  border-radius:16px;
+  padding:12px 14px;
+  margin:0;
+  box-shadow:0 8px 30px rgba(0,0,0,.14);
+}
+.ga-cover-tip-label{color:var(--olive-chip, #D4DAB8);}
+.ga-cover-tip-text{color:rgba(243,239,228,.85);}
+.ga-cover-tip-text strong{color:#fff;}
+/* el título de portada escala en pantallas angostas para no desbordar la tarjeta */
+.ga-cover-title{font-size:clamp(42px, 12.5vw, 60px);}
 
-      <div class="g-note"><strong>Consejo:</strong> agrega la app a tu pantalla de inicio (iPhone: Compartir → Añadir a inicio · Android: menú → Añadir a pantalla). Si la minimizas en vez de cerrarla, la conversación sigue abierta.</div>
-    </div>
+/* ── Capa de marca Meal Tracker: escala tipográfica de la app ── */
+.ga-cover-title{font-size:clamp(34px, 10vw, 42px);}
+.ga-cover-statement{font-size:17px;line-height:1.4;}
+.ga-cover-eyebrow{font-size:10px;font-weight:600;}
 
-    <!-- ═══ Slide 10 · Cierre + CTA ═══ -->
-    <div class="slide" data-step="9">
-      <div class="kicker">Cierre</div>
-      <h1 class="step-title">EMPIEZA HOY</h1>
-      <p class="step-lead">Ya sabes todo lo necesario. El mejor momento para el primer registro es <strong>tu próxima comida</strong>.</p>
-
-      <div class="g-take" style="margin-bottom:14px;">
-        <div class="g-take-label">Tu rutina mínima</div>
-        <ul>
-          <li>Registra cada comida cuando ocurra (texto o voz)</li>
-          <li>Guarda tus menús e ingredientes de siempre</li>
-          <li>Cierra el día mirando tu resumen — tu coach ve el resto en vivo</li>
-        </ul>
-      </div>
-
-      <div class="end-dark">
-        <div class="end-kick">Desde hoy</div>
-        <div class="end-quote">LA APP MIDE.<br><em>EL COACH DECIDE.</em></div>
-        <div style="font-size:12.5px;line-height:1.6;color:rgba(243,239,228,.65);">Registra sin fricción, deja que los datos hablen y recibe ajustes con criterio en cada seguimiento.</div>
-        <a class="end-cta" href="https://mealtrackermauromoron.vercel.app/" target="_blank" rel="noopener">
-          Abrir Meal Tracker
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="nav">
-    <div class="nav-inner">
-      <button class="nav-btn secondary" id="prevBtn" disabled>← Anterior</button>
-      <span class="nav-counter" id="navCounter">1 / 10</span>
-      <button class="nav-btn primary" id="nextBtn">Siguiente →</button>
-    </div>
-  </div>
-
-  <script>
-    (function () {
-      const slides = document.querySelectorAll('.slide');
-      const total = slides.length;
-      let current = 0;
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const counter = document.getElementById('navCounter');
-      const indicator = document.getElementById('stepIndicator');
-      const progressBar = document.getElementById('progressBar');
-
-      function render() {
-        slides.forEach((s, i) => s.classList.toggle('active', i === current));
-        prevBtn.disabled = current === 0;
-        nextBtn.textContent = current === total - 1 ? 'Volver al inicio ↺' : 'Siguiente →';
-        counter.textContent = (current + 1) + ' / ' + total;
-        indicator.textContent = (current + 1) + ' / ' + total;
-        progressBar.style.width = ((current + 1) / total * 100) + '%';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-      prevBtn.addEventListener('click', () => { if (current > 0) { current--; render(); } });
-      nextBtn.addEventListener('click', () => {
-        if (current < total - 1) { current++; } else { current = 0; }
-        render();
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight') { if (current < total - 1) { current++; render(); } }
-        if (e.key === 'ArrowLeft') { if (current > 0) { current--; render(); } }
-      });
-      render();
-    })();
-  </script>
-  <script>
-    /* Barrita de scroll de página: refleja el scroll del slide activo.
-       Visible desde que se abre (si el slide es más alto que el viewport). */
-    (function () {
-      var rail = document.createElement('div');
-      rail.className = 'em-page-rail';
-      rail.setAttribute('aria-hidden', 'true');
-      var thumb = document.createElement('div');
-      thumb.className = 'em-page-rail-thumb';
-      rail.appendChild(thumb);
-      document.body.appendChild(rail);
-      function update() {
-        try {
-          var doc = document.documentElement;
-          var max = doc.scrollHeight - window.innerHeight;
-          if (max < 40) { rail.classList.remove('on'); return; }
-          rail.classList.add('on');
-          var vh = window.innerHeight;
-          rail.style.height = vh + 'px'; /* 100vh poco fiable en iOS */
-          var h = Math.max(28, Math.round(vh * (vh / doc.scrollHeight)));
-          var top = (vh - h) * (window.scrollY / max);
-          thumb.style.height = h + 'px';
-          thumb.style.top = Math.max(0, Math.min(vh - h, top)) + 'px';
-        } catch (e) {}
-      }
-      window.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
-      window.addEventListener('resize', update);
-      window.addEventListener('orientationchange', function () { setTimeout(update, 60); });
-      if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', update);
-        window.visualViewport.addEventListener('scroll', update);
-      }
-      setInterval(function () { if (!document.hidden) update(); }, 900);
-      update(); setTimeout(update, 300);
-    })();
-  </script>
-</body>
-</html>
+/* ═══════════════════════════════════════════════════════════════ */
+/* ═══ MARCA MEAL TRACKER — vidrio, sin bordes sólidos ══════════ */
+/* Las tarjetas de la guía siguen el mismo lenguaje que el resto   */
+/* del centro: vidrio translúcido sobre el fondo de manchas, con   */
+/* hairline blanco (brillo del vidrio) en vez de línea de color.   */
+/* ═══════════════════════════════════════════════════════════════ */
+.ga-resume,.ga-resume-next,.ga-resume-where,.ga-resume-collapse,
+.ga-search-wrap,.ga-search-result,.ga-assistant-content,.ga-track,
+.ga-takeaway,.ga-callout,.ga-note,.ga-quote-card,.ga-table-wrap{
+  background:rgba(255,255,255,.46) !important;
+  -webkit-backdrop-filter:blur(9px) saturate(150%);
+  backdrop-filter:blur(9px) saturate(150%);
+  border:1px solid rgba(255,255,255,.65) !important;
+  box-shadow:0 1px 0 rgba(255,255,255,.85) inset, 0 10px 30px rgba(96,102,72,.12), 0 2px 6px rgba(96,102,72,.05) !important;
+}
+.ga-resume,.ga-resume-next,.ga-assistant-content,.ga-track{border-radius:24px !important;}
+.ga-search-wrap,.ga-resume-track-pill{border-radius:100px !important;}
+/* Botones flotantes: pastilla oscura, sin borde */
+.ga-topbar-btn,.ga-fab-btn,.ga-resume-btn-secondary{border-color:transparent !important;}
