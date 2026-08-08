@@ -1,60 +1,75 @@
-# Cápsulas informativas — imágenes
+# Imágenes del centro de recursos
 
-Cada cápsula del centro de recursos es **una sola imagen** (la infografía).
-La miniatura de la rejilla y la versión ampliada del visor son la MISMA
-imagen: el navegador la reutiliza desde caché al abrir el zoom, así que no
-hay que exportar dos versiones.
+Todas las imágenes van en esta carpeta (`img/`), **salvo las cápsulas**, que
+tienen la suya (`img/capsulas/` — ver el README de ahí).
 
-## Cómo publicar una cápsula nueva
+El nombre del archivo importa: el código busca exactamente ese nombre. Si un
+archivo no existe, la portada se muestra sin foto en vez de romperse.
 
-1. Exporta la infografía y déjala en esta carpeta.
-2. Abre `index.html.html`, busca `var CAPSULAS = [` y agrega una entrada:
+## Portadas (hero)
 
-   ```js
-   { id:'nutricion-fibra',
-     cat:'Nutrición',
-     title:'Fibra: la que casi nadie alcanza',
-     file:'img/capsulas/nutricion-fibra.png',
-     nuevo:true },
-   ```
+Solo estas cinco pantallas llevan foto de portada:
 
-3. Listo. El orden del array es el orden de la rejilla, y las cápsulas se
-   agrupan automáticamente por `cat` (categorías consecutivas quedan bajo
-   un mismo encabezado, así que mantén juntas las de la misma categoría).
+| Archivo | Dónde sale | Estado |
+|---|---|---|
+| `hero-inicio.png` | **Home** del centro | **Falta.** Mientras no exista se usa `hero-home.png` |
+| `hero-capsulas.png` | Subpágina **Cápsulas informativas** | Ya está |
+| `hero-guia.png` | Portada de la **Guía de alimentación** | Ya está |
+| `hero-faq.png` | Subpágina **Preguntas frecuentes** | **Falta.** Sin ella la portada sale en grafito, sin foto |
+| `hero-home.png` | Portada del **Onboarding** (el índice de los 4 pasos) | Ya está |
 
-| campo   | para qué sirve                                              |
-|---------|-------------------------------------------------------------|
-| `id`    | clave del avance de lectura. **No la cambies** una vez publicada: si la cambias, quien ya la vio la verá como pendiente otra vez. |
-| `cat`   | encabezado de grupo en la rejilla (`Nutrición`, `Entrenamiento`, `Hábitos`…). |
-| `title` | título bajo la miniatura y pie en el visor.                  |
-| `file`  | ruta de la imagen desde la raíz del repo.                    |
-| `nuevo` | `true` pinta la etiqueta "Nuevo" (desaparece sola cuando el cliente la abre). |
+Las **subsecciones del onboarding** (Cómo funciona el programa, Cómo funciona
+la app, Meal Tracking, Tu Journey) **no llevan foto**: son lectura, y una
+portada fotográfica en cada una distrae del texto. `hero-programa.png` quedó
+sin uso — puedes borrarlo.
 
-## Formato recomendado
+### Cómo deben ser
 
-- **Proporción vertical**, cercana a 4:5 — es la que usa la miniatura. Otras
-  proporciones funcionan, pero la miniatura recorta por el centro.
-- **Ancho 1080–1440 px**: suficiente para verse nítida a pantalla completa
-  en móvil sin inflar la descarga.
-- **PNG** si la infografía tiene texto o áreas planas (se ve más limpia);
-  **JPG de calidad alta** si es sobre todo fotografía.
-- Apunta a **menos de 600 KB por imagen**. Las cápsulas se cargan con
-  `loading="lazy"`, pero la pantalla muestra varias a la vez.
-- El texto de la infografía debe leerse **en la miniatura al menos a nivel
-  de titular**: si sólo se entiende ampliada, la rejilla se ve muda.
+- **Vertical o cuadrada.** La portada mide unos 390 × 390 px en pantalla y
+  recorta **por el centro**: el sujeto tiene que estar centrado, no arriba
+  ni en una esquina.
+- **Ancho mínimo 1200 px.**
+- **La mitad de abajo se desvanece** hacia el color de la página. Todo lo
+  importante de la foto debe estar en el **tercio superior**; lo de abajo
+  no se va a ver.
+- **Sin texto dentro de la imagen** — encima va el título.
+- Que **no sean parecidas entre sí**: hoy hay dos de gimnasio y se
+  confunden. Una por pantalla, cada una con su tema.
 
-## Nombres de archivo
+### Qué poner en las dos que faltan
 
-`categoria-tema.png`, en minúsculas y sin tildes ni espacios:
+- **`hero-faq.png`** — una toma tuya **explicando**: hablando a cámara,
+  corrigiendo a alguien, señalando algo. Es la sección donde el cliente te
+  pregunta a ti, y ninguna otra portada tiene tu cara. Alternativa: cenital
+  de cuaderno o tablero con anotaciones.
+- **`hero-inicio.png`** — la cara del centro. Algo que hable de *método* más
+  que de esfuerzo: material ordenado, un plano amplio y calmado, algo que se
+  distinga de la foto de gimnasio que ya usa el onboarding.
+
+## Capturas del tutorial de la app
+
+Se usan dentro de "Cómo funciona la app". No son portadas y no llevan
+tratamiento: se ven completas.
 
 ```
-nutricion-proteina.png
-entrenamiento-rpe.png
-habitos-dormir.png
+app-tutorial-01-rutina-del-dia.png
+app-tutorial-02-ejecucion-videos.png
+app-tutorial-03-galeria-workouts.png
+app-tutorial-04-meta-nutricional.png
+app-tutorial-05-galeria-recetas.png
+app-tutorial-06-fotos-progreso.png
 ```
 
-## Si una imagen todavía no existe
+## Otras
 
-La cápsula sigue apareciendo en la rejilla con el marco "Infografía en
-camino" en vez de una imagen rota — así puedes dejar la entrada preparada
-en `CAPSULAS` antes de tener el diseño listo.
+- `kettlebell.png` — foto de producto de la pantalla de acceso (PNG con
+  fondo transparente).
+
+## Peso de los archivos
+
+Las portadas actuales pesan entre 2,8 MB y 6,9 MB cada una: unos 19 MB en
+total. En datos móviles el hero tarda varios segundos en aparecer.
+
+Exportadas como **JPG de calidad 80 (o WebP) a 1200 px de ancho** quedan en
+**150–300 KB** sin diferencia visible en un teléfono. Si cambias la
+extensión, hay que actualizar el nombre en el código.
