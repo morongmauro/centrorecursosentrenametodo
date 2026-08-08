@@ -7470,6 +7470,207 @@ body.locked .mt-stains{display:none;}
 }
 .ga-resume-btn-primary .arr{flex:none;font-size:16px;line-height:1;}
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v13 · Legibilidad: nada de texto sobre texto, nada de texto invisible
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Fuera la textura de ruido ─────────────────────────────────── */
+.em-grain{display:none !important;}
+
+/* ── 2 · Zona segura ────────────────────────────────────────────────
+   El Meal Tracker fija sobre el iframe una píldora ("Aprendizaje ·
+   Entrena con Método") que ocupa de safe+10px a safe+41px. Todo lo que
+   sea texto de portada arranca POR DEBAJO de esa franja. */
+:root{
+  --em-topbar: calc(env(safe-area-inset-top, 0px) + 41px);
+  --em-safe-top: calc(env(safe-area-inset-top, 0px) + 62px);
+}
+/* El hero traía margin-top negativo (-1.5rem) para pegarse al borde: eso
+   se comía 24px de la zona segura y el kicker volvía a quedar bajo la
+   píldora. La zona segura se mide desde el borde real de la pantalla. */
+.em-hero{margin-top:0 !important;padding-top:var(--em-safe-top) !important;}
+#s-capsulas .foto-hero,#s-faq .foto-hero,#s-onboarding .foto-hero,
+.sub-hero-plain,.ga-cover{
+  padding-top:var(--em-safe-top) !important;
+}
+
+/* ── 3 · Volver: círculo sólido, en la misma línea que la píldora ──── */
+.sub-back,.hub-back-link,.mg-back{
+  top:calc(env(safe-area-inset-top, 0px) + 8px) !important;
+  right:16px !important;left:auto !important;
+  width:34px !important;height:34px !important;
+  background:#FFFFFF !important;
+  border:none !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;
+  box-shadow:0 2px 6px rgba(0,0,0,.18),0 8px 22px rgba(0,0,0,.16) !important;
+}
+/* Varias reglas viejas con selector de ID le ponían vidrio translúcido al
+   botón por pantalla; se anulan una por una para que en TODAS sea el mismo
+   círculo blanco sólido. */
+#s-faq .sub-back,#s-capsulas .sub-back,#s-programa .sub-back,
+#s-app-train .sub-back,#s-journey .sub-back,#s-onboarding .hub-back-link{
+  background:#FFFFFF !important;
+  border-color:transparent !important;
+  color:#1F1F1F !important;
+  box-shadow:0 2px 6px rgba(0,0,0,.18),0 8px 22px rgba(0,0,0,.16) !important;
+}
+#s-faq .sub-back:hover,#s-capsulas .sub-back:hover,#s-programa .sub-back:hover,
+#s-app-train .sub-back:hover,#s-journey .sub-back:hover{color:#1F1F1F !important;}
+#s-faq .sub-back .sub-back-arr,#s-capsulas .sub-back .sub-back-arr,
+#s-programa .sub-back .sub-back-arr,#s-app-train .sub-back .sub-back-arr,
+#s-journey .sub-back .sub-back-arr{color:#1F1F1F !important;}
+
+.sub-back-arr,.hub-back-arr{
+  font-size:18px !important;line-height:1 !important;
+  color:#1F1F1F !important;font-weight:700;margin-top:-2px;
+}
+.hub-back-link > span:not(.hub-back-arr){
+  position:absolute !important;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
+.hub-back-link{font-size:0 !important;gap:0 !important;padding:0 !important;
+  border-radius:50% !important;align-items:center !important;justify-content:center !important;}
+
+/* ── 4 · Portadas: el texto SIEMPRE se lee ──────────────────────────
+   Antes la foto llegaba a plena fuerza detrás del título. Ahora la capa
+   oscura es opaca donde vive el texto y solo se abre hacia arriba. */
+.foto-hero-overlay,.ga-cover-shade,.em-hero-shade{
+  background:linear-gradient(180deg,
+    rgba(18,18,17,.42) 0%,
+    rgba(18,18,17,.60) 34%,
+    rgba(20,20,18,.80) 62%,
+    rgba(22,22,20,.92) 84%,
+    var(--bg) 100%) !important;
+}
+.foto-hero-media img,.ga-cover-media img,.em-hero-photo img{
+  filter:saturate(.72) contrast(.86) brightness(.9) !important;
+  /* Encuadre: el sujeto de estas fotos está al centro, no arriba */
+  object-position:center center !important;
+}
+.foto-hero .sub-title,.foto-hero .hub-title,.ga-cover-title,.em-hero-name{
+  color:#FFFFFF !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.55),0 4px 26px rgba(0,0,0,.6) !important;
+}
+.foto-hero .sub-eyebrow,.foto-hero .hub-eyebrow,.ga-cover-eyebrow,.em-hero-kicker{
+  color:#DCE2C4 !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.6) !important;
+}
+.foto-hero .sub-intro,.foto-hero .hub-intro,.ga-cover-statement,
+.ga-cover-meta,.ga-cover-headnote{
+  color:rgba(255,255,255,.9) !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.55) !important;
+}
+.foto-hero .sub-intro strong,.foto-hero .hub-intro strong,
+.ga-cover-statement strong{color:#FFFFFF !important;font-weight:700 !important;}
+.ga-cover-tip{
+  background:rgba(0,0,0,.34) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
+}
+.ga-cover-tip-label{color:#DCE2C4 !important;}
+.ga-cover-tip-text{color:rgba(255,255,255,.9) !important;}
+.ga-cover-tip-text strong{color:#FFFFFF !important;}
+
+/* "Comer bien no es comer perfecto / Es tener un método": las dos líneas
+   al mismo nivel y del mismo tamaño — antes la segunda pesaba distinto. */
+.ga-cover-statement{
+  font-size:clamp(17px,4.6vw,20px) !important;line-height:1.35 !important;
+  letter-spacing:-.01em !important;font-weight:500 !important;max-width:30ch;
+}
+.ga-cover-statement strong{font-weight:700 !important;}
+
+/* La portada de la guía era una tarjeta con esquinas redondeadas: cortaba
+   en seco contra el crema. Va a sangre, como el hero del home. */
+.ga-cover{
+  border-radius:0 !important;
+  margin:0 -1.25rem 0 !important;
+  padding-left:1.25rem !important;padding-right:1.25rem !important;
+  padding-bottom:72px !important;
+  border-bottom:none !important;
+}
+.ga-reader{overflow-x:clip;}
+
+/* ── 5 · Portada sin foto (secciones del onboarding) ────────────────
+   El peso lo lleva la tipografía, no una imagen. */
+.sub-hero-plain{
+  position:relative;margin:0 -1.25rem 1.5rem;padding:0 1.25rem 30px;
+  background:linear-gradient(180deg,#191919 0%,#212120 58%,#3a3a33 82%,var(--bg) 100%);
+}
+.sub-hero-plain .sub-eyebrow{color:#DCE2C4 !important;}
+.sub-hero-plain .sub-title{color:#FFFFFF !important;}
+.sub-hero-plain .sub-title-line{background:var(--olive-light) !important;}
+.sub-hero-plain .sub-intro{color:rgba(255,255,255,.82) !important;}
+.sub-hero-plain .sub-intro strong{color:#FFFFFF !important;font-weight:700 !important;}
+.sub-hero-plain .rh-contract{color:rgba(255,255,255,.6) !important;}
+
+/* ── 6 · Hero del home: el aro y su explicación, una sola pieza ────── */
+.em-hero-titles{position:relative;z-index:1;display:flex;flex-direction:column;gap:3px;}
+.em-hero-progress{
+  position:relative;z-index:1;margin-top:22px;
+  display:flex;align-items:center;gap:16px;
+  padding:14px 16px;border-radius:20px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+}
+.em-hero-progress .em-hero-ring{width:74px;height:74px;}
+.em-hero-progress .em-hero-ring svg{width:74px;height:74px;}
+.em-hero-progress .em-hero-ring-num{font-size:26px;}
+.em-hero-progress-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;}
+.em-hero-progress-txt strong{
+  font-size:14px;font-weight:700;letter-spacing:-.015em;line-height:1.25;color:#FFFFFF;
+}
+.em-hero-progress-txt small{
+  font-size:11.5px;font-weight:400;line-height:1.4;color:rgba(255,255,255,.68);
+}
+
+/* ── 7 · Guía: "En esencia" vuelve a ser tarjeta grafito ────────────
+   Una regla global de vidrio le puso fondo blanco translúcido con
+   !important, pero su texto es crema: quedaba blanco sobre blanco. */
+.ga-takeaway{
+  background:#171717 !important;
+  border:1px solid rgba(255,255,255,.06) !important;
+  box-shadow:0 12px 30px rgba(20,20,20,.20) !important;
+}
+.ga-takeaway-label{color:rgba(243,239,228,.6) !important;}
+.ga-takeaway-title{color:#FFFFFF !important;}
+.ga-takeaway-list li{color:rgba(243,239,228,.94) !important;}
+.ga-takeaway-list li strong{color:#FFFFFF !important;}
+.ga-takeaway-list li::before{color:var(--olive-light) !important;}
+
+/* ── 8 · Modal del asistente: una sola tarjeta, centrada ───────────── */
+.ga-assistant-modal{
+  align-items:center !important;
+  padding:calc(env(safe-area-inset-top, 0px) + 56px) 14px 24px !important;
+}
+.ga-assistant-content{
+  background:#FFFFFF !important;
+  border:none !important;
+  box-shadow:0 24px 56px rgba(0,0,0,.28) !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;
+  max-height:100%;overflow-y:auto;
+  padding:1.5rem 1.15rem 1.25rem !important;
+}
+/* Dentro del modal el panel no repite piel de tarjeta */
+.ga-assistant-content .ga-resume{
+  background:transparent !important;border:none !important;box-shadow:none !important;
+  padding:0 !important;margin:0 !important;
+}
+.ga-assistant-content .ga-resume-eyebrow{margin-right:36px;}
+.ga-fab-btn-label em{font-style:normal;opacity:.72;font-weight:500;}
+
+/* ── 9 · Una sola gráfica de avance en todo el centro ───────────────
+   El aro del home mide TODO el material. Los asistentes de cada pantalla
+   se quedan, pero cuentan con palabras ("3 de 13 leídas") en vez de
+   repetir un aro: tres gráficas distintas competían y ninguna dejaba
+   claro sobre qué se mide el porcentaje. */
+.pg-assist-ring{display:none !important;}
+.pg-assist{gap:0 !important;padding:13px 15px !important;}
+.pg-assist-body{gap:2px !important;}
+.pg-assist-body small{
+  font-size:11.5px !important;font-weight:600 !important;color:var(--olive-dark) !important;
+}
+
 </style>
 </head>
 <body class="locked">
@@ -7628,7 +7829,6 @@ body.locked .mt-stains{display:none;}
      El "volver" vuelve a ser la pastilla propia de cada pantalla. -->
 
 <!-- HOME (única pantalla principal) -->
-<div class="em-grain" aria-hidden="true"></div>
 
 <div id="s-home" class="screen active">
   <div class="content-area">
@@ -7639,7 +7839,8 @@ body.locked .mt-stains{display:none;}
     <!-- ============ HERO editorial oscuro ============ -->
     <div class="em-hero">
       <div class="em-hero-photo" aria-hidden="true">
-        <img src="img/hero-home.png" alt="" loading="eager" fetchpriority="high" onerror="this.parentNode.style.display='none'">
+        <img src="img/hero-inicio.png" alt="" loading="eager" fetchpriority="high"
+             onerror="if(!this.dataset.fb){this.dataset.fb=1;this.src='img/hero-home.png';}else{this.parentNode.style.display='none';}">
         <div class="em-hero-shade"></div>
       </div>
       <div class="em-hero-glow a" aria-hidden="true"></div>
@@ -7648,11 +7849,14 @@ body.locked .mt-stains{display:none;}
       <!-- Sin "Bienvenido X": el saludo ya lo dio el Hoy del Meal Tracker.
            Dos piezas del mismo peso: de quién es el aprendizaje, y cuánto
            lleva. El aro es la firma visual de la app (los anillos de Hoy). -->
-      <div class="em-hero-head">
-        <div class="em-hero-titles">
-          <span class="em-hero-kicker">Tu aprendizaje</span>
-          <span class="em-hero-name" id="em-hero-hi">&nbsp;</span>
-        </div>
+      <div class="em-hero-titles">
+        <span class="em-hero-kicker">Tu aprendizaje</span>
+        <span class="em-hero-name" id="em-hero-hi">&nbsp;</span>
+      </div>
+
+      <!-- El aro y su explicación son UNA pieza: el número no significa nada
+           suelto. Van juntos, en una tarjeta propia dentro del hero. -->
+      <div class="em-hero-progress">
         <div class="em-hero-ring" role="img" aria-label="Progreso de lectura" id="em-hero-ring">
           <svg viewBox="0 0 96 96" fill="none" aria-hidden="true">
             <circle class="track" cx="48" cy="48" r="41" stroke-width="7"/>
@@ -7661,8 +7865,11 @@ body.locked .mt-stains{display:none;}
           </svg>
           <span class="em-hero-ring-num" id="em-hero-figure">0<i>%</i></span>
         </div>
+        <div class="em-hero-progress-txt">
+          <strong>de todo el material leído</strong>
+          <small id="em-hero-progress-meta">Onboarding, guía de alimentación y cápsulas</small>
+        </div>
       </div>
-      <p class="em-hero-cap">del material de aprendizaje leído</p>
     </div>
 
     <!-- ============ SECCIONES DEL CENTRO ============ -->
@@ -7793,12 +8000,9 @@ body.locked .mt-stains{display:none;}
       <span>Volver al onboarding</span>
     </div>
 
-    <div class="foto-hero">
-      <div class="foto-hero-media" aria-hidden="true">
-        <img src="img/hero-programa.png" alt="" loading="eager" onerror="this.parentNode.style.display='none'">
-      </div>
-      <div class="foto-hero-overlay" aria-hidden="true"></div>
-
+    <!-- Sin foto: las secciones del onboarding son lectura, y una portada
+         fotográfica en cada una distraía del texto. -->
+    <div class="sub-hero-plain">
       <div class="sub-header">
         <div class="sub-eyebrow">01 · El programa</div>
         <div class="sub-title">CÓMO FUNCIONA<br>EL PROGRAMA</div>
@@ -8241,12 +8445,20 @@ body.locked .mt-stains{display:none;}
       <span>Volver a Home</span>
     </div>
 
-    <div class="sub-header sub-anim" style="--d:0s;">
-      <div class="sub-eyebrow">04 · Dudas resueltas</div>
-      <div class="sub-title">PREGUNTAS<br>FRECUENTES</div>
-      <div class="sub-title-line"></div>
-      <div class="sub-intro">
-        Respuestas claras para ejecutar mejor tu proceso en el día a día.
+    <div class="foto-hero sub-anim" style="--d:0s;">
+      <div class="foto-hero-media" aria-hidden="true">
+        <!-- Sube img/hero-faq.png (ver README de img/). Si no existe, la
+             portada se muestra sin foto en vez de romperse. -->
+        <img src="img/hero-faq.png" alt="" loading="eager" onerror="this.parentNode.style.display='none'">
+      </div>
+      <div class="foto-hero-overlay" aria-hidden="true"></div>
+      <div class="sub-header">
+        <div class="sub-eyebrow">04 · Dudas resueltas</div>
+        <div class="sub-title">PREGUNTAS<br>FRECUENTES</div>
+        <div class="sub-title-line"></div>
+        <div class="sub-intro">
+          Respuestas claras para ejecutar mejor tu proceso en el día a día.
+        </div>
       </div>
     </div>
 
@@ -8706,12 +8918,18 @@ else capRender();
       <span>Volver a Home</span>
     </div>
 
-    <div class="hub-header-block hub-anim" style="--d:0s;">
-      <div class="hub-eyebrow">02 · Onboarding</div>
-      <div class="hub-title">EL ONBOARDING</div>
-      <div class="hub-title-line"></div>
-      <div class="hub-intro">
-        Conoce cómo funciona tu programa, la app de entrenamiento y el camino que vas a recorrer. <strong>Cuatro piezas que te dan el panorama completo.</strong>
+    <div class="foto-hero hub-anim" style="--d:0s;">
+      <div class="foto-hero-media" aria-hidden="true">
+        <img src="img/hero-home.png" alt="" loading="eager" onerror="this.parentNode.style.display='none'">
+      </div>
+      <div class="foto-hero-overlay" aria-hidden="true"></div>
+      <div class="hub-header-block">
+        <div class="hub-eyebrow">02 · Onboarding</div>
+        <div class="hub-title">EL ONBOARDING</div>
+        <div class="hub-title-line"></div>
+        <div class="hub-intro">
+          Conoce cómo funciona tu programa, la app de entrenamiento y el camino que vas a recorrer. <strong>Cuatro piezas que te dan el panorama completo.</strong>
+        </div>
       </div>
     </div>
 
@@ -10422,13 +10640,7 @@ function gaShowResumePanel() {
   // Progreso visual
   const pctEl = document.getElementById('ga-resume-pct');
   if (pctEl) pctEl.textContent = pct + '%';
-  // Aro de la portada — mismo patrón que el hero del home
-  const coverPct = document.getElementById('ga-cover-pct');
-  if (coverPct) coverPct.innerHTML = pct + '<i>%</i>';
-  const coverArc = document.getElementById('ga-cover-arc');
-  if (coverArc) setTimeout(() => { coverArc.style.strokeDashoffset = (257.6 * (1 - pct / 100)).toFixed(1); }, 200);
-  const coverRing = document.getElementById('ga-cover-ring');
-  if (coverRing) coverRing.classList.toggle('is-done', isDone);
+
   const countEl = document.getElementById('ga-resume-count');
   if (countEl) countEl.textContent = read.length + ' / ' + total + ' capítulos';
   const barFill = document.getElementById('ga-resume-bar-fill');
@@ -10542,7 +10754,11 @@ function gaShowResumePanel() {
   if (pendingCount) pendingCount.textContent = pending.length;
   if (doneCount) doneCount.textContent = done.length;
 
-  panel.style.display = 'block';
+  // El panel NO se muestra en línea. Al abrir la guía se ve la portada y el
+  // contenido; el progreso vive dentro del modal del asistente de lectura,
+  // que es quien lo saca a la vista.
+  panel.style.display = document.getElementById('ga-assistant-body') &&
+    panel.parentNode === document.getElementById('ga-assistant-body') ? 'block' : 'none';
 }
 
 // Asistente de lectura — modal con backdrop blur que clona la card
@@ -10558,6 +10774,7 @@ function gaToggleAssistant(forceClose) {
       if (modal._origNext) modal._origParent.insertBefore(resume, modal._origNext);
       else modal._origParent.appendChild(resume);
     }
+    resume.style.display = 'none';
     modal.style.display = 'none';
     document.body.style.overflow = '';
     return;
@@ -10566,6 +10783,7 @@ function gaToggleAssistant(forceClose) {
   modal._origParent = resume.parentNode;
   modal._origNext = resume.nextSibling;
   body.appendChild(resume);
+  resume.style.display = 'block';
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
@@ -11605,6 +11823,12 @@ function initBlurCarousel(scroller){
       if (fig) fig.innerHTML = p.pct + '<i>%</i>';
       var ring = document.getElementById('em-hero-ring');
       if (ring) ring.classList.toggle('is-done', p.total > 0 && p.done >= p.total);
+      var meta = document.getElementById('em-hero-progress-meta');
+      if (meta) {
+        meta.textContent = (p.total > 0 && p.done >= p.total)
+          ? 'Onboarding, guía y cápsulas · lo terminaste todo'
+          : p.done + ' de ' + p.total + ' entre onboarding, guía y cápsulas';
+      }
     } catch(e){}
   }
   window.emSyncHero = emSyncAssist;
