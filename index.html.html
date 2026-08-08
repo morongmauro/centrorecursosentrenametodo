@@ -7285,6 +7285,191 @@ body.locked .mt-stains{display:none;}
   .pg-assist-ring .arc{transition:none !important;}
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v12 · Dilución orgánica, hero encuadrado y navegación discreta
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · El hero deja de ser un bloque negro con borde duro ──────────
+   Antes: rectángulo negro que cortaba en seco contra el crema. Ahora la
+   foto se disuelve hacia abajo (máscara) y el color de fondo va del
+   grafito al crema de la página, así no hay línea de corte. */
+.em-hero{
+  background:linear-gradient(180deg,#191919 0%,#1f1f1e 46%,#3a3a33 74%,var(--bg) 100%) !important;
+  padding:0 22px 74px !important;
+  /* Encuadre: el contenido arranca por debajo de la píldora "Aprendizaje ·
+     Entrena con Método" que el Meal Tracker fija sobre el iframe. */
+  padding-top:calc(env(safe-area-inset-top, 0px) + 78px) !important;
+  margin-bottom:-34px !important;
+}
+.em-hero-photo img{
+  /* La foto se desvanece en vez de terminar en un borde recto */
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.55) 66%,rgba(0,0,0,0) 94%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 38%,rgba(0,0,0,.55) 66%,rgba(0,0,0,0) 94%);
+  filter:saturate(.82) contrast(.92);
+}
+.em-hero-photo .em-hero-shade{
+  background:linear-gradient(180deg,rgba(20,20,20,.62) 0%,rgba(20,20,20,.34) 40%,rgba(24,24,22,.55) 78%,rgba(24,24,22,.8) 100%) !important;
+}
+.em-hero-glow{filter:blur(90px) !important;opacity:.75;}
+
+/* ── 2 · Nombre y porcentaje, mismo peso ─────────────────────────── */
+.em-hero-head{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.em-hero-titles{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.em-hero-kicker{
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(243,239,228,.62);
+}
+.em-hero-name{
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(42px,12vw,54px);line-height:.94;letter-spacing:.015em;
+  color:#F7F4EC;text-shadow:0 2px 26px rgba(0,0,0,.55);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+/* Aro: la firma visual de la app (los anillos de Hoy) */
+.em-hero-ring{
+  position:relative;flex:none;width:96px;height:96px;
+  display:grid;place-content:center;
+}
+.em-hero-ring svg{
+  position:absolute;inset:0;width:96px;height:96px;
+  transform:rotate(-90deg);display:block;
+}
+.em-hero-ring .track{stroke:rgba(243,239,228,.16);}
+.em-hero-ring .arc{
+  stroke:var(--olive-light);stroke-linecap:round;
+  transition:stroke-dashoffset 1.3s cubic-bezier(.34,1.4,.64,1);
+}
+.em-hero-ring.is-done .arc{stroke:var(--olive-chip);}
+.em-hero-ring-num{
+  position:relative;
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(30px,8vw,36px);line-height:1;letter-spacing:.01em;
+  color:#F7F4EC;text-shadow:0 2px 20px rgba(0,0,0,.5);
+}
+.em-hero-ring-num i{font-style:normal;font-size:.5em;color:var(--olive-light);margin-left:.04em;}
+.em-hero-cap{
+  position:relative;z-index:1;margin-top:16px;
+  font-size:12px;font-weight:500;letter-spacing:.01em;
+  color:rgba(243,239,228,.58);
+}
+
+/* ── 3 · La página también se diluye: menos manchas duras ────────── */
+.em-grain{opacity:.35 !important;}
+.bg-halo{filter:blur(80px) !important;opacity:.55 !important;}
+
+/* ── 4 · Volver: solo un círculo con la flecha, lejos del borde ──── */
+.sub-back,.hub-back-link,.mg-back{
+  top:calc(env(safe-area-inset-top, 0px) + 70px) !important;
+  right:16px !important;left:auto !important;
+  width:38px !important;height:38px !important;
+  padding:0 !important;gap:0 !important;
+  border-radius:50% !important;
+  align-items:center !important;justify-content:center !important;
+  background:rgba(255,255,255,.9) !important;
+  box-shadow:0 2px 10px rgba(0,0,0,.10),0 8px 24px rgba(0,0,0,.08) !important;
+  font-size:0 !important;
+}
+/* El texto de cada pastilla se conserva en el DOM (lo lee el lector de
+   pantalla) pero deja de ocupar espacio. */
+.sub-back > span:not(.sub-back-arr),
+.hub-back-link > span:not(.sub-back-arr),
+.mg-back > span:not(.sub-back-arr){
+  position:absolute !important;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
+.sub-back-arr{
+  font-size:19px !important;line-height:1 !important;
+  color:var(--text) !important;margin-top:-2px;
+}
+/* Las subpantallas necesitan aire arriba: el círculo ya no es una pastilla
+   ancha, pero sigue flotando sobre el contenido. */
+.sub-area,.hub-area,.progm-page{padding-top:30px !important;}
+#s-capsulas .foto-hero,#s-programa .foto-hero,.ga-cover{
+  padding-top:calc(env(safe-area-inset-top, 0px) + 74px) !important;
+}
+/* Los heroes con foto de subpantalla se diluyen igual que el del home */
+.foto-hero-media img,.ga-cover-media img{
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 42%,rgba(0,0,0,.5) 72%,rgba(0,0,0,0) 96%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 42%,rgba(0,0,0,.5) 72%,rgba(0,0,0,0) 96%);
+  filter:saturate(.82) contrast(.92);
+}
+.foto-hero{
+  background:linear-gradient(180deg,#191919 0%,#232320 52%,#3d3d35 78%,var(--bg) 100%) !important;
+}
+
+/* ── 5 · Home: sin tarjeta de asistente, el índice sube ──────────── */
+.em-nav{margin-top:0 !important;}
+#s-home .content-area{padding-top:0 !important;}
+
+
+/* ── 6 · Portada de la guía con el patrón del hero del home ───────── */
+.ga-cover{
+  background:linear-gradient(180deg,#191919 0%,#1f1f1e 46%,#3a3a33 74%,var(--bg) 100%) !important;
+  padding-bottom:64px !important;margin-bottom:-26px !important;
+}
+.ga-cover-shade{
+  background:linear-gradient(180deg,rgba(20,20,20,.6) 0%,rgba(20,20,20,.32) 40%,rgba(24,24,22,.55) 78%,rgba(24,24,22,.8) 100%) !important;
+}
+.ga-cover-head{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.ga-cover-titles{min-width:0;}
+.ga-cover-eyebrow{
+  font-size:11px !important;font-weight:700 !important;
+  letter-spacing:.14em !important;text-transform:uppercase;
+  color:rgba(243,239,228,.62) !important;margin-bottom:6px;
+}
+.ga-cover-title{line-height:.94 !important;letter-spacing:.015em !important;}
+.ga-cover-ring{
+  position:relative;flex:none;width:96px;height:96px;
+  display:grid;place-content:center;
+}
+.ga-cover-ring svg{position:absolute;inset:0;width:96px;height:96px;transform:rotate(-90deg);display:block;}
+.ga-cover-ring .track{stroke:rgba(243,239,228,.16);}
+.ga-cover-ring .arc{
+  stroke:var(--olive-light);stroke-linecap:round;
+  transition:stroke-dashoffset 1.3s cubic-bezier(.34,1.4,.64,1);
+}
+.ga-cover-ring.is-done .arc{stroke:var(--olive-chip);}
+.ga-cover-ring-num{
+  position:relative;font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(30px,8vw,36px);line-height:1;letter-spacing:.01em;
+  color:#F7F4EC;text-shadow:0 2px 20px rgba(0,0,0,.5);
+}
+.ga-cover-ring-num i{font-style:normal;font-size:.5em;color:var(--olive-light);margin-left:.04em;}
+/* El asistente ahora vive DEBAJO de la portada */
+.ga-resume{margin-top:0 !important;}
+
+
+/* Portada de la guía: el aro comparte fila con el kicker, no con el título */
+.ga-cover-headnote{
+  font-size:12.5px;font-weight:500;letter-spacing:-.01em;
+  color:rgba(243,239,228,.6);margin-top:4px;
+}
+.ga-cover-title{position:relative;z-index:1;margin-top:14px;}
+
+/* Botón del asistente: pastilla ancha con el destino a la vista */
+.ga-resume-btn-primary{
+  width:100% !important;height:auto !important;
+  margin-top:12px;padding:12px 16px !important;
+  border-radius:100px !important;
+  display:flex !important;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--olive) !important;color:#fff !important;border:none;cursor:pointer;
+  font-family:'Inter',sans-serif;text-align:left;
+}
+.ga-resume-btn-primary #ga-resume-btn-primary-text{
+  position:static !important;width:auto !important;height:auto !important;
+  overflow:visible !important;clip:auto !important;clip-path:none !important;
+  white-space:normal !important;
+  font-size:12.5px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:#fff;
+}
+.ga-resume-btn-primary .arr{flex:none;font-size:16px;line-height:1;}
+
 </style>
 </head>
 <body class="locked">
@@ -7461,60 +7646,24 @@ body.locked .mt-stains{display:none;}
       <div class="em-hero-glow b" aria-hidden="true"></div>
 
       <!-- Sin "Bienvenido X": el saludo ya lo dio el Hoy del Meal Tracker.
-           Aquí el hero responde a la única pregunta que importa al entrar:
-           cuánto del material de aprendizaje llevas leído. -->
-      <div class="em-hero-eyebrow"><span id="em-hero-hi">Tu aprendizaje</span></div>
-      <div class="em-hero-headline">
-        <span class="em-hero-figure" id="em-hero-figure">0<i>%</i></span>
-        <span class="em-hero-figure-cap">del material leído</span>
-      </div>
-      <div class="em-hero-status">
-        <div class="em-hero-bar" role="img" aria-label="Progreso de lectura">
-          <span class="em-hero-bar-fill" id="em-hero-bar-fill"></span>
+           Dos piezas del mismo peso: de quién es el aprendizaje, y cuánto
+           lleva. El aro es la firma visual de la app (los anillos de Hoy). -->
+      <div class="em-hero-head">
+        <div class="em-hero-titles">
+          <span class="em-hero-kicker">Tu aprendizaje</span>
+          <span class="em-hero-name" id="em-hero-hi">&nbsp;</span>
         </div>
-        <div class="home-welcome-sub">Todo el método, organizado en un solo lugar.</div>
+        <div class="em-hero-ring" role="img" aria-label="Progreso de lectura" id="em-hero-ring">
+          <svg viewBox="0 0 96 96" fill="none" aria-hidden="true">
+            <circle class="track" cx="48" cy="48" r="41" stroke-width="7"/>
+            <circle class="arc" id="em-hero-arc" cx="48" cy="48" r="41" stroke-width="7"
+                    stroke-dasharray="257.6" stroke-dashoffset="257.6"/>
+          </svg>
+          <span class="em-hero-ring-num" id="em-hero-figure">0<i>%</i></span>
+        </div>
       </div>
+      <p class="em-hero-cap">del material de aprendizaje leído</p>
     </div>
-
-    <!-- ============ CONTINUAR — el asistente de lectura, reducido ============ -->
-    <!-- Antes era una tarjeta con su propio título, su propia barra y una
-         lista dentro: dos indicadores de avance compitiendo con el aro del
-         hero. Ahora es UNA tira de vidrio que flota sobre el borde del hero
-         con una sola acción — "continúa por aquí" — y el detalle queda tras
-         un enlace discreto. -->
-    <aside class="em-assist reveal" aria-label="Continuar leyendo">
-      <button class="em-assist-row" type="button" onclick="orientContinue()">
-        <span class="em-assist-body">
-          <span class="em-assist-tag">Continúa por aquí</span>
-          <strong id="em-assist-title">Empieza aquí</strong>
-        </span>
-        <span class="em-assist-go" aria-hidden="true">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </span>
-      </button>
-      <span id="em-assist-meta" hidden></span>
-      <button class="em-assist-toggle" type="button" id="em-assist-toggle" onclick="emToggleAssist()" aria-expanded="false" aria-controls="em-assist-full">
-        Ver todo mi material <span class="em-assist-chev">⌄</span>
-      </button>
-      <div class="em-assist-full" id="em-assist-full" hidden>
-
-    <!-- ============ TARJETA GESTORA: tu material (qué falta / qué terminaste) ============ -->
-    <div class="orient-card reveal" id="home-orient">
-      <div class="orient-head">
-        <span class="orient-title" id="orient-eyebrow">EN USO Y PENDIENTE</span>
-        <span class="orient-count"><strong id="orient-done">0</strong> <span class="orient-sep">/</span> <span id="orient-total">19</span> leído</span>
-      </div>
-      <div class="orient-bar"><div class="orient-fill" id="orient-fill"></div></div>
-      <button class="orient-cta" id="orient-cta" onclick="orientContinue()">
-        <span id="orient-cta-text">Continuar</span>
-        <span class="cta-arrow">→</span>
-      </button>
-      <div class="orient-list" id="orient-list"></div>
-    </div>
-
-      </div><!-- /em-assist-full -->
-    </aside>
-
 
     <!-- ============ SECCIONES DEL CENTRO ============ -->
     <!-- Cuatro botones, un solo patrón visual. El orden lo fija
@@ -9106,7 +9255,7 @@ function setWelcomeName(name) {
   const firstName = parts[0];
   const display = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
   const hi = document.getElementById('em-hero-hi');
-  if (hi) hi.textContent = display ? ('Tu aprendizaje · ' + display) : 'Tu aprendizaje';
+  if (hi) hi.textContent = display || '';
 }
 
 function checkFirstTimeBanner() {
@@ -9510,10 +9659,36 @@ let _orientNextGo = null;
 let _orientExpanded = {};
 const _CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+// Avance global del centro. El home ya no tiene tarjeta de asistente, así
+// que el cálculo vive aparte: el aro del hero lo necesita igual.
+function emComputeProgress() {
+  const readSet = orientGetReadSet();
+  const chapters = document.querySelectorAll('#s-guia-alimentacion .ga-h1');
+  const gTotal = chapters.length || 15;
+  let gDone = 0;
+  chapters.forEach(function(h){ if (readSet.has('ga:'+h.id)) gDone++; });
+
+  const capList = (typeof CAPSULAS !== 'undefined') ? CAPSULAS : [];
+  const capRead = (typeof capGetRead === 'function') ? capGetRead() : [];
+  const cTotal = capList.length;
+  const cDone = capList.filter(function(c){ return capRead.indexOf(c.id) !== -1; }).length;
+
+  const onbDone = ['programa','app','meal-tracker','journey']
+    .filter(function(k){ return readSet.has(k); }).length;
+
+  const total = 4 + gTotal + cTotal;
+  const done = onbDone + gDone + cDone;
+  return { done: done, total: total, pct: total ? Math.round(done / total * 100) : 0 };
+}
+
 function homeApplyOrientation() {
   const card = document.getElementById('home-orient');
-  if (!card) return;
   const readSet = orientGetReadSet();
+  if (!card) {
+    // Sin tarjeta que pintar: basta con refrescar el aro del hero.
+    if (typeof window.emSyncHero === 'function') window.emSyncHero();
+    return;
+  }
 
   // Capítulos de la guía (granular para el total real)
   const chapters = document.querySelectorAll('#s-guia-alimentacion .ga-h1');
@@ -10247,6 +10422,13 @@ function gaShowResumePanel() {
   // Progreso visual
   const pctEl = document.getElementById('ga-resume-pct');
   if (pctEl) pctEl.textContent = pct + '%';
+  // Aro de la portada — mismo patrón que el hero del home
+  const coverPct = document.getElementById('ga-cover-pct');
+  if (coverPct) coverPct.innerHTML = pct + '<i>%</i>';
+  const coverArc = document.getElementById('ga-cover-arc');
+  if (coverArc) setTimeout(() => { coverArc.style.strokeDashoffset = (257.6 * (1 - pct / 100)).toFixed(1); }, 200);
+  const coverRing = document.getElementById('ga-cover-ring');
+  if (coverRing) coverRing.classList.toggle('is-done', isDone);
   const countEl = document.getElementById('ga-resume-count');
   if (countEl) countEl.textContent = read.length + ' / ' + total + ' capítulos';
   const barFill = document.getElementById('ga-resume-bar-fill');
@@ -10308,7 +10490,18 @@ function gaShowResumePanel() {
     const time = nextItem.querySelector('.ga-toc-time');
     if (nextTitleEl) nextTitleEl.textContent = t ? t.textContent : '';
     if (nextTimeEl) nextTimeEl.textContent = time ? time.textContent : '';
-    if (btnTextEl) btnTextEl.textContent = lastSlug ? 'Continuar donde quedé' : 'Empezar a leer';
+    if (btnTextEl) {
+      // Entre paréntesis, el capítulo concreto: el botón deja de ser una
+      // promesa vaga y dice exactamente a dónde salta.
+      let destino = t ? t.textContent.trim() : '';
+      if (lastSlug) {
+        const lastItem = document.querySelector('.ga-toc-h1[data-target="' + lastSlug + '"]');
+        const lt = lastItem ? lastItem.querySelector('.ga-toc-text') : null;
+        if (lt) destino = lt.textContent.trim();
+      }
+      btnTextEl.textContent = (lastSlug ? 'Seguir donde quedaste' : 'Empezar a leer')
+        + (destino ? ' (' + destino + ')' : '');
+    }
     panel._gaNextSlug = nextItem.dataset.target;
   } else {
     if (nextTitleEl) nextTitleEl.textContent = 'Has completado todos los capítulos';
@@ -10595,15 +10788,12 @@ function gaInit() {
     firstTrack.classList.add('open');
   }
   try { localStorage.setItem('em_ga_last_visit', String(Date.now())); } catch(e) {}
-  // Restaurar posición de lectura donde el usuario quedó
-  let savedScroll = 0;
-  try { savedScroll = parseInt(localStorage.getItem(GA_KEY_SCROLL) || '0', 10); } catch(e) {}
-  if (savedScroll > 120) {
-    // Esperar a que el contenido renderice antes de restaurar
-    setTimeout(() => { window.scrollTo(0, savedScroll); }, 60);
-  } else {
-    window.scrollTo(0, 0);
-  }
+  // Se aterriza SIEMPRE en la portada. Antes se restauraba el scroll
+  // guardado y el cliente caía a media guía: la portada y el asistente de
+  // lectura quedaban arriba, fuera de vista, y parecía que no existían.
+  // Volver a donde quedaste ahora es una acción explícita — el botón del
+  // asistente, que dice a qué capítulo te lleva.
+  window.scrollTo(0, 0);
 }
 
 // Event delegation: bookmarks + marcar como leído
@@ -11397,53 +11587,27 @@ function initBlurCarousel(scroller){
 })();
 </script>
 <script>
-/* ── Asistente de lectura: refleja el estado real del orient-card ── */
+/* ── Aro del hero: refleja el avance global del centro ── */
 (function(){
+  var CIRC_HERO = 257.6;
 
-  window.emToggleAssist = function(){
-    var full = document.getElementById('em-assist-full');
-    var toggle = document.getElementById('em-assist-toggle');
-    var assist = toggle ? toggle.closest('.em-assist') : null;
-    if (!full) return;
-    var opening = full.hidden;
-    full.hidden = !opening;
-    if (assist) assist.classList.toggle('open', opening);
-    if (toggle) toggle.setAttribute('aria-expanded', opening ? 'true' : 'false');
-  };
+  // El home ya no tiene tarjeta de asistente; queda el stub para no romper
+  // ningún onclick viejo que haya quedado en caché del navegador.
+  window.emToggleAssist = function(){};
 
   function emSyncAssist(){
     try {
-      var doneEl = document.getElementById('orient-done');
-      var totalEl = document.getElementById('orient-total');
-      var ctaEl = document.getElementById('orient-cta-text');
-      if (!doneEl || !totalEl) return;
-      var done = parseInt(doneEl.textContent, 10) || 0;
-      var total = parseInt(totalEl.textContent, 10) || 0;
-      var pct = total ? Math.round(done / total * 100) : 0;
-
-      // Titular del hero: el porcentaje ES el titular, ya no la bienvenida.
+      var p = (typeof emComputeProgress === 'function')
+        ? emComputeProgress() : { pct: 0 };
+      var arc = document.getElementById('em-hero-arc');
+      if (arc) arc.style.strokeDashoffset = (CIRC_HERO * (1 - p.pct / 100)).toFixed(1);
       var fig = document.getElementById('em-hero-figure');
-      if (fig) fig.innerHTML = pct + '<i>%</i>';
-      var bar = document.getElementById('em-hero-bar-fill');
-      if (bar) bar.style.width = pct + '%';
-
-      var title = document.getElementById('em-assist-title');
-      var meta = document.getElementById('em-assist-meta');
-      var cta = ctaEl ? ctaEl.textContent : '';
-      if (title) {
-        if (done >= total && total > 0) {
-          title.textContent = 'Todo al día — repasa lo que quieras';
-        } else if (cta.indexOf('Empezar: ') === 0) {
-          title.textContent = 'Empieza aquí: ' + cta.slice(9);
-        } else if (cta.indexOf('Continuar: ') === 0) {
-          title.textContent = 'Retoma: ' + cta.slice(11);
-        } else if (cta) {
-          title.textContent = cta;
-        }
-      }
-      if (meta) meta.textContent = done + ' de ' + total + ' leídos · tu progreso se guarda solo';
+      if (fig) fig.innerHTML = p.pct + '<i>%</i>';
+      var ring = document.getElementById('em-hero-ring');
+      if (ring) ring.classList.toggle('is-done', p.total > 0 && p.done >= p.total);
     } catch(e){}
   }
+  window.emSyncHero = emSyncAssist;
 
   function emSyncGuia(){
     try {
