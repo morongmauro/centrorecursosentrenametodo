@@ -7375,9 +7375,9 @@ body.locked .mt-stains{display:none;}
 }
 /* El texto de cada pastilla se conserva en el DOM (lo lee el lector de
    pantalla) pero deja de ocupar espacio. */
-.sub-back > span:not(.sub-back-arr),
-.hub-back-link > span:not(.sub-back-arr),
-.mg-back > span:not(.sub-back-arr){
+.sub-back > span:not(.sub-back-arr):not(.hub-back-arr),
+.hub-back-link > span:not(.sub-back-arr):not(.hub-back-arr),
+.mg-back > span:not(.sub-back-arr):not(.hub-back-arr){
   position:absolute !important;width:1px;height:1px;overflow:hidden;
   clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
 }
@@ -7525,7 +7525,7 @@ body.locked .mt-stains{display:none;}
   font-size:18px !important;line-height:1 !important;
   color:#1F1F1F !important;font-weight:700;margin-top:-2px;
 }
-.hub-back-link > span:not(.hub-back-arr){
+.hub-back-link > span:not(.hub-back-arr):not(.sub-back-arr){
   position:absolute !important;width:1px;height:1px;overflow:hidden;
   clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
 }
@@ -7670,6 +7670,120 @@ body.locked .mt-stains{display:none;}
 .pg-assist-body small{
   font-size:11.5px !important;font-weight:600 !important;color:var(--olive-dark) !important;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v14 · Volver visible en todas, buscador en su sitio, bordes que se
+   diluyen arriba Y abajo
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Volver: un chevron, siempre, encima de todo ────────────────
+   El glifo del markup variaba por pantalla (←, ×, ‹). Se sustituye por
+   un chevron dibujado en CSS, así ninguna pantalla queda sin flecha. */
+.sub-back,.hub-back-link,.mg-back{
+  z-index:9999 !important;
+  display:flex !important;
+}
+.sub-back-arr,.hub-back-arr{
+  font-size:0 !important;
+  width:14px;height:14px;position:relative;display:block;margin:0 !important;
+}
+.sub-back-arr::before,.hub-back-arr::before{
+  content:"";position:absolute;top:50%;left:58%;
+  width:9px;height:9px;
+  border-left:2.2px solid #1F1F1F;border-bottom:2.2px solid #1F1F1F;
+  transform:translate(-50%,-50%) rotate(45deg);
+  border-radius:1px;
+}
+#s-ea-quickstart .qs-top{padding-right:56px;}
+.qs-top-close{display:none !important;}
+
+/* ── 2 · Buscador de la guía: se abre donde está la lupa ────────────
+   Estaba anclado a top:44px — justo debajo de la píldora del Meal
+   Tracker, que lo tapaba. Ahora crece desde su propia esquina. */
+#s-guia-alimentacion .ga-search-modal{
+  top:auto !important;
+  bottom:calc(1.25rem + 58px) !important;
+  left:14px !important;right:14px !important;
+  padding:0 !important;
+  background:transparent !important;
+  border:none !important;box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;
+  animation:gaSearchGrow .22s cubic-bezier(.16,.84,.3,1);
+}
+@keyframes gaSearchGrow{
+  from{opacity:0;transform:translateY(8px) scaleX(.9);transform-origin:right bottom;}
+  to{opacity:1;transform:none;}
+}
+.ga-search-panel{flex-direction:column-reverse !important;}
+.ga-search-wrap{
+  background:#FFFFFF !important;border:none !important;
+  box-shadow:0 4px 16px rgba(0,0,0,.14),0 12px 34px rgba(0,0,0,.14) !important;
+  padding:12px 18px !important;
+}
+.ga-search-results{
+  max-height:52vh !important;margin:0 0 10px !important;
+  background:#FFFFFF;border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.14),0 12px 34px rgba(0,0,0,.14);
+}
+.ga-search-results:empty{display:none;}
+/* Mientras el buscador está abierto, su lupa se esconde: la barra ocupa
+   ese lugar. */
+body.ga-searching .ga-fab-btn-round{display:none !important;}
+
+/* ── 3 · El contenido se diluye también hacia abajo ─────────────────
+   Arriba ya se disolvía bajo la píldora; abajo chocaba en seco con el
+   borde del teléfono y con las barras que flotan encima. */
+.em-fade-bottom{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  height:calc(96px + env(safe-area-inset-bottom, 0px));
+  pointer-events:none;
+  background:linear-gradient(0deg,
+    var(--bg) 20%,
+    rgba(247,244,237,.86) 52%,
+    rgba(247,244,237,0) 100%);
+}
+body.locked .em-fade-bottom{display:none;}
+/* La guía tiene sus propios botones flotando abajo: van por encima */
+.ga-fab-stack,.ga-search-modal{z-index:95 !important;}
+
+/* ── 4 · Heroes: integración premium con el fondo ───────────────────
+   La foto ya no termina: se apaga. Tres capas — la imagen con máscara
+   larga, un velo que gana cuerpo hacia abajo y, pegado al borde, una
+   franja del crema exacto de la página. Sin línea de corte. */
+.em-hero-photo img,.foto-hero-media img,.ga-cover-media img{
+  -webkit-mask-image:linear-gradient(180deg,
+    #000 0%,#000 30%,rgba(0,0,0,.82) 52%,rgba(0,0,0,.45) 72%,
+    rgba(0,0,0,.16) 87%,rgba(0,0,0,0) 100%) !important;
+  mask-image:linear-gradient(180deg,
+    #000 0%,#000 30%,rgba(0,0,0,.82) 52%,rgba(0,0,0,.45) 72%,
+    rgba(0,0,0,.16) 87%,rgba(0,0,0,0) 100%) !important;
+  filter:saturate(.68) contrast(.84) brightness(.88) !important;
+}
+.em-hero,.foto-hero,.ga-cover{
+  background:linear-gradient(180deg,
+    #1a1a19 0%,#1d1d1b 44%,#262622 66%,#3b3b34 82%,
+    #6f6f63 93%,var(--bg) 100%) !important;
+}
+/* Franja del crema exacto pegada al borde: mata cualquier resto de línea.
+   NO se toca el position de los hijos — las capas de foto son absolutas y
+   volverlas relativas descuadraba el hero entero. */
+.em-hero::after,.foto-hero::after,.ga-cover::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:110px;
+  background:linear-gradient(180deg,
+    rgba(247,244,237,0) 0%,rgba(247,244,237,.35) 42%,
+    rgba(247,244,237,.78) 72%,var(--bg) 96%);
+  pointer-events:none;z-index:0;
+}
+.em-hero-photo,.foto-hero-media,.ga-cover-media{
+  position:absolute !important;inset:0 !important;z-index:0 !important;
+}
+/* Aire abajo para que el degradado tenga dónde apagarse */
+.foto-hero{min-height:390px !important;padding-bottom:104px !important;margin-bottom:-40px !important;}
+.em-hero-titles,.em-hero-progress,.em-hero-eyebrow,
+.foto-hero .sub-header,.foto-hero .hub-header-block,
+.ga-cover-head,.ga-cover-title,.ga-cover-line,.ga-cover-statement,
+.ga-cover-meta,.ga-cover-tip{position:relative;z-index:2;}
 
 </style>
 </head>
@@ -7827,6 +7941,10 @@ body.locked .mt-stains{display:none;}
 <!-- Sin barra de marca: el centro ya vive dentro del Meal Tracker, así que
      repetir "Centro de aprendizaje" en cada pantalla solo robaba altura.
      El "volver" vuelve a ser la pastilla propia de cada pantalla. -->
+
+<!-- Dilución inferior: el contenido se apaga contra el borde del teléfono
+     y por detrás de las barras, igual que ya lo hacía arriba. -->
+<div class="em-fade-bottom" aria-hidden="true"></div>
 
 <!-- HOME (única pantalla principal) -->
 
@@ -9074,9 +9192,15 @@ else capRender();
     <div class="bg-halo bg-halo-1"></div>
     <div class="bg-halo bg-halo-2"></div>
 
-    <!-- Header sticky con progreso + cerrar -->
+    <!-- Volver: la misma pastilla que el resto de subpantallas (antes esta
+         era la única con una × dentro del header, y se perdía). -->
+    <div class="sub-back" onclick="go('s-onboarding')" style="cursor:pointer">
+      <span class="sub-back-arr">‹</span>
+      <span>Volver al onboarding</span>
+    </div>
+
+    <!-- Header sticky con progreso -->
     <div class="qs-top">
-      <div class="qs-top-close" onclick="go('s-onboarding')" aria-label="Volver al hub">×</div>
       <div class="qs-progress-bars" id="qs-bars">
         <div class="qs-progress-bar active"></div>
         <div class="qs-progress-bar"></div>
@@ -10823,7 +10947,17 @@ function gaToggleSearch() {
   if (!panel) return;
   const isOpen = panel.style.display !== 'none';
   panel.style.display = isOpen ? 'none' : 'block';
-  if (!isOpen) {
+  // La lupa se esconde mientras la barra ocupa su lugar: la barra CRECE
+  // desde ese botón en vez de abrirse arriba, donde la píldora del Meal
+  // Tracker la tapaba.
+  document.body.classList.toggle('ga-searching', !isOpen);
+  if (isOpen) {
+    // Al cerrar, se limpia para no dejar resultados colgando
+    const input = document.getElementById('ga-search-input');
+    if (input) input.value = '';
+    const res = document.getElementById('ga-search-results');
+    if (res) res.innerHTML = '';
+  } else {
     setTimeout(() => {
       const input = document.getElementById('ga-search-input');
       if (input) { try { input.focus({ preventScroll: true }); } catch(e) { input.focus(); } }
