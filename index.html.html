@@ -8235,6 +8235,383 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
   color:rgba(255,255,255,.88) !important;
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v18 · Velos casi invisibles, volver sólido y un solo subtexto de portada
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── A1 · Los velos del hero, al mínimo ─────────────────────────────
+   Arriba y abajo: mucho más transparentes y mucho más bajos. El velo
+   crema fuerte que se veía encima venía además del overlay del Meal
+   Tracker (ya rebajado allí). */
+.em-hero::before,.foto-hero::before,.ga-cover::before,.sub-hero-plain::before{
+  height:calc(env(safe-area-inset-top, 0px) + 34px) !important;
+  background:linear-gradient(180deg,rgba(24,24,22,.22) 0%,rgba(24,24,22,.06) 60%,rgba(24,24,22,0) 100%) !important;
+}
+.em-hero::after,.foto-hero::after,.ga-cover::after,.sub-hero-plain::after{
+  height:34px !important;
+  background:linear-gradient(180deg,rgba(237,236,229,0) 0%,rgba(237,236,229,.14) 60%,rgba(237,236,229,.55) 100%) !important;
+}
+.em-fade-bottom{
+  height:calc(40px + env(safe-area-inset-bottom, 0px)) !important;
+  background:linear-gradient(0deg,
+    rgba(237,236,229,.72) 0%,rgba(237,236,229,.34) 52%,rgba(237,236,229,0) 100%) !important;
+}
+
+/* ── A5 · Zona segura: nada de texto bajo la píldora al abrir ───────
+   La píldora del Meal Tracker termina en safe+41px. Todo arranca por
+   debajo con holgura. */
+:root{--em-safe-top: calc(env(safe-area-inset-top, 0px) + 66px);}
+.em-hero,.foto-hero,.ga-cover,.sub-hero-plain{
+  padding-top:var(--em-safe-top) !important;
+  /* Cápsulas traía margin-top:-32px y se comía la zona segura */
+  margin-top:0 !important;
+}
+
+/* ── A3 · Volver: círculo SÓLIDO, nunca vidrio, encima de todo ────── */
+.sub-back,.hub-back-link,.mg-back,
+#s-faq .sub-back,#s-capsulas .sub-back,#s-programa .sub-back,
+#s-app-train .sub-back,#s-journey .sub-back,#s-onboarding .hub-back-link,
+#s-ea-quickstart .sub-back{
+  z-index:99999 !important;
+  background:#1F1F1F !important;background-color:#1F1F1F !important;
+  background-image:none !important;
+  opacity:1 !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;
+  border:none !important;
+  box-shadow:0 2px 6px rgba(0,0,0,.28),0 10px 26px rgba(0,0,0,.22) !important;
+}
+.sub-back-arr::before,.hub-back-arr::before{
+  border-left-color:#FFFFFF !important;border-bottom-color:#FFFFFF !important;
+}
+
+/* ── A4 · UN solo subtexto de portada: el de la guía ────────────────
+   17px / 500, con la negrita a 700 y en blanco pleno. Nada en oliva. */
+.foto-hero .sub-intro,.foto-hero .hub-intro,
+.sub-hero-plain .sub-intro,.ga-cover-statement,.em-hero-lema{
+  font-family:'Inter',sans-serif !important;
+  font-size:17px !important;line-height:1.4 !important;
+  letter-spacing:-.005em !important;font-weight:500 !important;
+  color:rgba(255,255,255,.86) !important;
+  max-width:32ch;
+  text-shadow:0 1px 3px rgba(0,0,0,.5) !important;
+}
+.foto-hero .sub-intro strong,.foto-hero .hub-intro strong,
+.sub-hero-plain .sub-intro strong,.ga-cover-statement strong,.em-hero-lema em{
+  color:#FFFFFF !important;font-weight:700 !important;font-style:normal !important;
+}
+/* Nada de oliva en las portadas */
+.foto-hero .sub-intro em,.foto-hero .hub-intro em,
+.sub-hero-plain .sub-intro em,.ga-cover-meta-row strong,
+.ga-cover-statement em{color:#FFFFFF !important;}
+.ga-cover-meta-row{color:rgba(255,255,255,.62) !important;}
+
+
+/* ── B · Asistente de lectura flotante (cápsulas y preguntas) ────────
+   Por encima de cualquier velo y a todo color. */
+.pg-fab{
+  position:fixed;right:14px;
+  bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index:99998;
+  display:none;align-items:center;gap:8px;
+  padding:12px 18px 12px 14px;border:none;border-radius:100px;cursor:pointer;
+  background:#1F1F1F;color:#fff;
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:700;letter-spacing:-.01em;
+  box-shadow:0 2px 8px rgba(0,0,0,.28),0 12px 30px rgba(0,0,0,.22);
+}
+/* Vive dentro de cada pantalla: cuando la pantalla está oculta
+   (display:none) su botón tampoco se renderiza. */
+#s-capsulas .pg-fab,#s-faq .pg-fab{display:inline-flex;}
+.pg-fab svg{width:18px;height:18px;flex:none;display:block;}
+.pg-fab:active{transform:scale(.97);}
+
+.pg-modal{
+  position:fixed;inset:0;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  padding:calc(env(safe-area-inset-top, 0px) + 56px) 14px 24px;
+  background:rgba(20,20,20,.55);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  animation:fadeIn .2s ease;
+}
+.pg-modal-card{
+  position:relative;width:100%;max-width:520px;max-height:100%;overflow-y:auto;
+  background:#FFFFFF;border-radius:24px;
+  padding:1.5rem 1.15rem 1.25rem;
+  box-shadow:0 24px 56px rgba(0,0,0,.28);
+}
+.pg-modal-x{
+  position:absolute;top:14px;right:14px;
+  width:32px;height:32px;border:none;border-radius:50%;cursor:pointer;
+  background:rgba(0,0,0,.05);color:var(--text);font-size:20px;line-height:1;
+  display:grid;place-content:center;
+}
+.pg-modal-kick{
+  font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--olive-dark);margin-right:38px;
+}
+.pg-modal-title{
+  margin-top:5px;font-size:19px;font-weight:700;letter-spacing:-.015em;
+  line-height:1.2;color:var(--text);
+}
+.pg-modal-bar{
+  margin-top:14px;height:5px;border-radius:100px;
+  background:rgba(74,82,56,.12);overflow:hidden;
+}
+.pg-modal-bar span{
+  display:block;height:100%;width:0%;border-radius:100px;
+  background:linear-gradient(90deg,var(--olive),var(--olive-dark));
+  transition:width .8s cubic-bezier(.16,.84,.3,1);
+}
+.pg-modal-count{
+  margin-top:7px;font-size:11.5px;font-weight:500;color:var(--text-mute);
+}
+.pg-modal-count b{color:var(--olive-dark);font-weight:800;}
+.pg-modal-cta{
+  margin-top:14px;width:100%;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px 16px;border:none;border-radius:100px;cursor:pointer;
+  background:var(--olive);color:#fff;text-align:left;
+  font-family:'Inter',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:-.01em;
+}
+.pg-modal-cta .arr{flex:none;font-size:15px;}
+.pg-modal-group{margin-top:16px;}
+.pg-modal-group-head{
+  font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--text-mute);margin-bottom:6px;
+}
+.pg-modal-group-head b{color:var(--olive-dark);}
+.pg-modal-row{
+  display:block;width:100%;text-align:left;cursor:pointer;
+  padding:10px 0;border:none;border-bottom:.5px solid var(--border-soft);
+  background:none;font-family:'Inter',sans-serif;
+  font-size:13px;font-weight:600;letter-spacing:-.01em;line-height:1.3;color:var(--text);
+}
+.pg-modal-row.done{color:var(--text-mute);font-weight:500;}
+.pg-modal-row.done::before{content:"✓ ";color:var(--olive);font-weight:800;}
+.pg-modal-empty{font-size:12px;color:var(--text-mute);padding:8px 0;}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v19 · Secciones del onboarding: un texto continuo que se revela
+   ═══════════════════════════════════════════════════════════════════════ */
+.read-flow{
+  display:block !important;overflow:visible !important;
+  scroll-snap-type:none !important;
+  gap:0 !important;padding:0 !important;margin:0 !important;
+}
+.read-flow > .progm-block,.read-flow > .jrn-phase{
+  display:block !important;
+  filter:none !important;transform:none !important;
+  width:auto !important;min-width:0 !important;max-width:none !important;flex:none !important;
+  height:auto !important;max-height:none !important;overflow:visible !important;
+  scroll-snap-align:none !important;
+  background:transparent !important;border:none !important;box-shadow:none !important;
+  border-radius:0 !important;
+  padding:0 !important;margin:0 0 6px !important;
+}
+.read-flow .scroll-cue,.carousel-hint,.step-nav{display:none !important;}
+/* Reglas con selector de ID le daban piel de tarjeta a cada bloque: en un
+   cuerpo continuo sobran el fondo, el borde y la sombra. */
+#s-programa .progm-blocks > .progm-block,
+#s-app-train .progm-blocks > .progm-block,
+#s-journey .jrn-timeline > .jrn-phase,
+#s-journey .jrn-timeline > .jrn-phase .jrn-body{
+  background:transparent !important;background-image:none !important;
+  border:none !important;box-shadow:none !important;border-radius:0 !important;
+  padding:0 !important;margin:0 0 6px !important;
+  width:auto !important;min-width:0 !important;max-width:none !important;
+  height:auto !important;max-height:none !important;overflow:visible !important;
+  filter:none !important;
+}
+
+/* Revelado al bajar */
+.read-flow .flow-in,.read-flow .flow-sep{
+  opacity:0;transform:translateY(22px);
+  transition:opacity .6s cubic-bezier(.16,.84,.3,1),transform .6s cubic-bezier(.16,.84,.3,1);
+}
+.read-flow .flow-in.flow-on,.read-flow .flow-sep.flow-on{opacity:1;transform:none;}
+@media (prefers-reduced-motion: reduce){
+  .read-flow .flow-in,.read-flow .flow-sep{opacity:1 !important;transform:none !important;transition:none !important;}
+}
+
+/* Divisor numerado entre bloques */
+.flow-sep{
+  display:flex;align-items:center;gap:12px;
+  margin:34px 0 18px;
+}
+.read-flow > .flow-sep:first-child{margin-top:22px;}
+.flow-sep-num{
+  flex:none;font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:1;
+  letter-spacing:.03em;color:var(--olive-dark);
+}
+.flow-sep-line{flex:1;height:1px;background:var(--border);}
+.flow-sep-total{
+  flex:none;font-size:11px;font-weight:600;color:var(--text-mute);letter-spacing:-.01em;
+}
+
+/* ── Tipografía del cuerpo: la del Meal Tracker ─────────────────────
+   Prohibido el subtítulo en versalitas apretadas: el antiguo eyebrow
+   pasa a ser una bajada normal, en caja baja. */
+.read-flow .progm-block-eyebrow,.read-flow .jrn-phase-label,
+.read-flow .jrn-card-eyebrow{
+  font-size:13px !important;font-weight:500 !important;
+  letter-spacing:-.005em !important;text-transform:none !important;
+  color:var(--text-mute) !important;
+  margin:0 0 10px !important;
+}
+.read-flow .progm-block-title,.read-flow .jrn-card-title{
+  font-family:'Inter',sans-serif !important;
+  font-size:23px !important;font-weight:800 !important;
+  letter-spacing:-.025em !important;line-height:1.15 !important;
+  color:var(--text) !important;
+  margin:0 0 12px !important;text-transform:none !important;
+}
+.read-flow .progm-block-text,.read-flow .jrn-body{
+  font-size:14.5px !important;line-height:1.65 !important;color:var(--text-soft) !important;
+}
+.read-flow .progm-block-text p,.read-flow .jrn-body p{
+  margin:0 0 12px !important;font-size:14.5px !important;line-height:1.65 !important;
+}
+.read-flow .progm-block-text strong,.read-flow .jrn-body strong{
+  color:var(--text) !important;font-weight:700 !important;
+}
+.read-flow .progm-block-num{display:none !important;}
+
+/* Frase destacada dentro del bloque */
+.read-flow .rh-quote{
+  font-family:'Inter',sans-serif !important;
+  font-size:17px !important;font-weight:700 !important;
+  letter-spacing:-.02em !important;line-height:1.3 !important;
+  color:var(--text) !important;
+  margin:0 0 14px !important;
+}
+.read-flow .rh-quote em{color:var(--olive-dark) !important;font-style:normal !important;}
+
+/* Tarjeta "En esencia" */
+.read-flow .rh-takeaway,.read-flow .jrn-result{
+  background:var(--bg-card) !important;
+  border:none !important;border-radius:18px !important;
+  box-shadow:0 1px .5px rgba(0,0,0,.04),0 8px 24px rgba(74,82,56,.10) !important;
+  padding:14px 16px !important;margin:16px 0 !important;
+}
+.read-flow .rh-take-label{
+  font-size:10px !important;font-weight:800 !important;letter-spacing:.09em !important;
+  text-transform:uppercase !important;color:var(--olive-dark) !important;
+  margin-bottom:8px !important;
+}
+.read-flow .rh-takeaway ul{margin:0 !important;padding:0 !important;list-style:none !important;}
+.read-flow .rh-takeaway li{
+  position:relative;padding-left:20px;margin-bottom:7px;
+  font-size:13.5px;line-height:1.5;color:var(--text-soft);
+}
+.read-flow .rh-takeaway li::before{
+  content:"";position:absolute;left:2px;top:8px;
+  width:6px;height:6px;border-radius:50%;background:var(--olive);
+}
+.read-flow .rh-takeaway li strong{color:var(--text);font-weight:700;}
+
+/* Cierre en grafito */
+.read-flow .rh-dark{
+  background:#1F1F1F !important;border-radius:20px !important;
+  padding:20px 18px !important;margin:20px 0 6px !important;border:none !important;
+}
+.read-flow .rh-kicker{
+  font-size:13px !important;font-weight:700 !important;
+  letter-spacing:-.01em !important;text-transform:none !important;
+  color:var(--olive-dark) !important;
+}
+.read-flow .rh-dark-kicker{
+  font-size:10px !important;font-weight:800 !important;letter-spacing:.09em !important;
+  text-transform:uppercase !important;color:var(--olive-light) !important;
+  margin-bottom:8px !important;
+}
+.read-flow .rh-dark-quote{
+  font-family:'Bebas Neue',sans-serif !important;font-weight:400 !important;
+  font-size:clamp(24px,6.4vw,30px) !important;line-height:1.04 !important;
+  letter-spacing:.02em !important;color:#F7F4EC !important;margin:0 !important;
+}
+.read-flow .rh-dark-quote em{color:var(--olive-light) !important;font-style:normal !important;}
+
+/* Etiquetas en versalitas apretadas dentro del cuerpo: prohibidas.
+   Pasan a bajada normal en caja baja. */
+.read-flow .jrn-steps-label,.read-flow .rh-take-label,
+.read-flow .jrn-phase-label,.read-flow .appt-label{
+  font-size:13px !important;font-weight:700 !important;
+  letter-spacing:-.01em !important;text-transform:none !important;
+  color:var(--text) !important;
+  margin:0 0 8px !important;
+}
+.read-flow .rh-take-label{color:var(--olive-dark) !important;}
+/* Los numeritos de las listas dejan de gritar */
+.read-flow .jrn-step-num{
+  font-size:11px !important;font-weight:800 !important;letter-spacing:0 !important;
+  color:var(--olive-dark) !important;
+}
+
+/* Imágenes del tutorial dentro del cuerpo */
+.read-flow img,.read-flow .appm-img-wrap img{
+  width:100% !important;height:auto !important;border-radius:16px !important;
+  box-shadow:0 2px 8px rgba(60,70,50,.10),0 12px 34px rgba(60,70,50,.12) !important;
+  margin:6px 0 4px !important;
+}
+
+
+/* ═══ v20 · Cierre de los tres fallos detectados en la auditoría ═══ */
+
+/* 1 · El subtexto de preguntas frecuentes se quedaba en crema: una regla
+   con selector de ID ganaba. Las cinco portadas, mismo color. */
+#s-faq .foto-hero .sub-intro,#s-capsulas .foto-hero .sub-intro,
+#s-onboarding .foto-hero .hub-intro,#s-programa .sub-hero-plain .sub-intro,
+#s-app-train .sub-hero-plain .sub-intro,#s-journey .sub-hero-plain .sub-intro{
+  color:rgba(255,255,255,.86) !important;
+}
+#s-faq .foto-hero .sub-intro strong,#s-capsulas .foto-hero .sub-intro strong,
+#s-onboarding .foto-hero .hub-intro strong{color:#FFFFFF !important;font-weight:700 !important;}
+
+/* 2 · El botón del asistente caía a z-index:1 — .sub-area > * se lo imponía.
+   Es fijo y debe ir por encima de cualquier velo. */
+#s-faq .sub-area > .pg-fab,#s-capsulas .sub-area > .pg-fab,
+#s-faq .pg-fab,#s-capsulas .pg-fab{
+  position:fixed !important;z-index:99998 !important;
+}
+
+/* 3 · Quedaban etiquetas en versalitas apretadas dentro de las
+   subsecciones: el kicker de la tarjeta grafito y el "Resultado" del
+   journey. Pasan a bajada en caja baja, como el resto. */
+.read-flow .rh-dark-kicker{
+  font-size:13px !important;font-weight:700 !important;
+  letter-spacing:-.01em !important;text-transform:none !important;
+  color:var(--olive-light) !important;
+}
+.read-flow .jrn-result,.read-flow .jrn-result > span:first-child{
+  text-transform:none !important;
+}
+.read-flow .jrn-result > span:first-child{
+  font-size:13px !important;font-weight:700 !important;
+  letter-spacing:-.01em !important;color:var(--olive-dark) !important;
+}
+.read-flow .jrn-result > span:last-child{
+  font-size:13.5px !important;font-weight:500 !important;
+  letter-spacing:-.005em !important;color:var(--text-soft) !important;
+  text-transform:none !important;
+}
+
+
+/* Icono del divisor: el mismo tile del Meal Tracker, con un color por paso */
+.flow-sep-ico{
+  flex:none;width:38px;height:38px;border-radius:12px;
+  display:grid;place-content:center;
+  box-shadow:0 4px 12px rgba(74,82,56,.20);
+}
+.flow-sep-ico[data-c="0"]{background:linear-gradient(135deg,#98A465,#4A5238);}
+.flow-sep-ico[data-c="1"]{background:linear-gradient(135deg,#E09479,#C05E44);}
+.flow-sep-ico[data-c="2"]{background:linear-gradient(135deg,#D9B778,#B07F2E);}
+.flow-sep-ico[data-c="3"]{background:linear-gradient(135deg,#74AECB,#3F81A6);}
+.flow-sep-ico svg{width:19px !important;height:19px !important;display:block;filter:none !important;}
+.flow-sep-ico svg *{stroke:#FFFFFF !important;stroke-width:1.8 !important;fill:none !important;}
+.flow-sep-ico svg .pg-b{display:none !important;}
+.flow-sep{gap:11px;}
+
 </style>
 </head>
 <body class="locked">
@@ -8548,8 +8925,8 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
           </svg>
         </span>
         <span class="em-nav-txt">
-          <strong id="home-sec-onboarding-head">El onboarding del programa</strong>
-          <small id="home-sec-onboarding-meta">Cómo funciona todo, paso a paso · tu punto de partida</small>
+          <strong id="home-sec-onboarding-head">Onboarding</strong>
+          <small id="home-sec-onboarding-meta">Primeros pasos y entiende la metodología del programa</small>
         </span>
         <span class="em-nav-arr" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -9051,30 +9428,14 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
         <div class="sub-title">PREGUNTAS<br>FRECUENTES</div>
         <div class="sub-title-line"></div>
         <div class="sub-intro">
-          Respuestas claras para ejecutar mejor tu proceso en el día a día.
+          Respuestas claras para ejecutar mejor tu proceso <strong>en el día a día.</strong>
         </div>
       </div>
     </div>
 
     <!-- ASISTENTE DE LECTURA de esta pantalla -->
-    <aside class="pg-assist sub-anim" style="--d:.04s;" id="faq-assist" aria-label="Tu avance en preguntas frecuentes">
-      <div class="pg-assist-ring" role="img" aria-label="Preguntas abiertas">
-        <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
-          <circle class="track" cx="23" cy="23" r="19" stroke-width="3.5"/>
-          <circle class="arc" id="faq-assist-arc" cx="23" cy="23" r="19" stroke-width="3.5"
-                  stroke-dasharray="119.4" stroke-dashoffset="119.4"/>
-        </svg>
-        <span class="pg-assist-pct" id="faq-assist-pct">0%</span>
-      </div>
-      <div class="pg-assist-body">
-        <span class="pg-assist-tag">Tu avance aquí</span>
-        <strong id="faq-assist-title">Empieza por la primera pregunta</strong>
-        <small id="faq-assist-meta">0 de 0 leídas · se guarda solo</small>
-      </div>
-      <button class="pg-assist-go" type="button" id="faq-assist-go" onclick="faqContinue()" aria-label="Abrir la siguiente pregunta">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-    </aside>
+    <!-- El asistente ya no ocupa sitio en la página: vive en el botón
+         flotante, igual que en la guía de alimentación. -->
 
     <!-- Buscador -->
     <div class="faq-search sub-anim" style="--d:.06s;">
@@ -9186,6 +9547,14 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
       No encontramos preguntas con ese término. Prueba con otra palabra.
     </div>
 
+
+  <!-- ASISTENTE DE LECTURA (botón flotante + panel) — mismo patrón que la
+       guía de alimentación: al abrirlo dice qué llevas leído y qué falta. -->
+  <button class="pg-fab" type="button" onclick="pgAssistOpen('faq')" aria-label="Asistente de lectura">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a4 4 0 0 0-4 4v1H6a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h.5M12 3a4 4 0 0 1 4 4v1h2a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-.5M9 12v2a3 3 0 0 0 3 3 3 3 0 0 0 3-3v-2M9 17v1a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Asistente de lectura</span>
+  </button>
+
     <div class="footer">
       <div class="footer-brand">ENTRENA CON MÉTODO</div>
       <div class="footer-tagline">Mauro Morón · ISSA Training and Nutrition Coach</div>
@@ -9238,24 +9607,8 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
     </div>
 
     <!-- ASISTENTE DE LECTURA de esta pantalla -->
-    <aside class="pg-assist sub-anim" style="--d:.05s;" id="cap-assist" aria-label="Tu avance en cápsulas">
-      <div class="pg-assist-ring" role="img" aria-label="Cápsulas vistas">
-        <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
-          <circle class="track" cx="23" cy="23" r="19" stroke-width="3.5"/>
-          <circle class="arc" id="cap-assist-arc" cx="23" cy="23" r="19" stroke-width="3.5"
-                  stroke-dasharray="119.4" stroke-dashoffset="119.4"/>
-        </svg>
-        <span class="pg-assist-pct" id="cap-assist-pct">0%</span>
-      </div>
-      <div class="pg-assist-body">
-        <span class="pg-assist-tag">Tu avance aquí</span>
-        <strong id="cap-assist-title">Empieza por la primera cápsula</strong>
-        <small id="cap-assist-meta">0 de 0 vistas · se guarda solo</small>
-      </div>
-      <button class="pg-assist-go" type="button" id="cap-assist-go" onclick="capContinue()" aria-label="Abrir la siguiente cápsula">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-    </aside>
+    <!-- El asistente ya no ocupa sitio en la página: vive en el botón
+         flotante, igual que en la guía de alimentación. -->
 
     <!-- REJILLA DE CÁPSULAS — la pinta capRender() desde CAPSULAS (abajo) -->
     <div class="cap-gal sub-anim" style="--d:.08s;" id="cap-gal"></div>
@@ -9270,6 +9623,14 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
       <div class="footer-rights">© 2026 · Acceso personal e intransferible</div>
     </div>
   </div>
+
+
+  <!-- ASISTENTE DE LECTURA (botón flotante + panel) — mismo patrón que la
+       guía de alimentación: al abrirlo dice qué llevas leído y qué falta. -->
+  <button class="pg-fab" type="button" onclick="pgAssistOpen('cap')" aria-label="Asistente de lectura">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a4 4 0 0 0-4 4v1H6a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h.5M12 3a4 4 0 0 1 4 4v1h2a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-.5M9 12v2a3 3 0 0 0 3 3 3 3 0 0 0 3-3v-2M9 17v1a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Asistente de lectura</span>
+  </button>
 
   <!-- Lightbox: la infografía a pantalla completa, con zoom por pellizco -->
   <div class="cap-lb" id="cap-lb" onclick="capClose(event)" aria-hidden="true">
@@ -10448,13 +10809,10 @@ function homeApplyOrder(){
   const head = document.getElementById('home-sec-onboarding-head');
   const meta = document.getElementById('home-sec-onboarding-meta');
   onb.classList.toggle('is-done', done);
-  if (done) {
-    if (head) head.textContent = 'Repasar el onboarding';
-    if (meta) meta.textContent = 'Ya lo leíste completo · vuelve cuando quieras refrescar algo';
-  } else {
-    if (head) head.textContent = 'Empieza aquí: el onboarding';
-    if (meta) meta.textContent = 'Cómo funciona todo, paso a paso · tu punto de partida';
-  }
+  // Mismo título y misma bajada, leído o no: es la sección "Onboarding",
+  // no un estado.
+  if (head) head.textContent = 'Onboarding';
+  if (meta) meta.textContent = 'Primeros pasos y entiende la metodología del programa';
 }
 
 // === TARJETA ÚNICA DE ORIENTACIÓN (método + guía de todo el centro) ===
@@ -11973,11 +12331,11 @@ function appmCloseZoom() {
   }, { passive: true });
 })();
 
-// ============ Secciones del onboarding: lectura paso a paso ============
-// Antes eran un carrusel horizontal con las cards vecinas borrosas: se leía
-// a medias y obligaba a scrollear dentro de cada card. Ahora es un paso a la
-// vez con "Anterior / Siguiente" abajo, la misma mecánica de la guía del
-// Meal Tracker. El texto fluye completo y quien scrollea es la página.
+// ====== Secciones del onboarding: un solo cuerpo que se revela ======
+// Antes era un carrusel, después pasos con "Anterior/Siguiente". Las dos
+// versiones partían la lectura. Ahora es UN texto continuo: cada bloque se
+// separa con un divisor numerado y aparece al entrar en pantalla, como una
+// infografía que se va armando mientras bajas.
 function initStepFlow(scroller){
   if (!scroller) return;
   const slides = Array.prototype.slice.call(scroller.children).filter(function(c){
@@ -11985,73 +12343,54 @@ function initStepFlow(scroller){
   });
   if (!slides.length) return;
 
-  function show(i){
-    scroller._stepIndex = i;
-    slides.forEach(function(sl, k){
-      sl.classList.toggle('is-active', k === i);
-      sl.hidden = (k !== i);
-    });
-    const nav = scroller._nav;
-    if (nav){
-      nav.querySelector('.step-count b').textContent = (i + 1);
-      nav.querySelector('.step-prev').disabled = (i === 0);
-      const next = nav.querySelector('.step-next');
-      next.disabled = (i === slides.length - 1);
-      next.textContent = (i === slides.length - 1) ? 'Última' : 'Siguiente \u203a';
-    }
-  }
+  if (!scroller._flowInit){
+    scroller._flowInit = true;
+    scroller.classList.add('read-flow');
 
-  function move(dir){
-    const n = slides.length;
-    let i = Math.min(n - 1, Math.max(0, (scroller._stepIndex || 0) + dir));
-    show(i);
-    // Sube al inicio de la sección, no de la página: así la portada no
-    // vuelve a robar pantalla en cada toque.
-    const top = scroller.getBoundingClientRect().top + window.scrollY - 96;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-  }
-
-  if (!scroller._stepInit){
-    scroller._stepInit = true;
-    scroller.classList.add('step-flow');
-
-    // Fuera restos del carrusel
+    // Fuera los restos de las versiones anteriores
     const hint = scroller.parentNode.querySelector('.carousel-hint');
     if (hint) hint.remove();
-    slides.forEach(function(sl){
+    const nav = scroller.parentNode.querySelector('.step-nav');
+    if (nav) nav.remove();
+
+    slides.forEach(function(sl, i){
+      sl.hidden = false;
+      sl.classList.remove('is-active');
       const cue = sl.querySelector('.scroll-cue');
       if (cue) cue.remove();
+
+      // Divisor numerado: sustituye al subtítulo en versalitas apretadas
+      if (!sl.previousElementSibling || !sl.previousElementSibling.classList.contains('flow-sep')){
+        const sep = document.createElement('div');
+        sep.className = 'flow-sep';
+        // Cada bloque ya traía su icono; se recicla en el divisor, con un
+        // color propio por paso. Rompe la monotonía de seis bloques de
+        // texto seguidos sin inventar iconografía nueva.
+        const ico = sl.querySelector('.progm-block-icon svg, .appt-badge svg, .jrn-card-wm svg');
+        sep.innerHTML =
+          (ico ? '<span class="flow-sep-ico" data-c="' + (i % 4) + '">' + ico.outerHTML + '</span>' : '') +
+          '<span class="flow-sep-num">' + String(i + 1).padStart(2, '0') + '</span>' +
+          '<span class="flow-sep-line"></span>' +
+          '<span class="flow-sep-total">de ' + slides.length + '</span>';
+        scroller.insertBefore(sep, sl);
+      }
+      sl.classList.add('flow-in');
     });
 
-    const nav = document.createElement('div');
-    nav.className = 'step-nav';
-    nav.innerHTML =
-      '<button type="button" class="step-btn step-prev">\u2039 Anterior</button>' +
-      '<span class="step-count"><b>1</b> de ' + slides.length + '</span>' +
-      '<button type="button" class="step-btn step-next">Siguiente \u203a</button>';
-    scroller.parentNode.insertBefore(nav, scroller.nextSibling);
-    scroller._nav = nav;
-
-    nav.querySelector('.step-prev').addEventListener('click', function(){ move(-1); });
-    nav.querySelector('.step-next').addEventListener('click', function(){ move(1); });
-
-    // Deslizar con el dedo sigue funcionando
-    let sx = 0, sy = 0;
-    scroller.addEventListener('touchstart', function(e){
-      const t = e.touches[0]; sx = t.clientX; sy = t.clientY;
-    }, { passive: true });
-    scroller.addEventListener('touchend', function(e){
-      if (!sx) return;
-      const t = e.changedTouches[0];
-      const dx = t.clientX - sx, dy = t.clientY - sy;
-      if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.6) move(dx < 0 ? 1 : -1);
-      sx = 0; sy = 0;
-    }, { passive: true });
+    // Revelado al entrar en pantalla
+    if (window.IntersectionObserver){
+      const io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting){ e.target.classList.add('flow-on'); io.unobserve(e.target); }
+        });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.06 });
+      scroller.querySelectorAll('.flow-in, .flow-sep').forEach(function(el){ io.observe(el); });
+    } else {
+      scroller.querySelectorAll('.flow-in, .flow-sep').forEach(function(el){ el.classList.add('flow-on'); });
+    }
   }
-
-  show(scroller._stepIndex || 0);
 }
-// Nombre viejo conservado: lo llaman otros puntos del archivo
+// Nombres viejos conservados: los llaman otros puntos del archivo
 function initBlurCarousel(scroller){ return initStepFlow(scroller); }
 
 // Hook en go()
@@ -12694,6 +13033,118 @@ function initBlurCarousel(scroller){ return initStepFlow(scroller); }
   else { update(); setTimeout(update, 400); }
 })();
 </script>
+
+<!-- Panel del asistente de lectura de cápsulas y preguntas frecuentes -->
+<div class="pg-modal" id="pg-modal" style="display:none;" onclick="pgAssistClose(event)">
+  <div class="pg-modal-card" onclick="event.stopPropagation()">
+    <button class="pg-modal-x" type="button" onclick="pgAssistClose(event,true)" aria-label="Cerrar">×</button>
+    <div class="pg-modal-kick" id="pg-modal-kick">Tu progreso</div>
+    <div class="pg-modal-title" id="pg-modal-title">—</div>
+    <div class="pg-modal-bar"><span id="pg-modal-fill"></span></div>
+    <div class="pg-modal-count"><b id="pg-modal-pct">0%</b> leído · <span id="pg-modal-count">0 / 0</span></div>
+    <button class="pg-modal-cta" type="button" id="pg-modal-cta" onclick="pgAssistGo()">
+      <span id="pg-modal-cta-text">Empezar</span><span class="arr">→</span>
+    </button>
+    <div class="pg-modal-group" id="pg-modal-pending"></div>
+    <div class="pg-modal-group" id="pg-modal-done"></div>
+  </div>
+</div>
+
+<script>
+// ── Asistente de lectura de cápsulas y preguntas frecuentes ───────────
+// Un solo panel para las dos pantallas. Al abrirlo dice qué llevas leído,
+// qué falta y a qué te lleva el botón.
+var _pgKey = 'cap';
+
+function pgItems(key){
+  if (key === 'cap'){
+    var read = (typeof capGetRead === 'function') ? capGetRead() : [];
+    return (typeof CAPSULAS !== 'undefined' ? CAPSULAS : []).map(function(c, i){
+      return { label: c.title, done: read.indexOf(c.id) !== -1, go: function(){ capOpen(i); } };
+    });
+  }
+  var fread = (typeof faqGetRead === 'function') ? faqGetRead() : [];
+  return (typeof faqItems === 'function' ? faqItems() : []).map(function(it){
+    var t = it.querySelector('.faq-q-text');
+    return {
+      label: t ? t.textContent.trim() : 'Pregunta',
+      done: fread.indexOf(faqKey(it)) !== -1,
+      go: function(){
+        if (it.style.display === 'none'){ faqSetCat('all'); faqClearSearch(); }
+        it.open = true; faqMarkRead(it);
+        it.scrollIntoView({ behavior:'smooth', block:'center' });
+      }
+    };
+  });
+}
+
+function pgAssistOpen(key){
+  _pgKey = key;
+  var items = pgItems(key);
+  var total = items.length;
+  var done = items.filter(function(i){ return i.done; }).length;
+  var pct = total ? Math.round(done / total * 100) : 0;
+  var next = items.find(function(i){ return !i.done; });
+
+  var set = function(id, v){ var e = document.getElementById(id); if (e) e.textContent = v; };
+  set('pg-modal-kick', key === 'cap' ? 'Tus cápsulas' : 'Tus preguntas');
+  set('pg-modal-title', !total ? 'Aún no hay material publicado'
+      : next ? (done === 0 ? 'Empieza por aquí' : 'Continúa donde quedaste')
+             : 'Lo leíste todo');
+  set('pg-modal-pct', pct + '%');
+  set('pg-modal-count', done + ' / ' + total);
+  var fill = document.getElementById('pg-modal-fill');
+  if (fill) setTimeout(function(){ fill.style.width = pct + '%'; }, 120);
+
+  var cta = document.getElementById('pg-modal-cta');
+  var ctaT = document.getElementById('pg-modal-cta-text');
+  if (ctaT) ctaT.textContent = next ? (done === 0 ? 'Empezar: ' : 'Seguir: ') + next.label
+                                    : 'Repasar desde el principio';
+  if (cta) cta._go = next ? next.go : (items[0] ? items[0].go : null);
+
+  var render = function(id, list, titulo, vacio){
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '<div class="pg-modal-group-head">' + titulo +
+      ' <b>' + list.length + '</b></div>' +
+      (list.length
+        ? list.map(function(it, k){
+            return '<button type="button" class="pg-modal-row' + (it.done ? ' done' : '') +
+                   '" data-k="' + k + '">' + it.label + '</button>';
+          }).join('')
+        : '<div class="pg-modal-empty">' + vacio + '</div>');
+    var rows = el.querySelectorAll('.pg-modal-row');
+    [].forEach.call(rows, function(r, k){
+      r.onclick = function(){ pgAssistClose(null, true); setTimeout(list[k].go, 140); };
+    });
+  };
+  render('pg-modal-pending', items.filter(function(i){ return !i.done; }),
+         'Por leer', 'Nada pendiente');
+  render('pg-modal-done', items.filter(function(i){ return i.done; }),
+         'Leídos', 'Todavía nada');
+
+  var m = document.getElementById('pg-modal');
+  if (m){ m.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+}
+
+function pgAssistGo(){
+  var cta = document.getElementById('pg-modal-cta');
+  var go = cta && cta._go;
+  pgAssistClose(null, true);
+  if (typeof go === 'function') setTimeout(go, 140);
+}
+
+function pgAssistClose(ev, force){
+  if (!force && ev && ev.target && ev.target.closest && ev.target.closest('.pg-modal-card')) return;
+  var m = document.getElementById('pg-modal');
+  if (m) m.style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') pgAssistClose(null, true);
+});
+</script>
+
 </body>
 
 </html>

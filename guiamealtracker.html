@@ -384,6 +384,49 @@
       margin-top:8px;font-size:11.5px;line-height:1.45;
       color:rgba(20,20,20,.55);font-weight:500;
     }
+
+    /* ── Cuerpo continuo: las slides se leen seguidas ── */
+    .slide{display:block !important;}
+    .slide + .slide{margin-top:0;}
+    .flow-in{
+      opacity:0;transform:translateY(22px);
+      transition:opacity .6s cubic-bezier(.16,.84,.3,1),transform .6s cubic-bezier(.16,.84,.3,1);
+    }
+    .flow-in.flow-on{opacity:1;transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      .flow-in{opacity:1 !important;transform:none !important;transition:none !important;}
+    }
+    .flow-sep{display:flex;align-items:center;gap:12px;margin:38px 0 20px;}
+    .flow-sep-num{
+      flex:none;font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:1;
+      letter-spacing:.03em;color:#4A5238;
+    }
+    .flow-sep-line{flex:1;height:1px;background:rgba(0,0,0,.08);}
+    .flow-sep-total{flex:none;font-size:11px;font-weight:600;color:#8B8878;letter-spacing:-.01em;}
+    /* El kicker en versalitas apretadas pasa a bajada normal */
+    .kicker{
+      font-size:13px !important;font-weight:500 !important;
+      letter-spacing:-.005em !important;text-transform:none !important;
+      color:#8B8878 !important;margin-bottom:8px !important;
+    }
+    .step-title{
+      font-family:'Inter',sans-serif !important;
+      font-size:23px !important;font-weight:800 !important;
+      letter-spacing:-.025em !important;line-height:1.15 !important;
+      text-transform:none !important;
+    }
+    body{padding-bottom:40px;}
+    /* Los rótulos de tarjeta iban en versalitas apretadas: caja baja y
+       cuerpo normal, como el resto del texto. */
+    .g-card-kick{
+      font-size:13.5px !important;font-weight:700 !important;
+      letter-spacing:-.01em !important;text-transform:none !important;
+      color:#1F1F1F !important;
+    }
+    .g-take-label{
+      font-size:13px !important;font-weight:700 !important;
+      letter-spacing:-.01em !important;text-transform:none !important;
+    }
   </style>
 </head>
 <body>
@@ -610,45 +653,49 @@
 
   </div>
 
-  <div class="nav">
-    <div class="nav-inner">
-      <button class="nav-btn secondary" id="prevBtn" disabled>← Anterior</button>
-      <span class="nav-counter" id="navCounter">1 / 6</span>
-      <button class="nav-btn primary" id="nextBtn">Siguiente →</button>
-    </div>
-  </div>
 
   <script>
+    // Un solo cuerpo: las slides dejan de turnarse y se leen seguidas, cada
+    // una revelándose al entrar en pantalla. La barra superior de progreso
+    // ahora sigue el scroll en vez de contar pasos.
     (function () {
-      const slides = document.querySelectorAll('.slide');
-      const total = slides.length;
-      let current = 0;
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const counter = document.getElementById('navCounter');
+      const slides = [].slice.call(document.querySelectorAll('.slide'));
       const indicator = document.getElementById('stepIndicator');
       const progressBar = document.getElementById('progressBar');
 
-      function render() {
-        slides.forEach((s, i) => s.classList.toggle('active', i === current));
-        prevBtn.disabled = current === 0;
-        nextBtn.textContent = current === total - 1 ? 'Volver al inicio ↺' : 'Siguiente →';
-        counter.textContent = (current + 1) + ' / ' + total;
-        indicator.textContent = (current + 1) + ' / ' + total;
-        progressBar.style.width = ((current + 1) / total * 100) + '%';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      slides.forEach(function (s, i) {
+        s.classList.add('active', 'flow-in');
+        if (i > 0) {
+          const sep = document.createElement('div');
+          sep.className = 'flow-sep flow-in';
+          sep.innerHTML = '<span class="flow-sep-num">' + String(i).padStart(2, '0') + '</span>' +
+                          '<span class="flow-sep-line"></span>' +
+                          '<span class="flow-sep-total">de ' + (slides.length - 1) + '</span>';
+          s.parentNode.insertBefore(sep, s);
+        }
+      });
+
+      if (window.IntersectionObserver) {
+        const io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('flow-on'); io.unobserve(e.target); }
+          });
+        }, { rootMargin: '0px 0px -12% 0px', threshold: 0.06 });
+        document.querySelectorAll('.flow-in').forEach(function (el) { io.observe(el); });
+      } else {
+        document.querySelectorAll('.flow-in').forEach(function (el) { el.classList.add('flow-on'); });
       }
 
-      prevBtn.addEventListener('click', () => { if (current > 0) { current--; render(); } });
-      nextBtn.addEventListener('click', () => {
-        if (current < total - 1) { current++; } else { current = 0; }
-        render();
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight') { if (current < total - 1) { current++; render(); } }
-        if (e.key === 'ArrowLeft') { if (current > 0) { current--; render(); } }
-      });
-      render();
+      function onScroll() {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - window.innerHeight;
+        const pct = max > 0 ? Math.min(100, Math.round(window.scrollY / max * 100)) : 0;
+        if (progressBar) progressBar.style.width = pct + '%';
+        if (indicator) indicator.textContent = pct + '%';
+      }
+      window.addEventListener('scroll', function () { requestAnimationFrame(onScroll); }, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
     })();
   </script>
   <script>
