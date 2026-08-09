@@ -8,14 +8,26 @@
       <span>Volver atrás</span>
     </div>
 
+    <!-- Buscar en la guía: se comporta como el buscador de un PDF. Resalta
+         todas las apariciones, dice cuántas hay y salta de una a otra. -->
     <div class="ga-search-modal" id="ga-search-panel" style="display:none;">
       <div class="ga-search-panel">
         <div class="ga-search-wrap">
           <svg viewBox="0 0 24 24" fill="none" class="ga-search-icon"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          <input type="text" class="ga-search-input" id="ga-search-input" placeholder="Buscar palabra o tema..." oninput="gaSearch(this.value)">
-          <div class="ga-search-clear" onclick="gaToggleSearch()" aria-label="Cerrar buscador">×</div>
+          <input type="text" class="ga-search-input" id="ga-search-input" placeholder="Buscar en la guía..."
+                 oninput="gaSearch(this.value)"
+                 onkeydown="if(event.key==='Enter'){event.preventDefault();gaSearchStep(event.shiftKey?-1:1);}">
+          <span class="ga-search-count" id="ga-search-count"></span>
+          <span class="ga-search-nav" id="ga-search-nav" hidden>
+            <button type="button" class="ga-search-step" onclick="gaSearchStep(-1)" aria-label="Anterior">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+            </button>
+            <button type="button" class="ga-search-step" onclick="gaSearchStep(1)" aria-label="Siguiente">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </span>
+          <button type="button" class="ga-search-clear" onclick="gaToggleSearch()" aria-label="Cerrar buscador">×</button>
         </div>
-        <div class="ga-search-results" id="ga-search-results"></div>
       </div>
     </div>
 

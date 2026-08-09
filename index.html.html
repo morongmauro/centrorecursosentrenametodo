@@ -7785,6 +7785,208 @@ body.locked .em-fade-bottom{display:none;}
 .ga-cover-head,.ga-cover-title,.ga-cover-line,.ga-cover-statement,
 .ga-cover-meta,.ga-cover-tip{position:relative;z-index:2;}
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v15 · Un solo sistema de portada, degradados más cortos y suaves
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Degradados: menos alto y menos intensidad ──────────────────
+   La foto se apagaba en 110px con mucho cuerpo; se sentía pesada. */
+.em-hero-photo img,.foto-hero-media img,.ga-cover-media img{
+  -webkit-mask-image:linear-gradient(180deg,
+    #000 0%,#000 56%,rgba(0,0,0,.72) 76%,rgba(0,0,0,.3) 91%,rgba(0,0,0,0) 100%) !important;
+  mask-image:linear-gradient(180deg,
+    #000 0%,#000 56%,rgba(0,0,0,.72) 76%,rgba(0,0,0,.3) 91%,rgba(0,0,0,0) 100%) !important;
+  filter:saturate(.78) contrast(.9) brightness(.94) !important;
+}
+.em-hero,.foto-hero,.ga-cover{
+  background:linear-gradient(180deg,
+    #1b1b1a 0%,#1f1f1d 58%,#33332d 80%,#5e5e54 92%,var(--bg) 100%) !important;
+}
+.em-hero::after,.foto-hero::after,.ga-cover::after{
+  height:64px !important;
+  background:linear-gradient(180deg,
+    rgba(247,244,237,0) 0%,rgba(247,244,237,.45) 55%,var(--bg) 100%) !important;
+}
+.foto-hero-overlay,.ga-cover-shade,.em-hero-shade{
+  background:linear-gradient(180deg,
+    rgba(18,18,17,.34) 0%,
+    rgba(18,18,17,.50) 40%,
+    rgba(20,20,18,.68) 70%,
+    rgba(22,22,20,.82) 88%,
+    var(--bg) 100%) !important;
+}
+/* Y el contenido se apaga contra el borde inferior con menos cuerpo */
+.em-fade-bottom{
+  height:calc(66px + env(safe-area-inset-bottom, 0px)) !important;
+  background:linear-gradient(0deg,
+    var(--bg) 8%,rgba(247,244,237,.62) 46%,rgba(247,244,237,0) 100%) !important;
+}
+
+/* ── 2 · Portadas más bajas: las cards suben ────────────────────── */
+.foto-hero{min-height:300px !important;padding-bottom:74px !important;margin-bottom:-34px !important;}
+.em-hero{padding-bottom:56px !important;margin-bottom:-28px !important;}
+.ga-cover{padding-bottom:56px !important;margin-bottom:-24px !important;}
+.sub-area,.hub-area,.progm-page{padding-top:0 !important;}
+
+/* ── 3 · UN solo sistema tipográfico de portada ─────────────────────
+   El de la guía de alimentación, replicado en todas. */
+.foto-hero .sub-eyebrow,.foto-hero .hub-eyebrow,
+.sub-hero-plain .sub-eyebrow,.ga-cover-eyebrow{
+  font-size:11px !important;font-weight:700 !important;
+  letter-spacing:.14em !important;text-transform:uppercase !important;
+  font-family:'Inter',sans-serif !important;
+  color:#DCE2C4 !important;
+  margin-bottom:.5rem !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.65),0 2px 12px rgba(0,0,0,.5) !important;
+}
+.foto-hero .sub-title,.foto-hero .hub-title,
+.sub-hero-plain .sub-title,.ga-cover-title{
+  font-family:'Bebas Neue',sans-serif !important;font-weight:400 !important;
+  font-size:clamp(34px,10vw,42px) !important;
+  line-height:.96 !important;letter-spacing:.02em !important;
+  color:#FFFFFF !important;
+  margin-bottom:.6rem !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.5),0 4px 24px rgba(0,0,0,.55) !important;
+}
+.foto-hero .sub-title-line,.foto-hero .hub-title-line,
+.sub-hero-plain .sub-title-line,.ga-cover-line{
+  width:44px !important;height:2px !important;border-radius:2px !important;
+  background:var(--olive-light) !important;
+  margin-bottom:.9rem !important;
+}
+.foto-hero .sub-intro,.foto-hero .hub-intro,
+.sub-hero-plain .sub-intro,.ga-cover-statement{
+  font-size:17px !important;line-height:1.4 !important;letter-spacing:-.005em !important;
+  font-weight:500 !important;
+  color:rgba(255,255,255,.86) !important;
+  max-width:32ch;
+  text-shadow:0 1px 3px rgba(0,0,0,.5) !important;
+}
+.foto-hero .sub-intro strong,.foto-hero .hub-intro strong,
+.sub-hero-plain .sub-intro strong,.ga-cover-statement strong{
+  color:#FFFFFF !important;font-weight:700 !important;
+}
+.sub-hero-plain .rh-contract,.foto-hero .rh-contract{
+  font-size:11.5px !important;font-weight:500 !important;letter-spacing:.01em !important;
+  color:rgba(255,255,255,.55) !important;margin-top:.85rem !important;
+}
+/* El hero del home habla el mismo idioma */
+.em-hero-kicker{
+  font-size:11px !important;font-weight:700 !important;letter-spacing:.14em !important;
+  color:#DCE2C4 !important;
+}
+
+/* ── 4 · Portada de las secciones del onboarding: color de marca ────
+   Grafito neutro era anónimo. Oliva profundo con un halo cálido: se
+   reconoce como la marca sin necesidad de foto. */
+.sub-hero-plain{
+  min-height:220px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  margin:0 -1.25rem 0 !important;
+  padding:calc(env(safe-area-inset-top, 0px) + 62px) 1.25rem 66px !important;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 120% 90% at 88% 6%, rgba(169,180,120,.42), transparent 58%),
+    radial-gradient(ellipse 100% 80% at 4% 96%, rgba(74,82,56,.55), transparent 62%),
+    linear-gradient(180deg,#2C3327 0%,#333A2C 46%,#454C39 74%,#6E7560 91%,var(--bg) 100%) !important;
+}
+.sub-hero-plain::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:64px;
+  background:linear-gradient(180deg,rgba(247,244,237,0) 0%,rgba(247,244,237,.45) 55%,var(--bg) 100%);
+  pointer-events:none;z-index:0;
+}
+.sub-hero-plain .sub-header{position:relative;z-index:1;}
+
+/* ── 5 · Iconos de las cards: tile del Meal Tracker ─────────────────
+   Fuera las ilustraciones de plastilina y el badge oliva-soft: el mismo
+   cuadrado redondeado con degradado y trazo blanco que usa "Tus
+   herramientas" en Hoy. Los selectores repiten la cadena con ID porque
+   reglas anteriores ocultaban el icono con esa misma especificidad. */
+#s-programa .rh-clay,#s-app-train .rh-clay,#s-journey .rh-clay,.rh-clay{
+  display:none !important;
+}
+#s-programa .progm-blocks .progm-block .progm-block-icon,
+#s-app-train .progm-blocks .progm-block .appt-badge,
+#s-journey .jrn-timeline > .jrn-phase .jrn-card-wm{
+  display:grid !important;place-content:center !important;
+  position:relative !important;
+  width:44px !important;height:44px !important;
+  margin:2px 0 14px !important;flex:none !important;
+  border-radius:14px !important;
+  background:linear-gradient(135deg,#98A465,#4A5238) !important;
+  border:none !important;
+  color:#FFFFFF !important;
+  box-shadow:0 6px 16px rgba(74,82,56,.22) !important;
+  padding:0 !important;
+}
+#s-programa .progm-blocks .progm-block .progm-block-icon svg,
+#s-app-train .progm-blocks .progm-block .appt-badge svg,
+#s-journey .jrn-timeline > .jrn-phase .jrn-card-wm svg{
+  display:block !important;
+  width:22px !important;height:22px !important;
+  filter:none !important;opacity:1 !important;
+}
+#s-programa .progm-blocks .progm-block .progm-block-icon svg *,
+#s-app-train .progm-blocks .progm-block .appt-badge svg *,
+#s-journey .jrn-timeline > .jrn-phase .jrn-card-wm svg *{
+  stroke:#FFFFFF !important;stroke-width:1.8 !important;fill:none !important;
+}
+/* El trazo duplicado en offset (sombra dura) sobra sobre el tile */
+#s-programa .progm-block-icon .pg-b,#s-app-train .appt-badge .pg-b{display:none !important;}
+
+/* ── 6 · Onboarding: cards menos anchas y camino más curvo ─────────── */
+#s-onboarding .hub-cards > .hub-card:nth-of-type(odd){margin-right:52px !important;}
+#s-onboarding .hub-cards > .hub-card:nth-of-type(even){margin-left:52px !important;}
+#s-onboarding .hub-cards{gap:30px !important;}
+#s-onboarding .hub-path-line path{
+  stroke-width:1.6 !important;
+  stroke-dasharray:1 7 !important;
+  stroke-linecap:round !important;
+  opacity:.5 !important;
+}
+#s-onboarding .hub-card .hub-card-wm{
+  border-radius:14px !important;
+  background:linear-gradient(135deg,#98A465,#4A5238) !important;
+  border:none !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;
+  box-shadow:0 6px 16px rgba(74,82,56,.22) !important;
+  width:42px !important;height:42px !important;margin-top:-21px !important;
+}
+#s-onboarding .hub-card .hub-card-wm svg{width:21px !important;height:21px !important;filter:none !important;}
+#s-onboarding .hub-card .hub-card-wm svg *{stroke:#FFFFFF !important;stroke-width:1.8 !important;fill:none !important;}
+#s-onboarding .hub-cards .hub-card{padding-left:70px !important;}
+
+
+/* ── 7 · Buscar en la guía: barra con contador y flechas ──────────── */
+.ga-search-wrap{gap:8px !important;padding:10px 10px 10px 16px !important;}
+.ga-search-count{
+  flex:none;font-size:11px;font-weight:700;letter-spacing:.01em;
+  color:var(--text-mute);white-space:nowrap;
+}
+.ga-search-nav{display:flex;align-items:center;gap:2px;flex:none;}
+.ga-search-nav[hidden]{display:none;}
+.ga-search-step{
+  width:28px;height:28px;border:none;border-radius:50%;cursor:pointer;
+  background:transparent;color:var(--text-soft);
+  display:grid;place-content:center;
+}
+.ga-search-step svg{width:15px;height:15px;display:block;}
+.ga-search-step:active{background:rgba(0,0,0,.06);}
+.ga-search-clear{
+  flex:none;width:28px;height:28px;border:none;border-radius:50%;cursor:pointer;
+  background:rgba(0,0,0,.05);color:var(--text-soft);
+  font-size:17px;line-height:1;display:grid;place-content:center;
+}
+#s-guia-alimentacion mark.ga-hit{
+  background:rgba(212,218,184,.85);color:inherit;
+  border-radius:3px;padding:0 1px;
+}
+#s-guia-alimentacion mark.ga-hit.current{
+  background:var(--olive);color:#fff;
+  box-shadow:0 0 0 2px rgba(138,149,88,.35);
+}
+
 </style>
 </head>
 <body class="locked">
@@ -8983,17 +9185,17 @@ else capRender();
         var x = (i % 2 === 0) ? (r.right - wr.left + 19) : (r.left - wr.left - 19);
         return { x: x, y: r.top - wr.top + r.height / 2, top: r.top - wr.top, bottom: r.bottom - wr.top };
       });
+      // Curva continua en S: una cúbica por tramo, con los tiradores
+      // verticales. Antes eran rectas con esquinitas redondeadas y se veía
+      // como un plano de tuberías; así el camino serpentea de verdad.
       var d = 'M' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
       for (var i = 0; i < pts.length - 1; i++) {
         var a = pts[i], b = pts[i + 1];
-        var gy = (a.bottom + b.top) / 2;
-        var dir = b.x > a.x ? 1 : -1;
-        var rr = Math.min(20, Math.abs(gy - a.y), Math.abs(b.y - gy), Math.abs(b.x - a.x) / 2);
-        d += ' L' + a.x.toFixed(1) + ' ' + (gy - rr).toFixed(1) +
-             ' Q' + a.x.toFixed(1) + ' ' + gy.toFixed(1) + ' ' + (a.x + rr * dir).toFixed(1) + ' ' + gy.toFixed(1) +
-             ' L' + (b.x - rr * dir).toFixed(1) + ' ' + gy.toFixed(1) +
-             ' Q' + b.x.toFixed(1) + ' ' + gy.toFixed(1) + ' ' + b.x.toFixed(1) + ' ' + (gy + rr).toFixed(1) +
-             ' L' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
+        // Cuanto más separados están verticalmente, más panza toma la curva
+        var bend = Math.max(28, Math.abs(b.y - a.y) * 0.55);
+        d += ' C' + a.x.toFixed(1) + ' ' + (a.y + bend).toFixed(1) +
+             ' ' + b.x.toFixed(1) + ' ' + (b.y - bend).toFixed(1) +
+             ' ' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
       }
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
       var p = svg.querySelector('path');
@@ -10952,11 +11154,12 @@ function gaToggleSearch() {
   // Tracker la tapaba.
   document.body.classList.toggle('ga-searching', !isOpen);
   if (isOpen) {
-    // Al cerrar, se limpia para no dejar resultados colgando
+    // Al cerrar se quitan los resaltados: no deben quedar marcas en el texto
     const input = document.getElementById('ga-search-input');
     if (input) input.value = '';
-    const res = document.getElementById('ga-search-results');
-    if (res) res.innerHTML = '';
+    _gaLastQuery = '';
+    if (typeof gaClearHighlights === 'function') gaClearHighlights();
+    if (typeof gaUpdateSearchCount === 'function') gaUpdateSearchCount();
   } else {
     setTimeout(() => {
       const input = document.getElementById('ga-search-input');
@@ -11003,55 +11206,124 @@ function gaBuildSearchIndex() {
   });
 }
 
-function gaSearch(query) {
-  const resultsEl = document.getElementById('ga-search-results');
-  if (!resultsEl) return;
-  const qRaw = query.trim();
-  const q = gaNorm(qRaw);
-  if (q.length < 2) {
-    resultsEl.innerHTML = '';
-    return;
-  }
-  // Coincidencia insensible a mayúsculas Y acentos, sobre título + texto completo
-  const scored = [];
-  for (const item of gaSearchIndex) {
-    const inTitle = item.titleNorm.includes(q);
-    const idx = item.norm.indexOf(q);
-    if (!inTitle && idx < 0) continue;
-    scored.push({ item, inTitle, idx });
-  }
-  scored.sort((a, b) => (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0));
-  const matches = scored.slice(0, 12);
+// ── BUSCAR EN LA GUÍA (estilo "buscar en el documento") ──────────────
+// Antes desplegaba una lista de resultados que tapaba la pantalla. Ahora
+// se comporta como el buscador de un PDF: resalta TODAS las apariciones,
+// dice cuántas hay, salta a una por una con las flechas y muestra "3 de 17".
+let _gaHits = [];
+let _gaHitIndex = -1;
+let _gaLastQuery = '';
 
-  if (matches.length === 0) {
-    resultsEl.innerHTML = '<div class="ga-search-empty">No se encontraron resultados.</div>';
-    return;
-  }
-
-  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  resultsEl.innerHTML = matches.map((m, i) => {
-    let snippet;
-    if (m.idx >= 0) {
-      // Snippet con contexto real alrededor de la coincidencia + <mark>
-      const start = Math.max(0, m.idx - 36);
-      const end = Math.min(m.item.raw.length, m.idx + q.length + 96);
-      snippet = (start > 0 ? '…' : '') +
-        esc(m.item.raw.slice(start, m.idx)) +
-        '<mark>' + esc(m.item.raw.slice(m.idx, m.idx + q.length)) + '</mark>' +
-        esc(m.item.raw.slice(m.idx + q.length, end)) +
-        (end < m.item.raw.length ? '…' : '');
-    } else {
-      snippet = esc(m.item.raw.slice(0, 130)) + (m.item.raw.length > 130 ? '…' : '');
-    }
-    return `<div class="ga-search-result" data-slug="${m.item.slug}" data-ri="${i}">
-      <div class="ga-search-result-title">${esc(m.item.title)}</div>
-      <div class="ga-search-result-snippet">${snippet}</div>
-    </div>`;
-  }).join('');
-  // Click: navegar al capítulo y resaltar el pasaje que contiene el término
-  resultsEl.querySelectorAll('.ga-search-result').forEach(el => {
-    el.addEventListener('click', () => gaGoToSection(el.dataset.slug, qRaw));
+function gaClearHighlights() {
+  document.querySelectorAll('#s-guia-alimentacion mark.ga-hit').forEach(function (m) {
+    const parent = m.parentNode;
+    if (!parent) return;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
   });
+  _gaHits = [];
+  _gaHitIndex = -1;
+}
+
+// Recorre los nodos de texto del cuerpo de la guía y envuelve cada
+// aparición en <mark>. Se salta títulos de índice y controles.
+function gaHighlight(qNorm) {
+  const root = document.querySelector('#s-guia-alimentacion');
+  if (!root || qNorm.length < 2) return [];
+  const SKIP = 'SCRIPT,STYLE,MARK,BUTTON,INPUT,TEXTAREA';
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: function (node) {
+      if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      const p = node.parentElement;
+      if (!p || SKIP.indexOf(p.tagName) !== -1) return NodeFilter.FILTER_REJECT;
+      if (p.closest('.ga-toc-drawer, .ga-search-modal, .ga-resume, .ga-fab-stack, .ga-assistant-modal')) {
+        return NodeFilter.FILTER_REJECT;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const targets = [];
+  let n;
+  while ((n = walker.nextNode())) targets.push(n);
+
+  const hits = [];
+  targets.forEach(function (node) {
+    const norm = gaNorm(node.nodeValue);
+    let from = 0, at;
+    const ranges = [];
+    while ((at = norm.indexOf(qNorm, from)) !== -1) {
+      ranges.push(at);
+      from = at + qNorm.length;
+    }
+    if (!ranges.length) return;
+    // Se parte el nodo de derecha a izquierda para no invalidar los índices
+    let current = node;
+    for (let i = ranges.length - 1; i >= 0; i--) {
+      const startAt = ranges[i];
+      const after = current.splitText(startAt);
+      const mark = document.createElement('mark');
+      mark.className = 'ga-hit';
+      mark.textContent = after.nodeValue.slice(0, qNorm.length);
+      after.nodeValue = after.nodeValue.slice(qNorm.length);
+      after.parentNode.insertBefore(mark, after);
+      hits.unshift(mark);
+    }
+  });
+  // Orden de documento
+  hits.sort(function (a, b) {
+    return (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1;
+  });
+  return hits;
+}
+
+function gaSearch(query) {
+  const qRaw = (query || '').trim();
+  const qNorm = gaNorm(qRaw);
+  if (qNorm === _gaLastQuery) return;
+  _gaLastQuery = qNorm;
+
+  gaClearHighlights();
+  gaUpdateSearchCount();
+  if (qNorm.length < 2) return;
+
+  _gaHits = gaHighlight(qNorm);
+  gaUpdateSearchCount();
+  if (_gaHits.length) gaGoToHit(0);
+}
+
+function gaUpdateSearchCount() {
+  const el = document.getElementById('ga-search-count');
+  const nav = document.getElementById('ga-search-nav');
+  if (!el) return;
+  if (!_gaLastQuery || _gaLastQuery.length < 2) {
+    el.textContent = '';
+    if (nav) nav.hidden = true;
+    return;
+  }
+  if (!_gaHits.length) {
+    el.textContent = 'Sin resultados';
+    if (nav) nav.hidden = true;
+    return;
+  }
+  el.textContent = (_gaHitIndex + 1) + ' de ' + _gaHits.length;
+  if (nav) nav.hidden = false;
+}
+
+function gaGoToHit(i) {
+  if (!_gaHits.length) return;
+  const n = _gaHits.length;
+  _gaHitIndex = ((i % n) + n) % n;
+  _gaHits.forEach(function (m) { m.classList.remove('current'); });
+  const target = _gaHits[_gaHitIndex];
+  target.classList.add('current');
+  // block:center deja la palabra en mitad de pantalla, lejos de la barra
+  target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  gaUpdateSearchCount();
+}
+
+function gaSearchStep(dir) {
+  if (!_gaHits.length) return;
+  gaGoToHit(_gaHitIndex + dir);
 }
 
 function gaClearSearch() {
