@@ -8612,6 +8612,148 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
 .flow-sep-ico svg .pg-b{display:none !important;}
 .flow-sep{gap:11px;}
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v21 · Sin texto tenue, degradados más suaves, línea oliva y pista de scroll
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 2 · BUG: el carrusel viejo dejaba opacity:.3 !important y blur en los
+   bloques. En cuerpo continuo eso los pintaba lavados, como con un velo
+   blanco delante. Se anula por completo. */
+#s-programa .progm-blocks > .progm-block,
+#s-app-train .progm-blocks > .progm-block,
+#s-journey .jrn-timeline > .jrn-phase{
+  flex:none !important;
+  filter:none !important;
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+}
+/* El revelado vuelve a mandar sobre la opacidad, ahora sin competencia */
+.read-flow > .progm-block.flow-in,.read-flow > .jrn-phase.flow-in{
+  opacity:0 !important;transform:translateY(22px) !important;
+  transition:opacity .6s cubic-bezier(.16,.84,.3,1),transform .6s cubic-bezier(.16,.84,.3,1) !important;
+}
+.read-flow > .progm-block.flow-in.flow-on,.read-flow > .jrn-phase.flow-in.flow-on{
+  opacity:1 !important;transform:none !important;
+}
+@media (prefers-reduced-motion: reduce){
+  .read-flow > .progm-block.flow-in,.read-flow > .jrn-phase.flow-in{
+    opacity:1 !important;transform:none !important;transition:none !important;}
+}
+
+/* ── 4+7 · Línea oliva entre el título y el subtexto, en TODOS los heros ──
+   Una regla vieja con selector de ID la ocultaba en preguntas, cápsulas y
+   onboarding; se anula con la misma especificidad. */
+#s-faq .sub-title-line,#s-capsulas .sub-title-line,#s-onboarding .hub-title-line,
+#s-programa .sub-title-line,#s-app-train .sub-title-line,#s-journey .sub-title-line,
+.foto-hero .sub-title-line,.foto-hero .hub-title-line,
+.sub-hero-plain .sub-title-line,.ga-cover-line{
+  display:block !important;
+  width:44px !important;height:2px !important;border-radius:2px !important;
+  background:var(--olive-light) !important;
+  margin:0 0 .9rem !important;
+  opacity:.9;
+}
+/* El home no tenía línea: se dibuja bajo el nombre */
+.em-hero-titles::after{
+  content:"";display:block;
+  width:44px;height:2px;border-radius:2px;
+  background:var(--olive-light);opacity:.9;
+  margin:12px 0 2px;
+}
+
+/* ── 5+6 · El contacto entre la portada y el fondo, mucho más suave ─────
+   Aún se leía como una banda blanca; baja a un cuarto de cuerpo. */
+.em-hero::after,.foto-hero::after,.ga-cover::after,.sub-hero-plain::after{
+  height:44px !important;
+  background:linear-gradient(180deg,
+    rgba(237,236,229,0) 0%,rgba(237,236,229,.06) 55%,rgba(237,236,229,.22) 100%) !important;
+}
+.em-hero,.foto-hero,.ga-cover{
+  background:linear-gradient(180deg,
+    #1b1b1a 0%,#1f1f1d 62%,#3a3a34 84%,#6d6d63 95%,var(--bg) 100%) !important;
+}
+.sub-hero-plain{
+  background:linear-gradient(180deg,
+    #2A2A29 0%,#2E2E2C 62%,#4E4E48 84%,#8A8A80 95%,var(--bg) 100%) !important;
+}
+.em-hero-photo img,.foto-hero-media img,.ga-cover-media img{
+  -webkit-mask-image:linear-gradient(180deg,
+    #000 0%,#000 66%,rgba(0,0,0,.8) 82%,rgba(0,0,0,.34) 94%,rgba(0,0,0,0) 100%) !important;
+  mask-image:linear-gradient(180deg,
+    #000 0%,#000 66%,rgba(0,0,0,.8) 82%,rgba(0,0,0,.34) 94%,rgba(0,0,0,0) 100%) !important;
+}
+
+/* ── 8 · Pista de scroll bajo la portada ──────────────────────────────── */
+.scroll-hint{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  margin:6px 0 2px;padding:6px 0;
+  font-family:'Inter',sans-serif;
+  font-size:11.5px;font-weight:600;letter-spacing:-.01em;
+  color:var(--text-mute);
+  opacity:.85;transition:opacity .3s ease;
+  animation:hintBob 2.2s ease-in-out infinite;
+}
+.scroll-hint svg{width:14px;height:14px;display:block;}
+.scroll-hint.is-off{opacity:0;pointer-events:none;animation:none;}
+@keyframes hintBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+@media (prefers-reduced-motion: reduce){.scroll-hint{animation:none;}}
+
+/* ── 9 · La barrita lateral de scroll, un poco más gruesa y visible ───── */
+.em-page-rail,.rh-rail{width:5px !important;}
+.em-page-rail-thumb,.rh-rail-thumb{
+  width:5px !important;border-radius:100px !important;
+  background:rgba(74,82,56,.34) !important;
+}
+::-webkit-scrollbar{width:6px;height:0;}
+::-webkit-scrollbar-thumb{background:rgba(74,82,56,.30);border-radius:100px;}
+::-webkit-scrollbar-track{background:transparent;}
+html{scrollbar-width:thin;scrollbar-color:rgba(74,82,56,.30) transparent;}
+
+/* ── 13+16 · Nada se sale por los lados, y ningún scroll horizontal ───── */
+html,body{overflow-x:hidden !important;max-width:100vw;}
+.screen,.sub-area,.hub-area,.progm-page,.ga-reader,.content-area{
+  overflow-x:clip !important;max-width:100%;
+}
+.read-flow,.read-flow *{max-width:100%;}
+.read-flow img{max-width:100% !important;height:auto !important;}
+.flow-sep{margin-left:0;margin-right:0;}
+
+/* ── 15 · Jerarquía del cuerpo: título grande, subtítulo grande, texto menor ── */
+.read-flow .progm-block-title,.read-flow .jrn-card-title{
+  font-size:25px !important;font-weight:800 !important;
+  letter-spacing:-.028em !important;line-height:1.12 !important;
+}
+.read-flow .rh-quote{
+  font-size:18.5px !important;font-weight:700 !important;
+  letter-spacing:-.02em !important;line-height:1.28 !important;
+}
+.read-flow .progm-block-text,.read-flow .jrn-body,
+.read-flow .progm-block-text p,.read-flow .jrn-body p{
+  font-size:14px !important;line-height:1.62 !important;
+}
+.read-flow .rh-takeaway li{font-size:13px !important;}
+
+
+/* ── 17 · Visor de imagen: la X pegada a la foto ────────────────────── */
+.appm-zoom-overlay{padding:1rem !important;}
+.appm-zoom-fig{
+  position:relative;margin:0;max-width:100%;max-height:88vh;
+  display:flex;align-items:center;justify-content:center;
+  cursor:default;
+}
+.appm-zoom-fig img{display:block;max-width:100%;max-height:88vh;}
+.appm-zoom-close{
+  position:absolute !important;
+  top:-14px !important;right:-14px !important;
+  width:34px !important;height:34px !important;
+  background:#1F1F1F !important;color:#fff !important;
+  border:2px solid rgba(255,255,255,.9) !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.4) !important;
+  font-size:19px !important;
+}
+
 </style>
 </head>
 <body class="locked">
@@ -9395,8 +9537,10 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
 
   <!-- Visor de zoom de imagen -->
   <div class="appm-zoom-overlay" id="appm-zoom-overlay" onclick="apptCloseZoom()">
-    <button class="appm-zoom-close" onclick="apptCloseZoom()" aria-label="Cerrar">×</button>
-    <img id="appm-zoom-img" src="" alt="">
+    <figure class="appm-zoom-fig">
+      <img id="appm-zoom-img" src="" alt="">
+      <button class="appm-zoom-close" onclick="event.stopPropagation();apptCloseZoom()" aria-label="Cerrar">×</button>
+    </figure>
   </div>
 
   <script id="appm-data" type="application/json">[{"section": "C\u00f3mo funciona la app", "title": "Tu app de entrenamiento", "body": "<p class=\"rh-quote\">Datos reales, <em>decisiones con criterio.</em></p>\n<p>Dentro del programa usamos una app para organizar y dar seguimiento a dos pilares del proceso: <strong>entrenamiento y progreso</strong>.</p>\n<p>No es una app de rutinas gen\u00e9ricas. Es la herramienta de tu <strong>coaching online personalizado</strong>: registrar tu entrenamiento permite basar el proceso en datos reales y tomar decisiones con criterio.</p>\n<p>Aqu\u00ed encontrar\u00e1s tus rutinas con videos, tu calendario y las gr\u00e1ficas de tu progreso.</p>", "img": ""}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "D\u00f3nde encuentras tu rutina del d\u00eda", "body": "<p class=\"rh-quote\">Tu punto de partida <em>diario.</em></p>\n<p>Puedes iniciar tu rutina desde dos lugares: la secci\u00f3n <strong>Home</strong> o la secci\u00f3n <strong>Calendar</strong>, donde se muestra c\u00f3mo est\u00e1 organizada tu semana de entrenamiento.</p>\n<p>All\u00ed seleccionas la <strong>rutina programada para el d\u00eda</strong> e inicias. El Home funciona como tu punto de partida diario: te orienta antes de entrenar.</p>", "img": "img/app-tutorial-01-rutina-del-dia.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "Ejecutar: videos, registro y percepci\u00f3n", "body": "<p>Al abrir la rutina, cada ejercicio incluye un <strong>video demostrativo</strong> y una explicaci\u00f3n textual para guiar su correcta ejecuci\u00f3n.</p>\n<p>El orden responde a una l\u00f3gica de entrenamiento: calentamiento, fuerza, resistencia, movilidad y enfriamiento. <strong>S\u00edguelo como est\u00e1 planteado.</strong></p>\n<p>Durante la sesi\u00f3n registras los <strong>pesos, repeticiones y tu nivel de percepci\u00f3n de esfuerzo</strong>. Esto da trazabilidad real a tu progreso.</p>", "img": "img/app-tutorial-02-ejecucion-videos.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "La galer\u00eda de workouts y tu programa", "body": "<p>En la secci\u00f3n <strong>Workouts</strong> encuentras tu programa completo: las rutinas organizadas por fase, con su duraci\u00f3n estimada y n\u00famero de ejercicios.</p>\n<p>Esta secci\u00f3n es <strong>de consulta</strong>: \u00fasala si quieres visualizar tus ejercicios y videos. Pero lo recomendable es <strong>activar las rutinas desde el Calendar o el Home</strong>, seg\u00fan tu calendario. La galer\u00eda es para consultar, no para iniciar.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">En esencia</div><ul>\n<li>Inicia tu rutina desde Home o Calendar</li>\n<li>Sigue el orden planteado de la sesi\u00f3n</li>\n<li>Registra pesos, repeticiones y esfuerzo</li>\n</ul></div>", "img": "img/app-tutorial-03-galeria-workouts.png"}, {"section": "Secci\u00f3n 2 \u00b7 Registro peri\u00f3dico de progreso", "title": "Fotos de progreso y composici\u00f3n corporal", "body": "<p class=\"rh-quote\">Medir cambios reales, <em>no percepci\u00f3n.</em></p>\n<p>Para observar tu evoluci\u00f3n, registra <strong>mensualmente</strong> tu peso, porcentaje de grasa corporal y un registro fotogr\u00e1fico.</p>\n<p>Lo haces en las secciones <strong>Body Stats y Photos</strong>, desde el Calendar o desde el men\u00fa de opciones.</p>\n<p>Este registro peri\u00f3dico es lo que permite <strong>medir cambios reales</strong> y ajustar el proceso con datos, no con percepci\u00f3n.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">En esencia</div><ul>\n<li>Cada mes: peso, % de grasa y fotos</li>\n<li>Se registra en Body Stats y Photos</li>\n</ul></div>", "img": "img/app-tutorial-06-fotos-progreso.png"}, {"section": "Secci\u00f3n 3 \u00b7 Recomendaciones", "title": "Buenas pr\u00e1cticas para aprovechar la app", "body": "<p class=\"rh-quote\">H\u00e1bitos que hacen <em>la diferencia.</em></p>\n<ul class=\"app-modal-list\">\n<li>Revisa el <strong>Home</strong> antes de iniciar tu entrenamiento.</li>\n<li>Sigue las rutinas en el <strong>orden del calendario</strong>.</li>\n<li>Repasa los <strong>videos</strong> de los ejercicios antes de realizarlos.</li>\n<li>Registra <strong>pesos, repeticiones e intensidad</strong> de cada sesi\u00f3n.</li>\n<li>Ap\u00f3yate en la <strong>gu\u00eda de alimentaci\u00f3n</strong> y la <strong>app de Meal Tracking</strong>.</li>\n</ul>\n<div class=\"rh-dark\"><div class=\"rh-dark-kicker\">Cada sesi\u00f3n</div><p class=\"rh-dark-quote\">Tu progreso, <em>con trazabilidad real.</em></p></div>", "img": ""}]</script>
@@ -9601,7 +9745,7 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
         <div class="sub-title">CÁPSULAS<br>INFORMATIVAS</div>
         <div class="sub-title-line"></div>
         <div class="sub-intro">
-          Una idea por lámina. <strong>Toca una cápsula para verla en grande.</strong>
+          Una idea por lámina. <strong id="cap-intro-strong">Próximamente: se están preparando.</strong>
         </div>
       </div>
     </div>
@@ -9609,6 +9753,11 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
     <!-- ASISTENTE DE LECTURA de esta pantalla -->
     <!-- El asistente ya no ocupa sitio en la página: vive en el botón
          flotante, igual que en la guía de alimentación. -->
+
+    <div class="cap-soon" id="cap-soon" hidden>
+      <strong>Próximamente.</strong> Las infografías se están preparando; los
+      títulos de abajo son las que vienen primero.
+    </div>
 
     <!-- REJILLA DE CÁPSULAS — la pinta capRender() desde CAPSULAS (abajo) -->
     <div class="cap-gal sub-anim" style="--d:.08s;" id="cap-gal"></div>
@@ -9667,6 +9816,24 @@ var CAPSULAS = [
   { id:'habitos-pasos',         cat:'Hábitos',       title:'Pasos diarios: el cardio invisible', file:'img/capsulas/habitos-pasos-diarios.png' }
 ];
 
+// ¿Hay al menos una infografía subida? Se comprueba cargando la primera
+// imagen de la lista; mientras no exista, la portada avisa.
+function capCheckPublicadas(){
+  var strong = document.getElementById('cap-intro-strong');
+  var note = document.getElementById('cap-soon');
+  if (!strong || !CAPSULAS.length) return;
+  var probe = new Image();
+  probe.onload = function(){
+    strong.textContent = 'Toca una cápsula para verla en grande.';
+    if (note) note.hidden = true;
+  };
+  probe.onerror = function(){
+    strong.textContent = 'Próximamente: se están preparando.';
+    if (note) note.hidden = false;
+  };
+  probe.src = CAPSULAS[0].file;
+}
+
 const CAP_READ_KEY = 'em_cap_read';
 function capGetRead(){
   try { return JSON.parse(localStorage.getItem(CAP_READ_KEY) || '[]'); } catch(e){ return []; }
@@ -9692,6 +9859,10 @@ function capRender(){
   const gal = document.getElementById('cap-gal');
   const empty = document.getElementById('cap-empty');
   if (!gal) return;
+  // Aviso de "próximamente" mientras ninguna infografía esté publicada:
+  // así nadie cree que la sección está rota. Se quita solo en cuanto
+  // carga la primera imagen.
+  capCheckPublicadas();
   if (!CAPSULAS.length) {
     gal.innerHTML = '';
     if (empty) empty.hidden = false;
@@ -9820,24 +9991,23 @@ else capRender();
         var x = (i % 2 === 0) ? (r.right - wr.left + 19) : (r.left - wr.left - 19);
         return { x: x, y: r.top - wr.top + r.height / 2, top: r.top - wr.top, bottom: r.bottom - wr.top };
       });
-      // Ruta de mapa: tramos rectos unidos por diagonales a 45°, con las
-      // esquinas apenas matadas. Lee como un recorrido, no como una manguera.
+      // Caminito entre medallones: baja recto, cruza en horizontal y vuelve
+      // a bajar recto. Solo la esquina lleva una curvita.
       var d = 'M' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
       for (var i = 0; i < pts.length - 1; i++) {
         var a = pts[i], b = pts[i + 1];
-        var gy = (a.bottom + b.top) / 2;      // el quiebre cae en el hueco
+        var gy = (a.bottom + b.top) / 2;       // el cruce cae en el hueco
         var dx = b.x - a.x;
         var dir = dx > 0 ? 1 : -1;
-        var diag = Math.min(Math.abs(dx) / 2, 34);  // largo de la diagonal
-        var r = 7;                                   // esquina apenas matada
-        var y1 = gy - diag, y2 = gy + diag;
-        d += ' L' + a.x.toFixed(1) + ' ' + (y1 - r).toFixed(1) +
-             ' Q' + a.x.toFixed(1) + ' ' + y1.toFixed(1) + ' ' +
-                    (a.x + r * dir).toFixed(1) + ' ' + (y1 + r).toFixed(1) +
-             ' L' + (b.x - r * dir).toFixed(1) + ' ' + (y2 - r).toFixed(1) +
-             ' Q' + b.x.toFixed(1) + ' ' + y2.toFixed(1) + ' ' +
-                    b.x.toFixed(1) + ' ' + (y2 + r).toFixed(1) +
-             ' L' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
+        // Radio de la curvita: nunca mayor que medio tramo disponible
+        var r = Math.max(6, Math.min(14, Math.abs(dx) / 2, Math.abs(gy - a.y), Math.abs(b.y - gy)));
+        d += ' L' + a.x.toFixed(1) + ' ' + (gy - r).toFixed(1) +                      // baja recto
+             ' Q' + a.x.toFixed(1) + ' ' + gy.toFixed(1) + ' ' +
+                    (a.x + r * dir).toFixed(1) + ' ' + gy.toFixed(1) +                // curvita
+             ' L' + (b.x - r * dir).toFixed(1) + ' ' + gy.toFixed(1) +                // cruza recto
+             ' Q' + b.x.toFixed(1) + ' ' + gy.toFixed(1) + ' ' +
+                    b.x.toFixed(1) + ' ' + (gy + r).toFixed(1) +                      // curvita
+             ' L' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);                            // baja recto
       }
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
       var p = svg.querySelector('path');
@@ -10640,6 +10810,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // de "volver" (la que ya traía en el markup).
 
 function go(id){
+  // El visor de imagen es fijo: si se navega con él abierto, quedaba
+  // tapando la pantalla a la que vuelves. Salir siempre deja en la sección.
+  try { if (typeof apptCloseZoom === 'function') apptCloseZoom(); } catch(e){}
   // Las cápsulas dejaron de vivir en el home: tienen pantalla propia.
   // Cualquier enlace viejo a la biblioteca cae ahí.
   if (id === 's-biblioteca') id = 's-capsulas';
@@ -12291,10 +12464,14 @@ function apptZoom(src) {
   const zoomImg = document.getElementById('appm-zoom-img');
   if (zoomImg) zoomImg.src = src;
   if (overlay) overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 function apptCloseZoom() {
   const overlay = document.getElementById('appm-zoom-overlay');
   if (overlay) overlay.classList.remove('open');
+  const zoomImg = document.getElementById('appm-zoom-img');
+  if (zoomImg) zoomImg.removeAttribute('src');
+  document.body.style.overflow = '';
 }
 
 // Zoom de imagen
@@ -12347,6 +12524,22 @@ function initStepFlow(scroller){
     scroller._flowInit = true;
     scroller.classList.add('read-flow');
 
+    // Pista de scroll bajo la portada: sutil, y se apaga en cuanto bajas.
+    const page = scroller.closest('.progm-page, .sub-area, .hub-area') || scroller.parentNode;
+    const hero = page.querySelector('.sub-hero-plain, .foto-hero');
+    if (hero && !page.querySelector('.scroll-hint')){
+      const hint = document.createElement('div');
+      hint.className = 'scroll-hint';
+      hint.innerHTML = '<span>Desliza para leer</span>' +
+        '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      hero.parentNode.insertBefore(hint, hero.nextSibling);
+      const apagar = function(){
+        hint.classList.toggle('is-off', window.scrollY > 60);
+      };
+      window.addEventListener('scroll', function(){ requestAnimationFrame(apagar); }, {passive:true});
+      apagar();
+    }
+
     // Fuera los restos de las versiones anteriores
     const hint = scroller.parentNode.querySelector('.carousel-hint');
     if (hint) hint.remove();
@@ -12370,8 +12563,7 @@ function initStepFlow(scroller){
         sep.innerHTML =
           (ico ? '<span class="flow-sep-ico" data-c="' + (i % 4) + '">' + ico.outerHTML + '</span>' : '') +
           '<span class="flow-sep-num">' + String(i + 1).padStart(2, '0') + '</span>' +
-          '<span class="flow-sep-line"></span>' +
-          '<span class="flow-sep-total">de ' + slides.length + '</span>';
+          '<span class="flow-sep-line"></span>';
         scroller.insertBefore(sep, sl);
       }
       sl.classList.add('flow-in');
