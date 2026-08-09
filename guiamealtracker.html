@@ -370,6 +370,20 @@
     .cap:nth-child(4) > svg:first-child{background:linear-gradient(135deg,#E09479,#C05E44);}
     .cap:nth-child(5) > svg:first-child{background:linear-gradient(135deg,#74AECB,#3F81A6);}
     .cap:nth-child(6) > svg:first-child{background:linear-gradient(135deg,#9A9A8F,#62625A);}
+
+    /* Capturas reales de la app. Si el archivo no existe todavía, la figura
+       se retira sola y la slide sigue leyéndose igual. */
+    .mt-shot{margin:14px 0 0;}
+    .mt-shot img{
+      display:block;width:100%;height:auto;border-radius:16px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 2px 8px rgba(60,70,50,.10),0 12px 34px rgba(60,70,50,.12);
+      background:#EDECE5;
+    }
+    .mt-shot figcaption{
+      margin-top:8px;font-size:11.5px;line-height:1.45;
+      color:rgba(20,20,20,.55);font-weight:500;
+    }
   </style>
 </head>
 <body>
@@ -439,11 +453,23 @@
 
       <div class="g-card">
         <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Hoy</div>
+      <figure class="mt-shot">
+        <img src="img/mt-01-hoy.png" alt="La pantalla Hoy con los anillos del día" loading="lazy"
+             onerror="this.closest('.mt-shot').remove()">
+        <figcaption>Hoy: tu meta en cuatro anillos y tus herramientas debajo.</figcaption>
+      </figure>
+
         <p>Tu meta del día en cuatro anillos —<strong>calorías, proteína, carbos y grasas</strong>— y lo que llevas registrado. Debajo, tus herramientas: <strong>Mi semana</strong>, <strong>Reto</strong>, <strong>Recordatorios</strong> y <strong>Calendario</strong>.</p>
       </div>
 
       <div class="g-card">
         <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.2 0-2.4-.25-3.4-.7L3 21l1.7-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>Chat</div>
+      <figure class="mt-shot">
+        <img src="img/mt-02-chat.png" alt="El chat del Meal Tracker registrando una comida" loading="lazy"
+             onerror="this.closest('.mt-shot').remove()">
+        <figcaption>Chat: escribes la comida y la app responde con calorías y macros.</figcaption>
+      </figure>
+
         <p>Donde registras, corriges y preguntas. <strong>Es el centro de la app</strong>: escribes o dictas, y responde.</p>
       </div>
 
@@ -477,6 +503,12 @@
         <p>La app separa cada alimento, calcula calorías y macros con valores reales y lo suma a tus anillos.</p>
         <p>Con el <strong>micrófono</strong> lo dictas en vez de escribirlo. Sirve igual.</p>
       </div>
+      <figure class="mt-shot">
+        <img src="img/mt-03-registro.png" alt="Desglose de una comida registrada" loading="lazy"
+             onerror="this.closest('.mt-shot').remove()">
+        <figcaption>Cada alimento queda desglosado con sus calorías y macros.</figcaption>
+      </figure>
+
 
       <div class="g-take">
         <div class="g-take-label">Tres atajos que ahorran tiempo</div>
@@ -505,6 +537,12 @@
         <p>En <strong>Herramientas → Cambiar meta</strong> actualizas calorías y macros sin perder el historial.</p>
         <p>Y cuando <strong>Mauro la ajusta</strong> desde su panel, te avisa en el chat y los anillos quedan cambiados solos.</p>
       </div>
+      <figure class="mt-shot">
+        <img src="img/mt-04-desempeno.png" alt="Gráficas de desempeño de la semana" loading="lazy"
+             onerror="this.closest('.mt-shot').remove()">
+        <figcaption>Mi semana: tus gráficas de adherencia y tendencia contra la meta.</figcaption>
+      </figure>
+
     </div>
 
     <!-- ═══ Slide 5 · Proporciones ═══ -->
@@ -519,6 +557,12 @@
         <p><em>"Tengo pollo, arroz integral, brócoli y aceite de oliva — ayúdame con las proporciones para el almuerzo"</em></p>
         <p>Devuelve gramos por alimento con sus calorías y macros. <strong>Es matemática, no una receta.</strong></p>
       </div>
+      <figure class="mt-shot">
+        <img src="img/mt-05-proporciones.png" alt="Respuesta con las proporciones calculadas" loading="lazy"
+             onerror="this.closest('.mt-shot').remove()">
+        <figcaption>La respuesta: gramos exactos por alimento para cuadrar la comida.</figcaption>
+      </figure>
+
 
       <div class="g-card">
         <div class="g-card-kick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6z"/></svg>Armar el día entero</div>

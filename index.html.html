@@ -7987,6 +7987,127 @@ body.locked .em-fade-bottom{display:none;}
   box-shadow:0 0 0 2px rgba(138,149,88,.35);
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v16 · Portadas planas, volver en negro, dilución solo al scrollear
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Volver: mismo negro que la píldora "Aprendizaje" ──────────
+   Blanco competía con el fondo claro de algunas pantallas. Ahora es la
+   misma pastilla grafito, con la flecha blanca en negrita, y todo el
+   contenido pasa por detrás. */
+.sub-back,.hub-back-link,.mg-back{
+  background:rgba(31,31,31,.92) !important;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  box-shadow:0 2px 6px rgba(0,0,0,.22),0 10px 28px rgba(20,22,14,.28) !important;
+  z-index:9999 !important;
+}
+#s-faq .sub-back,#s-capsulas .sub-back,#s-programa .sub-back,
+#s-app-train .sub-back,#s-journey .sub-back,#s-onboarding .hub-back-link,
+#s-ea-quickstart .sub-back{
+  background:rgba(31,31,31,.92) !important;
+  box-shadow:0 2px 6px rgba(0,0,0,.22),0 10px 28px rgba(20,22,14,.28) !important;
+}
+.sub-back-arr::before,.hub-back-arr::before{
+  border-left-color:#FFFFFF !important;border-bottom-color:#FFFFFF !important;
+  border-left-width:2.6px !important;border-bottom-width:2.6px !important;
+}
+
+/* ── 2 · Portada plana: gris oscuro, baja, sin huecos ───────────────
+   Las tres secciones del onboarding comparten esta portada. Sin foto:
+   son lectura, y las cards deben entrar en pantalla cuanto antes. */
+.sub-hero-plain{
+  position:relative;
+  min-height:0 !important;
+  display:block !important;
+  /* Sangrado exacto: el ancho del contenedor de la app, centrado sobre el
+     centro del padre. Un margen negativo fijo no servía — cada pantalla
+     tiene su propio padding y el recorte del contenedor lo comía. */
+  width:min(100vw, 520px) !important;
+  margin:0 0 0 calc(50% - min(50vw, 260px)) !important;
+  padding:calc(env(safe-area-inset-top, 0px) + 60px) 1.25rem 46px !important;
+  overflow:hidden;
+  background:linear-gradient(180deg,
+    #232323 0%,#262626 52%,#3a3a38 76%,#6b6b66 92%,var(--bg) 100%) !important;
+}
+.sub-hero-plain::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:52px;
+  background:linear-gradient(180deg,rgba(237,236,229,0) 0%,rgba(237,236,229,.4) 55%,var(--bg) 100%);
+  pointer-events:none;z-index:0;
+}
+.sub-hero-plain .sub-header{
+  position:relative;z-index:1;
+  padding:0 !important;margin:0 !important;
+}
+.sub-hero-plain .sub-header::before{display:none !important;}
+/* Sin huecos: cada pieza pega con la siguiente */
+.sub-hero-plain .sub-eyebrow{margin-bottom:.45rem !important;}
+.sub-hero-plain .sub-title{margin-bottom:.5rem !important;}
+.sub-hero-plain .sub-title-line{margin-bottom:.7rem !important;}
+.sub-hero-plain .sub-intro{margin-bottom:0 !important;}
+.sub-hero-plain .rh-contract{margin-top:.7rem !important;margin-bottom:0 !important;}
+/* Elementos decorativos que dejaban aire muerto dentro de la portada */
+.sub-hero-plain .sub-pills,.sub-hero-plain .foto-hero-media,
+.sub-hero-plain .foto-hero-overlay{display:none !important;}
+
+/* ── 3 · Cards del onboarding: solo texto, sin iconos ──────────────── */
+#s-programa .progm-blocks .progm-block .progm-block-icon,
+#s-app-train .progm-blocks .progm-block .appt-badge,
+#s-journey .jrn-timeline > .jrn-phase .jrn-card-wm,
+#s-programa .rh-clay,#s-app-train .rh-clay,#s-journey .rh-clay{
+  display:none !important;
+}
+
+/* ── 4 · Onboarding: iconos con color propio por paso ───────────────
+   Un solo oliva para los cuatro los volvía indistinguibles. */
+#s-onboarding .hub-cards .hub-card:nth-of-type(1) .hub-card-wm{
+  background:linear-gradient(135deg,#98A465,#4A5238) !important;}
+#s-onboarding .hub-cards .hub-card:nth-of-type(2) .hub-card-wm{
+  background:linear-gradient(135deg,#E09479,#C05E44) !important;}
+#s-onboarding .hub-cards .hub-card:nth-of-type(3) .hub-card-wm{
+  background:linear-gradient(135deg,#D9B778,#B07F2E) !important;}
+#s-onboarding .hub-cards .hub-card:nth-of-type(4) .hub-card-wm{
+  background:linear-gradient(135deg,#74AECB,#3F81A6) !important;}
+/* Cards más cortas: más aire a los lados, se ven premium */
+#s-onboarding .hub-cards > .hub-card:nth-of-type(odd){margin-right:58px !important;}
+#s-onboarding .hub-cards > .hub-card:nth-of-type(even){margin-left:58px !important;}
+#s-onboarding .hub-path-line path{
+  stroke-width:1.5 !important;stroke-dasharray:2 6 !important;
+  stroke-linecap:round !important;stroke-linejoin:round !important;opacity:.45 !important;
+}
+
+/* ── 5 · Portadas con foto: a sangre y más bajas ───────────────────── */
+.foto-hero,.ga-cover,.em-hero{
+  width:min(100vw, 520px) !important;
+  margin-left:calc(50% - min(50vw, 260px)) !important;margin-right:0 !important;
+  padding-left:1.25rem !important;padding-right:1.25rem !important;
+}
+.foto-hero{min-height:250px !important;padding-bottom:64px !important;margin-bottom:-30px !important;}
+.screen{overflow-x:clip;}
+
+/* ── 6 · La firma queda pegada al último botón ─────────────────────── */
+.em-signature{margin-top:18px !important;padding-top:18px !important;}
+.footer{margin-top:14px !important;padding-top:18px !important;}
+
+/* Lema, ahora en el hero */
+.em-hero-lema{
+  position:relative;z-index:2;margin-top:20px;
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(21px,5.6vw,26px);line-height:1.08;letter-spacing:.02em;
+  color:rgba(247,244,237,.9);
+  text-shadow:0 1px 3px rgba(0,0,0,.5);
+}
+.em-hero-lema em{font-style:normal;color:var(--olive-light);}
+
+/* ── 7 · Dilución inferior: pequeña y solo mientras haya más abajo ─── */
+.em-fade-bottom{
+  height:calc(54px + env(safe-area-inset-bottom, 0px)) !important;
+  background:linear-gradient(0deg,
+    rgba(237,236,229,.92) 0%,rgba(237,236,229,.55) 48%,rgba(237,236,229,0) 100%) !important;
+  opacity:0;transition:opacity .25s ease;
+}
+body.em-scrolled .em-fade-bottom{opacity:1;}
+
 </style>
 </head>
 <body class="locked">
@@ -8144,9 +8265,26 @@ body.locked .em-fade-bottom{display:none;}
      repetir "Centro de aprendizaje" en cada pantalla solo robaba altura.
      El "volver" vuelve a ser la pastilla propia de cada pantalla. -->
 
-<!-- Dilución inferior: el contenido se apaga contra el borde del teléfono
-     y por detrás de las barras, igual que ya lo hacía arriba. -->
+<!-- Dilución inferior: pequeña, y solo mientras quede contenido por debajo.
+     Al abrir una pantalla o al llegar al final NO se enciende, para que
+     nada quede a medio leer. -->
 <div class="em-fade-bottom" aria-hidden="true"></div>
+<script>
+(function(){
+  function emFadeSync(){
+    try {
+      var doc = document.documentElement;
+      var queda = doc.scrollHeight - window.innerHeight - window.scrollY;
+      document.body.classList.toggle('em-scrolled', window.scrollY > 24 && queda > 24);
+    } catch(e){}
+  }
+  window.addEventListener('scroll', function(){ requestAnimationFrame(emFadeSync); }, {passive:true});
+  window.addEventListener('resize', emFadeSync);
+  document.addEventListener('DOMContentLoaded', emFadeSync);
+  setTimeout(emFadeSync, 400);
+  window.emFadeSync = emFadeSync;
+})();
+</script>
 
 <!-- HOME (única pantalla principal) -->
 
@@ -8190,6 +8328,8 @@ body.locked .em-fade-bottom{display:none;}
           <small id="em-hero-progress-meta">Onboarding, guía de alimentación y cápsulas</small>
         </div>
       </div>
+
+      <p class="em-hero-lema">Comer y entrenar bien no es hacerlo perfecto.<br><em>Es tener un método.</em></p>
     </div>
 
     <!-- ============ SECCIONES DEL CENTRO ============ -->
@@ -8293,7 +8433,6 @@ body.locked .em-fade-bottom{display:none;}
 
   <!-- FIRMA · pie minimalista sobre el mismo crema de la página -->
   <footer class="em-signature">
-    <p class="em-sig-quote">Comer y entrenar bien no es hacerlo perfecto. <em>Es tener un método.</em></p>
     <div class="em-sig-rule"></div>
     <p class="em-sig-name">Mauro Morón</p>
     <p class="em-sig-cred">ISSA Certified Fitness &amp; Nutrition Coach</p>
@@ -8550,13 +8689,17 @@ body.locked .em-fade-bottom{display:none;}
       <span>Volver al onboarding</span>
     </div>
 
-    <div class="sub-header jrn-anim" style="--d:0s;">
+    <!-- Portada plana: gris oscuro, solo título y bajada. Sin foto ni
+         espacios muertos — el contenido de la sección es lo que importa. -->
+    <div class="sub-hero-plain">
+      <div class="sub-header jrn-anim" style="--d:0s;">
       <div class="sub-eyebrow">04 · Trayecto</div>
       <div class="sub-title">TU JOURNEY<br>EN EL MÉTODO</div>
       <div class="sub-title-line"></div>
       <div class="sub-intro">
         Las 6 fases que estructuran tu progreso dentro del programa. <strong>Cada una construye la siguiente.</strong>
       </div>
+    </div>
     </div>
 
     <div class="jrn-timeline">
@@ -8730,13 +8873,17 @@ body.locked .em-fade-bottom{display:none;}
       <span>Volver al onboarding</span>
     </div>
 
-    <div class="sub-header">
+    <!-- Portada plana: gris oscuro, solo título y bajada. Sin foto ni
+         espacios muertos — el contenido de la sección es lo que importa. -->
+    <div class="sub-hero-plain">
+      <div class="sub-header">
       <div class="sub-eyebrow">02 · La app de entrenamiento</div>
       <div class="sub-title">CÓMO FUNCIONA<br>LA APP DE ENTRENAMIENTO</div>
       <div class="sub-title-line"></div>
       <div class="sub-intro">
         Tu centro de control: rutinas, calendario y registro de progreso. <strong>Deslízate por las secciones.</strong>
       </div>
+    </div>
     </div>
 
     <div class="progm-blocks appt-blocks" id="appt-carousel"></div>
@@ -9185,17 +9332,24 @@ else capRender();
         var x = (i % 2 === 0) ? (r.right - wr.left + 19) : (r.left - wr.left - 19);
         return { x: x, y: r.top - wr.top + r.height / 2, top: r.top - wr.top, bottom: r.bottom - wr.top };
       });
-      // Curva continua en S: una cúbica por tramo, con los tiradores
-      // verticales. Antes eran rectas con esquinitas redondeadas y se veía
-      // como un plano de tuberías; así el camino serpentea de verdad.
+      // Ruta de mapa: tramos rectos unidos por diagonales a 45°, con las
+      // esquinas apenas matadas. Lee como un recorrido, no como una manguera.
       var d = 'M' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
       for (var i = 0; i < pts.length - 1; i++) {
         var a = pts[i], b = pts[i + 1];
-        // Cuanto más separados están verticalmente, más panza toma la curva
-        var bend = Math.max(28, Math.abs(b.y - a.y) * 0.55);
-        d += ' C' + a.x.toFixed(1) + ' ' + (a.y + bend).toFixed(1) +
-             ' ' + b.x.toFixed(1) + ' ' + (b.y - bend).toFixed(1) +
-             ' ' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
+        var gy = (a.bottom + b.top) / 2;      // el quiebre cae en el hueco
+        var dx = b.x - a.x;
+        var dir = dx > 0 ? 1 : -1;
+        var diag = Math.min(Math.abs(dx) / 2, 34);  // largo de la diagonal
+        var r = 7;                                   // esquina apenas matada
+        var y1 = gy - diag, y2 = gy + diag;
+        d += ' L' + a.x.toFixed(1) + ' ' + (y1 - r).toFixed(1) +
+             ' Q' + a.x.toFixed(1) + ' ' + y1.toFixed(1) + ' ' +
+                    (a.x + r * dir).toFixed(1) + ' ' + (y1 + r).toFixed(1) +
+             ' L' + (b.x - r * dir).toFixed(1) + ' ' + (y2 - r).toFixed(1) +
+             ' Q' + b.x.toFixed(1) + ' ' + y2.toFixed(1) + ' ' +
+                    b.x.toFixed(1) + ' ' + (y2 + r).toFixed(1) +
+             ' L' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
       }
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
       var p = svg.querySelector('path');
@@ -11116,24 +11270,28 @@ function gaToggleAssistant(forceClose) {
 
 function gaResume() {
   const panel = document.getElementById('ga-resume');
+  // BUG: el panel vive dentro del modal del asistente, que bloquea el scroll
+  // del body (overflow:hidden). Cualquier scrollTo se ignoraba y el botón
+  // parecía muerto. Se cierra el modal primero y se salta después.
+  const modal = document.getElementById('ga-assistant-modal');
+  if (modal && modal.style.display !== 'none') {
+    gaToggleAssistant(true);
+    setTimeout(gaResume, 120);
+    return;
+  }
   try {
+    // Se salta SIEMPRE a un capítulo concreto (no a una coordenada de
+    // scroll guardada, que quedaba obsoleta si el contenido cambiaba).
     const lastSlug = localStorage.getItem('em_ga_last_slug');
-    const scrollY = parseInt(localStorage.getItem(GA_KEY_SCROLL) || '0', 10);
-    // 1) Si quedaste con scroll en un capítulo concreto, vuelve exacto
-    if (lastSlug && scrollY > 100) {
-      window.scrollTo({ top: scrollY, behavior: 'smooth' });
-      return;
-    }
-    // 2) Si hay slug pero no scroll, salta al heading
-    if (lastSlug) {
-      const el = document.getElementById(lastSlug);
-      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
-    }
-    // 3) Si no hay actividad, salta al siguiente capítulo pendiente que calculó el resume panel
     const nextSlug = panel && panel._gaNextSlug;
-    if (nextSlug) {
-      const el = document.getElementById(nextSlug);
-      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    const slug = lastSlug || nextSlug;
+    if (slug) {
+      const el = document.getElementById(slug);
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+        return;
+      }
     }
   } catch(e) {}
 }
