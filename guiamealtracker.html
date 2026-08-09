@@ -433,15 +433,12 @@
     .mtg-hero{
       position:relative;
       margin:-22px -18px 0;
-      padding:calc(env(safe-area-inset-top,0px) + 66px) 1.25rem 44px;
-      background:linear-gradient(180deg,#2A2A29 0%,#2E2E2C 62%,#4E4E48 84%,#8A8A80 95%,#EDECE5 100%);
+      padding:calc(env(safe-area-inset-top,0px) + 52px) 1.25rem 40px;
+      background:linear-gradient(180deg,#2A2A29 0%,#2C2C2B 62%,rgba(44,44,43,.82) 80%,rgba(44,44,43,.42) 91%,rgba(44,44,43,0) 100%);
       overflow:hidden;
     }
-    .mtg-hero::after{
-      content:"";position:absolute;left:0;right:0;bottom:0;height:44px;
-      background:linear-gradient(180deg,rgba(237,236,229,0) 0%,rgba(237,236,229,.06) 55%,rgba(237,236,229,.22) 100%);
-      pointer-events:none;
-    }
+    /* Sin capa crema al pie: la portada se apaga en transparencia, igual
+       que en el resto del centro. */
     .mtg-hero > *{position:relative;z-index:1;}
     .mtg-hero-kicker{
       font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
@@ -495,16 +492,8 @@
 </head>
 <body>
 
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div>
-        <span class="brand">MEAL TRACKER</span>
-        <span class="brand-sub">Cómo usar la app</span>
-      </div>
-      <div class="step-indicator" id="stepIndicator">1 / 6</div>
-    </div>
-    <div class="progress-inner"><div class="progress-bar" id="progressBar"></div></div>
-  </div>
+  <!-- Barra superior retirada: repetía el nombre de la app y un % que no
+       aportaba. La portada ya dice dónde estás. -->
 
   <div class="slides" id="slides">
 
@@ -693,8 +682,8 @@
     // ahora sigue el scroll en vez de contar pasos.
     (function () {
       const slides = [].slice.call(document.querySelectorAll('.slide'));
-      const indicator = document.getElementById('stepIndicator');
-      const progressBar = document.getElementById('progressBar');
+      const indicator = null;
+      const progressBar = null;
 
       slides.forEach(function (s, i) {
         s.classList.add('active', 'flow-in');

@@ -1700,7 +1700,11 @@
    desbordamiento lateral. */
 html, body { overflow-x: hidden !important; max-width: 100vw; }
 .ga-reader { overflow-x: clip; max-width: 100%; }
-.ga-reader *, .ga-section, .ga-section * { max-width: 100%; }
+/* La portada va a sangre: si se le aplica max-width se encoge al ancho de
+   contenido y deja una franja blanca a la derecha. */
+.ga-reader *:not(.ga-cover):not(.ga-cover-media):not(.ga-cover-media img),
+.ga-section, .ga-section * { max-width: 100%; }
+.ga-cover { max-width: none !important; }
 .ga-table-wrap { overflow-x: auto; }
 .ga-reader img { max-width: 100% !important; height: auto !important; }
 /* La barrita lateral, un poco más gruesa y con más presencia */

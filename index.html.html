@@ -8754,6 +8754,125 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
   font-size:19px !important;
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v22 · Sin banda blanca, divisores con título y bullets redondos
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · FUERA el degradado blanco del pie de la portada ────────────
+   La portada se apaga en transparencia: el fondo de la página se ve a
+   través, sin ninguna capa crema encima. */
+.em-hero::after,.foto-hero::after,.ga-cover::after,.sub-hero-plain::after{
+  display:none !important;content:none !important;
+}
+.em-hero,.foto-hero,.ga-cover{
+  background:linear-gradient(180deg,
+    #1b1b1a 0%,#1d1d1c 62%,
+    rgba(29,29,28,.82) 80%,rgba(29,29,28,.42) 91%,rgba(29,29,28,0) 100%) !important;
+}
+.sub-hero-plain{
+  background:linear-gradient(180deg,
+    #2A2A29 0%,#2C2C2B 62%,
+    rgba(44,44,43,.82) 80%,rgba(44,44,43,.42) 91%,rgba(44,44,43,0) 100%) !important;
+}
+.foto-hero-overlay,.ga-cover-shade,.em-hero-shade{
+  background:linear-gradient(180deg,
+    rgba(18,18,17,.34) 0%,rgba(18,18,17,.5) 42%,
+    rgba(20,20,18,.62) 72%,rgba(20,20,18,.34) 90%,rgba(20,20,18,0) 100%) !important;
+}
+.em-hero-photo img,.foto-hero-media img,.ga-cover-media img{
+  -webkit-mask-image:linear-gradient(180deg,
+    #000 0%,#000 64%,rgba(0,0,0,.78) 82%,rgba(0,0,0,.3) 94%,rgba(0,0,0,0) 100%) !important;
+  mask-image:linear-gradient(180deg,
+    #000 0%,#000 64%,rgba(0,0,0,.78) 82%,rgba(0,0,0,.3) 94%,rgba(0,0,0,0) 100%) !important;
+}
+
+/* ── 4 · "Próximamente" como pastilla ─────────────────────────────── */
+.cap-soon-pill{
+  display:inline-block;margin-left:8px;vertical-align:middle;
+  padding:4px 11px;border-radius:100px;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.28);
+  font-size:10.5px;font-weight:700;letter-spacing:.04em;
+  color:#FFFFFF;text-shadow:none;
+}
+.cap-soon-pill[hidden]{display:none;}
+
+/* ── 9 · Divisor: línea visible + icono + número + título grande ──── */
+.flow-sep{display:block !important;margin:38px 0 16px !important;}
+.flow-sep-rule{
+  display:block;height:1px;width:100%;
+  background:linear-gradient(90deg,var(--olive) 0%,var(--border) 46%,transparent 100%);
+  margin-bottom:16px;
+}
+.flow-sep-row{display:flex;align-items:center;gap:11px;}
+.flow-sep-num{
+  font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:1;
+  letter-spacing:.03em;color:var(--olive-dark);
+}
+.flow-sep-line{display:none !important;}
+.flow-sep-title{
+  display:block;margin-top:10px;
+  font-family:'Inter',sans-serif;
+  font-size:25px;font-weight:800;letter-spacing:-.028em;line-height:1.12;
+  color:var(--text);
+}
+
+/* ── 7 · Bullets redondos en todas partes, ningún gancho ──────────── */
+.read-flow .rh-takeaway li::before,
+.read-flow .jrn-steps li::before,
+.read-flow .app-modal-list li::before,
+.read-flow .jrn-result > span:first-child{
+  content:"" !important;
+  position:absolute;left:2px;top:8px;
+  width:6px !important;height:6px !important;border-radius:50% !important;
+  background:var(--olive) !important;
+  color:transparent !important;font-size:0 !important;
+}
+.read-flow .rh-takeaway li,.read-flow .app-modal-list li{
+  position:relative;padding-left:20px;list-style:none;
+}
+.read-flow .app-modal-list{margin:0 !important;padding:0 !important;list-style:none !important;}
+.read-flow .jrn-result{
+  position:relative;padding-left:20px !important;
+  display:block !important;
+}
+/* El ✓ del "resultado" del journey lo dibuja el propio .jrn-result con
+   ::before y con !important desde una regla de mayor peso: se repite la
+   cadena para poder sustituirlo por el punto. */
+.read-flow .jrn-timeline > .jrn-phase .jrn-result::before,
+#s-journey .jrn-timeline > .jrn-phase .jrn-result::before,
+#s-programa .read-flow .progm-note::before,
+#s-programa .read-flow .progm-welcome::before,
+#s-app-train .read-flow .progm-block .appt-callout::before,
+.read-flow .jrn-result::before{
+  content:"" !important;
+  position:absolute;left:2px;top:9px;
+  width:6px !important;height:6px !important;border-radius:50% !important;
+  background:var(--olive) !important;
+  color:transparent !important;font-size:0 !important;
+  border:none !important;box-shadow:none !important;
+}
+.read-flow .jrn-result > span:last-child{display:inline !important;}
+/* Los ✓ dibujados por CSS en otras listas también pasan a punto */
+.read-flow li::marker{color:var(--olive);}
+
+/* ── 11 · La cápsula del avance, ovalada de verdad ────────────────── */
+.em-hero-progress{
+  border-radius:100px !important;
+  padding:10px 20px 10px 10px !important;
+  gap:14px !important;
+  background:rgba(255,255,255,.09) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+}
+.em-hero-progress-txt strong{font-size:15px !important;letter-spacing:-.02em !important;}
+.em-hero-progress-txt small{font-size:11px !important;}
+
+/* ── 6 · Los números no se cortan en ninguna pantalla ─────────────── */
+.flow-sep,.flow-sep-row,.flow-sep-num,.flow-sep-title{overflow:visible !important;}
+.flow-sep-num{min-width:34px;flex:none;}
+#s-app-train .read-flow,#s-app-train .progm-blocks{padding-left:0 !important;padding-right:0 !important;}
+
 </style>
 </head>
 <body class="locked">
@@ -8916,6 +9035,36 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
      nada quede a medio leer. -->
 <div class="em-fade-bottom" aria-hidden="true"></div>
 <script>
+// Pista de scroll universal: se añade a CUALQUIER pantalla de lectura cuyo
+// contenido no quepa de una, sin tener que declararla pantalla por pantalla.
+(function(){
+  var CONTENEDOR = '.sub-area, .hub-area, .progm-page, .ga-reader, .qs-area';
+  function emHintSync(){
+    try {
+      var scr = document.querySelector('.screen.active');
+      if (!scr || scr.id === 's-home') return;
+      var host = scr.querySelector(CONTENEDOR);
+      if (!host) return;
+      var hint = scr.querySelector('.scroll-hint');
+      var hayMas = document.documentElement.scrollHeight > window.innerHeight + 40;
+      if (!hint && hayMas) {
+        hint = document.createElement('div');
+        hint.className = 'scroll-hint';
+        hint.innerHTML = '<span>Desliza para leer</span>' +
+          '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        var hero = host.querySelector('.foto-hero, .sub-hero-plain, .ga-cover');
+        if (hero && hero.parentNode) hero.parentNode.insertBefore(hint, hero.nextSibling);
+        else host.insertBefore(hint, host.firstChild);
+      }
+      if (hint) hint.classList.toggle('is-off', window.scrollY > 60 || !hayMas);
+    } catch(e){}
+  }
+  window.addEventListener('scroll', function(){ requestAnimationFrame(emHintSync); }, {passive:true});
+  window.addEventListener('resize', emHintSync);
+  document.addEventListener('DOMContentLoaded', emHintSync);
+  setTimeout(emHintSync, 500);
+  window.emHintSync = emHintSync;
+})();
 (function(){
   function emFadeSync(){
     try {
@@ -8970,7 +9119,7 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
           <span class="em-hero-ring-num" id="em-hero-figure">0<i>%</i></span>
         </div>
         <div class="em-hero-progress-txt">
-          <strong>de todo el material leído</strong>
+          <strong id="em-hero-progress-title">Vas por buen camino</strong>
           <small id="em-hero-progress-meta">Onboarding, guía de alimentación y cápsulas</small>
         </div>
       </div>
@@ -9581,6 +9730,8 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
     <!-- El asistente ya no ocupa sitio en la página: vive en el botón
          flotante, igual que en la guía de alimentación. -->
 
+    <div class="scroll-hint" id="faq-hint"><span>Desliza para leer</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
     <!-- Buscador -->
     <div class="faq-search sub-anim" style="--d:.06s;">
       <div class="faq-search-icon">
@@ -9745,7 +9896,8 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         <div class="sub-title">CÁPSULAS<br>INFORMATIVAS</div>
         <div class="sub-title-line"></div>
         <div class="sub-intro">
-          Una idea por lámina. <strong id="cap-intro-strong">Próximamente: se están preparando.</strong>
+          Una idea por lámina. <strong>Toca una cápsula para verla en grande.</strong>
+          <span class="cap-soon-pill" id="cap-soon" hidden>Próximamente</span>
         </div>
       </div>
     </div>
@@ -9754,12 +9906,9 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
     <!-- El asistente ya no ocupa sitio en la página: vive en el botón
          flotante, igual que en la guía de alimentación. -->
 
-    <div class="cap-soon" id="cap-soon" hidden>
-      <strong>Próximamente.</strong> Las infografías se están preparando; los
-      títulos de abajo son las que vienen primero.
-    </div>
-
     <!-- REJILLA DE CÁPSULAS — la pinta capRender() desde CAPSULAS (abajo) -->
+    <div class="scroll-hint" id="cap-hint"><span>Desliza para leer</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
     <div class="cap-gal sub-anim" style="--d:.08s;" id="cap-gal"></div>
 
     <p class="cap-empty" id="cap-empty" hidden>
@@ -9819,18 +9968,11 @@ var CAPSULAS = [
 // ¿Hay al menos una infografía subida? Se comprueba cargando la primera
 // imagen de la lista; mientras no exista, la portada avisa.
 function capCheckPublicadas(){
-  var strong = document.getElementById('cap-intro-strong');
   var note = document.getElementById('cap-soon');
-  if (!strong || !CAPSULAS.length) return;
+  if (!note || !CAPSULAS.length) return;
   var probe = new Image();
-  probe.onload = function(){
-    strong.textContent = 'Toca una cápsula para verla en grande.';
-    if (note) note.hidden = true;
-  };
-  probe.onerror = function(){
-    strong.textContent = 'Próximamente: se están preparando.';
-    if (note) note.hidden = false;
-  };
+  probe.onload = function(){ if (note) note.hidden = true; };
+  probe.onerror = function(){ if (note) note.hidden = false; };
   probe.src = CAPSULAS[0].file;
 }
 
@@ -9991,24 +10133,31 @@ else capRender();
         var x = (i % 2 === 0) ? (r.right - wr.left + 19) : (r.left - wr.left - 19);
         return { x: x, y: r.top - wr.top + r.height / 2, top: r.top - wr.top, bottom: r.bottom - wr.top };
       });
-      // Caminito entre medallones: baja recto, cruza en horizontal y vuelve
-      // a bajar recto. Solo la esquina lleva una curvita.
-      var d = 'M' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
+      // El camino NO puede pasar por detrás de las tarjetas: se dibuja de
+      // medallón a medallón pero cruzando SIEMPRE por el hueco vertical que
+      // queda entre una tarjeta y la siguiente.
+      var d = '';
       for (var i = 0; i < pts.length - 1; i++) {
         var a = pts[i], b = pts[i + 1];
-        var gy = (a.bottom + b.top) / 2;       // el cruce cae en el hueco
+        var gap0 = a.bottom, gap1 = b.top;      // el hueco real entre tarjetas
+        var gy = (gap0 + gap1) / 2;
         var dx = b.x - a.x;
         var dir = dx > 0 ? 1 : -1;
-        // Radio de la curvita: nunca mayor que medio tramo disponible
-        var r = Math.max(6, Math.min(14, Math.abs(dx) / 2, Math.abs(gy - a.y), Math.abs(b.y - gy)));
-        d += ' L' + a.x.toFixed(1) + ' ' + (gy - r).toFixed(1) +                      // baja recto
+        // La curvita nunca puede salirse del hueco ni del tramo horizontal
+        var r = Math.max(5, Math.min(12, Math.abs(dx) / 2, (gap1 - gap0) / 2 - 1));
+        if (!isFinite(r) || r < 0) r = 5;
+        // Arranca en el borde inferior de la tarjeta actual, a la altura del
+        // medallón, y termina en el borde superior de la siguiente.
+        d += ' M' + a.x.toFixed(1) + ' ' + a.y.toFixed(1) +
+             ' L' + a.x.toFixed(1) + ' ' + (gy - r).toFixed(1) +
              ' Q' + a.x.toFixed(1) + ' ' + gy.toFixed(1) + ' ' +
-                    (a.x + r * dir).toFixed(1) + ' ' + gy.toFixed(1) +                // curvita
-             ' L' + (b.x - r * dir).toFixed(1) + ' ' + gy.toFixed(1) +                // cruza recto
+                    (a.x + r * dir).toFixed(1) + ' ' + gy.toFixed(1) +
+             ' L' + (b.x - r * dir).toFixed(1) + ' ' + gy.toFixed(1) +
              ' Q' + b.x.toFixed(1) + ' ' + gy.toFixed(1) + ' ' +
-                    b.x.toFixed(1) + ' ' + (gy + r).toFixed(1) +                      // curvita
-             ' L' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);                            // baja recto
+                    b.x.toFixed(1) + ' ' + (gy + r).toFixed(1) +
+             ' L' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
       }
+      d = d.trim();
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
       var p = svg.querySelector('path');
       if (p) p.setAttribute('d', d);
@@ -10822,6 +10971,7 @@ function go(id){
     target.classList.add('active');
     window.scrollTo(0,0);
   }
+  if (typeof emHintSync === 'function') setTimeout(emHintSync, 120);
   if (id === 's-home' && typeof homeApplyOrder === 'function') homeApplyOrder();
   if (id === 's-capsulas' && typeof capRender === 'function') capRender();
   if (id === 's-faq' && typeof faqApplyProgress === 'function') faqApplyProgress();
@@ -12559,11 +12709,22 @@ function initStepFlow(scroller){
         // Cada bloque ya traía su icono; se recicla en el divisor, con un
         // color propio por paso. Rompe la monotonía de seis bloques de
         // texto seguidos sin inventar iconografía nueva.
+        // El divisor se lleva el título del bloque: línea, icono, número y
+        // el titular en grande. El kicker pequeño de encima sobraba —
+        // repetía el nombre de la sección.
         const ico = sl.querySelector('.progm-block-icon svg, .appt-badge svg, .jrn-card-wm svg');
+        const tEl = sl.querySelector('.progm-block-title, .jrn-card-title');
+        const titulo = tEl ? tEl.textContent.trim() : '';
+        if (tEl) tEl.remove();
+        const kick = sl.querySelector('.progm-block-eyebrow, .jrn-card-eyebrow, .jrn-phase-label');
+        if (kick) kick.remove();
         sep.innerHTML =
-          (ico ? '<span class="flow-sep-ico" data-c="' + (i % 4) + '">' + ico.outerHTML + '</span>' : '') +
-          '<span class="flow-sep-num">' + String(i + 1).padStart(2, '0') + '</span>' +
-          '<span class="flow-sep-line"></span>';
+          '<span class="flow-sep-rule"></span>' +
+          '<span class="flow-sep-row">' +
+            (ico ? '<span class="flow-sep-ico" data-c="' + (i % 4) + '">' + ico.outerHTML + '</span>' : '') +
+            '<span class="flow-sep-num">' + String(i + 1).padStart(2, '0') + '</span>' +
+          '</span>' +
+          (titulo ? '<span class="flow-sep-title">' + titulo + '</span>' : '');
         scroller.insertBefore(sep, sl);
       }
       sl.classList.add('flow-in');
@@ -13061,11 +13222,21 @@ function initBlurCarousel(scroller){ return initStepFlow(scroller); }
       if (fig) fig.innerHTML = p.pct + '<i>%</i>';
       var ring = document.getElementById('em-hero-ring');
       if (ring) ring.classList.toggle('is-done', p.total > 0 && p.done >= p.total);
+      // Un titular que diga algo, no "de todo el material leído".
+      var tit = document.getElementById('em-hero-progress-title');
       var meta = document.getElementById('em-hero-progress-meta');
+      var completo = p.total > 0 && p.done >= p.total;
+      if (tit) {
+        tit.textContent = completo ? 'Te lo leíste todo'
+          : p.pct === 0 ? 'Tu método empieza aquí'
+          : p.pct < 34 ? 'Ya arrancaste'
+          : p.pct < 67 ? 'Vas por buen camino'
+          : 'Estás a nada de terminarlo';
+      }
       if (meta) {
-        meta.textContent = (p.total > 0 && p.done >= p.total)
-          ? 'Onboarding, guía y cápsulas · lo terminaste todo'
-          : p.done + ' de ' + p.total + ' entre onboarding, guía y cápsulas';
+        meta.textContent = completo
+          ? 'Onboarding, guía y cápsulas · material completo'
+          : p.done + ' de ' + p.total + ' piezas · onboarding, guía y cápsulas';
       }
     } catch(e){}
   }
