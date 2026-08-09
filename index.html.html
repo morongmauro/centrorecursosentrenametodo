@@ -8108,6 +8108,133 @@ body.locked .em-fade-bottom{display:none;}
 }
 body.em-scrolled .em-fade-bottom{opacity:1;}
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v17 · Portadas sin cajas negras, velos sutiles y lectura por pasos
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Fuera la caja negra dentro de las portadas ─────────────────
+   .sub-header traía background:#141414 y se veía como un rectángulo
+   flotando encima de la foto. La portada ya tiene su propio fondo. */
+.foto-hero .sub-header,.sub-hero-plain .sub-header,
+.foto-hero .hub-header-block,.sub-hero-plain .hub-header-block{
+  background:transparent !important;background-image:none !important;
+  border:none !important;box-shadow:none !important;border-radius:0 !important;
+  padding:0 !important;margin:0 !important;
+}
+.foto-hero .sub-header::before,.foto-hero .sub-header::after,
+.sub-hero-plain .sub-header::before,.sub-hero-plain .sub-header::after,
+.foto-hero .hub-header-block::before,.foto-hero .hub-header-block::after{
+  display:none !important;content:none !important;
+}
+
+/* ── 2 · Velos del hero: apenas un tul, arriba y abajo ──────────────── */
+.em-hero::before,.foto-hero::before,.ga-cover::before,.sub-hero-plain::before{
+  content:"";position:absolute;left:0;right:0;top:0;
+  height:calc(env(safe-area-inset-top, 0px) + 56px);
+  background:linear-gradient(180deg,rgba(24,24,22,.45) 0%,rgba(24,24,22,.16) 62%,rgba(24,24,22,0) 100%);
+  pointer-events:none;z-index:1;
+}
+.em-hero::after,.foto-hero::after,.ga-cover::after,.sub-hero-plain::after{
+  height:54px !important;
+  background:linear-gradient(180deg,rgba(237,236,229,0) 0%,rgba(237,236,229,.28) 62%,var(--bg) 100%) !important;
+}
+.em-hero-titles,.em-hero-progress,.em-hero-lema,
+.foto-hero .sub-header,.foto-hero .hub-header-block,
+.sub-hero-plain .sub-header,.ga-cover-head,.ga-cover-title,.ga-cover-line,
+.ga-cover-statement,.ga-cover-meta{position:relative;z-index:2 !important;}
+
+/* ── 3 · Volver: por delante del velo, nítido como la píldora ─────── */
+.sub-back,.hub-back-link,.mg-back,
+#s-faq .sub-back,#s-capsulas .sub-back,#s-programa .sub-back,
+#s-app-train .sub-back,#s-journey .sub-back,#s-onboarding .hub-back-link,
+#s-ea-quickstart .sub-back{
+  z-index:9999 !important;
+  background:#1F1F1F !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;
+  opacity:1 !important;
+}
+
+/* ── 4 · Home: hero más corto, el protagonista son los botones ────── */
+.em-hero{padding-bottom:36px !important;margin-bottom:-18px !important;}
+.em-hero-name{font-size:clamp(34px,10vw,42px) !important;line-height:.96 !important;}
+.em-hero-progress{margin-top:16px !important;padding:12px 14px !important;}
+.em-hero-progress .em-hero-ring{width:58px !important;height:58px !important;}
+.em-hero-progress .em-hero-ring svg{width:58px !important;height:58px !important;}
+.em-hero-progress .em-hero-ring-num{font-size:20px !important;}
+/* El lema, con la letra del hero de la guía. Nada en oliva. */
+.em-hero-lema{
+  margin-top:14px !important;
+  font-family:'Inter',sans-serif !important;font-weight:500 !important;
+  font-size:17px !important;line-height:1.4 !important;letter-spacing:-.005em !important;
+  color:rgba(255,255,255,.86) !important;max-width:32ch;
+}
+.em-hero-lema em{color:#FFFFFF !important;font-weight:700 !important;font-style:normal;}
+
+/* ── 5 · Firma pegada, sin velo cuando ya se ve ────────────────────── */
+.em-signature{margin-top:10px !important;padding:14px 2px 6px !important;border-top:none !important;}
+.footer{margin-top:8px !important;padding:14px .5rem 10px !important;border-top:none !important;}
+
+/* ── 6 · Portadas del onboarding: gris oscuro y bajas ──────────────── */
+.sub-hero-plain{
+  padding-bottom:38px !important;
+  background:linear-gradient(180deg,#2A2A29 0%,#2E2E2C 56%,#4A4A45 82%,#7C7C73 93%,var(--bg) 100%) !important;
+}
+.sub-hero-plain .rh-contract{display:none !important;}
+
+/* ── 7 · Lectura por pasos (programa · app · journey) ──────────────── */
+.step-flow{
+  display:block !important;overflow:visible !important;
+  scroll-snap-type:none !important;
+  gap:0 !important;padding:0 !important;margin:0 !important;
+}
+.step-flow > .progm-block,.step-flow > .jrn-phase{
+  display:block !important;
+  filter:none !important;opacity:1 !important;transform:none !important;
+  width:auto !important;min-width:0 !important;max-width:none !important;
+  flex:none !important;
+  height:auto !important;max-height:none !important;overflow:visible !important;
+  scroll-snap-align:none !important;
+  margin:0 0 4px !important;
+}
+.step-flow > [hidden]{display:none !important;}
+.step-flow .scroll-cue,.carousel-hint{display:none !important;}
+.step-nav{
+  position:sticky;bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index:60;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin:16px 0 10px;padding:8px;
+  background:rgba(255,255,255,.94);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+  border-radius:100px;
+  box-shadow:0 2px 8px rgba(60,66,42,.10),0 12px 30px rgba(60,66,42,.14);
+}
+.step-btn{
+  flex:none;border:none;cursor:pointer;border-radius:100px;padding:9px 15px;
+  font-family:'Inter',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:-.01em;
+  background:#1F1F1F;color:#fff;transition:opacity .2s,transform .12s;
+}
+.step-btn:active{transform:scale(.96);}
+.step-btn:disabled{background:rgba(0,0,0,.06);color:var(--text-mute);cursor:default;}
+.step-count{
+  flex:1;text-align:center;
+  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-mute);
+}
+.step-count b{color:var(--olive-dark);font-weight:800;}
+.step-flow.jrn-timeline::before,.step-flow.jrn-timeline::after{display:none !important;}
+
+/* ── 8 · Kickers de portada en blanco, nunca en oliva ────────────────
+   Reglas con selector de ID los devolvían al verde y sobre la foto no se
+   leían; se anulan con la misma especificidad. */
+#s-onboarding .foto-hero .hub-eyebrow,#s-faq .foto-hero .sub-eyebrow,
+#s-capsulas .foto-hero .sub-eyebrow,#s-programa .sub-hero-plain .sub-eyebrow,
+#s-app-train .sub-hero-plain .sub-eyebrow,#s-journey .sub-hero-plain .sub-eyebrow,
+.foto-hero .sub-eyebrow,.foto-hero .hub-eyebrow,
+.sub-hero-plain .sub-eyebrow,.ga-cover-eyebrow,.em-hero-kicker{
+  color:rgba(255,255,255,.88) !important;
+}
+
 </style>
 </head>
 <body class="locked">
@@ -8463,7 +8590,7 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
          fotográfica en cada una distraía del texto. -->
     <div class="sub-hero-plain">
       <div class="sub-header">
-        <div class="sub-eyebrow">01 · El programa</div>
+        <div class="sub-eyebrow">El programa</div>
         <div class="sub-title">CÓMO FUNCIONA<br>EL PROGRAMA</div>
         <div class="sub-title-line"></div>
         <div class="sub-intro">
@@ -8693,8 +8820,8 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
          espacios muertos — el contenido de la sección es lo que importa. -->
     <div class="sub-hero-plain">
       <div class="sub-header jrn-anim" style="--d:0s;">
-      <div class="sub-eyebrow">04 · Trayecto</div>
-      <div class="sub-title">TU JOURNEY<br>EN EL MÉTODO</div>
+      <div class="sub-eyebrow">Tu trayecto</div>
+      <div class="sub-title">TU JOURNEY<br>EN EL PROGRAMA</div>
       <div class="sub-title-line"></div>
       <div class="sub-intro">
         Las 6 fases que estructuran tu progreso dentro del programa. <strong>Cada una construye la siguiente.</strong>
@@ -8877,7 +9004,7 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
          espacios muertos — el contenido de la sección es lo que importa. -->
     <div class="sub-hero-plain">
       <div class="sub-header">
-      <div class="sub-eyebrow">02 · La app de entrenamiento</div>
+      <div class="sub-eyebrow">La app de entrenamiento</div>
       <div class="sub-title">CÓMO FUNCIONA<br>LA APP DE ENTRENAMIENTO</div>
       <div class="sub-title-line"></div>
       <div class="sub-intro">
@@ -8920,7 +9047,7 @@ body.em-scrolled .em-fade-bottom{opacity:1;}
       </div>
       <div class="foto-hero-overlay" aria-hidden="true"></div>
       <div class="sub-header">
-        <div class="sub-eyebrow">04 · Dudas resueltas</div>
+        <div class="sub-eyebrow">Dudas resueltas</div>
         <div class="sub-title">PREGUNTAS<br>FRECUENTES</div>
         <div class="sub-title-line"></div>
         <div class="sub-intro">
@@ -9398,12 +9525,10 @@ else capRender();
       </div>
       <div class="foto-hero-overlay" aria-hidden="true"></div>
       <div class="hub-header-block">
-        <div class="hub-eyebrow">02 · Onboarding</div>
+        <div class="hub-eyebrow">Empieza aquí</div>
         <div class="hub-title">EL ONBOARDING</div>
         <div class="hub-title-line"></div>
-        <div class="hub-intro">
-          Conoce cómo funciona tu programa, la app de entrenamiento y el camino que vas a recorrer. <strong>Cuatro piezas que te dan el panorama completo.</strong>
-        </div>
+        <div class="hub-intro"><strong>Cuatro piezas</strong> y tienes el panorama completo.</div>
       </div>
     </div>
 
@@ -9520,7 +9645,7 @@ else capRender();
           <div class="hub-status-circle"></div>
         </div>
         <div class="hub-card-eyebrow">04 · Trayecto</div>
-        <div class="hub-card-title">Tu Journey en el método</div>
+        <div class="hub-card-title">Tu Journey en el programa</div>
         <div class="hub-card-desc">Las 6 fases que recorrerás: diagnóstico, activación, aprendizaje, ejecución, criterio y dominio.</div>
         <div class="hub-card-foot">
           <span class="hub-card-time">3 min</span>
@@ -10339,7 +10464,7 @@ function orientGetItems() {
     { key:'programa',     label:'Cómo funciona el programa',      group:'hub', go:function(){ goSection('s-programa','programa'); } },
     { key:'app',          label:'Cómo funciona la app',           group:'hub', go:function(){ goSection('s-app-train','app'); } },
     { key:'meal-tracker', label:'Cómo usar la app de Meal Tracking', group:'hub', go:function(){ openMealTrackerGuide(); } },
-    { key:'journey',      label:'Tu Journey en el método',        group:'hub', go:function(){ goSection('s-journey','journey'); } }
+    { key:'journey',      label:'Tu Journey en el programa',        group:'hub', go:function(){ goSection('s-journey','journey'); } }
   ];
   // Capítulos de la guía (en orden del DOM)
   document.querySelectorAll('#s-guia-alimentacion .ga-h1').forEach(function(h){
@@ -10399,7 +10524,7 @@ function homeApplyOrientation() {
     { label:'Cómo funciona el programa',         done:readSet.has('programa'),     go:function(){ goSection('s-programa','programa'); } },
     { label:'Cómo funciona la app',              done:readSet.has('app'),          go:function(){ goSection('s-app-train','app'); } },
     { label:'Cómo usar la app de Meal Tracking', done:readSet.has('meal-tracker'), go:function(){ openMealTrackerGuide(); } },
-    { label:'Tu Journey en el método',           done:readSet.has('journey'),      go:function(){ goSection('s-journey','journey'); } }
+    { label:'Tu Journey en el programa',           done:readSet.has('journey'),      go:function(){ goSection('s-journey','journey'); } }
   ];
   // Próximo capítulo pendiente (para el CTA y el meta del row)
   let nextChapterLabel = null;
@@ -11848,69 +11973,86 @@ function appmCloseZoom() {
   }, { passive: true });
 })();
 
-// ============ Carrusel con blur (Programa + Journey) ============
-function initBlurCarousel(scroller){
+// ============ Secciones del onboarding: lectura paso a paso ============
+// Antes eran un carrusel horizontal con las cards vecinas borrosas: se leía
+// a medias y obligaba a scrollear dentro de cada card. Ahora es un paso a la
+// vez con "Anterior / Siguiente" abajo, la misma mecánica de la guía del
+// Meal Tracker. El texto fluye completo y quien scrollea es la página.
+function initStepFlow(scroller){
   if (!scroller) return;
   const slides = Array.prototype.slice.call(scroller.children).filter(function(c){
     return c.classList.contains('progm-block') || c.classList.contains('jrn-phase');
   });
   if (!slides.length) return;
-  // Hint con contador (se crea una sola vez por scroller)
-  let counterEl = null;
-  if (!scroller._blurInit){
-    scroller.addEventListener('scroll', function(){ window.requestAnimationFrame(update); }, {passive:true});
-    if (!scroller.previousElementSibling || !scroller.previousElementSibling.classList.contains('carousel-hint')){
-      const hint = document.createElement('div');
-      hint.className = 'carousel-hint';
-      hint.innerHTML =
-        '<span class="ch-arr">‹</span>' +
-        '<span class="ch-word">Desliza</span>' +
-        '<span class="ch-counter"><b class="ch-current">1</b> de ' + slides.length + '</span>' +
-        '<span class="ch-arr">›</span>';
-      scroller.parentNode.insertBefore(hint, scroller);
-    }
-    scroller._blurInit = true;
-  }
-  counterEl = scroller.parentNode.querySelector('.carousel-hint .ch-current');
-  function update(){
-    const sc = scroller.getBoundingClientRect();
-    const center = sc.left + sc.width/2;
-    let best=null, bestD=Infinity, bestIdx=0;
-    slides.forEach(function(s,i){
-      const r = s.getBoundingClientRect();
-      const d = Math.abs((r.left + r.width/2) - center);
-      if (d < bestD){ bestD = d; best = s; bestIdx = i; }
+
+  function show(i){
+    scroller._stepIndex = i;
+    slides.forEach(function(sl, k){
+      sl.classList.toggle('is-active', k === i);
+      sl.hidden = (k !== i);
     });
-    slides.forEach(function(s){ s.classList.toggle('is-active', s === best); });
-    if (counterEl) counterEl.textContent = (bestIdx+1);
-  }
-  scroller.scrollLeft = 0;
-  update();
-  setTimeout(update, 80);
-
-  // Indicador "↓ hay más" en slides con scroll interno
-  slides.forEach(function(s){
-    if (!s._cueInit){
-      s._cueInit = true;
-      const cue = document.createElement('div');
-      cue.className = 'scroll-cue';
-      cue.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      s.insertBefore(cue, s.firstChild);
-      s.addEventListener('scroll', function(){ window.requestAnimationFrame(function(){ cueUpd(s); }); }, {passive:true});
-      // imágenes dentro de la card pueden cambiar la altura → recalcular al cargar
-      s.querySelectorAll('img').forEach(function(im){ im.addEventListener('load', function(){ cueUpd(s); }); });
+    const nav = scroller._nav;
+    if (nav){
+      nav.querySelector('.step-count b').textContent = (i + 1);
+      nav.querySelector('.step-prev').disabled = (i === 0);
+      const next = nav.querySelector('.step-next');
+      next.disabled = (i === slides.length - 1);
+      next.textContent = (i === slides.length - 1) ? 'Última' : 'Siguiente \u203a';
     }
-    // recalcular en varios momentos para que aparezca de inmediato
-    [60, 200, 500, 1000].forEach(function(t){ setTimeout(function(){ cueUpd(s); }, t); });
-  });
-  function cueUpd(s){
-    const scrollable = s.scrollHeight > s.clientHeight + 12;
-    const atBottom = s.scrollHeight - s.clientHeight - s.scrollTop <= 16;
-    s.classList.toggle('has-more', scrollable && !atBottom);
   }
-  window.addEventListener('resize', function(){ slides.forEach(function(s){ cueUpd(s); }); }, {passive:true});
-}
 
+  function move(dir){
+    const n = slides.length;
+    let i = Math.min(n - 1, Math.max(0, (scroller._stepIndex || 0) + dir));
+    show(i);
+    // Sube al inicio de la sección, no de la página: así la portada no
+    // vuelve a robar pantalla en cada toque.
+    const top = scroller.getBoundingClientRect().top + window.scrollY - 96;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
+  if (!scroller._stepInit){
+    scroller._stepInit = true;
+    scroller.classList.add('step-flow');
+
+    // Fuera restos del carrusel
+    const hint = scroller.parentNode.querySelector('.carousel-hint');
+    if (hint) hint.remove();
+    slides.forEach(function(sl){
+      const cue = sl.querySelector('.scroll-cue');
+      if (cue) cue.remove();
+    });
+
+    const nav = document.createElement('div');
+    nav.className = 'step-nav';
+    nav.innerHTML =
+      '<button type="button" class="step-btn step-prev">\u2039 Anterior</button>' +
+      '<span class="step-count"><b>1</b> de ' + slides.length + '</span>' +
+      '<button type="button" class="step-btn step-next">Siguiente \u203a</button>';
+    scroller.parentNode.insertBefore(nav, scroller.nextSibling);
+    scroller._nav = nav;
+
+    nav.querySelector('.step-prev').addEventListener('click', function(){ move(-1); });
+    nav.querySelector('.step-next').addEventListener('click', function(){ move(1); });
+
+    // Deslizar con el dedo sigue funcionando
+    let sx = 0, sy = 0;
+    scroller.addEventListener('touchstart', function(e){
+      const t = e.touches[0]; sx = t.clientX; sy = t.clientY;
+    }, { passive: true });
+    scroller.addEventListener('touchend', function(e){
+      if (!sx) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.6) move(dx < 0 ? 1 : -1);
+      sx = 0; sy = 0;
+    }, { passive: true });
+  }
+
+  show(scroller._stepIndex || 0);
+}
+// Nombre viejo conservado: lo llaman otros puntos del archivo
+function initBlurCarousel(scroller){ return initStepFlow(scroller); }
 
 // Hook en go()
 (function() {
@@ -11922,8 +12064,9 @@ function initBlurCarousel(scroller){
       if (typeof hubApplyReadStates === 'function') hubApplyReadStates();
       if (typeof homeApplyOrientation === 'function') homeApplyOrientation();
     }
-    if (id === 's-programa') setTimeout(function(){ initBlurCarousel(document.querySelector('#s-programa .progm-blocks')); }, 60);
-    if (id === 's-journey')  setTimeout(function(){ initBlurCarousel(document.querySelector('#s-journey .jrn-timeline')); }, 60);
+    if (id === 's-programa')  setTimeout(function(){ initStepFlow(document.querySelector('#s-programa .progm-blocks')); }, 60);
+    if (id === 's-journey')   setTimeout(function(){ initStepFlow(document.querySelector('#s-journey .jrn-timeline')); }, 60);
+    if (id === 's-app-train') setTimeout(function(){ initStepFlow(document.querySelector('#s-app-train .progm-blocks')); }, 60);
   };
 })();
 </script>
@@ -12061,7 +12204,7 @@ function initBlurCarousel(scroller){
   var LABELS = {
     'programa':     'Cómo funciona el programa',
     'app':          'Cómo funciona la app',
-    'journey':      'Tu Journey en el método',
+    'journey':      'Tu Journey en el programa',
     'meal-tracker': 'Cómo usar Meal Tracker',
     'entrada':      'Entró al centro'
   };
