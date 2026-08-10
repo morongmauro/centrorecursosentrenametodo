@@ -8972,6 +8972,217 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
 .scroll-hint svg{color:var(--olive-dark);}
 .scroll-hint.is-off{opacity:0 !important;}
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v24 · Bug de las letras, aire del hero y frases destacadas
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── BUG · Párrafos tratados como bullets ──────────────────────────
+   .progm-welcome, .progm-note y .appt-callout son PÁRRAFOS, no items de
+   lista. Al quitarles el fondo les dejé el punto y la sangría de bullet:
+   el punto caía encima de la primera letra de cada línea. */
+.read-flow .progm-note,.read-flow .progm-welcome,
+.read-flow .appt-callout,
+#s-programa .read-flow .progm-note,#s-programa .read-flow .progm-welcome,
+#s-app-train .read-flow .appt-callout{
+  padding:0 !important;margin:0 0 12px !important;
+  display:block !important;
+}
+.read-flow .progm-note::before,.read-flow .progm-welcome::before,
+.read-flow .appt-callout::before,
+#s-programa .read-flow .progm-note::before,
+#s-programa .read-flow .progm-welcome::before,
+#s-app-train .read-flow .appt-callout::before{
+  content:none !important;display:none !important;
+}
+/* Nada recorta el texto: ni overflow, ni clip, ni máscaras heredadas */
+.read-flow,.read-flow *{
+  overflow:visible !important;clip-path:none !important;
+  -webkit-mask-image:none !important;mask-image:none !important;
+}
+.read-flow .rh-takeaway{overflow:hidden !important;}
+
+/* ── Menos aire entre la portada y el texto ────────────────────────── */
+.sub-hero-plain{padding-bottom:26px !important;margin-bottom:0 !important;}
+.scroll-hint{margin:8px 0 0 !important;padding:4px 0 !important;}
+.read-flow > .flow-sep:first-child{margin-top:14px !important;}
+#s-programa .progm-blocks,#s-app-train .progm-blocks,
+#s-journey .jrn-timeline,#s-meal-guide .progm-blocks{margin-top:0 !important;}
+
+/* ── Transparencia sutil en el límite inferior de la portada ───────── */
+.sub-hero-plain{position:relative;}
+.sub-hero-plain::after{
+  content:"" !important;display:block !important;
+  position:absolute;left:0;right:0;bottom:0;height:18px;
+  background:linear-gradient(180deg,rgba(42,42,41,0) 0%,rgba(237,236,229,.18) 100%);
+  pointer-events:none;
+}
+
+/* ── Frases destacadas: cuerpo en negrita grande, NO Bebas ─────────── */
+.read-flow .rh-quote,.read-flow .rh-dark-quote,
+.read-flow .jrn-quote,.read-flow .progm-quote,
+#s-programa .read-flow .rh-quote,#s-app-train .read-flow .rh-quote,
+#s-journey .read-flow .rh-quote,#s-meal-guide .read-flow .rh-quote{
+  font-family:'Inter',sans-serif !important;
+  font-size:19px !important;font-weight:800 !important;
+  letter-spacing:-.02em !important;line-height:1.3 !important;
+  text-transform:none !important;
+  color:var(--text) !important;
+  margin:0 0 14px !important;
+}
+.read-flow .rh-quote em,.read-flow .jrn-quote em{
+  color:var(--olive-dark) !important;font-style:normal !important;font-weight:800 !important;
+}
+
+
+/* ── Lista con icono de la guía del Meal Tracker ────────────────────── */
+.read-flow .mtg-list{list-style:none !important;margin:0 !important;padding:0 !important;}
+.read-flow .mtg-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  margin:0 0 13px !important;padding:0 !important;
+  font-size:14px;line-height:1.55;color:var(--text-soft);
+}
+.read-flow .mtg-list li::before{content:none !important;display:none !important;}
+.read-flow .mtg-list li strong{color:var(--text);font-weight:700;}
+.read-flow .mtg-list li em{font-style:normal;color:var(--olive-dark);font-weight:600;}
+.mtg-ico{
+  flex:none;width:34px;height:34px;border-radius:11px;
+  display:grid;place-content:center;color:#fff;
+  box-shadow:0 4px 12px rgba(74,82,56,.20);
+}
+.mtg-ico[data-c="0"]{background:linear-gradient(135deg,#98A465,#4A5238);}
+.mtg-ico[data-c="1"]{background:linear-gradient(135deg,#E09479,#C05E44);}
+.mtg-ico[data-c="2"]{background:linear-gradient(135deg,#D9B778,#B07F2E);}
+.mtg-ico[data-c="3"]{background:linear-gradient(135deg,#74AECB,#3F81A6);}
+.mtg-ico svg{width:17px;height:17px;display:block;}
+
+/* Diagrama de la app */
+.mtd-diagram{margin:4px 0 18px;}
+.mtd-diagram svg{
+  width:100%;height:auto;display:block;border-radius:18px;
+  box-shadow:0 2px 8px rgba(60,70,50,.10),0 12px 30px rgba(60,70,50,.12);
+  background:#FFFFFF;
+}
+.mtd-caption{
+  margin-top:8px !important;font-size:11.5px !important;line-height:1.45 !important;
+  color:var(--text-mute) !important;font-weight:500 !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   v25 · Una forma por sección — mismo texto, distinta puesta en escena
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1 · Un color de acento por sección ─────────────────────────────
+   Antes los iconos rotaban cuatro colores DENTRO de cada sección, así que
+   las cuatro se veían igual de multicolor. Ahora cada sección tiene el
+   suyo: entras y sabes dónde estás sin leer. */
+#s-programa   {--sec:#8A9558; --sec-dark:#4A5238; --sec-soft:#EFF2E2;}
+#s-app-train  {--sec:#D77A61; --sec-dark:#A44A31; --sec-soft:#FBEAE3;}
+#s-meal-guide {--sec:#C9A24B; --sec-dark:#8A6A1E; --sec-soft:#F8F0DC;}
+#s-journey    {--sec:#5B93B0; --sec-dark:#33637E; --sec-soft:#E4F0F6;}
+
+#s-programa .flow-sep-ico,#s-app-train .flow-sep-ico,
+#s-meal-guide .flow-sep-ico,#s-journey .flow-sep-ico,
+#s-programa .mtg-ico,#s-app-train .mtg-ico,
+#s-meal-guide .mtg-ico,#s-journey .mtg-ico{
+  background:linear-gradient(135deg,var(--sec),var(--sec-dark)) !important;
+}
+#s-programa .flow-sep-num,#s-app-train .flow-sep-num,
+#s-meal-guide .flow-sep-num,#s-journey .flow-sep-num,
+#s-programa .rh-quote em,#s-app-train .rh-quote em,
+#s-meal-guide .rh-quote em,#s-journey .rh-quote em,
+#s-programa .rh-take-label,#s-app-train .rh-take-label,
+#s-meal-guide .rh-take-label,#s-journey .rh-take-label{
+  color:var(--sec-dark) !important;
+}
+#s-programa .flow-sep-rule,#s-app-train .flow-sep-rule,
+#s-meal-guide .flow-sep-rule,#s-journey .flow-sep-rule{
+  background:linear-gradient(90deg,var(--sec) 0%,var(--border) 46%,transparent 100%) !important;
+}
+#s-programa .read-flow li::before,#s-app-train .read-flow li::before,
+#s-meal-guide .read-flow li::before,#s-journey .read-flow li::before,
+#s-journey .read-flow .jrn-result::before{
+  background:var(--sec) !important;
+}
+#s-programa .sub-title-line,#s-app-train .sub-title-line,
+#s-meal-guide .sub-title-line,#s-journey .sub-title-line{
+  background:var(--sec) !important;
+}
+
+/* ── 2 · VISUAL (app de entrenamiento): manda la captura ───────────── */
+[data-modo="visual"] .appm-img-wrap{
+  margin:0 0 14px !important;
+  border:none !important;border-radius:20px !important;
+  background:#fff !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important;
+  box-shadow:0 2px 8px rgba(60,70,50,.10),0 14px 36px rgba(60,70,50,.14) !important;
+}
+[data-modo="visual"] .appm-img-wrap img{
+  max-height:none !important;height:auto !important;
+  object-fit:cover !important;width:100% !important;
+}
+/* La captura entra ANTES del texto: se mira y luego se lee el pie */
+[data-modo="visual"] .progm-block{display:flex !important;flex-direction:column;}
+[data-modo="visual"] .appm-img-wrap{order:-1;}
+[data-modo="visual"] .progm-block-text{
+  font-size:13.5px !important;color:var(--text-soft) !important;
+}
+
+/* ── 3 · EJEMPLOS (Meal Tracker): lo entrecomillado, como un mensaje ── */
+.chat-ej{
+  display:inline-block;
+  margin:6px 0;padding:9px 14px;
+  border-radius:18px 18px 18px 6px;
+  background:var(--sec-soft);
+  color:var(--sec-dark) !important;
+  font-weight:600 !important;font-size:13.5px;line-height:1.45;
+  box-shadow:0 1px 2px rgba(60,70,50,.08);
+}
+
+/* ── 4 · LÍNEA (journey): raíl con hitos, no seis bloques iguales ──── */
+[data-modo="linea"]{position:relative;}
+[data-modo="linea"]::before{
+  content:"";position:absolute;left:13px;top:8px;bottom:60px;
+  width:2px;border-radius:2px;
+  background:linear-gradient(180deg,var(--sec) 0%,var(--sec) 70%,transparent 100%);
+  opacity:.28;
+}
+/* La sangría la imponía una regla con selector de ID (padding:0 !important),
+   así que el hito caía encima del párrafo. Se repite la cadena. */
+#s-journey .jrn-timeline > .jrn-phase,
+[data-modo="linea"] > .jrn-phase{
+  padding:0 0 0 42px !important;position:relative;
+}
+#s-journey [data-modo="linea"] > .flow-sep,
+[data-modo="linea"] > .flow-sep{padding-left:42px !important;}
+.linea-hito{
+  position:absolute;left:0;top:2px;
+  width:28px;height:28px;border-radius:50%;
+  display:grid;place-content:center;
+  background:var(--sec);color:#fff;
+  box-shadow:0 0 0 4px var(--bg),0 3px 10px rgba(51,99,126,.28);
+}
+.linea-hito i{display:none;}
+.linea-hito b{
+  font-family:'Inter',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:0;
+}
+/* En la línea de tiempo el divisor no repite el número */
+[data-modo="linea"] .flow-sep-num{display:none !important;}
+
+/* ── 5 · Cierres alternos: no todos terminan igual ─────────────────── */
+.cierre-b .rh-takeaway{
+  background:transparent !important;box-shadow:none !important;
+  border-left:2px solid var(--sec) !important;
+  border-radius:0 !important;
+  padding:2px 0 2px 16px !important;
+}
+.cierre-b .rh-take-label{color:var(--sec-dark) !important;}
+.cierre-a .rh-takeaway{
+  background:var(--sec-soft) !important;
+  box-shadow:none !important;border-radius:18px !important;
+}
+
 </style>
 </head>
 <body class="locked">
@@ -9388,8 +9599,7 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         </svg>
         <div class="progm-block-eyebrow">Cómo funciona el programa</div>
         <div class="progm-block-title">Tu progreso, con método</div>
-        <div class="progm-block-text"><p class="progm-welcome">Estás por empezar un programa construido sobre un principio simple: <strong>los resultados no se persiguen — se construyen</strong>.</p>
-<p>Cada rutina, cada meta nutricional y cada registro que verás aquí responde a una lógica que la evidencia respalda: entrenamiento, alimentación y descanso funcionando como <strong>un solo sistema</strong>.</p>
+        <div class="progm-block-text"><p>Cada rutina, cada meta nutricional y cada registro que verás aquí responde a una lógica que la evidencia respalda: entrenamiento, alimentación y descanso funcionando como <strong>un solo sistema</strong>.</p>
 <p>Tu parte no es hacerlo perfecto. Es entender cómo funciona y <strong>ejecutarlo con criterio</strong>.</p>
 <p>Estos minutos de lectura son la mejor inversión de tu primera semana.</p>
 <div class="rh-dark"><div class="rh-dark-kicker">Desde hoy</div><p class="rh-dark-quote">Tu progreso tiene <em>método.</em></p></div></div>
@@ -9476,18 +9686,17 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         </svg>
         <div class="progm-block-eyebrow">Pilar 3 · Entorno</div>
         <div class="progm-block-title">Tu entorno de trabajo</div>
-        <div class="progm-block-text"><p class="rh-quote">Cinco espacios <em>sostienen tu proceso.</em></p>
+        <div class="progm-block-text"><p class="rh-quote">Dos apps y dos canales. <em>Nada más que aprender.</em></p>
 <ul class="progm-list">
-<li><strong>App de entrenamiento.</strong> Tus rutinas con video y seguimiento de progreso.</li>
-<li><strong>App de registro de comidas.</strong> Para registrar lo que comes, estimar tus porciones según tu meta y recibir recetas inteligentes con tus ingredientes.</li>
-<li><strong>Chat 1:1 por WhatsApp.</strong> Canal directo conmigo para resolver dudas y ajustar tu proceso.</li>
-<li><strong>Centro de Aprendizaje (web app).</strong> Todo el material informativo y las guías de aprendizaje en un solo lugar.</li>
-<li><strong>Chat de grupo privado en Instagram.</strong> Comunidad del programa: contenido y acompañamiento.</li>
+<li><strong>App de entrenamiento.</strong> Tus rutinas con videos de ejecución y tu calendario semanal.</li>
+<li><strong>App de gestión de alimentación.</strong> Meal tracking, recetario y el material de aprendizaje, todo dentro.</li>
+<li><strong>WhatsApp.</strong> Canal directo conmigo para dudas y ajustes de tu proceso.</li>
+<li><strong>Grupo de Instagram.</strong> Mensajes comunitarios y acompañamiento entre quienes están en el programa.</li>
 </ul>
 <div class="rh-takeaway"><div class="rh-take-label">En esencia</div><ul>
-<li>Cada herramienta cumple un rol específico</li>
-<li>Dudas y ajustes: chat 1:1 por WhatsApp</li>
-<li>Material y guías: aquí, en el Centro de Aprendizaje</li>
+<li>Entrenamiento: calendario y videos</li>
+<li>Alimentación: registro, recetas y aprendizaje</li>
+<li>Dudas: WhatsApp · Comunidad: Instagram</li>
 </ul></div></div>
       </div>
       <div class="progm-block">
@@ -9513,18 +9722,16 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         </svg>
         <div class="progm-block-eyebrow">Pilar 4 · Seguimiento</div>
         <div class="progm-block-title">Seguimiento y evolución</div>
-        <div class="progm-block-text"><p class="rh-quote">Lo que no se mide, <em>no se puede optimizar.</em></p>
-<p>Por eso registras tres cosas, cada una en su lugar:</p>
+        <div class="progm-block-text"><p class="rh-quote">Registras para decidir con datos, <em>no con percepción.</em></p>
+<p>Tu entrenamiento y tu gestión de alimentación quedan registrados, y esos datos los usamos los dos: <strong>tú para ver tu avance real, y yo para ajustar el proceso con criterio</strong> en vez de a ciegas.</p>
 <ul class="progm-list">
-<li><strong>Tus entrenamientos</strong> en la app de entrenamiento: pesos, repeticiones y percepción de esfuerzo.</li>
-<li><strong>Tus comidas</strong> en la app de registro de comidas (no en la app de entrenamiento).</li>
-<li><strong>Tu avance de lectura</strong> de la guía, aquí en el Centro de Aprendizaje.</li>
+<li><strong>Tu entrenamiento</strong> en la app de entrenamiento: pesos, repeticiones y percepción de esfuerzo.</li>
+<li><strong>Tu alimentación</strong> en la app de gestión: lo que comes y cómo queda frente a tu meta del día.</li>
+<li><strong>Tu composición corporal y tus fotografías</strong>: peso, porcentaje de grasa y registro fotográfico, una vez al mes.</li>
 </ul>
-<div class="rh-kicker">Registro mensual</div>
-<p>Y una vez al <strong>mes</strong>, actualizas tu <strong>registro corporal: peso y % de grasa</strong>, y tu <strong>foto de progreso</strong>.</p>
 <div class="rh-takeaway"><div class="rh-take-label">En esencia</div><ul>
-<li>Entrenos → app de entrenamiento</li>
-<li>Comidas → app de registro de comidas</li>
+<li>Los datos sirven a los dos: a ti y a tu coach</li>
+<li>Entrenamiento y alimentación, cada uno en su app</li>
 <li>Cada mes: peso, % de grasa y fotos</li>
 </ul></div></div>
       </div>
@@ -9548,9 +9755,10 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         <div class="progm-block-title">Aclaraciones operativas</div>
         <div class="progm-block-text"><p class="rh-quote">Cualquier molestia, lesión o cambio en tu salud: <em>infórmalo de inmediato.</em></p>
 <ul class="progm-list">
-<li>El acceso a la app y al contenido es <strong>personal e intransferible</strong>.</li>
-<li>Si deseas salir, avisa <strong>antes de la fecha de corte mensual</strong> para evitar cobros. Las pausas temporales son posibles por viajes o condición médica.</li>
-<li>El programa funciona como <strong>suscripción mensual</strong> desde la fecha de inicio.</li>
+<li>El programa funciona como <strong>suscripción mensual</strong> desde tu fecha de inicio.</li>
+<li>Si decides retirarte, <strong>avísame antes de la fecha de corte</strong> para evitar cobros del siguiente mes.</li>
+<li>Las <strong>pausas temporales</strong> son posibles por viaje o condición médica.</li>
+<li>El acceso a las apps y al contenido es <strong>personal e intransferible</strong>.</li>
 </ul>
 <div class="rh-takeaway"><div class="rh-take-label">En esencia</div><ul>
 <li>Acceso personal e intransferible</li>
@@ -9743,7 +9951,7 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
       </div>
     </div>
 
-    <div class="rh-dark jrn-close"><div class="rh-dark-kicker">Fase a fase</div><p class="rh-dark-quote">Adaptarte a tu realidad <em>sin perder el rumbo.</em></p></div>
+    <div class="rh-dark jrn-close"><div class="rh-dark-kicker">Fase a fase</div><p class="rh-dark-quote">Adaptarte a tu nueva realidad <em>sin perder el rumbo.</em></p></div>
 
     <div class="footer">
       <div class="footer-brand">ENTRENA CON MÉTODO</div>
@@ -9791,7 +9999,7 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
     </figure>
   </div>
 
-  <script id="appm-data" type="application/json">[{"section": "C\u00f3mo funciona la app", "title": "Tu app de entrenamiento", "body": "<p class=\"rh-quote\">Datos reales, <em>decisiones con criterio.</em></p>\n<p>Dentro del programa usamos una app para organizar y dar seguimiento a dos pilares del proceso: <strong>entrenamiento y progreso</strong>.</p>\n<p>No es una app de rutinas gen\u00e9ricas. Es la herramienta de tu <strong>coaching online personalizado</strong>: registrar tu entrenamiento permite basar el proceso en datos reales y tomar decisiones con criterio.</p>\n<p>Aqu\u00ed encontrar\u00e1s tus rutinas con videos, tu calendario y las gr\u00e1ficas de tu progreso.</p>", "img": ""}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "D\u00f3nde encuentras tu rutina del d\u00eda", "body": "<p class=\"rh-quote\">Tu punto de partida <em>diario.</em></p>\n<p>Puedes iniciar tu rutina desde dos lugares: la secci\u00f3n <strong>Home</strong> o la secci\u00f3n <strong>Calendar</strong>, donde se muestra c\u00f3mo est\u00e1 organizada tu semana de entrenamiento.</p>\n<p>All\u00ed seleccionas la <strong>rutina programada para el d\u00eda</strong> e inicias. El Home funciona como tu punto de partida diario: te orienta antes de entrenar.</p>", "img": "img/app-tutorial-01-rutina-del-dia.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "Ejecutar: videos, registro y percepci\u00f3n", "body": "<p>Al abrir la rutina, cada ejercicio incluye un <strong>video demostrativo</strong> y una explicaci\u00f3n textual para guiar su correcta ejecuci\u00f3n.</p>\n<p>El orden responde a una l\u00f3gica de entrenamiento: calentamiento, fuerza, resistencia, movilidad y enfriamiento. <strong>S\u00edguelo como est\u00e1 planteado.</strong></p>\n<p>Durante la sesi\u00f3n registras los <strong>pesos, repeticiones y tu nivel de percepci\u00f3n de esfuerzo</strong>. Esto da trazabilidad real a tu progreso.</p>", "img": "img/app-tutorial-02-ejecucion-videos.png"}, {"section": "Secci\u00f3n 1 \u00b7 C\u00f3mo iniciar tu rutina", "title": "La galer\u00eda de workouts y tu programa", "body": "<p>En la secci\u00f3n <strong>Workouts</strong> encuentras tu programa completo: las rutinas organizadas por fase, con su duraci\u00f3n estimada y n\u00famero de ejercicios.</p>\n<p>Esta secci\u00f3n es <strong>de consulta</strong>: \u00fasala si quieres visualizar tus ejercicios y videos. Pero lo recomendable es <strong>activar las rutinas desde el Calendar o el Home</strong>, seg\u00fan tu calendario. La galer\u00eda es para consultar, no para iniciar.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">En esencia</div><ul>\n<li>Inicia tu rutina desde Home o Calendar</li>\n<li>Sigue el orden planteado de la sesi\u00f3n</li>\n<li>Registra pesos, repeticiones y esfuerzo</li>\n</ul></div>", "img": "img/app-tutorial-03-galeria-workouts.png"}, {"section": "Secci\u00f3n 2 \u00b7 Registro peri\u00f3dico de progreso", "title": "Fotos de progreso y composici\u00f3n corporal", "body": "<p class=\"rh-quote\">Medir cambios reales, <em>no percepci\u00f3n.</em></p>\n<p>Para observar tu evoluci\u00f3n, registra <strong>mensualmente</strong> tu peso, porcentaje de grasa corporal y un registro fotogr\u00e1fico.</p>\n<p>Lo haces en las secciones <strong>Body Stats y Photos</strong>, desde el Calendar o desde el men\u00fa de opciones.</p>\n<p>Este registro peri\u00f3dico es lo que permite <strong>medir cambios reales</strong> y ajustar el proceso con datos, no con percepci\u00f3n.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">En esencia</div><ul>\n<li>Cada mes: peso, % de grasa y fotos</li>\n<li>Se registra en Body Stats y Photos</li>\n</ul></div>", "img": "img/app-tutorial-06-fotos-progreso.png"}, {"section": "Secci\u00f3n 3 \u00b7 Recomendaciones", "title": "Buenas pr\u00e1cticas para aprovechar la app", "body": "<p class=\"rh-quote\">H\u00e1bitos que hacen <em>la diferencia.</em></p>\n<ul class=\"app-modal-list\">\n<li>Revisa el <strong>Home</strong> antes de iniciar tu entrenamiento.</li>\n<li>Sigue las rutinas en el <strong>orden del calendario</strong>.</li>\n<li>Repasa los <strong>videos</strong> de los ejercicios antes de realizarlos.</li>\n<li>Registra <strong>pesos, repeticiones e intensidad</strong> de cada sesi\u00f3n.</li>\n<li>Ap\u00f3yate en la <strong>gu\u00eda de alimentaci\u00f3n</strong> y la <strong>app de Meal Tracking</strong>.</li>\n</ul>\n<div class=\"rh-dark\"><div class=\"rh-dark-kicker\">Cada sesi\u00f3n</div><p class=\"rh-dark-quote\">Tu progreso, <em>con trazabilidad real.</em></p></div>", "img": ""}]</script>
+  <script id="appm-data" type="application/json">[{"section": "Cómo funciona la app", "title": "Tu app de entrenamiento", "body": "<p class=\"rh-quote\">Datos reales, <em>decisiones con criterio.</em></p>\n<p>Dentro del programa usamos una app para organizar y dar seguimiento a dos pilares del proceso: <strong>entrenamiento y progreso</strong>.</p>\n<p>No es una app de rutinas genéricas. Es la herramienta de tu <strong>coaching online personalizado</strong>: registrar tu entrenamiento permite basar el proceso en datos reales y tomar decisiones con criterio.</p>\n<p>Aquí encontrarás tus rutinas con videos, tu calendario y las gráficas de tu progreso.</p>", "img": ""}, {"section": "Sección 1 · Cómo iniciar tu rutina", "title": "Dónde encuentras tu rutina del día", "body": "<p class=\"rh-quote\">Tu punto de partida <em>diario.</em></p>\n<p>Puedes iniciar tu rutina desde dos lugares: la sección <strong>Home</strong> o la sección <strong>Calendar</strong>, donde se muestra cómo está organizada tu semana de entrenamiento.</p>\n<p>Allí seleccionas la <strong>rutina programada para el día</strong> e inicias. El Home funciona como tu punto de partida diario: te orienta antes de entrenar.</p>", "img": "img/app-tutorial-01-rutina-del-dia.png"}, {"section": "Sección 1 · Cómo iniciar tu rutina", "title": "Ejecutar: videos, registro y percepción", "body": "<p>Al abrir la rutina, cada ejercicio incluye un <strong>video demostrativo</strong> y una explicación textual para guiar su correcta ejecución.</p>\n<p>El orden responde a una lógica de entrenamiento: calentamiento, fuerza, resistencia, movilidad y enfriamiento. <strong>Síguelo como está planteado.</strong></p>\n<p>Durante la sesión registras los <strong>pesos, repeticiones y tu nivel de percepción de esfuerzo</strong>. Esto da trazabilidad real a tu progreso.</p>", "img": "img/app-tutorial-02-ejecucion-videos.png"}, {"section": "Sección 1 · Cómo iniciar tu rutina", "title": "La galería de workouts y tu programa", "body": "<p>En la sección <strong>Workouts</strong> encuentras tu programa completo: las rutinas organizadas por fase, con su duración estimada y número de ejercicios.</p>\n<p>Esta sección es <strong>de consulta</strong>: úsala para visualizar tus ejercicios y videos. La galería es para consultar, no para iniciar.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">En esencia</div><ul>\n<li>Sigue el orden planteado de la sesión</li>\n<li>Registra pesos, repeticiones y esfuerzo</li>\n</ul></div>", "img": "img/app-tutorial-03-galeria-workouts.png"}, {"section": "Sección 2 · Registro periódico de progreso", "title": "Fotos de progreso y composición corporal", "body": "<p class=\"rh-quote\">Medir cambios reales, <em>no percepción.</em></p>\n<p>Para observar tu evolución, registra <strong>mensualmente</strong> tu peso, porcentaje de grasa corporal y un registro fotográfico.</p>\n<p>Lo haces en las secciones <strong>Body Stats y Photos</strong>, desde el Calendar o desde el menú de opciones.</p>\n<p>Este registro periódico es lo que permite <strong>medir cambios reales</strong> y ajustar el proceso con datos, no con percepción.</p>\n<div class=\"rh-takeaway\"><div class=\"rh-take-label\">En esencia</div><ul>\n<li>Cada mes: peso, % de grasa y fotos</li>\n<li>Se registra en Body Stats y Photos</li>\n</ul></div>", "img": "img/app-tutorial-06-fotos-progreso.png"}, {"section": "Sección 3 · Recomendaciones", "title": "Buenas prácticas para aprovechar la app", "body": "<p class=\"rh-quote\">Hábitos que hacen <em>la diferencia.</em></p>\n<ul class=\"app-modal-list\">\n<li>Sigue las rutinas en el <strong>orden del calendario</strong>.</li>\n<li>Repasa los <strong>videos</strong> de los ejercicios antes de realizarlos.</li>\n<li>Registra <strong>pesos, repeticiones e intensidad</strong> de cada sesión.</li>\n</ul>\n<div class=\"rh-dark\"><div class=\"rh-dark-kicker\">Cada sesión</div><p class=\"rh-dark-quote\">Tu progreso, <em>con trazabilidad real.</em></p></div>", "img": ""}]</script>
 </div>
 
 <!-- =============================================== -->
@@ -9996,16 +10204,51 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         <div class="progm-block-title">Qué hay en cada pestaña</div>
         <div class="progm-block-text">
           <p class="rh-quote">Cinco lugares, y ya. <em>Todo lo demás pasa en el chat.</em></p>
-          <p><strong>Hoy.</strong> Tu meta del día en cuatro anillos —calorías, proteína, carbos y grasas— y lo que llevas registrado. Debajo, tus herramientas: Mi semana, Reto, Recordatorios y Calendario.</p>
-          <p><strong>Chat.</strong> Donde registras, corriges y preguntas. Es el centro de la app.</p>
-          <p><strong>Recetario.</strong> Recetas filtradas por lo que te queda del día, no por antojo.</p>
-          <p><strong>Herramientas.</strong> Menús favoritos, Mis ingredientes, Cambiar meta y el historial.</p>
-          <p><strong>Aprende.</strong> Este centro, en su propio botón al lado de la barra.</p>
-          <div class="rh-takeaway"><div class="rh-take-label">En esencia</div><ul>
-            <li>La app registra, calcula y organiza</li>
-            <li>No recomienda dietas ni reemplaza a un profesional</li>
-            <li>El criterio lo aporta tu coach</li>
-          </ul></div>
+
+          <!-- Diagrama de la app: los cuatro anillos del día y una burbuja de
+               chat. Es SVG, así que no depende de subir capturas. -->
+          <div class="mtd-diagram" aria-label="La pantalla Hoy con sus cuatro anillos y el chat">
+            <svg viewBox="0 0 320 150" fill="none" aria-hidden="true">
+              <rect x="8" y="8" width="304" height="134" rx="18" fill="#FFFFFF"/>
+              <text x="26" y="34" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#8A9558" letter-spacing="0.6">TU DÍA · EN VIVO</text>
+              <circle cx="46" cy="76" r="22" stroke="#E6E4DA" stroke-width="6"/>
+              <circle cx="46" cy="76" r="22" stroke="#8A9558" stroke-width="6" stroke-linecap="round"
+                      stroke-dasharray="138.2" stroke-dashoffset="48" transform="rotate(-90 46 76)"/>
+              <text x="46" y="80" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1F1F1F">65%</text>
+              <g>
+                <circle cx="110" cy="76" r="14" stroke="#E6E4DA" stroke-width="4"/>
+                <circle cx="110" cy="76" r="14" stroke="#D77A61" stroke-width="4" stroke-linecap="round" stroke-dasharray="88" stroke-dashoffset="26" transform="rotate(-90 110 76)"/>
+                <text x="110" y="102" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="#6B6B6B">PROTE</text>
+                <circle cx="152" cy="76" r="14" stroke="#E6E4DA" stroke-width="4"/>
+                <circle cx="152" cy="76" r="14" stroke="#D4B581" stroke-width="4" stroke-linecap="round" stroke-dasharray="88" stroke-dashoffset="34" transform="rotate(-90 152 76)"/>
+                <text x="152" y="102" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="#6B6B6B">CARBOS</text>
+                <circle cx="194" cy="76" r="14" stroke="#E6E4DA" stroke-width="4"/>
+                <circle cx="194" cy="76" r="14" stroke="#6B7A8F" stroke-width="4" stroke-linecap="round" stroke-dasharray="88" stroke-dashoffset="44" transform="rotate(-90 194 76)"/>
+                <text x="194" y="102" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="#6B6B6B">GRASAS</text>
+              </g>
+              <rect x="228" y="52" width="66" height="30" rx="12" fill="#D4DAB8"/>
+              <rect x="236" y="62" width="42" height="3.5" rx="1.75" fill="#4A5238" opacity=".55"/>
+              <rect x="236" y="70" width="28" height="3.5" rx="1.75" fill="#4A5238" opacity=".35"/>
+              <rect x="228" y="90" width="66" height="24" rx="10" fill="#F1F0EA"/>
+              <rect x="236" y="100" width="34" height="3.5" rx="1.75" fill="#8B8878"/>
+              <circle cx="284" cy="102" r="7" fill="#1F1F1F"/>
+              <path d="M284 99v6M281.5 102h5" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <p class="mtd-caption">Arriba tu meta del día en anillos; abajo, el chat donde registras.</p>
+          </div>
+
+          <ul class="mtg-list">
+            <li><span class="mtg-ico" data-c="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+              <span><strong>Hoy.</strong> Tu meta del día en cuatro anillos y lo que llevas registrado. Debajo: Mi semana, Reto, Recordatorios y Calendario.</span></li>
+            <li><span class="mtg-ico" data-c="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.2 0-2.4-.25-3.4-.7L3 21l1.7-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg></span>
+              <span><strong>Chat.</strong> Donde registras, corriges y preguntas. Es el centro de la app.</span></li>
+            <li><span class="mtg-ico" data-c="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+              <span><strong>Recetario.</strong> Recetas filtradas por lo que te queda del día, no por antojo.</span></li>
+            <li><span class="mtg-ico" data-c="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+              <span><strong>Herramientas.</strong> Menús favoritos, Mis ingredientes, Cambiar meta y el historial.</span></li>
+            <li><span class="mtg-ico" data-c="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
+              <span><strong>Aprende.</strong> Este centro, en su propio botón al lado de la barra.</span></li>
+          </ul>
         </div>
       </div>
 
@@ -10015,24 +10258,28 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         <div class="progm-block-title">Registra como hablas</div>
         <div class="progm-block-text">
           <p class="rh-quote">Sin formularios. <em>Escribes la frase y ya.</em></p>
-          <p>Así se ve: <strong>"Desayuno: 2 huevos revueltos, avena con plátano y café con leche"</strong>.</p>
-          <p>La app separa cada alimento, calcula calorías y macros con valores reales y lo suma a tus anillos. Con el <strong>micrófono</strong> lo dictas en vez de escribirlo: sirve igual.</p>
-          <div class="rh-takeaway"><div class="rh-take-label">Tres atajos</div><ul>
-            <li><strong>Menús favoritos:</strong> guarda con la estrella lo que repites</li>
-            <li><strong>Preguntar sin registrar:</strong> "¿macros de 100g de pollo?"</li>
-            <li><strong>Repetir ayer:</strong> copia el día completo</li>
-          </ul></div>
+          <p>Escribes o dictas: <strong>"Desayuno: 2 huevos revueltos, avena con plátano y café con leche"</strong>. La app separa cada alimento, calcula calorías y macros con valores reales y lo suma a tus anillos.</p>
         </div>
       </div>
 
       <div class="progm-block">
-        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
-        <div class="progm-block-eyebrow">Corregir</div>
-        <div class="progm-block-title">Ajusta lo que haga falta</div>
+        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
+        <div class="progm-block-eyebrow">En el chat</div>
+        <div class="progm-block-title">Qué le puedes pedir</div>
         <div class="progm-block-text">
-          <p class="rh-quote">Nada queda escrito en piedra.</p>
-          <p>Toca el <strong>lápiz</strong> en cualquier comida y cambia las cantidades: los valores se recalculan solos. La <strong>papelera</strong> la elimina. También puedes decirlo en el chat: <strong>"el arroz eran 150 gramos, no 200"</strong>.</p>
-          <p>En <strong>Herramientas → Cambiar meta</strong> actualizas calorías y macros sin perder el historial. Y cuando Mauro la ajusta desde su panel, te avisa en el chat y los anillos quedan cambiados solos.</p>
+          <p class="rh-quote">No solo registra. <em>También responde.</em></p>
+          <ul class="mtg-list">
+            <li><span class="mtg-ico" data-c="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+              <span><strong>Cuánto aporta un alimento</strong>, sin registrarlo: <em>"¿macros de 100 g de pollo?"</em></span></li>
+            <li><span class="mtg-ico" data-c="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9v9z"/></svg></span>
+              <span><strong>Que te cierre la meta</strong> con lo que te falta: <em>"me faltan 40 g de proteína, ¿qué hago?"</em></span></li>
+            <li><span class="mtg-ico" data-c="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+              <span><strong>Corregir lo registrado</strong>: <em>"el arroz eran 150 gramos, no 200"</em>. O con el lápiz en la comida.</span></li>
+            <li><span class="mtg-ico" data-c="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 .5-5.5 4.5L18 21l-6-3.5L6 21l1.5-7L2 9.5 9 9z"/></svg></span>
+              <span><strong>Sugerencias con tus favoritos</strong>: si te pasas o te falta, propone con tus <strong>menús</strong> e <strong>ingredientes favoritos</strong> guardados.</span></li>
+            <li><span class="mtg-ico" data-c="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span><strong>Repetir ayer</strong>: si comiste lo mismo, copia el día completo.</span></li>
+          </ul>
         </div>
       </div>
 
@@ -10044,26 +10291,21 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
           <p class="rh-quote">Tú pones los alimentos. <em>La app pone los gramos.</em></p>
           <p>Le dices qué tienes y para qué comida, y calcula las cantidades que te cuadran con lo que te queda del día: <strong>"Tengo pollo, arroz integral, brócoli y aceite de oliva — ayúdame con las proporciones para el almuerzo"</strong>.</p>
           <p>Guarda en <strong>Herramientas → Mis ingredientes</strong> lo que sueles comprar y pide <strong>"arma mi día"</strong>: reparte desayuno, almuerzo, snack y cena hasta llegar a tu meta. La propuesta es editable.</p>
-          <div class="rh-takeaway"><div class="rh-take-label">Cuándo pedirlo</div><ul>
-            <li>Vas a cocinar y no sabes cuánto servirte</li>
-            <li>Te faltan macros al final del día</li>
-            <li>Quieres planear mañana con lo que tienes en casa</li>
-          </ul></div>
         </div>
       </div>
 
       <div class="progm-block">
-        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <div class="progm-block-eyebrow">Tu rutina</div>
-        <div class="progm-block-title">Empieza hoy</div>
+        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+        <div class="progm-block-eyebrow">Tu meta</div>
+        <div class="progm-block-title">Cambiarla cuando toque</div>
         <div class="progm-block-text">
-          <p>El mejor momento para el primer registro es <strong>tu próxima comida</strong>.</p>
+          <p>En <strong>Herramientas → Cambiar meta</strong> actualizas calorías y macros sin perder el historial. Y cuando yo la ajusto desde mi panel, te aviso en el chat y los anillos quedan cambiados solos.</p>
+          <p>Veo tu avance en vivo: macros del día y adherencia de la semana. <strong>No tienes que enviarme nada.</strong></p>
           <div class="rh-takeaway"><div class="rh-take-label">Tu rutina mínima</div><ul>
             <li>Registra cada comida cuando ocurra, por texto o por voz</li>
             <li>Guarda tus menús e ingredientes de siempre</li>
             <li>Pide proporciones cuando no sepas cuánto servirte</li>
           </ul></div>
-          <p>Mauro ve tu avance en vivo desde su panel: macros del día y adherencia de la semana. <strong>No tienes que enviarle nada.</strong></p>
         </div>
       </div>
 
@@ -12928,6 +13170,40 @@ function initStepFlow(scroller){
       }
       sl.classList.add('flow-in');
     });
+
+    // ── Forma propia por sección (solo presentación) ──
+    // Las cuatro contaban lo suyo con el mismo molde y se sentían iguales.
+    // Aquí no se toca el texto: cambia cómo se muestra.
+    const pantalla = scroller.closest('.screen');
+    const modo = pantalla ? ({
+      's-programa':   'concepto',   // texto y principios
+      's-app-train':  'visual',     // manda la captura
+      's-meal-guide': 'ejemplos',   // frases que se copian al chat
+      's-journey':    'linea'       // línea de tiempo con progresión
+    })[pantalla.id] : null;
+    if (modo) scroller.dataset.modo = modo;
+
+    // Journey: raíl de línea de tiempo con un hito por fase
+    if (modo === 'linea'){
+      slides.forEach(function(sl, k){
+        const hito = document.createElement('span');
+        hito.className = 'linea-hito';
+        hito.innerHTML = '<i></i><b>' + String(k + 1).padStart(2, '0') + '</b>';
+        sl.insertBefore(hito, sl.firstChild);
+      });
+    }
+
+    // Meal Tracker: lo entrecomillado se lee como un mensaje de chat.
+    // Se marca por contenido, sin reescribir nada.
+    if (modo === 'ejemplos'){
+      scroller.querySelectorAll('.progm-block-text strong').forEach(function(el){
+        const t = (el.textContent || '').trim();
+        if (/^["“]/.test(t) && /["”]\.?$/.test(t)) el.classList.add('chat-ej');
+      });
+    }
+
+    // Cierres alternos: no todos los bloques terminan igual
+    slides.forEach(function(sl, k){ sl.classList.add(k % 2 ? 'cierre-b' : 'cierre-a'); });
 
     // Revelado al entrar en pantalla
     if (window.IntersectionObserver){
