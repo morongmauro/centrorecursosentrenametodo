@@ -8892,11 +8892,17 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
   -webkit-mask-image:none !important;mask-image:none !important;
 }
 
-/* ── 3 · Portada de la guía: imagen centrada y con más zoom ────────── */
+/* ── 3 · Portada de la guía: la foto llena TODA la portada ──────────
+   Medía 258px dentro de una portada de 364px, así que abajo quedaba una
+   franja negra sin imagen. Ahora la capa cubre el bloque entero. */
+.ga-cover-media{position:absolute !important;inset:0 !important;overflow:hidden;}
 .ga-cover-media img{
+  position:absolute !important;inset:0 !important;
+  width:100% !important;height:100% !important;
+  max-height:none !important;min-height:100% !important;
   object-fit:cover !important;
   object-position:center center !important;
-  transform:scale(1.18);transform-origin:center center;
+  transform:scale(1.06);transform-origin:center center;
 }
 
 /* ── 4+8 · Tarjetas del onboarding mucho más ovaladas ─────────────── */
@@ -10245,7 +10251,7 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
             <li><span class="mtg-ico" data-c="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
               <span><strong>Recetario.</strong> Recetas filtradas por lo que te queda del día, no por antojo.</span></li>
             <li><span class="mtg-ico" data-c="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
-              <span><strong>Herramientas.</strong> Menús favoritos, Mis ingredientes, Cambiar meta y el historial.</span></li>
+              <span><strong>Herramientas.</strong> Menús favoritos, Mis ingredientes, Mi semana, Reto, Recordatorios y Calendario.</span></li>
             <li><span class="mtg-ico" data-c="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
               <span><strong>Aprende.</strong> Este centro, en su propio botón al lado de la barra.</span></li>
           </ul>
@@ -10295,12 +10301,37 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
       </div>
 
       <div class="progm-block">
-        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
-        <div class="progm-block-eyebrow">Tu meta</div>
-        <div class="progm-block-title">Cambiarla cuando toque</div>
+        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l3.5-4 3 2.5L20 6"/></svg></div>
+        <div class="progm-block-eyebrow">Tu seguimiento</div>
+        <div class="progm-block-title">Mira cómo vas</div>
         <div class="progm-block-text">
-          <p>En <strong>Herramientas → Cambiar meta</strong> actualizas calorías y macros sin perder el historial. Y cuando yo la ajusto desde mi panel, te aviso en el chat y los anillos quedan cambiados solos.</p>
-          <p>Veo tu avance en vivo: macros del día y adherencia de la semana. <strong>No tienes que enviarme nada.</strong></p>
+          <p class="rh-quote">Tu semana, a la vista. <em>Sin pedir nada.</em></p>
+          <ul class="mtg-list">
+            <li><span class="mtg-ico" data-c="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3.5-4 3 2.5L20 6"/></svg></span>
+              <span><strong>Mi semana.</strong> Tu desempeño de los últimos días: qué tan alineado quedaste con tu meta y cómo viene la tendencia.</span></li>
+            <li><span class="mtg-ico" data-c="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></span>
+              <span><strong>Calendario.</strong> Los días registrados, para revisar cualquier fecha atrás.</span></li>
+            <li><span class="mtg-ico" data-c="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+              <span><strong>Recetario.</strong> Recetas filtradas por lo que te queda del día: no te propone lo que ya no te cabe.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="progm-block">
+        <div class="progm-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+        <div class="progm-block-eyebrow">Lo que llega solo</div>
+        <div class="progm-block-title">Tu meta y tus avisos</div>
+        <div class="progm-block-text">
+          <p class="rh-quote">La meta la ajusto yo. <em>Tú te enteras al instante.</em></p>
+          <p>Tu meta de calorías y macros <strong>la administro yo desde mi panel</strong>, según cómo venga tu proceso. Cuando la cambio, <strong>te llega el aviso al chat y los anillos quedan actualizados solos</strong>. No tienes que configurar nada.</p>
+          <ul class="mtg-list">
+            <li><span class="mtg-ico" data-c="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+              <span><strong>Recordatorios.</strong> Los que te dejo desde mi panel aparecen en la app; cuando los cumples, los marcas y lo veo.</span></li>
+            <li><span class="mtg-ico" data-c="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M11 18h2"/></svg></span>
+              <span><strong>Notificaciones al teléfono.</strong> Si las activas, te avisa para que ningún registro se te pase.</span></li>
+            <li><span class="mtg-ico" data-c="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
+              <span><strong>Yo veo tu avance en vivo</strong>: macros del día y adherencia de la semana. <strong>No tienes que enviarme nada.</strong></span></li>
+          </ul>
           <div class="rh-takeaway"><div class="rh-take-label">Tu rutina mínima</div><ul>
             <li>Registra cada comida cuando ocurra, por texto o por voz</li>
             <li>Guarda tus menús e ingredientes de siempre</li>
