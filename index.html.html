@@ -12835,6 +12835,333 @@ document.addEventListener('click', (e) => {
 });
 
 // Inicializar al entrar a la guía
+
+// ═══════════════════════════════════════════════════════════════════════
+// MODO ESCUCHA · la guía leída en voz alta
+// ═══════════════════════════════════════════════════════════════════════
+// Para quien no alcanza a leer pero sí a escuchar. Usa speechSynthesis: la
+// voz vive en el propio teléfono, así que no hay archivos que descargar, no
+// consume datos y arranca al instante. Si algún día se quiere una voz
+// grabada por un narrador, lo único que cambia es de dónde sale el audio:
+// la lista de bloques, el resaltado y los controles se quedan igual.
+const GA_AUDIO_KEY = 'em_ga_audio_pos';
+const GA_AUDIO_PREFS = 'em_ga_audio_prefs';
+let gaAudioBloques = [];      // [{ el, texto, seccion, titulo, esTitulo }]
+let gaAudioIdx = 0;
+let gaAudioSonando = false;
+let gaAudioVoz = null;
+let gaAudioVel = 1;
+let gaAudioKeepAlive = null;
+let gaAudioParando = false;   // ignora onend cuando el corte lo provocamos nosotros
+
+function gaAudioSoportado() {
+  return typeof window !== 'undefined' && 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+}
+
+// Arma la lista de lo que se lee, en el orden en que aparece en pantalla.
+// Solo contenido: los botones, los "3 min de lectura" y el índice quedan fuera.
+function gaAudioIndexar() {
+  gaAudioBloques = [];
+  const secciones = document.querySelectorAll('#s-guia-alimentacion .ga-section');
+  secciones.forEach(sec => {
+    const slug = sec.dataset.section || '';
+    const titulo = (sec.querySelector('.ga-h1')?.textContent || '').trim();
+    const sel = '.ga-h1, .ga-h2, .ga-h3, .ga-p, .ga-list > li, .ga-takeaway-title, .ga-takeaway-list > li, .ga-caption';
+    sec.querySelectorAll(sel).forEach(el => {
+      const texto = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (texto.length < 2) return;
+      gaAudioBloques.push({
+        el, texto, seccion: slug, titulo,
+        esTitulo: el.classList.contains('ga-h1'),
+      });
+    });
+  });
+  return gaAudioBloques.length;
+}
+
+function gaAudioCargarPrefs() {
+  try {
+    const p = JSON.parse(localStorage.getItem(GA_AUDIO_PREFS) || '{}');
+    if (p.vel) gaAudioVel = Number(p.vel) || 1;
+    return p;
+  } catch (e) { return {}; }
+}
+function gaAudioGuardarPrefs(extra) {
+  try {
+    const p = { ...gaAudioCargarPrefs(), vel: gaAudioVel, ...(extra || {}) };
+    localStorage.setItem(GA_AUDIO_PREFS, JSON.stringify(p));
+  } catch (e) {}
+}
+
+// Las voces del sistema llegan de forma asíncrona en casi todos los
+// navegadores: hay que esperar a voiceschanged o la lista sale vacía.
+function gaAudioCargarVoces() {
+  if (!gaAudioSoportado()) return;
+  const todas = window.speechSynthesis.getVoices() || [];
+  const es = todas.filter(v => (v.lang || '').toLowerCase().startsWith('es'));
+  const lista = es.length ? es : todas;
+  const sel = document.getElementById('ga-audio-voz');
+  if (!sel) return;
+  if (!lista.length) { sel.innerHTML = '<option>Voz del sistema</option>'; return; }
+
+  const prefs = gaAudioCargarPrefs();
+  sel.innerHTML = lista.map(v => `<option value="${v.name}">${v.name.replace(/^(Microsoft|Google|Apple)\s+/, '').slice(0, 22)}</option>`).join('');
+  const guardada = lista.find(v => v.name === prefs.voz);
+  gaAudioVoz = guardada || lista[0];
+  sel.value = gaAudioVoz.name;
+}
+
+function gaAudioSetVoz(nombre) {
+  const v = (window.speechSynthesis.getVoices() || []).find(x => x.name === nombre);
+  if (!v) return;
+  gaAudioVoz = v;
+  gaAudioGuardarPrefs({ voz: nombre });
+  if (gaAudioSonando) gaAudioLeer(gaAudioIdx);   // aplica la voz nueva ya mismo
+}
+function gaAudioSetVel(v) {
+  gaAudioVel = Number(v) || 1;
+  gaAudioGuardarPrefs();
+  if (gaAudioSonando) gaAudioLeer(gaAudioIdx);
+}
+
+function gaAudioResaltar(i) {
+  document.querySelectorAll('.ga-reading').forEach(el => el.classList.remove('ga-reading'));
+  const b = gaAudioBloques[i];
+  if (!b) return;
+  b.el.classList.add('ga-reading');
+  const r = b.el.getBoundingClientRect();
+  // Solo se mueve la pantalla si el párrafo se salió de la zona cómoda:
+  // así el usuario puede desplazarse a leer otra cosa sin pelear con el scroll.
+  if (r.top < 90 || r.bottom > window.innerHeight - 150) {
+    window.scrollTo({ top: window.scrollY + r.top - window.innerHeight * 0.35, behavior: 'smooth' });
+  }
+}
+
+function gaAudioPintar() {
+  const b = gaAudioBloques[gaAudioIdx];
+  const tit = document.getElementById('ga-audio-title');
+  const cnt = document.getElementById('ga-audio-count');
+  const fill = document.getElementById('ga-audio-fill');
+  const play = document.getElementById('ga-audio-play');
+  if (tit) tit.textContent = b ? (b.titulo || 'Guía de alimentación') : 'Escuchar la guía';
+  if (cnt) cnt.textContent = gaAudioBloques.length ? `${gaAudioIdx + 1} / ${gaAudioBloques.length}` : '';
+  if (fill) fill.style.width = gaAudioBloques.length ? `${((gaAudioIdx + 1) / gaAudioBloques.length) * 100}%` : '0%';
+  if (play) {
+    play.innerHTML = gaAudioSonando
+      ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="5" width="3.5" height="14" rx="1"/><rect x="13.5" y="5" width="3.5" height="14" rx="1"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>';
+    play.setAttribute('aria-label', gaAudioSonando ? 'Pausar' : 'Reproducir');
+  }
+}
+
+function gaAudioGuardarPos() {
+  try { localStorage.setItem(GA_AUDIO_KEY, String(gaAudioIdx)); } catch (e) {}
+}
+
+// Chrome corta la síntesis a los ~15 s si el texto es largo. El pause+resume
+// periódico la mantiene viva; en el resto de navegadores es inofensivo.
+function gaAudioLatido(encender) {
+  clearInterval(gaAudioKeepAlive);
+  gaAudioKeepAlive = null;
+  if (!encender) return;
+  gaAudioKeepAlive = setInterval(() => {
+    const s = window.speechSynthesis;
+    if (s.speaking && !s.paused) { s.pause(); s.resume(); }
+  }, 9000);
+}
+
+function gaAudioLeer(i) {
+  if (!gaAudioSoportado()) return;
+  const b = gaAudioBloques[i];
+  if (!b) { gaAudioFin(); return; }
+  gaAudioIdx = i;
+
+  gaAudioParando = true;
+  window.speechSynthesis.cancel();
+  gaAudioParando = false;
+
+  const u = new window.SpeechSynthesisUtterance(b.texto);
+  if (gaAudioVoz) u.voice = gaAudioVoz;
+  u.lang = (gaAudioVoz && gaAudioVoz.lang) || 'es-ES';
+  u.rate = gaAudioVel;
+  u.pitch = 1;
+  // Un respiro más largo tras los títulos: se oye como capítulo, no como lista.
+  u.onend = () => {
+    if (gaAudioParando || !gaAudioSonando) return;
+    setTimeout(() => {
+      if (!gaAudioSonando) return;
+      gaAudioAvanzar();
+    }, b.esTitulo ? 420 : 130);
+  };
+  u.onerror = (e) => {
+    // "interrupted"/"canceled" son nuestros propios cortes: no son fallos.
+    if (gaAudioParando || !gaAudioSonando || e.error === 'interrupted' || e.error === 'canceled') return;
+    gaAudioSonando = false;
+    gaAudioLatido(false);
+    gaAudioPintar();
+  };
+
+  gaAudioSonando = true;
+  window.speechSynthesis.speak(u);
+  gaAudioLatido(true);
+  gaAudioResaltar(i);
+  gaAudioPintar();
+  gaAudioGuardarPos();
+}
+
+// Al terminar un capítulo se marca como leído: escuchar cuenta igual que leer.
+function gaAudioAvanzar() {
+  const actual = gaAudioBloques[gaAudioIdx];
+  const sig = gaAudioBloques[gaAudioIdx + 1];
+  if (actual && (!sig || sig.seccion !== actual.seccion)) {
+    try {
+      if (typeof gaMarkRead === 'function' && !gaGetRead().includes(actual.seccion)) gaMarkRead(actual.seccion);
+    } catch (e) {}
+  }
+  if (!sig) { gaAudioFin(); return; }
+  gaAudioLeer(gaAudioIdx + 1);
+}
+
+function gaAudioFin() {
+  gaAudioSonando = false;
+  gaAudioParando = true;
+  window.speechSynthesis.cancel();
+  gaAudioParando = false;
+  gaAudioLatido(false);
+  gaAudioPintar();
+  const tit = document.getElementById('ga-audio-title');
+  if (tit) tit.textContent = 'Guía terminada 🎧';
+}
+
+function gaAudioPlayPause() {
+  if (!gaAudioSoportado()) {
+    alert('Tu navegador no puede leer en voz alta. Prueba con Chrome o Safari actualizados.');
+    return;
+  }
+  if (!gaAudioBloques.length && !gaAudioIndexar()) return;
+  if (gaAudioSonando) {
+    gaAudioSonando = false;
+    gaAudioParando = true;
+    window.speechSynthesis.cancel();
+    gaAudioParando = false;
+    gaAudioLatido(false);
+    gaAudioPintar();
+  } else {
+    gaAudioLeer(gaAudioIdx);
+  }
+}
+
+function gaAudioSaltar(delta) {
+  if (!gaAudioBloques.length && !gaAudioIndexar()) return;
+  const n = Math.min(gaAudioBloques.length - 1, Math.max(0, gaAudioIdx + delta));
+  if (gaAudioSonando) gaAudioLeer(n);
+  else { gaAudioIdx = n; gaAudioResaltar(n); gaAudioPintar(); gaAudioGuardarPos(); }
+}
+
+function gaAudioIrSeccion(dir) {
+  if (!gaAudioBloques.length && !gaAudioIndexar()) return;
+  const act = gaAudioBloques[gaAudioIdx];
+  if (!act) return;
+  let n = gaAudioIdx;
+  if (dir > 0) {
+    while (n < gaAudioBloques.length - 1 && gaAudioBloques[n].seccion === act.seccion) n++;
+  } else {
+    // Primero al inicio del capítulo actual; si ya estás ahí, al anterior.
+    while (n > 0 && gaAudioBloques[n - 1].seccion === act.seccion) n--;
+    if (n === gaAudioIdx && n > 0) {
+      const prevSlug = gaAudioBloques[n - 1].seccion;
+      n--;
+      while (n > 0 && gaAudioBloques[n - 1].seccion === prevSlug) n--;
+    }
+  }
+  if (gaAudioSonando) gaAudioLeer(n);
+  else { gaAudioIdx = n; gaAudioResaltar(n); gaAudioPintar(); gaAudioGuardarPos(); }
+}
+function gaAudioNextSeccion() { gaAudioIrSeccion(1); }
+function gaAudioPrevSeccion() { gaAudioIrSeccion(-1); }
+
+// Empieza a escuchar desde un capítulo concreto (lo usa el índice).
+function gaAudioDesdeSeccion(slug) {
+  if (!gaAudioBloques.length) gaAudioIndexar();
+  const i = gaAudioBloques.findIndex(b => b.seccion === slug);
+  if (i < 0) return;
+  gaAudioAbrirBarra(true);
+  gaAudioLeer(i);
+}
+
+function gaAudioAbrirBarra(forzar) {
+  const bar = document.getElementById('ga-audio-bar');
+  if (!bar) return;
+  if (!gaAudioBloques.length) gaAudioIndexar();
+  gaAudioCargarPrefs();
+  const selVel = document.getElementById('ga-audio-vel');
+  if (selVel) selVel.value = String(gaAudioVel);
+  gaAudioCargarVoces();
+  bar.classList.add('open');
+  document.body.classList.add('ga-audio-on');
+  // Retoma donde quedó la escucha anterior
+  if (!forzar) {
+    try {
+      const g = parseInt(localStorage.getItem(GA_AUDIO_KEY) || '0', 10);
+      if (g > 0 && g < gaAudioBloques.length) gaAudioIdx = g;
+    } catch (e) {}
+  }
+  gaAudioPintar();
+}
+
+function gaAudioCerrar() {
+  gaAudioSonando = false;
+  gaAudioParando = true;
+  if (gaAudioSoportado()) window.speechSynthesis.cancel();
+  gaAudioParando = false;
+  gaAudioLatido(false);
+  document.querySelectorAll('.ga-reading').forEach(el => el.classList.remove('ga-reading'));
+  document.getElementById('ga-audio-bar')?.classList.remove('open');
+  document.body.classList.remove('ga-audio-on');
+  gaAudioPintar();
+}
+
+function gaAudioToggleBar() {
+  const bar = document.getElementById('ga-audio-bar');
+  if (!bar) return;
+  if (bar.classList.contains('open')) gaAudioCerrar();
+  else gaAudioAbrirBarra(false);
+}
+
+// La voz no puede seguir sonando si el cliente se fue de la guía.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && gaAudioSonando) gaAudioPlayPause();
+});
+
+if (gaAudioSoportado() && typeof window.speechSynthesis.addEventListener === 'function') {
+  window.speechSynthesis.addEventListener('voiceschanged', gaAudioCargarVoces);
+}
+
+// Botón de auriculares en cada capítulo del índice: escuchar ESE capítulo sin
+// tener que buscarlo con los saltos del reproductor. Se inyecta por JS para
+// que el índice del HTML no tenga que repetir el markup 15 veces.
+function gaAudioBotonesToc() {
+  if (!gaAudioSoportado()) return;
+  document.querySelectorAll('#ga-toc-nav .ga-toc-h1').forEach(a => {
+    if (a.querySelector('.ga-toc-play')) return;
+    const slug = a.dataset.target;
+    if (!slug) return;
+    const b = document.createElement('button');
+    b.className = 'ga-toc-play';
+    b.type = 'button';
+    b.title = 'Escuchar este capítulo';
+    b.setAttribute('aria-label', 'Escuchar este capítulo');
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M4 14v-3a8 8 0 0 1 16 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 14a2 2 0 0 1 2-2h1v5H6a2 2 0 0 1-2-2v-1zM20 14a2 2 0 0 0-2-2h-1v5h1a2 2 0 0 0 2-2v-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+    b.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('ga-toc-drawer')?.classList.remove('open');   // gaToggleToc alterna, aquí solo queremos cerrar
+      gaAudioDesdeSeccion(slug);
+    });
+    a.appendChild(b);
+  });
+}
+
 function gaInit() {
   gaBuildSearchIndex();
   gaSetupObserver();
@@ -12842,6 +13169,8 @@ function gaInit() {
   gaUpdateProgress();
   gaUpdateTracks();
   gaShowResumePanel();
+  gaAudioIndexar();
+  gaAudioBotonesToc();
   // Abrir el primer track por defecto (Lo esencial)
   const firstTrack = document.querySelector('.ga-track[data-track="1"]');
   if (firstTrack && !firstTrack.classList.contains('open')) {
@@ -12917,6 +13246,7 @@ function gaBack() {
     const wasInGuia = guia && guia.classList.contains('active');
     if (wasInGuia && id !== 's-guia-alimentacion') {
       try { localStorage.setItem(GA_KEY_SCROLL, String(window.scrollY)); } catch(e) {}
+      try { gaAudioCerrar(); } catch(e) {}
     }
     // Registrar pantalla previa antes de entrar a la guía (excepto cuando volvemos a la propia guía)
     if (id === 's-guia-alimentacion' && !wasInGuia) {
