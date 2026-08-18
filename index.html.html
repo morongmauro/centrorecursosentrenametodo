@@ -9211,6 +9211,128 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
 .hub-firsttime{border-radius:22px !important;}
 .tool-card{border-radius:24px !important;}
 .jrn-card{border-radius:24px !important;}
+
+/* ═══════════════════════════════════════════════════════════════════
+   AJUSTES DE FORMA · v2 — onboarding, meal tracker y journey
+   Va DESPUÉS de todo lo anterior a propósito: el archivo arrastra varias
+   capas de overrides con !important y estas reglas tienen que ganarlas.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── ONBOARDING · pasos en columna con flecha, sin camino punteado ──
+   La ruta punteada y los círculos del margen pedían leer un mapa. Cada
+   tarjeta es un paso y una flecha lleva a la siguiente: se entiende sin
+   explicación. */
+#s-onboarding .hub-cards > .hub-card:nth-of-type(odd),
+#s-onboarding .hub-cards > .hub-card:nth-of-type(even){
+  margin-left:0 !important;margin-right:0 !important;
+}
+/* Fuera el número/✓ suelto en el margen: la pill "Leído / Pendiente" ya
+   dice el estado, y el número vive dentro de la tarjeta. */
+#s-onboarding .hub-cards > .hub-card::after{display:none !important;}
+#s-onboarding .hub-cards{gap:0 !important;}
+#s-onboarding .hub-cards > .hub-card{margin:0 !important;}
+
+.hub-step-arrow{
+  display:flex;align-items:center;justify-content:center;
+  height:34px;margin:2px 0;
+  color:var(--olive);opacity:.5;
+}
+.hub-step-arrow svg{width:19px;height:19px;display:block;}
+
+/* El color del icono de cada paso se ataba a nth-of-type, y las flechas
+   (también divs) corrían la cuenta: se pintaban todos mal. Va por
+   data-section, que no depende de cuántos hermanos haya. Cada paso lleva
+   el color de SU subpágina: oliva, terracota, dorado y azul. */
+#s-onboarding .hub-cards .hub-card[data-section="programa"] .hub-card-wm{
+  background:linear-gradient(135deg,#98A465,#4A5238) !important;}
+#s-onboarding .hub-cards .hub-card[data-section="app"] .hub-card-wm{
+  background:linear-gradient(135deg,#E09479,#C05E44) !important;}
+#s-onboarding .hub-cards .hub-card[data-section="meal-tracker"] .hub-card-wm{
+  background:linear-gradient(135deg,#D9B778,#B07F2E) !important;}
+#s-onboarding .hub-cards .hub-card[data-section="journey"] .hub-card-wm{
+  background:linear-gradient(135deg,#74AECB,#3F81A6) !important;}
+
+/* El número manda: es lo que dice "esto es un paso". Sin el rótulo en
+   versalitas al lado, que solo repetía el nombre de la sección. */
+#s-onboarding .hub-card .hub-card-eyebrow{
+  font-family:'Bebas Neue',sans-serif !important;
+  font-size:22px !important;line-height:1 !important;
+  letter-spacing:.04em !important;font-weight:400 !important;
+  color:var(--olive) !important;opacity:.75;
+  margin-bottom:.28rem !important;
+}
+#s-onboarding .hub-card.read .hub-card-eyebrow{opacity:.5;}
+
+/* ── MEAL TRACKER · los subiconos de lista, sin pastilla de color ──
+   Tenían el mismo cuadrado dorado que el icono del divisor y competían
+   con él: parecían dos jerarquías del mismo rango. Ahora son solo trazo. */
+#s-programa .mtg-ico,#s-app-train .mtg-ico,
+#s-meal-guide .mtg-ico,#s-journey .mtg-ico,
+.read-flow .mtg-ico,.mtg-ico{
+  background:none !important;background-image:none !important;
+  box-shadow:none !important;border:none !important;
+  width:22px !important;height:22px !important;border-radius:0 !important;
+  color:var(--sec,var(--olive)) !important;
+  margin-top:1px;
+}
+.read-flow .mtg-ico svg,.mtg-ico svg{width:19px !important;height:19px !important;}
+.read-flow .mtg-list li{gap:10px !important;}
+
+/* ── JOURNEY · misma lectura que las demás subpáginas ──────────────── */
+/* 1 · Fuera el raíl vertical y los hitos numerados del margen */
+#s-journey [data-modo="linea"]::before,
+[data-modo="linea"]::before{content:none !important;display:none !important;}
+#s-journey .linea-hito,.linea-hito{display:none !important;}
+#s-journey .jrn-timeline > .jrn-phase,
+#s-journey [data-modo="linea"] > .jrn-phase,
+[data-modo="linea"] > .jrn-phase{padding-left:0 !important;}
+#s-journey [data-modo="linea"] > .flow-sep,
+[data-modo="linea"] > .flow-sep{padding-left:0 !important;}
+
+/* 2 · El número vuelve al divisor, junto al icono y sobre el título —
+       exactamente como en Programa y Meal Tracker. */
+#s-journey [data-modo="linea"] .flow-sep-num,
+[data-modo="linea"] .flow-sep-num{display:inline-block !important;}
+
+/* 3 · Un solo color en toda la subpágina. Antes convivían el azul de la
+       sección (iconos, viñetas) con restos de oliva (el rótulo "Lo que
+       haces tú" y la viñeta del resultado): dentro de una misma tarjeta
+       se veían dos paletas. */
+#s-journey .read-flow .jrn-steps-label,
+#s-journey .read-flow .rh-take-label,
+#s-journey .jrn-steps-label,
+#s-journey .read-flow .rh-kicker{color:var(--sec-dark) !important;}
+#s-journey .read-flow li::before,
+#s-journey .read-flow .jrn-steps li::before,
+#s-journey .read-flow .jrn-result::before,
+#s-journey .jrn-timeline > .jrn-phase .jrn-result::before,
+.read-flow #s-journey .jrn-result::before{background:var(--sec) !important;}
+#s-journey .read-flow li::marker{color:var(--sec) !important;}
+#s-journey .read-flow .jrn-steps li::before{color:var(--sec) !important;}
+#s-journey .read-flow .rh-quote em{color:var(--sec-dark) !important;}
+/* La última viñeta (el "resultado" de la fase) traía su negrita en oliva
+   por herencia de otra sección: se alinea con las demás negritas. */
+#s-journey .read-flow .jrn-result strong,
+#s-journey .jrn-timeline > .jrn-phase .jrn-result strong,
+#s-journey .read-flow .jrn-result .jrn-result-text{
+  color:var(--text) !important;
+}
+
+/* 4 · El cierre en negro con texto oliva no pertenecía a ninguna parte:
+       era el único bloque oscuro del centro y encima con el color de otra
+       sección. Pasa al mismo cierre suave que usan las demás. */
+#s-journey .rh-dark.jrn-close{
+  background:var(--sec-soft) !important;
+  border-radius:22px !important;
+  padding:18px 18px 20px !important;
+  margin:.4rem .25rem 1.6rem !important;
+  box-shadow:none !important;border:none !important;
+}
+#s-journey .rh-dark.jrn-close .rh-dark-kicker{
+  color:var(--sec-dark) !important;opacity:.9;
+}
+#s-journey .rh-dark.jrn-close .rh-dark-quote{color:var(--text) !important;}
+#s-journey .rh-dark.jrn-close .rh-dark-quote em{color:var(--sec-dark) !important;}
 </style>
 </head>
 <body class="locked">
@@ -10344,15 +10466,15 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         <div class="progm-block-eyebrow">Lo que llega solo</div>
         <div class="progm-block-title">Tu meta y tus avisos</div>
         <div class="progm-block-text">
-          <p class="rh-quote">La meta la ajusto yo. <em>Tú te enteras al instante.</em></p>
-          <p>Tu meta de calorías y macros <strong>la administro yo desde mi panel</strong>, según cómo venga tu proceso. Cuando la cambio, <strong>te llega el aviso al chat y los anillos quedan actualizados solos</strong>. No tienes que configurar nada.</p>
+          <p class="rh-quote">Tu meta la ajusta tu coach. <em>Tú te enteras al instante.</em></p>
+          <p>Tu meta de calorías y macros <strong>la administra tu coach desde su panel</strong>, según cómo venga tu proceso. Cuando cambia, <strong>te llega el aviso al chat y los anillos quedan actualizados solos</strong>. No tienes que configurar nada.</p>
           <ul class="mtg-list">
             <li><span class="mtg-ico" data-c="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
-              <span><strong>Recordatorios.</strong> Los que te dejo desde mi panel aparecen en la app; cuando los cumples, los marcas y lo veo.</span></li>
+              <span><strong>Recordatorios.</strong> Los que deja tu coach aparecen en la app; al marcarlos como cumplidos, él lo ve al instante.</span></li>
             <li><span class="mtg-ico" data-c="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M11 18h2"/></svg></span>
               <span><strong>Notificaciones al teléfono.</strong> Si las activas, te avisa para que ningún registro se te pase.</span></li>
             <li><span class="mtg-ico" data-c="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
-              <span><strong>Yo veo tu avance en vivo</strong>: macros del día y adherencia de la semana. <strong>No tienes que enviarme nada.</strong></span></li>
+              <span><strong>Tu coach ve tu avance en vivo</strong>: macros del día y adherencia de la semana. <strong>No tienes que enviar nada.</strong></span></li>
           </ul>
           <div class="rh-takeaway"><div class="rh-take-label">Tu rutina mínima</div><ul>
             <li>Registra cada comida cuando ocurra, por texto o por voz</li>
@@ -10726,10 +10848,10 @@ else capRender();
       <span>¿Primera vez? <strong>Sigue el orden 1 → 2 → 3 → 4.</strong> Toma menos de 15 min y vas a entenderlo todo.</span>
     </div>
 
-    <!-- 4 SECCIONES · camino paso a paso -->
+    <!-- 4 SECCIONES · un paso por tarjeta, con flecha entre una y otra -->
     <div class="hub-cards">
 
-      <!-- Degradado compartido de los iconos + línea punteada del camino -->
+      <!-- Degradado compartido de los iconos -->
       <svg width="0" height="0" style="position:absolute" aria-hidden="true">
         <defs>
           <linearGradient id="emOgGrad" gradientUnits="userSpaceOnUse" x1="3" y1="3" x2="21" y2="21">
@@ -10737,10 +10859,6 @@ else capRender();
             <stop offset="1" stop-color="#4A5238"/>
           </linearGradient>
         </defs>
-      </svg>
-      <svg class="hub-path-line" viewBox="0 0 382 570" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M371 39 L371 90 Q371 110 351 110 L31 110 Q11 110 11 130 L11 300 Q11 320 31 320 L351 320 Q371 320 371 340 L371 430 Q371 450 351 450 L31 450 Q11 450 11 470 L11 531"
-              fill="none" stroke="#5a5a5a" stroke-width="2.7" stroke-linecap="round" stroke-dasharray="0.5 8.5"/>
       </svg>
 
       <!-- 01 · Programa -->
@@ -10754,7 +10872,7 @@ else capRender();
         <div class="hub-card-status" data-status-for="programa">
           <div class="hub-status-circle"></div>
         </div>
-        <div class="hub-card-eyebrow">01 · Programa</div>
+        <div class="hub-card-eyebrow">01</div>
         <div class="hub-card-title">Cómo funciona el programa</div>
         <div class="hub-card-desc">Entrenamiento, alimentación, entorno de trabajo, seguimiento y aclaraciones operativas.</div>
         <div class="hub-card-foot">
@@ -10765,6 +10883,10 @@ else capRender();
         </div>
       </div>
 
+
+      <div class="hub-step-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
       <!-- 02 · App -->
       <div class="hub-card hub-anim" style="--d:.18s;" data-section="app" onclick="goSection('s-app-train','app')">
         <div class="hub-card-wm">
@@ -10776,7 +10898,7 @@ else capRender();
         <div class="hub-card-status" data-status-for="app">
           <div class="hub-status-circle"></div>
         </div>
-        <div class="hub-card-eyebrow">02 · App</div>
+        <div class="hub-card-eyebrow">02</div>
         <div class="hub-card-title">Cómo funciona la app de entrenamiento</div>
         <div class="hub-card-desc">Tu centro de control: cómo iniciar tus rutinas, seguir tu calendario y registrar tu progreso.</div>
         <div class="hub-card-foot">
@@ -10787,6 +10909,10 @@ else capRender();
         </div>
       </div>
 
+
+      <div class="hub-step-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
       <!-- 03 · Meal Tracking -->
       <div class="hub-card hub-anim" style="--d:.24s;" data-section="meal-tracker" onclick="openMealTrackerGuide()">
         <div class="hub-card-wm">
@@ -10799,7 +10925,7 @@ else capRender();
         <div class="hub-card-status" data-status-for="meal-tracker">
           <div class="hub-status-circle"></div>
         </div>
-        <div class="hub-card-eyebrow">03 · Meal Tracking</div>
+        <div class="hub-card-eyebrow">03</div>
         <div class="hub-card-title">Cómo usar la app de Meal Tracking</div>
         <div class="hub-card-desc">La herramienta de IA para registrar tus comidas y estimar porciones según tu meta diaria. Opcional, pero te facilita la vida.</div>
         <div class="hub-card-foot">
@@ -10810,6 +10936,10 @@ else capRender();
         </div>
       </div>
 
+
+      <div class="hub-step-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
       <!-- 04 · Journey -->
       <div class="hub-card hub-anim" style="--d:.30s;" data-section="journey" onclick="goSection('s-journey','journey')">
         <div class="hub-card-wm">
@@ -10822,7 +10952,7 @@ else capRender();
         <div class="hub-card-status" data-status-for="journey">
           <div class="hub-status-circle"></div>
         </div>
-        <div class="hub-card-eyebrow">04 · Trayecto</div>
+        <div class="hub-card-eyebrow">04</div>
         <div class="hub-card-title">Tu Journey en el programa</div>
         <div class="hub-card-desc">Las 6 fases que recorrerás: diagnóstico, activación, aprendizaje, ejecución, criterio y dominio.</div>
         <div class="hub-card-foot">
@@ -13566,15 +13696,11 @@ function initStepFlow(scroller){
     })[pantalla.id] : null;
     if (modo) scroller.dataset.modo = modo;
 
-    // Journey: raíl de línea de tiempo con un hito por fase
-    if (modo === 'linea'){
-      slides.forEach(function(sl, k){
-        const hito = document.createElement('span');
-        hito.className = 'linea-hito';
-        hito.innerHTML = '<i></i><b>' + String(k + 1).padStart(2, '0') + '</b>';
-        sl.insertBefore(hito, sl.firstChild);
-      });
-    }
+    // Journey: el raíl con hitos numerados al margen se eliminó. Metía una
+    // línea y unos círculos que ninguna otra subpágina tiene, y dejaba el
+    // número lejos del título. Ahora el journey se lee igual que Programa y
+    // Meal Tracker: divisor con icono, número y título.
+    // (el journey ya no necesita nada extra: usa el mismo divisor que las demás)
 
     // Meal Tracker: lo entrecomillado se lee como un mensaje de chat.
     // Se marca por contenido, sin reescribir nada.
