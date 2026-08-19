@@ -64,7 +64,14 @@ habitos-dormir.png
 
 La cápsula sigue apareciendo con el marco **“Infografía en camino”** en vez
 de una imagen rota — así puedes dejar la entrada preparada antes de tener el
-diseño listo. Es justo como se ven ahora las diez de `capsulas.js`.
+diseño listo. Las diez que ya están en `capsulas.js` tienen su imagen.
+
+## Rehacer una lámina
+
+Las diez láminas están hechas con la misma plantilla: cabecera grafito con el
+titular en Bebas Neue, tres bloques numerados, una figura y la banda oliva de
+“la regla”. Si rediseñas una, **respeta el nombre del archivo** y las
+proporciones (4:5), y el centro la toma sin tocar nada más.
 
 ## El guion de cada cápsula
 

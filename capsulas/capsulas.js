@@ -50,10 +50,10 @@ window.CAPSULAS_DATA = [
   /* ── ENTRENAMIENTO ────────────────────────────────────────────────── */
   { id:'entreno-sobrecarga',
     cat:'Entrenamiento',
-    title:'Sobrecarga progresiva: así se progresa',
-    file:'capsulas/entrenamiento-sobrecarga-progresiva.png',
-    nota:'Por qué el músculo solo cambia si le pides más, y las cuatro formas de pedir más sin subir el peso a lo loco.',
-    tag:'La ley que sostiene tu rutina',
+    title:'Cómo elegir el peso y progresar',
+    file:'capsulas/entrenamiento-elegir-peso.png',
+    nota:'Con qué peso empiezas, cuándo toca subirlo y qué haces cuando ya no puedes subir más.',
+    tag:'La regla de la doble progresión',
     nuevo:true },
 
   { id:'entreno-orden',

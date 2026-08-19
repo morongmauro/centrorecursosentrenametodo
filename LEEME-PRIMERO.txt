@@ -7,7 +7,8 @@ morongmauro/centrorecursosentrenametodo, respetando las carpetas.
 En GitHub: Add file -> Upload files -> arrastra de una sola vez:
 
     index.html.html      (reemplaza el que ya está)
-    capsulas/            (carpeta nueva)
+    capsulas/            (carpeta nueva: 10 láminas + los archivos que
+                          las publican)
     podcast/             (carpeta nueva)
     img/                 (solo trae README.md; reemplaza el suyo,
                           las fotos que ya están no se tocan)
@@ -17,9 +18,8 @@ NO renombres index.html.html — ese nombre es el que está publicado.
 
 Qué es cada cosa
 ----------------
-capsulas/capsulas.js   El listado de las 10 cápsulas. Aquí agregas una
-                       nueva. Las infografías (.png) van en esta misma
-                       carpeta.
+capsulas/*.png         Las 10 infografías, 1080x1350 px, listas para verse.
+capsulas/capsulas.js   El listado. Aquí agregas una cápsula nueva.
 capsulas/README.md     Cómo publicar una cápsula: campos y formato.
 capsulas/GUIONES.md    Qué dice cada lámina, bloque por bloque.
 podcast/podcasts.js    Aquí pegas los links de YouTube. Mientras esté
@@ -28,9 +28,9 @@ podcast/README.md      Cómo cargar un episodio.
 
 Después de subir
 ----------------
-Abre el centro -> Cápsulas informativas: deberías ver las 10 tarjetas con
-su descripción y el marco "Infografía en camino". Si la lista sale vacía,
-es que capsulas/capsulas.js no quedó dentro de la carpeta capsulas/.
+Abre el centro -> Cápsulas informativas: deberías ver las 10 tarjetas ya
+con su infografía. Si salen con el marco "Infografía en camino", es que
+los .png no quedaron dentro de la carpeta capsulas/.
 
 Opcional: borra img/capsulas/README.md desde la web de GitHub. Ese
 contenido se mudó a capsulas/README.md.

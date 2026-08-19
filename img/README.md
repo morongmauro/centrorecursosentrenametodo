@@ -54,8 +54,9 @@ rápida. Son lectura, y una portada fotográfica distraía del texto.
 ## 2. Cápsulas informativas → carpeta `capsulas/`
 
 Se mudaron: la infografía y su entrada viven juntas en `capsulas/`, fuera de
-esta carpeta. Las diez están pendientes; sin el archivo, la tarjeta muestra el
-marco "Infografía en camino".
+esta carpeta. Las diez ya están hechas y subidas. Si algún día falta un
+archivo, la tarjeta muestra el marco "Infografía en camino" en vez de
+romperse.
 
 El listado, el formato y el naming están en **`capsulas/README.md`**, y el
 guion de cada lámina en **`capsulas/GUIONES.md`**.

@@ -29,7 +29,7 @@ Publicar = **dos pasos**: subes la imagen a `capsulas/` y agregas su bloque a
 |---|---|---|---|---|
 | 1 | Nutrición | Proteína: cuánta y cuándo | `nutricion-proteina` | `nutricion-proteina.png` |
 | 2 | Nutrición | El plato balanceado, en 3 pasos | `nutricion-plato` | `nutricion-plato-balanceado.png` |
-| 3 | Entrenamiento | Sobrecarga progresiva: así se progresa | `entreno-sobrecarga` | `entrenamiento-sobrecarga-progresiva.png` |
+| 3 | Entrenamiento | Cómo elegir el peso y progresar | `entreno-sobrecarga` | `entrenamiento-elegir-peso.png` |
 | 4 | Entrenamiento | El orden de los ejercicios importa | `entreno-orden` | `entrenamiento-orden-ejercicios.png` |
 | 5 | Entrenamiento | RPE: entrena con percepción | `entreno-rpe` | `entrenamiento-rpe.png` |
 | 6 | Entrenamiento | Configura la máquina antes de la serie | `entreno-maquinas` | `entrenamiento-configurar-maquinas.png` |
@@ -117,24 +117,28 @@ párrafos. Paleta del centro: oliva `#8A9558`, oliva oscuro `#4A5238`, crema
 
 ---
 
-## 3 · Sobrecarga progresiva: así se progresa
+## 3 · Cómo elegir el peso y progresar
 
-**Objetivo:** que entienda la ley que hace que su rutina funcione, y que
-progresar no es “sudar más”.
-**Le habla a:** el que lleva meses con los mismos pesos y no ve cambios.
+**Objetivo:** darle el procedimiento completo —con qué peso empieza, cuándo
+sube y cuánto— para que no dependa de preguntarte cada semana.
+**Le habla a:** el que lleva meses con los mismos kilos, y el que sube por
+impulso y pierde la técnica.
+**No confundir con la de RPE:** aquella enseña el *lenguaje* (qué se siente
+un 8); esta es el *procedimiento* (qué peso pongo hoy y cuándo lo cambio).
 
 | Bloque | Contenido |
 |---|---|
-| Titular | **SOBRECARGA** · *progresiva* |
-| Bajada | Tu cuerpo cambia cuando le pides un poco más que la última vez. |
-| 1 · Qué es | **Superar tu registro anterior**, no reventarte hoy. Un poco más, de forma sostenida. |
-| 2 · Cuatro formas de pedir más | **Más peso · más repeticiones · más series · mejor ejecución** (rango completo, menos ayuda, más control). No siempre toca subir el peso. |
-| 3 · Cuándo subir | Si cierras **todas** las series en el rango indicado y te sobraban 3 repeticiones (RPE ≤ 7), **sube en el siguiente entrenamiento**. |
-| La regla | *Si esta semana no superaste nada de la anterior, no entrenaste: repetiste.* |
+| Titular | **EL PESO** · *cómo elegirlo y cuándo subirlo* |
+| Bajada | El peso correcto no es el que más pesa: es el que te deja cerrar el rango con buena técnica. |
+| 1 · La primera vez | Elige un peso con el que llegues **al tope del rango dejando 2–3 repeticiones en reserva**. Si te sobran cinco, iba liviano; si no llegas al mínimo, iba pesado. **Anótalo.** |
+| 2 · Cuándo subir | **Doble progresión:** primero suben las repeticiones dentro del rango; cuando cierras **el tope en todas las series** con 2 en reserva, sube el peso. |
+| 3 · Cuánto subir | **El salto más pequeño disponible**: 2,5–5 kg abajo, 1–2,5 kg arriba. Las repeticiones bajarán: es normal, vuelves a escalar el rango. |
+| La regla | *Progresar es superar tu registro anterior, aunque sea por una repetición.* |
 
-**Visual:** escalera de 4 peldaños, uno por palanca, subiendo semana a semana.
-**Qué NO decir:** porcentajes de 1RM, periodización, descargas — eso lo pone
-la programación, no el cliente.
+**Visual:** dos semanas de la misma serie — las repeticiones llenando el
+rango 8→12 y, al cerrarlo, el salto de peso que reinicia el ciclo.
+**Qué NO decir:** porcentajes de 1RM ni periodización — eso lo pone la
+programación, no el cliente.
 
 ---
 
