@@ -3,7 +3,12 @@
 El nombre del archivo importa: el código busca exactamente ese nombre. Si un
 archivo no existe, la sección se muestra sin foto en vez de romperse.
 
-Son **16 imágenes** en total. Estado a día de hoy: 5 puestas, 11 pendientes.
+Quedando fuera las cápsulas, esta carpeta necesita **10 imágenes**: las 5
+portadas y las 5 capturas del Meal Tracker. Puestas 3, pendientes 7.
+
+> Las infografías de las cápsulas ya **no** viven aquí: van en la
+> carpeta `capsulas/`, junto al archivo que las publica. Ver
+> `capsulas/README.md`.
 
 ---
 
@@ -46,28 +51,14 @@ rápida. Son lectura, y una portada fotográfica distraía del texto.
 
 ---
 
-## 2. Cápsulas informativas → carpeta `img/capsulas/`
+## 2. Cápsulas informativas → carpeta `capsulas/`
 
-Las seis están pendientes. Sin el archivo, la tarjeta muestra el marco
-"Infografía en camino".
+Se mudaron: la infografía y su entrada viven juntas en `capsulas/`, fuera de
+esta carpeta. Las diez están pendientes; sin el archivo, la tarjeta muestra el
+marco "Infografía en camino".
 
-| Cápsula | Archivo |
-|---|---|
-| Proteína: cuánta y cuándo | `nutricion-proteina.png` |
-| El plato balanceado, en 3 pasos | `nutricion-plato-balanceado.png` |
-| El orden de los ejercicios importa | `entrenamiento-orden-ejercicios.png` |
-| RPE: entrena con percepción | `entrenamiento-rpe.png` |
-| Dormir es entrenar | `habitos-dormir.png` |
-| Pasos diarios: el cardio invisible | `habitos-pasos-diarios.png` |
-
-Proporción **4:5 vertical**, 1080–1440 px de ancho, menos de 600 KB. El
-titular debe leerse **ya en la miniatura**: si solo se entiende ampliada, la
-rejilla se ve muda.
-
-Para publicar una cápsula nueva: suelta la imagen aquí y agrega su entrada al
-array `CAPSULAS` en `index.html.html` (busca `var CAPSULAS = [`). El `id` de
-cada cápsula es la clave del avance de lectura — **no lo cambies** una vez
-publicada, o quien ya la vio la verá como pendiente otra vez.
+El listado, el formato y el naming están en **`capsulas/README.md`**, y el
+guion de cada lámina en **`capsulas/GUIONES.md`**.
 
 ---
 

@@ -7119,19 +7119,24 @@ body.locked .mt-stains{display:none;}
   display:flex;align-items:center;gap:10px;
 }
 .cap-cat::after{content:"";flex:1;height:1px;background:var(--border);}
-.cap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+/* Tarjeta ancha: la infografía a la izquierda y su ficha a la derecha.
+   Es la MISMA tarjeta que usan los podcast — infografía y episodio se leen
+   igual: de qué va, y qué te llevas. */
+.cap-grid{display:flex;flex-direction:column;gap:12px;}
 .cap-card{
-  display:flex;flex-direction:column;gap:0;padding:0;
-  background:none;border:none;cursor:pointer;text-align:left;
+  display:grid;grid-template-columns:132px 1fr;gap:12px;align-items:start;
+  width:100%;padding:10px;border-radius:18px;cursor:pointer;text-align:left;
   font-family:'Inter',sans-serif;
+  background:var(--glass,#fff);border:var(--glass-edge,1px solid var(--border));
+  box-shadow:var(--glass-shadow,0 8px 24px rgba(74,82,56,.10));
   transition:transform .14s ease;
 }
-.cap-card:active{transform:scale(.975);}
+.cap-card:active{transform:scale(.985);}
 .cap-thumb{
   position:relative;display:block;width:100%;aspect-ratio:4/5;
-  border-radius:16px;overflow:hidden;
+  border-radius:12px;overflow:hidden;
   background:linear-gradient(165deg,#FDFCF8 0%,#F1F3E5 100%);
-  box-shadow:0 1px .5px rgba(0,0,0,.05),0 8px 24px rgba(74,82,56,.12);
+  box-shadow:0 1px .5px rgba(0,0,0,.05),0 4px 12px rgba(74,82,56,.10);
 }
 .cap-thumb img{
   width:100%;height:100%;object-fit:cover;display:block;
@@ -7147,26 +7152,59 @@ body.locked .mt-stains{display:none;}
   color:var(--text-mute);
 }
 .cap-badge{
-  position:absolute;top:9px;left:9px;
+  position:absolute;top:6px;left:6px;
   padding:3px 8px;border-radius:100px;background:var(--olive);color:#fff;
   font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 }
 .cap-check{
-  position:absolute;top:9px;right:9px;width:20px;height:20px;border-radius:50%;
+  position:absolute;top:6px;right:6px;width:19px;height:19px;border-radius:50%;
   display:grid;place-content:center;background:var(--olive-dark);
 }
-.cap-check svg{width:11px;height:11px;display:block;}
+.cap-check svg{width:10px;height:10px;display:block;}
+.cap-body{min-width:0;padding-top:1px;}
 .cap-kicker{
-  margin-top:9px;
+  display:block;
   font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
   color:var(--olive-dark);
 }
 .cap-title{
-  margin-top:3px;
-  font-size:12.5px;font-weight:600;letter-spacing:-.01em;line-height:1.3;
+  display:block;margin-top:3px;
+  font-size:13px;font-weight:600;letter-spacing:-.01em;line-height:1.3;
   color:var(--text);
 }
 .cap-card.is-read .cap-title{color:var(--text-soft);font-weight:500;}
+/* La descripción: qué contiene la lámina. Sin esto la rejilla obliga a
+   abrir una por una para saber de qué va cada cosa. */
+.cap-note{
+  display:block;margin-top:5px;
+  font-size:11.5px;line-height:1.45;color:var(--text-soft);
+}
+.cap-tag{
+  display:inline-block;margin-top:7px;padding:3px 9px;border-radius:100px;
+  background:var(--olive-soft);color:var(--olive-dark);
+  font-size:9.5px;font-weight:700;letter-spacing:.03em;
+}
+
+/* ── Pestañas de la sección (Infografías · Podcast) ─────────────────── */
+.mx-tabs{
+  display:flex;gap:6px;margin:2px 0 6px;padding:4px;border-radius:100px;
+  background:var(--glass,#fff);border:var(--glass-edge,1px solid var(--border));
+  box-shadow:var(--glass-shadow,0 8px 24px rgba(74,82,56,.10));
+}
+.mx-tabs[hidden]{display:none;}
+.mx-tab{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:9px 10px;border:none;border-radius:100px;background:transparent;
+  cursor:pointer;font-family:'Inter',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:-.01em;color:var(--text-soft);
+  transition:background .16s ease,color .16s ease;
+}
+.mx-tab svg{width:15px;height:15px;flex:none;}
+.mx-tab.is-on{
+  background:var(--olive-dark);color:#F3EFE4;
+  box-shadow:0 2px 8px rgba(74,82,56,.26);
+}
+.mx-tab-n{font-size:10px;font-weight:800;opacity:.6;}
 .cap-empty{
   margin:24px 0;padding:20px;border-radius:18px;
   background:var(--bg-soft);border:.5px dashed var(--border);
@@ -7175,7 +7213,9 @@ body.locked .mt-stains{display:none;}
 
 /* Lightbox: la infografía a pantalla completa */
 .cap-lb{
-  display:none;position:fixed;inset:0;z-index:200;
+  /* Por encima del botón "volver" (fijo, z-index 99999): si no, la flecha
+     queda encima de la × del visor. */
+  display:none;position:fixed;inset:0;z-index:100000;
   background:rgba(12,12,12,.94);
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   flex-direction:column;align-items:center;justify-content:center;
@@ -7214,6 +7254,144 @@ body.locked .mt-stains{display:none;}
 .cap-lb-count{
   font-size:10px;font-weight:700;letter-spacing:.09em;
   color:rgba(243,239,228,.55);min-width:52px;text-align:center;
+}
+
+
+/* ── 5b · Podcast recomendados ─────────────────────────────────────
+   Tarjeta ancha: miniatura de YouTube a la izquierda y la ficha del
+   episodio a la derecha. La miniatura la sirve YouTube (i.ytimg.com):
+   no hay que subir ninguna imagen al repo. */
+.pod-list{margin-top:4px;animation-delay:var(--d,0s);}
+.pod-cat{
+  margin:22px 0 10px;
+  font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--text-mute);
+  display:flex;align-items:center;gap:10px;
+}
+.pod-cat::after{content:"";flex:1;height:1px;background:var(--border);}
+.pod-group{display:flex;flex-direction:column;gap:12px;}
+.pod-card{
+  display:grid;grid-template-columns:124px 1fr;gap:12px;align-items:start;
+  width:100%;padding:10px;border-radius:18px;cursor:pointer;text-align:left;
+  font-family:'Inter',sans-serif;
+  background:var(--glass,#fff);border:var(--glass-edge,1px solid var(--border));
+  box-shadow:var(--glass-shadow,0 8px 24px rgba(74,82,56,.10));
+  transition:transform .14s ease;
+}
+.pod-card:active{transform:scale(.985);}
+.pod-thumb{
+  position:relative;display:block;width:100%;aspect-ratio:16/9;
+  border-radius:12px;overflow:hidden;
+  background:linear-gradient(165deg,#2A2A28 0%,#141414 100%);
+}
+.pod-thumb img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .35s cubic-bezier(.16,.84,.3,1);
+}
+.pod-card:hover .pod-thumb img{transform:scale(1.04);}
+.pod-card.no-img .pod-thumb img{display:none;}
+.pod-play{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:34px;height:34px;border-radius:50%;
+  display:grid;place-content:center;
+  background:rgba(20,20,20,.62);box-shadow:0 2px 10px rgba(0,0,0,.35);
+}
+.pod-play svg{width:13px;height:13px;display:block;margin-left:2px;}
+.pod-dur{
+  position:absolute;right:6px;bottom:6px;
+  padding:2px 6px;border-radius:6px;background:rgba(12,12,12,.82);
+  font-size:9px;font-weight:700;letter-spacing:.02em;color:#F3EFE4;
+}
+.pod-badge{
+  position:absolute;top:6px;left:6px;
+  padding:3px 8px;border-radius:100px;background:var(--olive);color:#fff;
+  font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+}
+.pod-check{
+  position:absolute;top:6px;right:6px;width:19px;height:19px;border-radius:50%;
+  display:grid;place-content:center;background:var(--olive-dark);
+}
+.pod-check svg{width:10px;height:10px;display:block;}
+.pod-body{min-width:0;padding-top:1px;}
+.pod-show{
+  display:block;
+  font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--olive-dark);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.pod-title{
+  display:block;margin-top:3px;
+  font-size:13px;font-weight:600;letter-spacing:-.01em;line-height:1.3;
+  color:var(--text);
+}
+.pod-card.is-seen .pod-title{color:var(--text-soft);font-weight:500;}
+.pod-note{
+  display:block;margin-top:5px;
+  font-size:11.5px;line-height:1.45;color:var(--text-soft);
+}
+.pod-tag{
+  display:inline-block;margin-top:7px;padding:3px 9px;border-radius:100px;
+  background:var(--olive-soft);color:var(--olive-dark);
+  font-size:9.5px;font-weight:700;letter-spacing:.03em;
+}
+.pod-empty{
+  margin:24px 0;padding:20px;border-radius:18px;
+  background:var(--bg-soft);border:.5px dashed var(--border);
+  font-size:12.5px;line-height:1.55;color:var(--text-mute);text-align:center;
+}
+
+/* Visor: el episodio se reproduce dentro del centro, sin salir a YouTube */
+.pod-lb{
+  /* Por encima del botón "volver", que es fijo y va a z-index 99999:
+     si no, el visor abría con la flecha encima del video. */
+  display:none;position:fixed;inset:0;z-index:100000;
+  background:rgba(12,12,12,.94);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  flex-direction:column;align-items:center;justify-content:center;
+  padding:56px 14px 74px;
+}
+.pod-lb.open{display:flex;animation:fadeIn .2s ease;}
+.pod-lb-x{
+  position:absolute;top:14px;right:14px;z-index:2;
+  width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#F3EFE4;
+  font-size:22px;line-height:1;
+}
+.pod-lb-inner{width:100%;max-width:520px;display:flex;flex-direction:column;gap:12px;}
+.pod-lb-frame{
+  position:relative;width:100%;aspect-ratio:16/9;
+  border-radius:14px;overflow:hidden;background:#000;
+}
+.pod-lb-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.pod-lb-cap{
+  font-size:12.5px;font-weight:500;letter-spacing:-.01em;line-height:1.45;
+  color:rgba(243,239,228,.78);text-align:center;
+}
+.pod-lb-cap b{display:block;font-size:10px;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;color:rgba(243,239,228,.5);margin-bottom:4px;}
+.pod-lb-out{
+  align-self:center;display:inline-flex;align-items:center;gap:7px;
+  padding:9px 16px;border-radius:100px;text-decoration:none;
+  background:rgba(255,255,255,.13);color:#F3EFE4;
+  font-size:11.5px;font-weight:700;letter-spacing:.01em;
+}
+.pod-lb-out svg{width:13px;height:13px;flex:none;}
+.pod-lb-nav{
+  position:absolute;bottom:18px;left:0;right:0;
+  display:flex;align-items:center;justify-content:center;gap:18px;
+}
+.pod-lb-nav button{
+  width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#F3EFE4;font-size:22px;line-height:1;
+}
+.pod-lb-nav button:active{transform:scale(.92);}
+.pod-lb-count{
+  font-size:10px;font-weight:700;letter-spacing:.09em;
+  color:rgba(243,239,228,.55);min-width:52px;text-align:center;
+}
+@media (max-width:360px){
+  .pod-card{grid-template-columns:104px 1fr;}
+  .cap-card{grid-template-columns:110px 1fr;}
 }
 
 /* ── 6 · FAQ leída ─────────────────────────────────────────────────── */
@@ -9661,7 +9839,7 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         </span>
         <span class="em-nav-txt">
           <strong>Cápsulas informativas</strong>
-          <small>Infografías para repasar una idea en un minuto</small>
+          <small id="home-sec-capsulas-meta">Infografías para repasar una idea en un minuto</small>
         </span>
         <span class="em-nav-arr" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -10567,11 +10745,11 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
       </div>
       <div class="foto-hero-overlay" aria-hidden="true"></div>
       <div class="sub-header">
-        <div class="sub-eyebrow">Material visual</div>
+        <div class="sub-eyebrow">Material de apoyo</div>
         <div class="sub-title">CÁPSULAS<br>INFORMATIVAS</div>
         <div class="sub-title-line"></div>
         <div class="sub-intro">
-          Una idea por lámina. <strong>Toca una cápsula para verla en grande.</strong>
+          <span id="cap-intro-txt">Una idea por lámina. <strong>Toca una cápsula para verla en grande.</strong></span>
           <span class="cap-soon-pill" id="cap-soon" hidden>Próximamente</span>
         </div>
       </div>
@@ -10581,14 +10759,40 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
     <!-- El asistente ya no ocupa sitio en la página: vive en el botón
          flotante, igual que en la guía de alimentación. -->
 
-    <!-- REJILLA DE CÁPSULAS — la pinta capRender() desde CAPSULAS (abajo) -->
+    <!-- PESTAÑAS — dos formatos bajo la misma sección: la lámina que se ve
+         en un minuto y el episodio que se escucha caminando. La barra se
+         oculta sola mientras no haya podcast cargados. -->
     <div class="scroll-hint" id="cap-hint"><span>Desliza para leer</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
-    <div class="cap-gal sub-anim" style="--d:.08s;" id="cap-gal"></div>
+    <div class="mx-tabs sub-anim" style="--d:.05s;" id="cap-tabs" role="tablist" hidden>
+      <button class="mx-tab is-on" type="button" id="cap-tab-info" role="tab" aria-selected="true" onclick="capTab('info')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15-4.5-4.5L7 20"/></svg>
+        Infografías <span class="mx-tab-n" id="cap-tab-info-n"></span>
+      </button>
+      <button class="mx-tab" type="button" id="cap-tab-pod" role="tab" aria-selected="false" onclick="capTab('pod')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1"/><path d="M12 18v4M8 22h8"/></svg>
+        Podcast <span class="mx-tab-n" id="cap-tab-pod-n"></span>
+      </button>
+    </div>
 
-    <p class="cap-empty" id="cap-empty" hidden>
-      Aún no hay cápsulas publicadas. Vuelve pronto: cada mes se suma material nuevo.
-    </p>
+    <!-- PANEL 1 · INFOGRAFÍAS — la pinta capRender() desde CAPSULAS -->
+    <div id="cap-pane-info">
+      <div class="cap-gal sub-anim" style="--d:.08s;" id="cap-gal"></div>
+
+      <p class="cap-empty" id="cap-empty" hidden>
+        Aún no hay cápsulas publicadas. Vuelve pronto: cada mes se suma material nuevo.
+      </p>
+    </div>
+
+    <!-- PANEL 2 · PODCAST — la pinta podRender() desde PODCASTS -->
+    <div id="cap-pane-pod" hidden>
+      <div class="pod-list sub-anim" style="--d:.08s;" id="pod-list"></div>
+
+      <p class="pod-empty" id="pod-empty" hidden>
+        Todavía no hay episodios recomendados. Vuelve pronto: se suman a medida
+        que encuentro material que valga la pena.
+      </p>
+    </div>
 
     <div class="footer">
       <div class="footer-brand">ENTRENA CON MÉTODO</div>
@@ -10618,27 +10822,268 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
       <button type="button" class="cap-lb-next" onclick="capStep(event,1)" aria-label="Cápsula siguiente">›</button>
     </div>
   </div>
+
+  <!-- Visor: el episodio se reproduce dentro del centro -->
+  <div class="pod-lb" id="pod-lb" onclick="podClose(event)" aria-hidden="true">
+    <button class="pod-lb-x" type="button" onclick="podClose(event, true)" aria-label="Cerrar">×</button>
+    <div class="pod-lb-inner" onclick="event.stopPropagation()">
+      <div class="pod-lb-frame" id="pod-lb-frame"></div>
+      <div class="pod-lb-cap" id="pod-lb-cap"></div>
+      <a class="pod-lb-out" id="pod-lb-out" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        Ver en YouTube
+      </a>
+    </div>
+    <div class="pod-lb-nav">
+      <button type="button" onclick="podStep(event,-1)" aria-label="Episodio anterior">‹</button>
+      <span class="pod-lb-count" id="pod-lb-count"></span>
+      <button type="button" onclick="podStep(event,1)" aria-label="Episodio siguiente">›</button>
+    </div>
+  </div>
 </div>
+
+
+<!-- ═══ CONTENIDO QUE SE EDITA A MANO ═══════════════════════════════════
+     Las dos listas de esta sección NO viven en este archivo:
+
+       capsulas/capsulas.js  → las láminas (van junto a sus imágenes)
+       podcast/podcasts.js   → los links de los episodios
+
+     Se cargan antes que la sección. Si falta alguno de los dos, esa lista
+     queda vacía y el resto del centro sigue funcionando igual. -->
+<script src="capsulas/capsulas.js"></script>
+<script src="podcast/podcasts.js"></script>
+
+<script>
+// ── PODCAST RECOMENDADOS ──────────────────────────────────────────────
+// Un episodio = un link de YouTube. La miniatura la sirve YouTube y el
+// video se reproduce dentro del centro: no se sube ningún archivo.
+//
+// El listado vive en podcast/podcasts.js — ahí se pegan los links, sin
+// abrir este archivo. Si ese archivo falta o está vacío, la pestaña de
+// podcast no aparece y la sección se ve como siempre.
+var PODCASTS = Array.isArray(window.PODCASTS_DATA) ? window.PODCASTS_DATA : [];
+
+
+// ── Utilidades ────────────────────────────────────────────────────────
+// Del link pegado sacamos el id: sirve youtu.be/ID, watch?v=ID,
+// /embed/ID, /live/ID y /shorts/ID.
+function podVideoId(p){
+  if (p.yt) return p.yt;
+  var m = String(p.url || '').match(/(?:youtu\.be\/|\/embed\/|\/live\/|\/shorts\/|[?&]v=)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : '';
+}
+function podListId(p){
+  if (p.list) return p.list;
+  var m = String(p.url || '').match(/[?&]list=([A-Za-z0-9_-]{12,})/);
+  return m ? m[1] : '';
+}
+function podWatchUrl(p){
+  var v = podVideoId(p), l = podListId(p);
+  if (v) return 'https://www.youtube.com/watch?v=' + v + (l ? '&list=' + l : '');
+  if (l) return 'https://www.youtube.com/playlist?list=' + l;
+  return p.url || '#';
+}
+function podEmbedUrl(p){
+  var v = podVideoId(p), l = podListId(p);
+  var q = '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+  if (v) return 'https://www.youtube-nocookie.com/embed/' + v + q + (l ? '&list=' + l : '');
+  if (l) return 'https://www.youtube-nocookie.com/embed/videoseries' + q + '&list=' + l;
+  return '';
+}
+function podThumb(p){
+  if (p.thumb) return p.thumb;
+  var v = podVideoId(p);
+  return v ? 'https://i.ytimg.com/vi/' + v + '/maxresdefault.jpg' : '';
+}
+function podEsc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Vistos ────────────────────────────────────────────────────────────
+// Mismo patrón que las cápsulas: se guarda local y el sincronizador de
+// Supabase engancha podMarkSeen() por nombre en window.
+const POD_SEEN_KEY = 'em_pod_seen';
+function podGetSeen(){
+  try { return JSON.parse(localStorage.getItem(POD_SEEN_KEY) || '[]'); } catch(e){ return []; }
+}
+function podMarkSeen(id){
+  const seen = podGetSeen();
+  if (seen.indexOf(id) === -1) {
+    seen.push(id);
+    try { localStorage.setItem(POD_SEEN_KEY, JSON.stringify(seen)); } catch(e){}
+  }
+}
+
+// Índice (dentro de PODCASTS) del episodio abierto en el visor
+let _podIndex = -1;
+
+function podRender(){
+  const list = document.getElementById('pod-list');
+  const empty = document.getElementById('pod-empty');
+  if (!list) return;
+  if (!PODCASTS.length) {
+    list.innerHTML = '';
+    if (empty) empty.hidden = false;
+    return;
+  }
+  if (empty) empty.hidden = true;
+
+  const seen = podGetSeen();
+  let html = '';
+  let lastCat = null;
+  PODCASTS.forEach(function(p, i){
+    const cat = p.cat || 'Recomendados';
+    if (cat !== lastCat) {
+      if (lastCat !== null) html += '</div>';
+      html += '<div class="pod-cat">' + podEsc(cat) + '</div><div class="pod-group">';
+      lastCat = cat;
+    }
+    const done = seen.indexOf(p.id) !== -1;
+    const thumb = podThumb(p);
+    // maxresdefault no existe en todos los videos: si falla, se cae a la
+    // miniatura estándar y, si tampoco, al marco oscuro con el play.
+    const fallback = podVideoId(p)
+      ? 'if(!this.dataset.fb){this.dataset.fb=1;this.src=\'https://i.ytimg.com/vi/' + podVideoId(p) + '/hqdefault.jpg\';}else{this.closest(\'.pod-card\').classList.add(\'no-img\');}'
+      : 'this.closest(\'.pod-card\').classList.add(\'no-img\')';
+    html +=
+      '<button class="pod-card' + (done ? ' is-seen' : '') + (thumb ? '' : ' no-img') + '" type="button" onclick="podOpen(' + i + ')">' +
+        '<span class="pod-thumb">' +
+          (thumb ? '<img src="' + podEsc(thumb) + '" alt="" loading="lazy" onerror="' + fallback + '">' : '') +
+          '<span class="pod-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#F3EFE4"><polygon points="6 4 20 12 6 20"/></svg></span>' +
+          (p.dur ? '<span class="pod-dur">' + podEsc(p.dur) + '</span>' : '') +
+          (p.nuevo && !done ? '<span class="pod-badge">Nuevo</span>' : '') +
+          (done ? '<span class="pod-check" aria-label="Visto"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : '') +
+        '</span>' +
+        '<span class="pod-body">' +
+          (p.show ? '<span class="pod-show">' + podEsc(p.show) + '</span>' : '') +
+          '<span class="pod-title">' + podEsc(p.title) + '</span>' +
+          (p.nota ? '<span class="pod-note">' + podEsc(p.nota) + '</span>' : '') +
+          (p.tag ? '<span class="pod-tag">' + podEsc(p.tag) + '</span>' : '') +
+        '</span>' +
+      '</button>';
+  });
+  if (lastCat !== null) html += '</div>';
+  list.innerHTML = html;
+}
+
+function podOpen(i){
+  const p = PODCASTS[i];
+  if (!p) return;
+  podMarkSeen(p.id);
+  // Videos que su dueño no deja incrustar: se abren en YouTube, así el
+  // cliente nunca se queda mirando un reproductor con error.
+  if (p.sinEmbed || !podEmbedUrl(p)) {
+    window.open(podWatchUrl(p), '_blank', 'noopener');
+    podRender();
+    return;
+  }
+  _podIndex = i;
+  const lb = document.getElementById('pod-lb');
+  const frame = document.getElementById('pod-lb-frame');
+  const cap = document.getElementById('pod-lb-cap');
+  const out = document.getElementById('pod-lb-out');
+  const count = document.getElementById('pod-lb-count');
+  if (!lb || !frame) return;
+  frame.innerHTML = '<iframe src="' + podEsc(podEmbedUrl(p)) + '" title="' + podEsc(p.title) + '" ' +
+    'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+    'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+  if (cap) cap.innerHTML = (p.show ? '<b>' + podEsc(p.show) + '</b>' : '') + podEsc(p.title);
+  if (out) out.href = podWatchUrl(p);
+  if (count) count.textContent = (i + 1) + ' / ' + PODCASTS.length;
+  lb.classList.add('open');
+  lb.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function podStep(ev, dir){
+  if (ev) ev.stopPropagation();
+  if (!PODCASTS.length) return;
+  const n = PODCASTS.length;
+  podOpen((_podIndex + dir + n) % n);
+}
+function podClose(ev, force){
+  if (!force && ev && ev.target && ev.target.closest && ev.target.closest('.pod-lb-inner, .pod-lb-nav')) return;
+  const lb = document.getElementById('pod-lb');
+  const frame = document.getElementById('pod-lb-frame');
+  // Vaciar el iframe es lo que detiene el audio: sin esto sigue sonando.
+  if (frame) frame.innerHTML = '';
+  if (lb) { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); }
+  document.body.style.overflow = '';
+  _podIndex = -1;
+  podRender();
+}
+document.addEventListener('keydown', function (e) {
+  const lb = document.getElementById('pod-lb');
+  if (!lb || !lb.classList.contains('open')) return;
+  if (e.key === 'Escape') podClose(null, true);
+  if (e.key === 'ArrowRight') podStep(null, 1);
+  if (e.key === 'ArrowLeft') podStep(null, -1);
+});
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', podRender);
+else podRender();
+</script>
 
 <script>
 // ── CÁPSULAS INFORMATIVAS ─────────────────────────────────────────────
-// Una cápsula = una infografía. Para publicar una nueva basta con soltar
-// la imagen en img/capsulas/ y agregar su entrada acá: no hay que tocar
-// markup ni CSS. El orden de este array es el orden de la rejilla.
-//
-//   file  → ruta de la imagen (la preview y la ampliación son la MISMA
-//           imagen; el navegador la reusa desde caché al abrir el zoom)
-//   cat   → categoría con la que se agrupa en la rejilla
-//   title → título visible bajo la preview
-//   nuevo → true pinta la etiqueta "Nuevo"
-var CAPSULAS = [
-  { id:'nutricion-proteina',    cat:'Nutrición',     title:'Proteína: cuánta y cuándo',        file:'img/capsulas/nutricion-proteina.png',        nuevo:true },
-  { id:'nutricion-plato',       cat:'Nutrición',     title:'El plato balanceado, en 3 pasos',  file:'img/capsulas/nutricion-plato-balanceado.png' },
-  { id:'entreno-orden',         cat:'Entrenamiento', title:'El orden de los ejercicios importa', file:'img/capsulas/entrenamiento-orden-ejercicios.png' },
-  { id:'entreno-rpe',           cat:'Entrenamiento', title:'RPE: entrena con percepción',      file:'img/capsulas/entrenamiento-rpe.png' },
-  { id:'habitos-sueno',         cat:'Hábitos',       title:'Dormir es entrenar',               file:'img/capsulas/habitos-dormir.png' },
-  { id:'habitos-pasos',         cat:'Hábitos',       title:'Pasos diarios: el cardio invisible', file:'img/capsulas/habitos-pasos-diarios.png' }
-];
+// Una cápsula = una infografía. El listado vive en capsulas/capsulas.js,
+// junto a las imágenes: ahí se agrega una cápsula nueva sin abrir este
+// archivo. Si ese archivo falta, la rejilla queda vacía con su aviso.
+var CAPSULAS = Array.isArray(window.CAPSULAS_DATA) ? window.CAPSULAS_DATA : [];
+
+function capEsc(x){
+  return String(x == null ? '' : x)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Pestañas de la sección ────────────────────────────────────────────
+// Dos formatos bajo el mismo techo: la lámina que se ve en un minuto y el
+// episodio que se escucha caminando. Mientras no haya podcast cargados la
+// barra no aparece y la pantalla se ve exactamente como antes.
+var _capTabActual = 'info';
+function capTab(which){
+  const hayPod = (typeof PODCASTS !== 'undefined') && PODCASTS.length > 0;
+  if (which !== 'pod' || !hayPod) which = 'info';
+  _capTabActual = which;
+
+  const tabs = document.getElementById('cap-tabs');
+  if (tabs) tabs.hidden = !hayPod;
+  const bi = document.getElementById('cap-tab-info');
+  const bp = document.getElementById('cap-tab-pod');
+  if (bi) { bi.classList.toggle('is-on', which === 'info'); bi.setAttribute('aria-selected', which === 'info'); }
+  if (bp) { bp.classList.toggle('is-on', which === 'pod'); bp.setAttribute('aria-selected', which === 'pod'); }
+  const ni = document.getElementById('cap-tab-info-n');
+  if (ni) ni.textContent = CAPSULAS.length || '';
+  const np = document.getElementById('cap-tab-pod-n');
+  if (np) np.textContent = hayPod ? PODCASTS.length : '';
+
+  const pi = document.getElementById('cap-pane-info');
+  const pp = document.getElementById('cap-pane-pod');
+  if (pi) pi.hidden = which !== 'info';
+  if (pp) pp.hidden = which !== 'pod';
+
+  const txt = document.getElementById('cap-intro-txt');
+  if (txt) txt.innerHTML = which === 'pod'
+    ? 'Episodios que valen tu tiempo. <strong>Toca uno y se reproduce aquí mismo.</strong>'
+    : 'Una idea por lámina. <strong>Toca una cápsula para verla en grande.</strong>';
+  const soon = document.getElementById('cap-soon');
+  if (soon && which === 'pod') soon.hidden = true;
+
+  // La bajada del botón del home nombra los dos formatos solo cuando de
+  // verdad hay episodios cargados.
+  const meta = document.getElementById('home-sec-capsulas-meta');
+  if (meta) meta.textContent = hayPod
+    ? 'Infografías y podcast · una idea en poco tiempo'
+    : 'Infografías para repasar una idea en un minuto';
+
+  // El asistente de lectura solo tiene sentido sobre las infografías
+  const fab = document.querySelector('#s-capsulas .pg-fab');
+  if (fab) fab.style.display = which === 'info' ? '' : 'none';
+
+  if (which === 'pod') { if (typeof podRender === 'function') podRender(); }
+  else capRender();
+  if (typeof emHintSync === 'function') setTimeout(emHintSync, 60);
+}
 
 // ¿Hay al menos una infografía subida? Se comprueba cargando la primera
 // imagen de la lista; mientras no exista, la portada avisa.
@@ -10700,13 +11145,16 @@ function capRender(){
     html +=
       '<button class="cap-card' + (done ? ' is-read' : '') + '" type="button" data-i="' + i + '" onclick="capOpen(' + i + ')">' +
         '<span class="cap-thumb">' +
-          '<img src="' + c.file + '" alt="' + c.title.replace(/"/g, '&quot;') + '" loading="lazy" ' +
+          '<img src="' + capEsc(c.file) + '" alt="' + capEsc(c.title) + '" loading="lazy" ' +
                'onerror="this.closest(\'.cap-card\').classList.add(\'no-img\')">' +
           (c.nuevo && !done ? '<span class="cap-badge">Nuevo</span>' : '') +
           (done ? '<span class="cap-check" aria-label="Vista"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : '') +
         '</span>' +
-        '<span class="cap-kicker">' + c.cat + '</span>' +
-        '<span class="cap-title">' + c.title + '</span>' +
+        '<span class="cap-body">' +
+          '<span class="cap-title">' + capEsc(c.title) + '</span>' +
+          (c.nota ? '<span class="cap-note">' + capEsc(c.nota) + '</span>' : '') +
+          (c.tag ? '<span class="cap-tag">' + capEsc(c.tag) + '</span>' : '') +
+        '</span>' +
       '</button>';
   });
   if (lastCat !== null) html += '</div>';
@@ -10784,8 +11232,8 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowRight') capStep(null, 1);
   if (e.key === 'ArrowLeft') capStep(null, -1);
 });
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', capRender);
-else capRender();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ capTab(_capTabActual); });
+else capTab(_capTabActual);
 
 // ── Camino del onboarding ─────────────────────────────────────────────
 // Redibuja la ruta de mapa (segmentos rectos + esquinas redondeadas)
@@ -11609,17 +12057,24 @@ function emCloudRestore(){
     })
     .then(function(rows){
       if (!Array.isArray(rows)) { markDone(); return; }
-      var hub = [], ga = [], legacy = [];
+      var hub = [], ga = [], legacy = [], caps = [], pods = [];
       rows.forEach(function(ev){
         if (!ev || !ev.section_key) return;
         if (ev.source === 'hub') hub.push(ev.section_key);
         else if (ev.source === 'guia' || ev.source === 'ga') ga.push(ev.section_key);
         else if (ev.source === 'legacy') legacy.push(ev.section_key);
+        // Cápsulas y podcast viajan con prefijo ('cap:', 'pod:') porque en
+        // Supabase conviven con el resto de secciones; en local se guarda
+        // el id pelado.
+        else if (ev.source === 'capsula') caps.push(String(ev.section_key).replace(/^cap:/, ''));
+        else if (ev.source === 'podcast') pods.push(String(ev.section_key).replace(/^pod:/, ''));
       });
       var changed = false;
       if (mergeKey(HUB_READ_KEY, hub)) changed = true;
       if (mergeKey(GA_KEY_READ, ga)) changed = true;
       if (mergeKey(READ_KEY, legacy)) changed = true;
+      if (mergeKey('em_cap_read', caps)) changed = true;
+      if (mergeKey('em_pod_seen', pods)) changed = true;
       markDone();
       if (!changed) return;
       // Repintar la UI con el avance recién llegado — sin recargar: son las
@@ -11629,6 +12084,8 @@ function emCloudRestore(){
         try { if (typeof hubApplyReadStates === 'function') hubApplyReadStates(); } catch(e){}
         try { if (typeof homeApplyOrientation === 'function') homeApplyOrientation(); } catch(e){}
         try { if (typeof bibApplyGuiaProgress === 'function') bibApplyGuiaProgress(); } catch(e){}
+        try { if (typeof capRender === 'function') capRender(); } catch(e){}
+        try { if (typeof podRender === 'function') podRender(); } catch(e){}
       };
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function(){ setTimeout(applyUI, 60); });
@@ -11656,6 +12113,10 @@ function go(id){
   // Las cápsulas dejaron de vivir en el home: tienen pantalla propia.
   // Cualquier enlace viejo a la biblioteca cae ahí.
   if (id === 's-biblioteca') id = 's-capsulas';
+  // Los podcast dejaron de tener pantalla propia: son la segunda pestaña
+  // de cápsulas. Cualquier enlace viejo cae ahí, ya abierto en su pestaña.
+  var _tabPedida = null;
+  if (id === 's-podcast') { id = 's-capsulas'; _tabPedida = 'pod'; }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const target = document.getElementById(id);
   if (target) {
@@ -11664,7 +12125,7 @@ function go(id){
   }
   if (typeof emHintSync === 'function') setTimeout(emHintSync, 120);
   if (id === 's-home' && typeof homeApplyOrder === 'function') homeApplyOrder();
-  if (id === 's-capsulas' && typeof capRender === 'function') capRender();
+  if (id === 's-capsulas' && typeof capTab === 'function') capTab(_tabPedida || _capTabActual);
   if (id === 's-faq' && typeof faqApplyProgress === 'function') faqApplyProgress();
 }
 
@@ -14033,6 +14494,27 @@ function initBlurCarousel(scroller){ return initStepFlow(scroller); }
       };
       window.capMarkRead.__synced = true;
       log('Wrap capMarkRead OK');
+    }
+    if (typeof window.podMarkSeen === 'function' && !window.podMarkSeen.__synced){
+      var _pod = window.podMarkSeen;
+      window.podMarkSeen = function(id){
+        var yaEstaba = false;
+        try { yaEstaba = (JSON.parse(localStorage.getItem('em_pod_seen') || '[]')).indexOf(id) !== -1; } catch(e){}
+        var r = _pod.apply(this, arguments);
+        // Solo la PRIMERA vez: volver a abrir el mismo episodio no es otra
+        // escucha.
+        if (!yaEstaba) {
+          var label = null;
+          try {
+            var ep = (window.PODCASTS || []).find(function(x){ return x.id === id; });
+            if (ep) label = ep.title;
+          } catch(e){}
+          postEvent('podcast', 'pod:' + id, label);
+        }
+        return r;
+      };
+      window.podMarkSeen.__synced = true;
+      log('Wrap podMarkSeen OK');
     }
     if (typeof window.markRead === 'function' && !window.markRead.__synced){
       var _mk = window.markRead;
