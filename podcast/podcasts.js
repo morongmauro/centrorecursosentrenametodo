@@ -42,19 +42,43 @@
 
 window.PODCASTS_DATA = [
 
-  /* Borra la barra y los asteriscos de este bloque para publicarlo, y
-     cámbialo por el episodio que quieras:
+  /* ── LEER ETIQUETAS Y COMPRAR MEJOR ───────────────────────────────── */
+  { id:'etiquetas-leer-1',
+    cat:'Leer etiquetas y comprar mejor',
+    title:'Leer etiquetas sin que te engañen (1 de 2)',
+    show:'El Podcast de Soycomocomo',
+    url:'https://www.youtube.com/watch?v=AsKrD0Isnxk',
+    nota:'Lo que grita el frente del envase casi nunca es lo que dice el reverso. Aquí aprendes a leer el reverso antes de que el producto llegue al carrito.',
+    tag:'Empieza por esta' },
 
-  { id:'sueno-dormir-mejor',
-    cat:'Sueño y recuperación',
-    title:'Herramientas para dormir mejor',
-    show:'Huberman Lab',
-    url:'https://www.youtube.com/watch?v=XXXXXXXXXXX',
-    dur:'1h 20 min',
-    nota:'La base de todo lo que hablamos de descanso: luz, horarios y temperatura.',
-    tag:'Escucha los primeros 20 min',
-    nuevo:true },
+  { id:'etiquetas-leer-2',
+    cat:'Leer etiquetas y comprar mejor',
+    title:'Leer etiquetas: el tutorial (2 de 2)',
+    show:'El Podcast de Soycomocomo',
+    url:'https://www.youtube.com/watch?v=oZ6qZWgrke0',
+    nota:'La continuación de la anterior. Escúchalas seguidas: la primera te da el criterio y esta lo baja al detalle.',
+    tag:'Va después de la primera' },
 
-  */
+  { id:'compra-cafe',
+    cat:'Leer etiquetas y comprar mejor',
+    title:'Qué café comprar y cuál no',
+    show:'El Podcast de Soycomocomo',
+    url:'https://www.youtube.com/watch?v=q1mw4L6nVOE',
+    nota:'El café es de lo poco que tomas todos los días sin fallar. Vale la pena saber cuál elegir en el súper.' },
+
+  /* ── NUTRICIÓN ────────────────────────────────────────────────────── */
+  { id:'nutricion-grasas',
+    cat:'Nutrición',
+    title:'Las grasas, más allá de las calorías',
+    show:'El Podcast de Soycomocomo',
+    url:'https://www.youtube.com/watch?v=FHL06cv7H1o',
+    nota:'El macronutriente con peor fama y peor entendido: para qué sirven las grasas y por qué mirarlas solo como calorías se queda corto.' },
+
+  { id:'nutricion-ayuno',
+    cat:'Nutrición',
+    title:'¿Qué rompe el ayuno intermitente?',
+    show:'El Podcast de Soycomocomo',
+    url:'https://www.youtube.com/watch?v=qubg5G069i4',
+    nota:'Qué puedes tomar durante la ventana sin cortar el ayuno y qué sí lo rompe. Para quien ya ayuna o está por probarlo.' }
 
 ];
