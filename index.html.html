@@ -7220,14 +7220,17 @@ body.locked .mt-stains{display:none;}
   background:rgba(12,12,12,.94);
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   flex-direction:column;align-items:center;justify-content:center;
-  padding:56px 14px 74px;
+  padding:calc(env(safe-area-inset-top, 0px) + 86px) 14px calc(env(safe-area-inset-bottom, 0px) + 24px);
 }
 .cap-lb.open{display:flex;animation:fadeIn .2s ease;}
 .cap-lb-x{
-  position:absolute;top:14px;right:14px;z-index:2;
-  width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
-  background:rgba(255,255,255,.14);color:#F3EFE4;
-  font-size:22px;line-height:1;
+  /* Bajada del borde: pegada arriba del todo, en el móvil el dedo cae en
+     la esquina de la pantalla y el toque no llega. 44px es el mínimo
+     cómodo para el pulgar. */
+  position:absolute;top:calc(env(safe-area-inset-top, 0px) + 30px);right:16px;z-index:2;
+  width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.16);color:#F3EFE4;
+  font-size:26px;line-height:1;
 }
 .cap-lb-fig{
   margin:0;max-width:100%;max-height:100%;
@@ -7243,19 +7246,8 @@ body.locked .mt-stains{display:none;}
   font-size:12.5px;font-weight:500;letter-spacing:-.01em;
   color:rgba(243,239,228,.72);text-align:center;max-width:34ch;
 }
-.cap-lb-nav{
-  position:absolute;bottom:18px;left:0;right:0;
-  display:flex;align-items:center;justify-content:center;gap:18px;
-}
-.cap-lb-nav button{
-  width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
-  background:rgba(255,255,255,.14);color:#F3EFE4;font-size:22px;line-height:1;
-}
-.cap-lb-nav button:active{transform:scale(.92);}
-.cap-lb-count{
-  font-size:10px;font-weight:700;letter-spacing:.09em;
-  color:rgba(243,239,228,.55);min-width:52px;text-align:center;
-}
+
+
 
 
 /* ── 5b · Podcast recomendados ─────────────────────────────────────
@@ -7308,6 +7300,11 @@ body.locked .mt-stains{display:none;}
   padding:3px 8px;border-radius:100px;background:var(--olive);color:#fff;
   font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 }
+.pod-flag{
+  position:absolute;top:6px;right:6px;
+  padding:3px 8px;border-radius:100px;background:rgba(12,12,12,.82);color:#F3EFE4;
+  font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+}
 .pod-check{
   position:absolute;top:6px;right:6px;width:19px;height:19px;border-radius:50%;
   display:grid;place-content:center;background:var(--olive-dark);
@@ -7349,14 +7346,17 @@ body.locked .mt-stains{display:none;}
   background:rgba(12,12,12,.94);
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   flex-direction:column;align-items:center;justify-content:center;
-  padding:56px 14px 74px;
+  padding:calc(env(safe-area-inset-top, 0px) + 86px) 14px calc(env(safe-area-inset-bottom, 0px) + 24px);
 }
 .pod-lb.open{display:flex;animation:fadeIn .2s ease;}
 .pod-lb-x{
-  position:absolute;top:14px;right:14px;z-index:2;
-  width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
-  background:rgba(255,255,255,.14);color:#F3EFE4;
-  font-size:22px;line-height:1;
+  /* Bajada del borde: pegada arriba del todo, en el móvil el dedo cae en
+     la esquina de la pantalla y el toque no llega. 44px es el mínimo
+     cómodo para el pulgar. */
+  position:absolute;top:calc(env(safe-area-inset-top, 0px) + 30px);right:16px;z-index:2;
+  width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.16);color:#F3EFE4;
+  font-size:26px;line-height:1;
 }
 .pod-lb-inner{width:100%;max-width:520px;display:flex;flex-direction:column;gap:12px;}
 .pod-lb-frame{
@@ -7377,19 +7377,8 @@ body.locked .mt-stains{display:none;}
   font-size:11.5px;font-weight:700;letter-spacing:.01em;
 }
 .pod-lb-out svg{width:13px;height:13px;flex:none;}
-.pod-lb-nav{
-  position:absolute;bottom:18px;left:0;right:0;
-  display:flex;align-items:center;justify-content:center;gap:18px;
-}
-.pod-lb-nav button{
-  width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
-  background:rgba(255,255,255,.14);color:#F3EFE4;font-size:22px;line-height:1;
-}
-.pod-lb-nav button:active{transform:scale(.92);}
-.pod-lb-count{
-  font-size:10px;font-weight:700;letter-spacing:.09em;
-  color:rgba(243,239,228,.55);min-width:52px;text-align:center;
-}
+
+
 @media (max-width:360px){
   .pod-card{grid-template-columns:104px 1fr;}
   .cap-card{grid-template-columns:110px 1fr;}
@@ -10750,7 +10739,7 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         <div class="sub-title">CÁPSULAS<br>INFORMATIVAS</div>
         <div class="sub-title-line"></div>
         <div class="sub-intro">
-          <span id="cap-intro-txt">Una idea por lámina. <strong>Toca una cápsula para verla en grande.</strong></span>
+          <span id="cap-intro-txt">Cápsulas informativas creadas para ti: formato infográfico y lenguaje sencillo, para que entiendas los conceptos básicos que te ayudan a mejorar. <strong>Toca una para verla en grande.</strong></span>
           <span class="cap-soon-pill" id="cap-soon" hidden>Próximamente</span>
         </div>
       </div>
@@ -10817,11 +10806,6 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
       <img id="cap-lb-img" src="" alt="">
       <figcaption id="cap-lb-cap"></figcaption>
     </figure>
-    <div class="cap-lb-nav">
-      <button type="button" class="cap-lb-prev" onclick="capStep(event,-1)" aria-label="Cápsula anterior">‹</button>
-      <span class="cap-lb-count" id="cap-lb-count"></span>
-      <button type="button" class="cap-lb-next" onclick="capStep(event,1)" aria-label="Cápsula siguiente">›</button>
-    </div>
   </div>
 
   <!-- Visor: el episodio se reproduce dentro del centro -->
@@ -10834,11 +10818,6 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
         Ver en YouTube
       </a>
-    </div>
-    <div class="pod-lb-nav">
-      <button type="button" onclick="podStep(event,-1)" aria-label="Episodio anterior">‹</button>
-      <span class="pod-lb-count" id="pod-lb-count"></span>
-      <button type="button" onclick="podStep(event,1)" aria-label="Episodio siguiente">›</button>
     </div>
   </div>
 </div>
@@ -10917,6 +10896,22 @@ function podMarkSeen(id){
   }
 }
 
+// "Viendo" = lo abrió y sonó, pero no llegó al final. Es solo de este
+// teléfono: a Supabase viaja únicamente el "visto" de verdad, que es el
+// que engancha podMarkSeen(). Cuando termina el episodio, deja de estar
+// en viendo y pasa a visto.
+const POD_WATCH_KEY = 'em_pod_watching';
+function podGetWatching(){
+  try { return JSON.parse(localStorage.getItem(POD_WATCH_KEY) || '[]'); } catch(e){ return []; }
+}
+function podMarkWatching(id){
+  const w = podGetWatching();
+  if (w.indexOf(id) === -1) {
+    w.push(id);
+    try { localStorage.setItem(POD_WATCH_KEY, JSON.stringify(w)); } catch(e){}
+  }
+}
+
 // Índice (dentro de PODCASTS) del episodio abierto en el visor
 let _podIndex = -1;
 
@@ -10932,6 +10927,7 @@ function podRender(){
   if (empty) empty.hidden = true;
 
   const seen = podGetSeen();
+  const watching = podGetWatching();
   let html = '';
   let lastCat = null;
   PODCASTS.forEach(function(p, i){
@@ -10942,6 +10938,7 @@ function podRender(){
       lastCat = cat;
     }
     const done = seen.indexOf(p.id) !== -1;
+    const enCurso = !done && watching.indexOf(p.id) !== -1;
     const thumb = podThumb(p);
     // maxresdefault no existe en todos los videos: si falla, se cae a la
     // miniatura estándar y, si tampoco, al marco oscuro con el play.
@@ -10954,7 +10951,8 @@ function podRender(){
           (thumb ? '<img src="' + podEsc(thumb) + '" alt="" loading="lazy" onerror="' + fallback + '">' : '') +
           '<span class="pod-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#F3EFE4"><polygon points="6 4 20 12 6 20"/></svg></span>' +
           (p.dur ? '<span class="pod-dur">' + podEsc(p.dur) + '</span>' : '') +
-          (p.nuevo && !done ? '<span class="pod-badge">Nuevo</span>' : '') +
+          (p.nuevo && !done && !enCurso ? '<span class="pod-badge">Nuevo</span>' : '') +
+          (enCurso ? '<span class="pod-flag">Viendo</span>' : '') +
           (done ? '<span class="pod-check" aria-label="Visto"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : '') +
         '</span>' +
         '<span class="pod-body">' +
@@ -10969,45 +10967,125 @@ function podRender(){
   list.innerHTML = html;
 }
 
+// ── Visor ─────────────────────────────────────────────────────────────
+// El episodio se reproduce con el reproductor de YouTube (API iframe).
+// Eso es lo que permite saber si el cliente lo terminó: mientras suena la
+// tarjeta dice "Viendo", y solo al llegar al final pasa a "Visto". Si la
+// API no carga (red lenta, bloqueador), se cae al iframe de siempre: el
+// episodio se ve igual y lo único que se pierde es el aviso de terminado.
+//
+// El script de la API se pide la primera vez que se abre un episodio, no
+// al cargar la página: mientras nadie le dé play, YouTube no entra aquí.
+var _podPlayer = null;
+var _podApiWait = null;
+var _podApiLoading = false;
+
+function podLoadApi(cb){
+  if (window.YT && window.YT.Player) { cb(true); return; }
+  _podApiWait = cb;
+  if (_podApiLoading) return;
+  _podApiLoading = true;
+  var previo = window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){
+    if (typeof previo === 'function') { try { previo(); } catch(e){} }
+    var f = _podApiWait; _podApiWait = null;
+    if (f) f(true);
+  };
+  var sc = document.createElement('script');
+  sc.src = 'https://www.youtube.com/iframe_api';
+  sc.onerror = function(){
+    _podApiLoading = false;
+    var f = _podApiWait; _podApiWait = null;
+    if (f) f(false);
+  };
+  document.head.appendChild(sc);
+  // Si en 5 segundos no cargó, seguimos con el iframe normal.
+  setTimeout(function(){
+    if (window.YT && window.YT.Player) return;
+    var f = _podApiWait; _podApiWait = null;
+    if (f) f(false);
+  }, 5000);
+}
+
+// ¿Se lo vio entero? El final exacto no siempre llega —cierra en el
+// minuto 58 de 60—, así que a partir del 90% ya cuenta como visto.
+function podCasiEntero(){
+  try {
+    if (!_podPlayer || !_podPlayer.getDuration) return false;
+    var d = _podPlayer.getDuration(), t = _podPlayer.getCurrentTime();
+    return d > 0 && (t / d) >= 0.9;
+  } catch(e){ return false; }
+}
+
+function podIframeSimple(frame, p){
+  frame.innerHTML = '<iframe src="' + podEsc(podEmbedUrl(p)) + '" title="' + podEsc(p.title) + '" ' +
+    'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+    'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+}
+
 function podOpen(i){
   const p = PODCASTS[i];
   if (!p) return;
-  podMarkSeen(p.id);
   // Videos que su dueño no deja incrustar: se abren en YouTube, así el
-  // cliente nunca se queda mirando un reproductor con error.
+  // cliente nunca se queda mirando un reproductor con error. Ahí no hay
+  // forma de saber si lo terminó, así que se queda en "Viendo".
   if (p.sinEmbed || !podEmbedUrl(p)) {
+    podMarkWatching(p.id);
     window.open(podWatchUrl(p), '_blank', 'noopener');
     podRender();
     return;
   }
+  podMarkWatching(p.id);
   _podIndex = i;
   const lb = document.getElementById('pod-lb');
   const frame = document.getElementById('pod-lb-frame');
   const cap = document.getElementById('pod-lb-cap');
   const out = document.getElementById('pod-lb-out');
-  const count = document.getElementById('pod-lb-count');
   if (!lb || !frame) return;
-  frame.innerHTML = '<iframe src="' + podEsc(podEmbedUrl(p)) + '" title="' + podEsc(p.title) + '" ' +
-    'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
-    'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
   if (cap) cap.innerHTML = (p.show ? '<b>' + podEsc(p.show) + '</b>' : '') + podEsc(p.title);
   if (out) out.href = podWatchUrl(p);
-  if (count) count.textContent = (i + 1) + ' / ' + PODCASTS.length;
+  frame.innerHTML = '<div id="pod-yt"></div>';
   lb.classList.add('open');
   lb.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+
+  const vid = podVideoId(p), lista = podListId(p);
+  podLoadApi(function(ok){
+    // Si mientras cargaba la API cerró el visor, no montamos nada.
+    if (_podIndex !== i || !lb.classList.contains('open')) return;
+    if (!ok || !window.YT || !window.YT.Player) { podIframeSimple(frame, p); return; }
+    var opciones = {
+      host: 'https://www.youtube-nocookie.com',
+      playerVars: { autoplay:1, rel:0, modestbranding:1, playsinline:1 },
+      events: {
+        onStateChange: function(e){
+          if (e.data === 1) podMarkWatching(p.id);                              // sonando
+          if (e.data === 0) { podMarkSeen(p.id); podRender(); }                 // terminó
+          if (e.data === 2 && podCasiEntero()) { podMarkSeen(p.id); podRender(); } // pausó al final
+        }
+      }
+    };
+    if (vid) { opciones.videoId = vid; if (lista) opciones.playerVars.list = lista; }
+    else { opciones.playerVars.listType = 'playlist'; opciones.playerVars.list = lista; }
+    try { _podPlayer = new YT.Player('pod-yt', opciones); }
+    catch(e){ podIframeSimple(frame, p); }
+  });
+  podRender();
 }
-function podStep(ev, dir){
-  if (ev) ev.stopPropagation();
-  if (!PODCASTS.length) return;
-  const n = PODCASTS.length;
-  podOpen((_podIndex + dir + n) % n);
-}
+
+// Un episodio a la vez: desde el visor no se salta al siguiente. Para oír
+// otro hay que cerrar y elegirlo en la lista.
 function podClose(ev, force){
-  if (!force && ev && ev.target && ev.target.closest && ev.target.closest('.pod-lb-inner, .pod-lb-nav')) return;
+  if (!force && ev && ev.target && ev.target.closest && ev.target.closest('.pod-lb-inner')) return;
   const lb = document.getElementById('pod-lb');
   const frame = document.getElementById('pod-lb-frame');
-  // Vaciar el iframe es lo que detiene el audio: sin esto sigue sonando.
+  // Si cierra ya casi al final, cuenta como visto.
+  const p = PODCASTS[_podIndex];
+  if (p && podCasiEntero()) podMarkSeen(p.id);
+  // Destruir el reproductor (o vaciar el iframe) es lo que detiene el
+  // audio: sin esto sigue sonando con el visor cerrado.
+  if (_podPlayer && _podPlayer.destroy) { try { _podPlayer.destroy(); } catch(e){} }
+  _podPlayer = null;
   if (frame) frame.innerHTML = '';
   if (lb) { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); }
   document.body.style.overflow = '';
@@ -11018,8 +11096,6 @@ document.addEventListener('keydown', function (e) {
   const lb = document.getElementById('pod-lb');
   if (!lb || !lb.classList.contains('open')) return;
   if (e.key === 'Escape') podClose(null, true);
-  if (e.key === 'ArrowRight') podStep(null, 1);
-  if (e.key === 'ArrowLeft') podStep(null, -1);
 });
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', podRender);
 else podRender();
@@ -11065,8 +11141,8 @@ function capTab(which){
 
   const txt = document.getElementById('cap-intro-txt');
   if (txt) txt.innerHTML = which === 'pod'
-    ? 'Episodios que valen tu tiempo. <strong>Toca uno y se reproduce aquí mismo.</strong>'
-    : 'Una idea por lámina. <strong>Toca una cápsula para verla en grande.</strong>';
+    ? 'Episodios de podcast seleccionados para ti, para profundizar en lo que ya viste — de forma sencilla, interesante y entretenida, porque aprender también puede engancharte. <strong>Toca uno y se reproduce aquí mismo.</strong>'
+    : 'Cápsulas informativas creadas para ti: formato infográfico y lenguaje sencillo, para que entiendas los conceptos básicos que te ayudan a mejorar. <strong>Toca una para verla en grande.</strong>';
   const soon = document.getElementById('cap-soon');
   if (soon && which === 'pod') soon.hidden = true;
 
@@ -11200,26 +11276,22 @@ function capOpen(i){
   const lb = document.getElementById('cap-lb');
   const img = document.getElementById('cap-lb-img');
   const cap = document.getElementById('cap-lb-cap');
-  const count = document.getElementById('cap-lb-count');
   if (!lb || !img) return;
   img.src = c.file;
   img.alt = c.title;
   if (cap) cap.textContent = c.title;
-  if (count) count.textContent = (i + 1) + ' / ' + CAPSULAS.length;
   lb.classList.add('open');
   lb.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   capMarkRead(c.id);
 }
-function capStep(ev, dir){
-  if (ev) ev.stopPropagation();
-  if (!CAPSULAS.length) return;
-  const n = CAPSULAS.length;
-  capOpen((_capIndex + dir + n) % n);
-}
+// Una cápsula a la vez: no se salta de una lámina a la siguiente desde el
+// visor. Para ver otra hay que cerrar y elegirla en la lista — así el
+// cliente decide qué abre y el "visto" no se llena de láminas que solo
+// pasaron de largo.
 function capClose(ev, force){
   // Un toque sobre la propia imagen no cierra (se puede ampliar con pellizco)
-  if (!force && ev && ev.target && ev.target.closest && ev.target.closest('.cap-lb-fig, .cap-lb-nav')) return;
+  if (!force && ev && ev.target && ev.target.closest && ev.target.closest('.cap-lb-fig')) return;
   const lb = document.getElementById('cap-lb');
   if (lb) { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); }
   document.body.style.overflow = '';
@@ -11230,8 +11302,6 @@ document.addEventListener('keydown', function (e) {
   const lb = document.getElementById('cap-lb');
   if (!lb || !lb.classList.contains('open')) return;
   if (e.key === 'Escape') capClose(null, true);
-  if (e.key === 'ArrowRight') capStep(null, 1);
-  if (e.key === 'ArrowLeft') capStep(null, -1);
 });
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ capTab(_capTabActual); });
 else capTab(_capTabActual);
