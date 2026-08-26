@@ -7167,11 +7167,15 @@ body.locked .mt-stains{display:none;}
   padding:3px 8px;border-radius:100px;background:var(--olive);color:#fff;
   font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 }
-.cap-check{
-  position:absolute;top:6px;right:6px;width:19px;height:19px;border-radius:50%;
-  display:grid;place-content:center;background:var(--olive-dark);
+.cap-check,.pod-check{
+  position:absolute;top:6px;right:6px;
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 8px 3px 6px;border-radius:100px;
+  background:var(--olive-dark);color:#fff;
+  font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  box-shadow:0 2px 8px rgba(0,0,0,.22);
 }
-.cap-check svg{width:10px;height:10px;display:block;}
+.cap-check svg,.pod-check svg{width:9px;height:9px;display:block;flex:none;}
 .cap-body{min-width:0;padding-top:1px;}
 .cap-kicker{
   display:block;
@@ -7322,11 +7326,7 @@ body.locked .mt-stains{display:none;}
   padding:3px 8px;border-radius:100px;background:rgba(12,12,12,.82);color:#F3EFE4;
   font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
 }
-.pod-check{
-  position:absolute;top:6px;right:6px;width:19px;height:19px;border-radius:50%;
-  display:grid;place-content:center;background:var(--olive-dark);
-}
-.pod-check svg{width:10px;height:10px;display:block;}
+
 .pod-body{min-width:0;}
 /* EL TÍTULO MANDA. El nombre del podcast pasa a ser la letra chica: lo que
    hace que alguien le dé play es de qué trata el episodio, no de qué canal
@@ -7695,6 +7695,32 @@ body.locked .mt-stains{display:none;}
 .sub-hero-plain,.ga-cover{
   padding-top:var(--em-safe-top) !important;
 }
+
+/* ── 2b · Franja de dilución bajo la píldora de marca ────────────────
+   El Meal Tracker fija encima una píldora negra ("Aprendizaje · Entrena
+   con Método"). Al hacer scroll, el contenido pasaba NÍTIDO por detrás y
+   se leía revuelto con ella. Esta franja lo desenfoca y lo aclara según
+   sube, y se apaga con una máscara para que no se vea un borde recto.
+
+   Va en z-60: por DEBAJO del botón de volver (z-70), que así se mantiene
+   siempre limpio y por encima de todo. Se dibuja aquí, dentro del centro,
+   y no en el Meal Tracker: desde fuera taparía también ese botón. */
+.em-top-fade{
+  position:fixed;left:0;right:0;top:0;z-index:60;
+  height:calc(env(safe-area-inset-top, 0px) + 58px);
+  pointer-events:none;
+  -webkit-backdrop-filter:blur(11px) saturate(115%);
+  backdrop-filter:blur(11px) saturate(115%);
+  background:linear-gradient(180deg,
+    rgba(247,244,237,.80) 0%,
+    rgba(247,244,237,.52) 48%,
+    rgba(247,244,237,.18) 78%,
+    rgba(247,244,237,0) 100%);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
+}
+/* El botón de volver, siempre por encima de la franja. */
+.sub-back,.hub-back-link,.mg-back{z-index:70 !important;}
 
 /* ── 3 · Volver: círculo sólido, en la misma línea que la píldora ──── */
 .sub-back,.hub-back-link,.mg-back{
@@ -10751,6 +10777,8 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
      y el toque la abre a pantalla completa. Las imágenes van en
      img/capsulas/ — ver el README de esa carpeta para el naming. -->
 <div id="s-capsulas" class="screen">
+  <!-- Diluye lo que pasa por debajo de la píldora de marca al hacer scroll -->
+  <div class="em-top-fade" aria-hidden="true"></div>
   <div class="sub-area">
 
     <div class="bg-halo bg-halo-1"></div>
@@ -10771,9 +10799,12 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         <div class="sub-eyebrow">Material de apoyo</div>
         <div class="sub-title">CÁPSULAS<br>INFORMATIVAS</div>
         <div class="sub-title-line"></div>
+        <!-- Texto CORTO y FIJO. Antes cambiaba al saltar entre Infografías
+             y Podcast, y como el de podcast era más largo la rejilla saltaba
+             hacia abajo: el contenido que importa arrancaba a media pantalla.
+             Una sola frase que sirve para los dos formatos. -->
         <div class="sub-intro">
-          <span id="cap-intro-txt">Cápsulas informativas creadas para ti: formato infográfico y lenguaje sencillo, para que entiendas los conceptos básicos que te ayudan a mejorar. <strong>Toca una para verla en grande.</strong></span>
-          <span class="cap-soon-pill" id="cap-soon" hidden>Próximamente</span>
+          <span id="cap-intro-txt">Infografías y podcast escogidos para ti. <strong>Toca uno y ábrelo.</strong></span>
         </div>
       </div>
     </div>
@@ -11008,7 +11039,7 @@ function podRender(){
           (p.dur ? '<span class="pod-dur">' + podEsc(p.dur) + '</span>' : '') +
           (p.nuevo && !done && !enCurso ? '<span class="pod-badge">Nuevo</span>' : '') +
           (enCurso ? '<span class="pod-flag">Viendo</span>' : '') +
-          (done ? '<span class="pod-check" aria-label="Visto"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : '') +
+          (done ? '<span class="pod-check"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Visto</span>' : '') +
         '</span>' +
         '<span class="pod-body">' +
           // El título va PRIMERO: es lo que hace que alguien le dé play.
@@ -11016,7 +11047,6 @@ function podRender(){
           '<span class="pod-title">' + podEsc(p.title) + '</span>' +
           (p.show ? '<span class="pod-show">' + podEsc(p.show) + '</span>' : '') +
           (p.nota ? '<span class="pod-note">' + podEsc(p.nota) + '</span>' : '') +
-          (p.tag ? '<span class="pod-tag">' + podEsc(p.tag) + '</span>' : '') +
         '</span>' +
       '</button>';
   });
@@ -11325,6 +11355,34 @@ function capConstruirLista(escritasRaw, archivos){
 
 var CAPSULAS = capConstruirLista(window.CAPSULAS_DATA, CAP_FILES);
 
+// ── CARGA DE LA IMAGEN, TOLERANTE A LA EXTENSIÓN ──────────────────────
+// El listado dice .png, pero la imagen subida puede ser .jpg, .jpeg, .webp
+// o .avif — y entonces la tarjeta salía con el marco "Infografía en camino"
+// aunque la lámina estuviera en el repo. Ahora, si falla, se prueban las
+// otras extensiones antes de darla por perdida. También se prueba en
+// minúsculas: GitHub distingue mayúsculas y "FOTO.PNG" no es "foto.png".
+const CAP_EXTS = ['png', 'jpg', 'jpeg', 'webp', 'avif', 'PNG', 'JPG', 'JPEG'];
+
+function capImgFallback(img){
+  const base = String(img.getAttribute('data-base') || img.src).replace(/\.[a-z0-9]+$/i, '');
+  let n = Number(img.getAttribute('data-try') || 0);
+  img.setAttribute('data-base', base);
+  while (n < CAP_EXTS.length) {
+    const siguiente = base + '.' + CAP_EXTS[n];
+    n++;
+    if (siguiente !== img.src) {
+      img.setAttribute('data-try', n);
+      img.src = siguiente;
+      return;
+    }
+  }
+  // Se acabaron las opciones: marco honesto en vez de un icono roto.
+  const card = img.closest('.cap-card');
+  if (card) card.classList.add('no-img');
+  const fig = img.closest('.cap-lb-fig');
+  if (fig) fig.classList.add('no-img');
+}
+
 function capEsc(x){
   return String(x == null ? '' : x)
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -11356,12 +11414,8 @@ function capTab(which){
   if (pi) pi.hidden = which !== 'info';
   if (pp) pp.hidden = which !== 'pod';
 
-  const txt = document.getElementById('cap-intro-txt');
-  if (txt) txt.innerHTML = which === 'pod'
-    ? 'Episodios de podcast seleccionados para ti, para profundizar en lo que ya viste — de forma sencilla, interesante y entretenida, porque aprender también puede engancharte. <strong>Toca uno y se reproduce aquí mismo.</strong>'
-    : 'Cápsulas informativas creadas para ti: formato infográfico y lenguaje sencillo, para que entiendas los conceptos básicos que te ayudan a mejorar. <strong>Toca una para verla en grande.</strong>';
-  const soon = document.getElementById('cap-soon');
-  if (soon && which === 'pod') soon.hidden = true;
+  // El texto del hero NO se toca al cambiar de pestaña: si cambia, la
+  // portada crece o se encoge y toda la rejilla salta de sitio.
 
   // La bajada del botón del home nombra los dos formatos solo cuando de
   // verdad hay episodios cargados.
@@ -11379,16 +11433,9 @@ function capTab(which){
   if (typeof emHintSync === 'function') setTimeout(emHintSync, 60);
 }
 
-// ¿Hay al menos una infografía subida? Se comprueba cargando la primera
-// imagen de la lista; mientras no exista, la portada avisa.
-function capCheckPublicadas(){
-  var note = document.getElementById('cap-soon');
-  if (!note || !CAPSULAS.length) return;
-  var probe = new Image();
-  probe.onload = function(){ if (note) note.hidden = true; };
-  probe.onerror = function(){ if (note) note.hidden = false; };
-  probe.src = CAPSULAS[0].file;
-}
+// El aviso de "Próximamente" se quitó: ya hay láminas publicadas y el
+// marco de "Infografía en camino" de cada tarjeta ya cubre el caso de una
+// imagen que todavía no está subida.
 
 const CAP_READ_KEY = 'em_cap_read';
 function capGetRead(){
@@ -11415,10 +11462,6 @@ function capRender(){
   const gal = document.getElementById('cap-gal');
   const empty = document.getElementById('cap-empty');
   if (!gal) return;
-  // Aviso de "próximamente" mientras ninguna infografía esté publicada:
-  // así nadie cree que la sección está rota. Se quita solo en cuanto
-  // carga la primera imagen.
-  capCheckPublicadas();
   if (!CAPSULAS.length) {
     gal.innerHTML = '';
     if (empty) empty.hidden = false;
@@ -11441,14 +11484,13 @@ function capRender(){
       '<button class="cap-card' + (done ? ' is-read' : '') + '" type="button" data-i="' + i + '" onclick="capOpen(' + i + ')">' +
         '<span class="cap-thumb">' +
           '<img src="' + capEsc(c.file) + '" alt="' + capEsc(c.title) + '" loading="lazy" ' +
-               'onerror="this.closest(\'.cap-card\').classList.add(\'no-img\')">' +
+               'onerror="capImgFallback(this)">' +
           (c.nuevo && !done ? '<span class="cap-badge">Nuevo</span>' : '') +
-          (done ? '<span class="cap-check" aria-label="Vista"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : '') +
+          (done ? '<span class="cap-check"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Vista</span>' : '') +
         '</span>' +
         '<span class="cap-body">' +
           '<span class="cap-title">' + capEsc(c.title) + '</span>' +
           (c.nota ? '<span class="cap-note">' + capEsc(c.nota) + '</span>' : '') +
-          (c.tag ? '<span class="cap-tag">' + capEsc(c.tag) + '</span>' : '') +
         '</span>' +
       '</button>';
   });
@@ -11495,6 +11537,11 @@ function capOpen(i){
   const img = document.getElementById('cap-lb-img');
   const cap = document.getElementById('cap-lb-cap');
   if (!lb || !img) return;
+  // Mismo cargador tolerante que la rejilla: si el archivo real es .jpg y
+  // el listado dice .png, la lámina se abre igual.
+  img.removeAttribute('data-try');
+  img.removeAttribute('data-base');
+  img.onerror = function(){ capImgFallback(img); };
   img.src = c.file;
   img.alt = c.title;
   if (cap) cap.textContent = c.title;
