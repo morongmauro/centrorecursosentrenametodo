@@ -87,7 +87,7 @@ window.PODCASTS_DATA = [
 
   /* ── LEER ETIQUETAS Y COMPRAR MEJOR ───────────────────────────────── */
   { id:'etiquetas-leer-1',
-    cat:'Leer etiquetas y comprar mejor',
+    cat:'Nutrición',
     show:'El Podcast de Soycomocomo',
     title:'Leer etiquetas sin que te engañen (1 de 2)',
     nota:'Lo que grita el frente del envase casi nunca es lo que dice el reverso. Aquí aprendes a leer el reverso antes de que el producto llegue al carrito.',
@@ -95,7 +95,7 @@ window.PODCASTS_DATA = [
     tag:'Empieza por esta' },
 
   { id:'etiquetas-leer-2',
-    cat:'Leer etiquetas y comprar mejor',
+    cat:'Nutrición',
     show:'El Podcast de Soycomocomo',
     title:'Leer etiquetas: el tutorial (2 de 2)',
     nota:'La continuación de la anterior. Escúchalas seguidas: la primera te da el criterio y esta lo baja al detalle.',
@@ -103,7 +103,7 @@ window.PODCASTS_DATA = [
     tag:'Va después de la primera' },
 
   { id:'compra-yogures',
-    cat:'Leer etiquetas y comprar mejor',
+    cat:'Nutrición',
     show:'El Podcast de Soycomocomo',
     title:'Kéfir, griego, proteico o desnatado: cuál elegir',
     nota:'La comparación de los cuatro, para que elijas el tuyo en el pasillo del súper sin quedarte mirando la nevera.',
@@ -111,21 +111,21 @@ window.PODCASTS_DATA = [
 
   /* ── CAFÉ Y VINAGRE DE MANZANA ────────────────────────────────────── */
   { id:'compra-cafe',
-    cat:'Café y vinagre de manzana',
+    cat:'Nutrición',
     show:'El Podcast de Soycomocomo',
     title:'Qué café comprar y cuál no',
     nota:'El café es de lo poco que tomas todos los días sin fallar. Este te dice cuál comprar; el siguiente, por qué te conviene.',
     url:'https://www.youtube.com/watch?v=q1mw4L6nVOE' },
 
   { id:'cafe-beneficios',
-    cat:'Café y vinagre de manzana',
+    cat:'Nutrición',
     show:'El Podcast de Soycomocomo',
     title:'Los beneficios del café, uno por uno',
     nota:'Qué hace de verdad el café en tu cuerpo. Va con el anterior: aquel explica cuál elegir y este por qué vale la pena.',
     url:'https://www.youtube.com/watch?v=Cz0Lt1NWV48' },
 
   { id:'vinagre-manzana',
-    cat:'Café y vinagre de manzana',
+    cat:'Nutrición',
     show:'El Podcast de Soycomocomo',
     title:'Vinagre de manzana: ¿es para tanto?',
     nota:'Repasa los beneficios que se le atribuyen, cuánto hay de cierto en cada uno y cómo tomarlo si decides usarlo.',
@@ -134,21 +134,21 @@ window.PODCASTS_DATA = [
 
   /* ── SUPLEMENTOS ──────────────────────────────────────────────────── */
   { id:'suple-colageno',
-    cat:'Suplementos',
+    cat:'Nutrición',
     show:'Dr. Carlos Jaramillo',
     title:'Qué colágeno elegir, según para qué lo quieres',
     nota:'No todos sirven para lo mismo. Míralo antes de gastar en el primero que te recomienden en la farmacia.',
     url:'https://www.youtube.com/watch?v=qNTqP6S4tkA' },
 
   { id:'suple-creatina-mayores',
-    cat:'Suplementos',
+    cat:'Nutrición',
     show:'Dr. Carlos Jaramillo',
     title:'Creatina después de los 70',
     nota:'La creatina no es cosa solo de gimnasio ni solo de gente joven. Un caso concreto en una persona mayor.',
     url:'https://www.youtube.com/watch?v=3C4JZ4ShhW8' },
 
   { id:'suple-magnesio-senales',
-    cat:'Suplementos',
+    cat:'Nutrición',
     show:'Dr. Carlos Jaramillo',
     title:'Calambres, insomnio y antojos de dulce: ¿te falta magnesio?',
     nota:'Tres molestias que parecen no tener nada que ver y pueden apuntar al mismo sitio.',
@@ -156,7 +156,7 @@ window.PODCASTS_DATA = [
     tag:'Primero este' },
 
   { id:'suple-magnesio-cual',
-    cat:'Suplementos',
+    cat:'Nutrición',
     show:'Dr. Carlos Jaramillo',
     title:'Qué magnesio tomar y cuál no',
     nota:'Va después del anterior: si te falta, este te dice cuál comprar y cuál es el que se vende mucho y aprovechas poco.',
@@ -165,21 +165,21 @@ window.PODCASTS_DATA = [
 
   /* ── AYUNO Y APETITO ──────────────────────────────────────────────── */
   { id:'nutricion-ayuno',
-    cat:'Ayuno y apetito',
+    cat:'Nutrición',
     show:'El Podcast de Soycomocomo',
     title:'¿Qué rompe el ayuno intermitente?',
     nota:'Qué puedes tomar durante la ventana sin cortar el ayuno y qué sí lo rompe. Para quien ya ayuna o está por probarlo.',
     url:'https://www.youtube.com/watch?v=qubg5G069i4' },
 
   { id:'ayuno-siete-dias',
-    cat:'Ayuno y apetito',
+    cat:'Nutrición',
     show:'Dr. Carlos Jaramillo',
     title:'Qué pasa en el cuerpo con siete días de ayuno',
     nota:'Para entender el mecanismo, no para copiarlo: una semana de ayuno no es algo que se improvise por tu cuenta.',
     url:'https://www.youtube.com/watch?v=_VbvRmqe3zA' },
 
   { id:'hormona-hambre',
-    cat:'Ayuno y apetito',
+    cat:'Nutrición',
     show:'Dr. Carlos Jaramillo',
     title:'La hormona del hambre: por qué no paras de comer',
     nota:'Si sientes que nunca te llenas, esto explica por qué el hambre no es solo cuestión de fuerza de voluntad.',
@@ -187,21 +187,21 @@ window.PODCASTS_DATA = [
 
   /* ── NUTRICIÓN Y SALUD ────────────────────────────────────────────── */
   { id:'nutricion-grasas',
-    cat:'Nutrición y salud',
+    cat:'Nutrición',
     show:'El Podcast de Soycomocomo',
     title:'Las grasas, más allá de las calorías',
     nota:'El macronutriente con peor fama y peor entendido: para qué sirven las grasas y por qué mirarlas solo como calorías se queda corto.',
     url:'https://www.youtube.com/watch?v=FHL06cv7H1o' },
 
   { id:'dormir-descanso',
-    cat:'Nutrición y salud',
+    cat:'Bienestar general',
     show:'Dr. Carlos Jaramillo',
     title:'Duermes ocho horas y sigues cansado',
     nota:'Estar ocho horas en la cama no es lo mismo que descansar ocho horas. Por qué te levantas fundido aunque cumplas con el horario.',
     url:'https://www.youtube.com/watch?v=9PZNBvWtQxM' },
 
   { id:'salud-metabolica-inmune',
-    cat:'Nutrición y salud',
+    cat:'Nutrición',
     show:'El Podcast de Soycomocomo',
     title:'Salud metabólica y sistema inmune',
     nota:'Qué tiene que ver cómo está tu metabolismo con lo bien que te defiendes. Para quien cree que cuidarse es solo cuestión de peso.',
@@ -211,14 +211,14 @@ window.PODCASTS_DATA = [
      identificarlo. Escríbeme dos palabras de su contenido y la redacto.
      Mientras tanto la tarjeta se ve bien, solo sin la línea de nota. */
   { id:'deportistas',
-    cat:'Nutrición y salud',
+    cat:'Entrenamiento',
     show:'Dr. Carlos Jaramillo',
     title:'Si entrenas en serio, esto va para ti',
     url:'https://www.youtube.com/watch?v=JbZpnc6kyQU' },
 
   /* ── HORMONAS ─────────────────────────────────────────────────────── */
   { id:'dolor-menstrual',
-    cat:'Hormonas',
+    cat:'Bienestar general',
     show:'El Podcast de Soycomocomo',
     title:'Dolor menstrual: alimentos y suplementos que ayudan',
     nota:'Que la regla duela tanto no es normal, y hay margen para hacer algo. Con Carlos González, fisioterapeuta y especialista en PNI.',
@@ -226,10 +226,98 @@ window.PODCASTS_DATA = [
     tag:'No, no es normal que duela así' },
 
   { id:'hormonas-testosterona',
-    cat:'Hormonas',
+    cat:'Bienestar general',
     show:'Dr. Carlos Jaramillo',
     title:'Testosterona: qué la baja y qué la sostiene',
     nota:'Después de los 30 baja sola, poco a poco. Qué acelera esa caída y qué está en tu mano para frenarla.',
-    url:'https://www.youtube.com/watch?v=riiEnoDbL0E' }
+    url:'https://www.youtube.com/watch?v=riiEnoDbL0E' },
+
+  /* ═══════════════════════════════════════════════════════════════════
+     HUBERMAN LAB — los de más respaldo científico de la lista.
+     Todos están en inglés. YouTube les pone subtítulos automáticos y los
+     traduce: en el reproductor, engranaje → Subtítulos → Traducir → Español.
+     Por eso el `show` lo dice: para que nadie le dé play esperando español.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  /* ── ENTRENAR CON CRITERIO ────────────────────────────────────────── */
+  { id:'hub-cavaliere-plan',
+    cat:'Entrenamiento',
+    show:'Huberman Lab · en inglés',
+    title:'Cómo se arma un plan de entrenamiento que sirve',
+    nota:'Frecuencia, técnica y progresión, en el orden que importa. Es el porqué de que tu rutina esté armada como está.',
+    url:'https://www.youtube.com/watch?v=UNCwdFxPtE8' },
+
+  /* ── GRASA, AZÚCAR Y MÚSCULO ──────────────────────────────────────── */
+  { id:'hub-esencial-grasa',
+    cat:'Nutrición',
+    show:'Huberman Lab Essentials · en inglés',
+    title:'Perder grasa: lo que de verdad mueve la aguja',
+    nota:'La versión corta y sin relleno. Si de esta lista solo escuchas uno, que sea este.',
+    url:'https://www.youtube.com/watch?v=f4cdu-QiKHo' },
+
+  { id:'hub-norton-comer',
+    cat:'Nutrición',
+    show:'Huberman Lab · en inglés',
+    title:'Comer para perder grasa y ganar músculo',
+    nota:'Layne Norton es doctor en nutrición y levanta en serio. Lo que explica aquí es el sustento de tu meta de macros.',
+    url:'https://www.youtube.com/watch?v=K4Ze-Sp6aUE' },
+
+  { id:'hub-lustig-azucar',
+    cat:'Nutrición',
+    show:'Huberman Lab · en inglés',
+    title:'Qué le hace el azúcar añadido a tu cuerpo',
+    nota:'Por qué el ultraprocesado no es solo calorías de más, con el endocrinólogo que puso el tema sobre la mesa.',
+    url:'https://www.youtube.com/watch?v=n28W4AmvMDE' },
+
+  /* ── DORMIR Y RECUPERAR ───────────────────────────────────────────── */
+  { id:'hub-walker-sueno',
+    cat:'Bienestar general',
+    show:'Huberman Lab · en inglés',
+    title:'Cuántas horas necesitas dormir tú',
+    nota:'El sueño no es igual para todos. Cómo saber cuánto te toca y qué se rompe cuando te quedas corto.',
+    url:'https://www.youtube.com/watch?v=-OBCwiPPfEU' },
+
+  { id:'hub-calor-sauna',
+    cat:'Bienestar general',
+    show:'Huberman Lab · en inglés',
+    title:'Sauna y calor: qué gana el cuerpo',
+    nota:'Qué hace el calor deliberado por tu corazón, tu recuperación y tu ánimo, y cuánto hace falta para notarlo.',
+    url:'https://www.youtube.com/watch?v=EQ3GjpGq5Y8' },
+
+  /* ── CABEZA Y HÁBITOS ─────────────────────────────────────────────── */
+  { id:'hub-goggins-fuerza',
+    cat:'Bienestar general',
+    show:'Huberman Lab · en inglés',
+    title:'De dónde sale la fuerza mental',
+    nota:'David Goggins hizo método de la incomodidad. Para los días en que no quieres ir a entrenar y vas igual.',
+    url:'https://www.youtube.com/watch?v=nDLb8_wgX50' },
+
+  { id:'hub-conti-salud-mental',
+    cat:'Bienestar general',
+    show:'Huberman Lab · en inglés',
+    title:'Cuidar tu salud mental, en concreto',
+    nota:'Un psiquiatra explica qué mirar y por dónde empezar cuando algo no anda bien. Sin frases de cajón.',
+    url:'https://www.youtube.com/watch?v=qPKd99Pa2iU' },
+
+  { id:'hub-suzuki-memoria',
+    cat:'Bienestar general',
+    show:'Huberman Lab · en inglés',
+    title:'Atención y memoria: cómo se entrenan',
+    nota:'Qué le hace el ejercicio a tu cerebro, contado por una neurocientífica. Otra razón para no saltarte la sesión.',
+    url:'https://www.youtube.com/watch?v=099hgtRoUZw' },
+
+  { id:'hub-ferriss-aprender',
+    cat:'Bienestar general',
+    show:'Huberman Lab · en inglés',
+    title:'Aprender mejor y elegir tu rumbo',
+    nota:'Cómo aprende alguien que vive de aprender rápido. Sirve igual para un idioma que para cambiar un hábito.',
+    url:'https://www.youtube.com/watch?v=doupx8SAs5Y' },
+
+  { id:'hub-musica-animo',
+    cat:'Bienestar general',
+    show:'Huberman Lab · en inglés',
+    title:'La música como palanca de ánimo',
+    nota:'Qué poner antes de entrenar, qué poner para concentrarte y qué evitar de noche. Aplicable el mismo día.',
+    url:'https://www.youtube.com/watch?v=gveDhZW-rUk' }
 
 ];
