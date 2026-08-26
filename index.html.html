@@ -7144,6 +7144,12 @@ body.locked .mt-stains{display:none;}
 }
 .cap-thumb img{
   width:100%;height:100%;object-fit:cover;display:block;
+  /* ANCLADA ARRIBA. Las láminas son más altas que el marco (2:3 contra 4:5),
+     así que "cover" recorta a lo alto. Centrado se comía el titular, que es
+     justo lo que hace reconocible la lámina en la rejilla. Anclando arriba
+     el título siempre sobrevive y lo que se pierde es el pie. Funciona con
+     cualquier proporción más alta que 4:5. */
+  object-position:top center;
   transition:transform .35s cubic-bezier(.16,.84,.3,1);
 }
 .cap-card:hover .cap-thumb img{transform:scale(1.035);}

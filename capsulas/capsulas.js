@@ -51,9 +51,13 @@
    centro agrupa siempre en Entrenamiento → Nutrición → Bienestar general.
    Dentro de cada categoría sí manda el orden en que estén escritos.
 
-   Reglas de la imagen: 4:5 vertical, 1080–1440 px de ancho, menos de
-   600 KB, y el titular debe leerse ya en la miniatura — ahora se ven de
-   a dos por fila, así que el texto pequeño no se lee sin abrirla.
+   Reglas de la imagen: vertical, 1024–1440 px de ancho, menos de 600 KB.
+   Sirve cualquier proporción de 4:5 en adelante (las actuales son 2:3).
+
+   EL TITULAR VA ARRIBA. La miniatura de la rejilla muestra la parte de
+   ARRIBA de la lámina y recorta el pie: es lo que hace que se reconozca
+   sin abrirla. Se ven de a dos por fila, así que el texto pequeño de la
+   lámina no se va a leer en la tarjeta — para eso está la descripción.
    Mientras la imagen no exista, la tarjeta se ve con el marco
    "Infografía en camino" — puedes dejar la entrada lista de antemano.
 
@@ -66,9 +70,9 @@ window.CAPSULAS_DATA = [
   /* ── ENTRENAMIENTO ────────────────────────────────────────────────── */
   { id:'ent-01-capacidades',
     cat:'Entrenamiento',
-    title:'Las cinco capacidades físicas',
+    title:'Las cinco capacidades',
     file:'capsulas/01-entrenamiento-las-cinco-capacidades.png',
-    nota:'Fuerza, resistencia, velocidad, flexibilidad y coordinación.',
+    nota:'Fuerza, movilidad, resistencia, potencia y coordinación: cuál te frena.',
     tag:'Empieza por aquí',
     nuevo:true },
 
@@ -76,36 +80,38 @@ window.CAPSULAS_DATA = [
     cat:'Entrenamiento',
     title:'Cómo crece el músculo',
     file:'capsulas/02-entrenamiento-como-crece-el-musculo.png',
-    nota:'Qué pasa dentro del músculo y qué necesita después para crecer.',
+    nota:'La dosis que produce hipertrofia: 10 a 20 series semanales por músculo.',
     nuevo:true },
 
   { id:'ent-03-lenguaje-rutina',
     cat:'Entrenamiento',
     title:'El lenguaje de tu rutina',
     file:'capsulas/03-entrenamiento-el-lenguaje-de-tu-rutina.png',
-    nota:'Series, repeticiones, RIR, tempo: qué significa cada palabra.',
-    tag:'Para no perderte en el plan',
+    nota:'Carga, volumen, densidad y tempo: las variables que definen tu entreno.',
+    tag:'Para leer tu plan sin dudar',
     nuevo:true },
 
   { id:'ent-04-subir-peso',
     cat:'Entrenamiento',
     title:'Cuándo subir el peso',
     file:'capsulas/04-entrenamiento-cuando-subir-el-peso.png',
-    nota:'La señal de que ya toca subir, cuánto, y qué hacer si te estancas.',
+    nota:'Y por qué no tiene que ser cada semana. Primero suben las repeticiones.',
     nuevo:true },
 
   { id:'ent-05-orden-sesion',
     cat:'Entrenamiento',
     title:'El orden de la sesión',
     file:'capsulas/05-entrenamiento-el-orden-de-la-sesion.png',
-    nota:'Qué va primero y qué va al final, y por qué ese orden importa.',
+    tag:'El orden es parte de la dosis',
+    nota:'Dónde gastas la fuerza disponible. Los compuestos van primero.',
     nuevo:true },
 
   { id:'ent-06-entiende-rutina',
     cat:'Entrenamiento',
     title:'Entiende tu rutina',
     file:'capsulas/06-entrenamiento-entiende-tu-rutina.png',
-    nota:'Qué busca cada bloque de tu plan y qué pasa si te saltas uno.',
+    tag:'Con RIR y RPE ya lees tu plan',
+    nota:'RIR, RPE, 1RM y ROM: las abreviaturas que sí necesitas ahora.',
     nuevo:true },
 
   /* ── NUTRICIÓN ────────────────────────────────────────────────────── */
@@ -113,7 +119,7 @@ window.CAPSULAS_DATA = [
     cat:'Nutrición',
     title:'Cuánto de cada macro',
     file:'capsulas/07-nutricion-cuanto-de-cada-macro.png',
-    nota:'Proteína, carbohidrato y grasa: cuánto de cada uno y por qué.',
+    nota:'Proteína, grasa y carbohidrato en gramos por kilo de tu peso.',
     tag:'Tu meta, explicada',
     nuevo:true },
 
@@ -121,14 +127,14 @@ window.CAPSULAS_DATA = [
     cat:'Nutrición',
     title:'Perder grasa y ganar músculo',
     file:'capsulas/08-nutricion-perder-grasa-y-ganar-musculo.png',
-    nota:'Si se puede a la vez, en qué casos y qué esperar de verdad.',
+    nota:'Déficit, recomposición o superávit: cuál te toca y qué esperar.',
     nuevo:true },
 
   { id:'nut-09-comer-sin-pesar',
     cat:'Nutrición',
     title:'Comer bien sin pesar',
     file:'capsulas/09-nutricion-comer-bien-sin-pesar.png',
-    nota:'Servirte bien sin pesar: la mano como medida, el plato como guía.',
+    nota:'Dos métodos para los días sin registro: el plato y tu propia mano.',
     tag:'Para comer fuera',
     nuevo:true },
 
@@ -137,15 +143,15 @@ window.CAPSULAS_DATA = [
     cat:'Bienestar general',
     title:'Dormir mejor con lo que tienes',
     file:'capsulas/10-bienestar-dormir-mejor-con-lo-que-tienes.png',
-    nota:'Qué se rompe cuando duermes mal y las palancas que sí controlas.',
+    nota:'Las palancas que sí puedes mover hoy, empezando por la más barata.',
     nuevo:true },
 
   { id:'bie-11-muevete-fuera',
     cat:'Bienestar general',
     title:'Muévete fuera del gimnasio',
     file:'capsulas/11-bienestar-muevete-fuera-del-gimnasio.png',
-    nota:'El gasto del resto del día: cuánto suma y cómo subirlo.',
-    tag:'El cardio invisible',
+    nota:'El NEAT, y por qué se mide caminando. No es cardio extra.',
+    tag:'El gasto invisible',
     nuevo:true }
 
 ];
