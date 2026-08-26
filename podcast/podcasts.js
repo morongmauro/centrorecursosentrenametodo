@@ -10,17 +10,42 @@
 
    Campos:
      id     · llave del "visto". NO la cambies una vez publicado.
-     cat    · encabezado de grupo (Sueño, Nutrición, Mentalidad…).
-     title  · el título que pones tú, en español y corto.
-              No tiene que ser el del video.
-     show   · nombre del podcast o del canal.
+     cat    · Entrenamiento · Nutrición · Bienestar general. Son las tres
+              categorías que existen. Cualquier otra cosa (Sueño,
+              Mentalidad, Hábitos…) cae sola en Bienestar general, así que
+              no se abren separadores con un solo episodio dentro.
+     title  · EL TÍTULO. Es lo primero que se lee en la tarjeta y lo que
+              hace que le den play. En español, corto y concreto — no
+              tiene que ser el del video.
+     show   · nombre del podcast o del canal. Va DEBAJO del título y en
+              letra chica: es contexto, no el gancho.
      url    · el link, tal cual lo copias.
      dur    · duración, texto libre ('54 min', '1h 20 min'). Opcional.
-     nota   · POR QUÉ lo recomiendas. Es lo que hace que le den play.
+     nota   · POR QUÉ lo recomiendas. En la galería se recorta a tres
+              líneas; completa se lee al abrir el episodio.
      tag    · etiqueta corta al pie ('Escucha los primeros 20 min').
      nuevo  · true pinta la etiqueta "Nuevo".
      thumb  · imagen propia para la tarjeta (opcional). Ver abajo.
      sinEmbed · true si el dueño del video no deja incrustarlo.
+     audio  · link para ESCUCHAR el episodio (Spotify, Apple Podcasts,
+              iVoox…). Opcional pero MUY recomendado — lee lo de abajo.
+
+   ─── SOBRE ESCUCHAR CON LA PANTALLA APAGADA ───────────────────────────
+   El reproductor de YouTube incrustado SE PAUSA cuando el cliente bloquea
+   el teléfono. No es algo que se pueda arreglar desde el centro: YouTube
+   reserva la reproducción en segundo plano para su propia app y para
+   Premium, y la bloquea en los reproductores incrustados de terceros.
+   Cualquier truco para saltárselo va contra sus condiciones y deja de
+   funcionar en la siguiente actualización.
+
+   Por eso existe el campo `audio`. Cuando lo llenas, el visor muestra un
+   botón "Escuchar" que abre Spotify o Apple Podcasts, donde el audio SÍ
+   sigue sonando con la pantalla apagada. Si el episodio también está en
+   esas plataformas, ponlo: es la diferencia entre que lo vean y que lo
+   escuchen mientras caminan.
+
+   Sin `audio`, el visor le dice al cliente que abra el episodio en la app
+   de YouTube, que tiene sus propias reglas de segundo plano.
 
    Qué links sirven:
      https://www.youtube.com/watch?v=XXXXXXXXXXX
@@ -53,8 +78,9 @@
      1. No borres las comillas ni la coma del final de cada línea.
      2. El id NO se toca: es la llave del "visto" de cada cliente.
 
-   Si dos episodios llevan la misma cat, ponlos JUNTOS: el encabezado se
-   pinta una sola vez y agrupa todo lo que venga seguido.
+   Ya no hace falta ponerlos juntos por categoría: el centro los agrupa
+   solo, siempre en el orden Entrenamiento → Nutrición → Bienestar
+   general. Dentro de cada grupo se respeta el orden en que estén aquí.
    ───────────────────────────────────────────────────────────────────── */
 
 window.PODCASTS_DATA = [

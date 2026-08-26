@@ -2,26 +2,58 @@
    CÁPSULAS INFORMATIVAS — el listado del centro de recursos
    ═══════════════════════════════════════════════════════════════════════
 
-   Este archivo es el ÚNICO que hay que tocar para publicar una cápsula.
-   No abras index.html.html.
+   ─── LO MÍNIMO ────────────────────────────────────────────────────────
+   Para publicar una lámina basta con SUBIR LA IMAGEN a esta carpeta.
+   No hace falta escribir nada aquí: el centro la detecta sola y la coloca
+   en su categoría. (Lo hace capsulas/manifest.js, que se reescribe solo
+   cada vez que subes una imagen.)
 
-   Para publicar una cápsula nueva:
-     1. Deja su imagen en esta misma carpeta (capsulas/).
-     2. Agrega su bloque aquí abajo, junto a las de su misma categoría.
+   Para que eso funcione, EL NOMBRE DEL ARCHIVO importa:
+
+       categoria-titulo-con-guiones.png
+
+       nutricion-como-armar-el-plato.png
+         → categoría Nutrición · título "Como armar el plato"
+
+       entrenamiento-cuando-subir-el-peso.png
+         → categoría Entrenamiento · título "Cuando subir el peso"
+
+       bienestar-manejar-el-estres.png
+         → categoría Bienestar general · título "Manejar el estres"
+
+   Primera palabra = categoría. Vale entrenamiento, entreno, fuerza,
+   movilidad, cardio, tecnica · nutricion, alimentacion, comida, dieta,
+   recetas · bienestar, habitos, sueno, descanso, mentalidad, estres,
+   salud. Si no reconoce la primera palabra, la manda a Bienestar general
+   y usa el nombre completo como título.
+
+   ─── CUANDO QUIERES MÁS QUE ESO ───────────────────────────────────────
+   El título que sale del nombre del archivo no lleva tildes ni dos puntos,
+   y no trae descripción. Cuando quieras ponerle el título bonito y el
+   texto que se lee bajo la miniatura, agrega su bloque aquí abajo
+   apuntando al MISMO archivo: lo que escribas manda sobre lo automático.
 
    Campos:
      id     · llave del avance de lectura. NO la cambies una vez publicada:
               quien ya la vio la vería como pendiente otra vez.
-     cat    · encabezado de grupo. Las de la misma categoría van juntas.
+     cat    · Entrenamiento · Nutrición · Bienestar general. Son las tres
+              que existen; cualquier otra cosa cae en Bienestar general.
      title  · título de la tarjeta y pie del visor.
      file   · ruta de la imagen desde la raíz del repo.
-     nota   · de qué va la lámina, en una o dos líneas. Es lo que se lee
-              en la tarjeta antes de abrirla.
+     nota   · la descripción que va DEBAJO de la imagen, de DOS LÍNEAS.
+              Es lo que se lee sin abrir la lámina. Máximo ~70 caracteres:
+              lo que se pase de dos líneas se corta solo en la tarjeta
+              (completo se ve al abrirla). Una frase, no un párrafo.
      tag    · etiqueta corta al pie (opcional).
      nuevo  · true pinta la etiqueta "Nuevo" (desaparece al abrirla).
 
+   El ORDEN de los bloques aquí ya no decide el orden en pantalla: el
+   centro agrupa siempre en Entrenamiento → Nutrición → Bienestar general.
+   Dentro de cada categoría sí manda el orden en que estén escritos.
+
    Reglas de la imagen: 4:5 vertical, 1080–1440 px de ancho, menos de
-   600 KB, y el titular debe leerse ya en la miniatura.
+   600 KB, y el titular debe leerse ya en la miniatura — ahora se ven de
+   a dos por fila, así que el texto pequeño no se lee sin abrirla.
    Mientras la imagen no exista, la tarjeta se ve con el marco
    "Infografía en camino" — puedes dejar la entrada lista de antemano.
 
@@ -31,78 +63,89 @@
 
 window.CAPSULAS_DATA = [
 
-  /* ── NUTRICIÓN ────────────────────────────────────────────────────── */
-  { id:'nutricion-proteina',
-    cat:'Nutrición',
-    title:'Proteína: cuánta y cuándo',
-    file:'capsulas/nutricion-proteina.png',
-    nota:'Cuántos gramos te tocan al día según tu peso, cómo repartirlos en el día y de dónde sacarlos.',
-    tag:'El macro que más cuesta cerrar',
-    nuevo:true },
-
-  { id:'nutricion-plato',
-    cat:'Nutrición',
-    title:'El plato balanceado, en 3 pasos',
-    file:'capsulas/nutricion-plato-balanceado.png',
-    nota:'Cómo servirte bien cuando no puedes pesar ni registrar: mitad vegetales, un cuarto proteína, un cuarto carbohidrato.',
-    tag:'Para comer fuera' },
-
   /* ── ENTRENAMIENTO ────────────────────────────────────────────────── */
-  { id:'entreno-sobrecarga',
+  { id:'ent-01-capacidades',
     cat:'Entrenamiento',
-    title:'Cómo elegir el peso y progresar',
-    file:'capsulas/entrenamiento-elegir-peso.png',
-    nota:'Con qué peso empiezas, cuándo toca subirlo y qué haces cuando ya no puedes subir más.',
-    tag:'La regla de la doble progresión',
+    title:'Las cinco capacidades físicas',
+    file:'capsulas/01-entrenamiento-las-cinco-capacidades.png',
+    nota:'Fuerza, resistencia, velocidad, flexibilidad y coordinación.',
+    tag:'Empieza por aquí',
     nuevo:true },
 
-  { id:'entreno-orden',
+  { id:'ent-02-crece-musculo',
     cat:'Entrenamiento',
-    title:'El orden de los ejercicios importa',
-    file:'capsulas/entrenamiento-orden-ejercicios.png',
-    nota:'Qué va primero y qué va al final, y por qué llegar cansado a lo pesado te cuesta el estímulo del día.' },
-
-  { id:'entreno-rpe',
-    cat:'Entrenamiento',
-    title:'RPE: entrena con percepción',
-    file:'capsulas/entrenamiento-rpe.png',
-    nota:'La escala del 6 al 10 para elegir el peso solo: cuántas repeticiones dejar en reserva y cuándo subir.' },
-
-  { id:'entreno-maquinas',
-    cat:'Entrenamiento',
-    title:'Configura la máquina antes de la serie',
-    file:'capsulas/entrenamiento-configurar-maquinas.png',
-    nota:'Asiento, respaldo, apoyos y recorrido: los cuatro ajustes que convierten una máquina incómoda en la correcta para ti.',
-    tag:'30 segundos que cambian el ejercicio',
+    title:'Cómo crece el músculo',
+    file:'capsulas/02-entrenamiento-como-crece-el-musculo.png',
+    nota:'Qué pasa dentro del músculo y qué necesita después para crecer.',
     nuevo:true },
 
-  { id:'entreno-herramientas',
+  { id:'ent-03-lenguaje-rutina',
     cat:'Entrenamiento',
-    title:'Bandas, kettlebell y mancuernas: cuándo usar cada una',
-    file:'capsulas/entrenamiento-herramientas.png',
-    nota:'Qué hace bien cada herramienta, para qué NO sirve, y con cuál resolver un entrenamiento fuera del gym.',
+    title:'El lenguaje de tu rutina',
+    file:'capsulas/03-entrenamiento-el-lenguaje-de-tu-rutina.png',
+    nota:'Series, repeticiones, RIR, tempo: qué significa cada palabra.',
+    tag:'Para no perderte en el plan',
     nuevo:true },
 
-  /* ── MOVILIDAD ────────────────────────────────────────────────────── */
-  { id:'movilidad-para-que',
-    cat:'Movilidad',
-    title:'Movilidad: para qué sirve de verdad',
-    file:'capsulas/movilidad-para-que-sirve.png',
-    nota:'Los tres usos que sí tiene —prevenir, corregir y darte rango para levantar más— y cuál te toca a ti.',
-    tag:'No es estirar por estirar',
+  { id:'ent-04-subir-peso',
+    cat:'Entrenamiento',
+    title:'Cuándo subir el peso',
+    file:'capsulas/04-entrenamiento-cuando-subir-el-peso.png',
+    nota:'La señal de que ya toca subir, cuánto, y qué hacer si te estancas.',
     nuevo:true },
 
-  /* ── HÁBITOS ──────────────────────────────────────────────────────── */
-  { id:'habitos-sueno',
-    cat:'Hábitos',
-    title:'Dormir es entrenar',
-    file:'capsulas/habitos-dormir.png',
-    nota:'Qué se rompe cuando duermes mal —fuerza, recuperación y apetito— y las tres palancas que sí controlas.' },
+  { id:'ent-05-orden-sesion',
+    cat:'Entrenamiento',
+    title:'El orden de la sesión',
+    file:'capsulas/05-entrenamiento-el-orden-de-la-sesion.png',
+    nota:'Qué va primero y qué va al final, y por qué ese orden importa.',
+    nuevo:true },
 
-  { id:'habitos-pasos',
-    cat:'Hábitos',
-    title:'Pasos diarios: el cardio invisible',
-    file:'capsulas/habitos-pasos-diarios.png',
-    nota:'El gasto que ocurre fuera del gimnasio, cuánto subirlo por semana y de dónde salen esos pasos sin buscar tiempo extra.' }
+  { id:'ent-06-entiende-rutina',
+    cat:'Entrenamiento',
+    title:'Entiende tu rutina',
+    file:'capsulas/06-entrenamiento-entiende-tu-rutina.png',
+    nota:'Qué busca cada bloque de tu plan y qué pasa si te saltas uno.',
+    nuevo:true },
+
+  /* ── NUTRICIÓN ────────────────────────────────────────────────────── */
+  { id:'nut-07-cada-macro',
+    cat:'Nutrición',
+    title:'Cuánto de cada macro',
+    file:'capsulas/07-nutricion-cuanto-de-cada-macro.png',
+    nota:'Proteína, carbohidrato y grasa: cuánto de cada uno y por qué.',
+    tag:'Tu meta, explicada',
+    nuevo:true },
+
+  { id:'nut-08-grasa-y-musculo',
+    cat:'Nutrición',
+    title:'Perder grasa y ganar músculo',
+    file:'capsulas/08-nutricion-perder-grasa-y-ganar-musculo.png',
+    nota:'Si se puede a la vez, en qué casos y qué esperar de verdad.',
+    nuevo:true },
+
+  { id:'nut-09-comer-sin-pesar',
+    cat:'Nutrición',
+    title:'Comer bien sin pesar',
+    file:'capsulas/09-nutricion-comer-bien-sin-pesar.png',
+    nota:'Servirte bien sin pesar: la mano como medida, el plato como guía.',
+    tag:'Para comer fuera',
+    nuevo:true },
+
+  /* ── BIENESTAR GENERAL ────────────────────────────────────────────── */
+  { id:'bie-10-dormir-mejor',
+    cat:'Bienestar general',
+    title:'Dormir mejor con lo que tienes',
+    file:'capsulas/10-bienestar-dormir-mejor-con-lo-que-tienes.png',
+    nota:'Qué se rompe cuando duermes mal y las palancas que sí controlas.',
+    nuevo:true },
+
+  { id:'bie-11-muevete-fuera',
+    cat:'Bienestar general',
+    title:'Muévete fuera del gimnasio',
+    file:'capsulas/11-bienestar-muevete-fuera-del-gimnasio.png',
+    nota:'El gasto del resto del día: cuánto suma y cómo subirlo.',
+    tag:'El cardio invisible',
+    nuevo:true }
 
 ];

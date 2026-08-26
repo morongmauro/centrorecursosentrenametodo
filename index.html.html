@@ -7119,18 +7119,22 @@ body.locked .mt-stains{display:none;}
   display:flex;align-items:center;gap:10px;
 }
 .cap-cat::after{content:"";flex:1;height:1px;background:var(--border);}
-/* Tarjeta ancha: la infografía a la izquierda y su ficha a la derecha.
-   Es la MISMA tarjeta que usan los podcast — infografía y episodio se leen
-   igual: de qué va, y qué te llevas. */
-.cap-grid{display:flex;flex-direction:column;gap:12px;}
+/* GALERÍA: la infografía manda y su texto va DEBAJO. Antes era una lista
+   vertical de tarjetas anchas — se leía bien pero obligaba a bajar mucho y
+   la imagen quedaba de miniatura. En galería se ven varias de un golpe y la
+   lámina se reconoce sin leer. Dos columnas: el centro mide 520 px, con tres
+   la infografía quedaría ilegible. */
+.cap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
 .cap-card{
-  display:grid;grid-template-columns:132px 1fr;gap:12px;align-items:start;
-  width:100%;padding:10px;border-radius:18px;cursor:pointer;text-align:left;
+  display:flex;flex-direction:column;gap:9px;
+  width:100%;padding:9px;border-radius:18px;cursor:pointer;text-align:left;
   font-family:'Inter',sans-serif;
   background:var(--glass,#fff);border:var(--glass-edge,1px solid var(--border));
   box-shadow:var(--glass-shadow,0 8px 24px rgba(74,82,56,.10));
   transition:transform .14s ease;
 }
+/* Pantallas muy angostas: una sola columna, la imagen no se achica más. */
+@media (max-width:359px){ .cap-grid{grid-template-columns:1fr;} }
 .cap-card:active{transform:scale(.985);}
 .cap-thumb{
   position:relative;display:block;width:100%;aspect-ratio:4/5;
@@ -7169,16 +7173,20 @@ body.locked .mt-stains{display:none;}
   color:var(--olive-dark);
 }
 .cap-title{
-  display:block;margin-top:3px;
-  font-size:13px;font-weight:600;letter-spacing:-.01em;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  font-size:13px;font-weight:700;letter-spacing:-.01em;line-height:1.3;
   color:var(--text);
 }
 .cap-card.is-read .cap-title{color:var(--text-soft);font-weight:500;}
 /* La descripción: qué contiene la lámina. Sin esto la rejilla obliga a
    abrir una por una para saber de qué va cada cosa. */
+/* DOS LÍNEAS, ni una más. En una rejilla de dos columnas el texto que se
+   pasa de ahí empuja las tarjetas y arruina la lectura de golpe que es la
+   gracia de la galería. Si una nota no cabe en dos líneas, se corta sola:
+   escríbela de ~70 caracteres. El texto completo va en el visor. */
 .cap-note{
-  display:block;margin-top:5px;
-  font-size:11.5px;line-height:1.45;color:var(--text-soft);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin-top:5px;font-size:11px;line-height:1.45;color:var(--text-soft);
 }
 .cap-tag{
   display:inline-block;margin-top:7px;padding:3px 9px;border-radius:100px;
@@ -7262,15 +7270,18 @@ body.locked .mt-stains{display:none;}
   display:flex;align-items:center;gap:10px;
 }
 .pod-cat::after{content:"";flex:1;height:1px;background:var(--border);}
-.pod-group{display:flex;flex-direction:column;gap:12px;}
+/* GALERÍA, igual que las cápsulas: la miniatura arriba y el texto debajo.
+   La gente escanea galerías; una lista larga de filas se abandona. */
+.pod-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
 .pod-card{
-  display:grid;grid-template-columns:124px 1fr;gap:12px;align-items:start;
-  width:100%;padding:10px;border-radius:18px;cursor:pointer;text-align:left;
+  display:flex;flex-direction:column;gap:9px;
+  width:100%;padding:9px;border-radius:18px;cursor:pointer;text-align:left;
   font-family:'Inter',sans-serif;
   background:var(--glass,#fff);border:var(--glass-edge,1px solid var(--border));
   box-shadow:var(--glass-shadow,0 8px 24px rgba(74,82,56,.10));
   transition:transform .14s ease;
 }
+@media (max-width:359px){ .pod-group{grid-template-columns:1fr;} }
 .pod-card:active{transform:scale(.985);}
 .pod-thumb{
   position:relative;display:block;width:100%;aspect-ratio:16/9;
@@ -7310,22 +7321,28 @@ body.locked .mt-stains{display:none;}
   display:grid;place-content:center;background:var(--olive-dark);
 }
 .pod-check svg{width:10px;height:10px;display:block;}
-.pod-body{min-width:0;padding-top:1px;}
+.pod-body{min-width:0;}
+/* EL TÍTULO MANDA. El nombre del podcast pasa a ser la letra chica: lo que
+   hace que alguien le dé play es de qué trata el episodio, no de qué canal
+   viene. Antes iba al revés. */
+.pod-title{
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+  font-size:13px;font-weight:700;letter-spacing:-.01em;line-height:1.3;
+  color:var(--text);
+}
+.pod-card.is-seen .pod-title{color:var(--text-soft);font-weight:600;}
 .pod-show{
-  display:block;
-  font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  display:block;margin-top:4px;
+  font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--olive-dark);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-.pod-title{
-  display:block;margin-top:3px;
-  font-size:13px;font-weight:600;letter-spacing:-.01em;line-height:1.3;
-  color:var(--text);
-}
-.pod-card.is-seen .pod-title{color:var(--text-soft);font-weight:500;}
+/* Mismas dos líneas que las cápsulas: en galería todo el texto tiene que
+   caber de un vistazo. La nota completa se lee al abrir el episodio. */
 .pod-note{
-  display:block;margin-top:5px;
-  font-size:11.5px;line-height:1.45;color:var(--text-soft);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin-top:5px;
+  font-size:11px;line-height:1.45;color:var(--text-soft);
 }
 .pod-tag{
   display:inline-block;margin-top:7px;padding:3px 9px;border-radius:100px;
@@ -7368,7 +7385,7 @@ body.locked .mt-stains{display:none;}
   font-size:12.5px;font-weight:500;letter-spacing:-.01em;line-height:1.45;
   color:rgba(243,239,228,.78);text-align:center;
 }
-.pod-lb-cap b{display:block;font-size:10px;font-weight:800;letter-spacing:.09em;
+.pod-lb-cap b{display:block;margin-top:4px;font-size:10px;font-weight:800;letter-spacing:.09em;
   text-transform:uppercase;color:rgba(243,239,228,.5);margin-bottom:4px;}
 .pod-lb-out{
   align-self:center;display:inline-flex;align-items:center;gap:7px;
@@ -7377,6 +7394,16 @@ body.locked .mt-stains{display:none;}
   font-size:11.5px;font-weight:700;letter-spacing:.01em;
 }
 .pod-lb-out svg{width:13px;height:13px;flex:none;}
+.pod-lb-acts{display:flex;gap:8px;flex-wrap:wrap;}
+.pod-lb-acts .pod-lb-out{flex:1 1 0;min-width:140px;justify-content:center;}
+/* "Escuchar" es la acción para quien pone el episodio de fondo: se
+   distingue del "Ver en YouTube" sin gritar. */
+.pod-lb-out.is-audio{background:var(--olive);color:#fff;border-color:transparent;}
+.pod-lb-hint{
+  margin:2px 2px 0;font-size:10.5px;line-height:1.5;
+  color:rgba(255,255,255,.62);text-align:center;
+}
+.pod-lb-hint b{color:rgba(255,255,255,.85);font-weight:600;}
 
 
 @media (max-width:360px){
@@ -10814,10 +10841,17 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
     <div class="pod-lb-inner" onclick="event.stopPropagation()">
       <div class="pod-lb-frame" id="pod-lb-frame"></div>
       <div class="pod-lb-cap" id="pod-lb-cap"></div>
-      <a class="pod-lb-out" id="pod-lb-out" href="#" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        Ver en YouTube
-      </a>
+      <div class="pod-lb-acts">
+        <a class="pod-lb-out" id="pod-lb-out" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          Ver en YouTube
+        </a>
+        <a class="pod-lb-out is-audio" id="pod-lb-audio" href="#" target="_blank" rel="noopener" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-3a9 9 0 0 1 18 0v3"/><rect x="2.5" y="13" width="4.5" height="7" rx="2"/><rect x="17" y="13" width="4.5" height="7" rx="2"/></svg>
+          Escuchar
+        </a>
+      </div>
+      <p class="pod-lb-hint" id="pod-lb-hint"></p>
     </div>
   </div>
 </div>
@@ -10831,6 +10865,10 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
 
      Se cargan antes que la sección. Si falta alguno de los dos, esa lista
      queda vacía y el resto del centro sigue funcionando igual. -->
+<!-- La lista de archivos que HAY en capsulas/. La reescribe sola una acción
+     de GitHub cada vez que subes una imagen: por eso una lámina nueva aparece
+     sin tocar código. Va ANTES de capsulas.js. -->
+<script src="capsulas/manifest.js"></script>
 <script src="capsulas/capsulas.js"></script>
 <script src="podcast/podcasts.js"></script>
 
@@ -10842,7 +10880,11 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
 // El listado vive en podcast/podcasts.js — ahí se pegan los links, sin
 // abrir este archivo. Si ese archivo falta o está vacío, la pestaña de
 // podcast no aparece y la sección se ve como siempre.
-var PODCASTS = Array.isArray(window.PODCASTS_DATA) ? window.PODCASTS_DATA : [];
+// Se agrupan en las mismas tres categorías que las cápsulas. catAgrupar()
+// se define más abajo, en el bloque de cápsulas; por eso esto se resuelve
+// al primer render y no aquí arriba.
+var PODCASTS_RAW = Array.isArray(window.PODCASTS_DATA) ? window.PODCASTS_DATA : [];
+var PODCASTS = PODCASTS_RAW;
 
 
 // ── Utilidades ────────────────────────────────────────────────────────
@@ -10919,6 +10961,13 @@ function podRender(){
   const list = document.getElementById('pod-list');
   const empty = document.getElementById('pod-empty');
   if (!list) return;
+  // Se agrupan en las tres categorías la primera vez que se pintan. Se
+  // reordena el arreglo REAL (no una copia) porque podOpen() abre por
+  // índice: con una copia, tocar una tarjeta abriría otro episodio.
+  if (!PODCASTS._agrupado && typeof catAgrupar === 'function') {
+    PODCASTS = catAgrupar(PODCASTS);
+    PODCASTS._agrupado = true;
+  }
   if (!PODCASTS.length) {
     list.innerHTML = '';
     if (empty) empty.hidden = false;
@@ -10931,7 +10980,7 @@ function podRender(){
   let html = '';
   let lastCat = null;
   PODCASTS.forEach(function(p, i){
-    const cat = p.cat || 'Recomendados';
+    const cat = catNorm(p.cat);
     if (cat !== lastCat) {
       if (lastCat !== null) html += '</div>';
       html += '<div class="pod-cat">' + podEsc(cat) + '</div><div class="pod-group">';
@@ -10956,8 +11005,10 @@ function podRender(){
           (done ? '<span class="pod-check" aria-label="Visto"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : '') +
         '</span>' +
         '<span class="pod-body">' +
-          (p.show ? '<span class="pod-show">' + podEsc(p.show) + '</span>' : '') +
+          // El título va PRIMERO: es lo que hace que alguien le dé play.
+          // El nombre del podcast es contexto, va debajo y en chiquito.
           '<span class="pod-title">' + podEsc(p.title) + '</span>' +
+          (p.show ? '<span class="pod-show">' + podEsc(p.show) + '</span>' : '') +
           (p.nota ? '<span class="pod-note">' + podEsc(p.nota) + '</span>' : '') +
           (p.tag ? '<span class="pod-tag">' + podEsc(p.tag) + '</span>' : '') +
         '</span>' +
@@ -11042,8 +11093,33 @@ function podOpen(i){
   const cap = document.getElementById('pod-lb-cap');
   const out = document.getElementById('pod-lb-out');
   if (!lb || !frame) return;
-  if (cap) cap.innerHTML = (p.show ? '<b>' + podEsc(p.show) + '</b>' : '') + podEsc(p.title);
+  // Mismo orden que en la galería: el título manda, el canal es contexto.
+  if (cap) cap.innerHTML = podEsc(p.title) + (p.show ? '<b>' + podEsc(p.show) + '</b>' : '');
   if (out) out.href = podWatchUrl(p);
+
+  // ── SEGUIR ESCUCHANDO CON LA PANTALLA APAGADA ───────────────────────
+  // El reproductor incrustado de YouTube SE PAUSA al bloquear el teléfono.
+  // No es algo que se pueda arreglar desde acá: YouTube reserva la
+  // reproducción en segundo plano para su app y para Premium, y bloquea el
+  // audio de fondo en los reproductores incrustados de terceros. Cualquier
+  // truco para saltárselo va contra sus condiciones y deja de funcionar
+  // solo en la siguiente actualización.
+  //
+  // Lo que SÍ funciona y es lo que se ofrece aquí:
+  //   · abrir el episodio en la app de YouTube, que tiene sus propias reglas;
+  //   · un enlace de audio propio (Spotify, Apple Podcasts…) cuando el
+  //     episodio lo tiene — campo `audio` en podcast/podcasts.js.
+  const aud = document.getElementById('pod-lb-audio');
+  if (aud) {
+    if (p.audio) { aud.href = p.audio; aud.hidden = false; }
+    else { aud.hidden = true; aud.removeAttribute('href'); }
+  }
+  const hint = document.getElementById('pod-lb-hint');
+  if (hint) {
+    hint.innerHTML = p.audio
+      ? '¿Lo quieres de fondo? Dale a <b>Escuchar</b>: ahí sigue sonando con la pantalla apagada. Aquí dentro se pausa al bloquear el teléfono.'
+      : 'Aquí dentro el video se pausa al bloquear el teléfono — es una restricción de YouTube. Para dejarlo sonando de fondo, ábrelo con <b>Ver en YouTube</b>.';
+  }
   frame.innerHTML = '<div id="pod-yt"></div>';
   lb.classList.add('open');
   lb.setAttribute('aria-hidden', 'false');
@@ -11106,7 +11182,142 @@ else podRender();
 // Una cápsula = una infografía. El listado vive en capsulas/capsulas.js,
 // junto a las imágenes: ahí se agrega una cápsula nueva sin abrir este
 // archivo. Si ese archivo falta, la rejilla queda vacía con su aviso.
-var CAPSULAS = Array.isArray(window.CAPSULAS_DATA) ? window.CAPSULAS_DATA : [];
+// ── LAS TRES CATEGORÍAS DEL CENTRO ────────────────────────────────────
+// Todo se agrupa en Entrenamiento, Nutrición y Bienestar general, siempre
+// en ese orden. Lo que llegue con otro nombre (Movilidad, Hábitos, Sueño,
+// Mentalidad…) cae en la que le corresponde en vez de abrir un separador
+// nuevo con una sola tarjeta dentro. Vale para cápsulas y para podcast.
+var CAT_ORDEN = ['Entrenamiento', 'Nutrición', 'Bienestar general'];
+var CAT_PREFIJOS = {
+  entrenamiento:'Entrenamiento', entreno:'Entrenamiento', entrenar:'Entrenamiento',
+  fuerza:'Entrenamiento', movilidad:'Entrenamiento', cardio:'Entrenamiento',
+  tecnica:'Entrenamiento', gym:'Entrenamiento',
+  nutricion:'Nutrición', alimentacion:'Nutrición', comida:'Nutrición',
+  dieta:'Nutrición', recetas:'Nutrición',
+  bienestar:'Bienestar general', habitos:'Bienestar general', sueno:'Bienestar general',
+  descanso:'Bienestar general', mentalidad:'Bienestar general', estres:'Bienestar general',
+  salud:'Bienestar general', adherencia:'Bienestar general'
+};
+function catSlug(x){
+  return String(x == null ? '' : x).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ').trim();
+}
+// Nombre de categoría → una de las tres. Lo desconocido va a Bienestar
+// general: es el cajón correcto para "lo demás", no un error.
+function catNorm(x){
+  var n = catSlug(x);
+  if (!n) return 'Bienestar general';
+  var primera = n.split(' ')[0];
+  return CAT_PREFIJOS[primera] || CAT_PREFIJOS[n] || 'Bienestar general';
+}
+// Reordena una lista para que salga agrupada en las tres categorías, en el
+// orden de CAT_ORDEN, conservando dentro de cada una el orden del archivo.
+function catAgrupar(lista){
+  var out = [];
+  CAT_ORDEN.forEach(function(c){
+    lista.forEach(function(x){ if (catNorm(x.cat) === c) out.push(x); });
+  });
+  return out;
+}
+
+// ── DESCUBRIMIENTO AUTOMÁTICO DE LÁMINAS ──────────────────────────────
+// capsulas/manifest.js trae la lista de archivos que HAY en la carpeta; lo
+// reescribe solo una acción de GitHub cada vez que subes una imagen (ver
+// .github/workflows/capsulas-manifest.yml). Una página estática no puede
+// leer el contenido de una carpeta por sí sola — el manifiesto es la forma
+// de que sí pueda, sin servidor y sin que tú toques código.
+//
+// Con eso: subes la imagen y aparece. Si además quieres ponerle título
+// bonito y descripción, agregas su bloque en capsulas.js apuntando al
+// mismo archivo y ese bloque manda sobre lo automático.
+//
+// Sin entrada propia, la categoría y el título salen del NOMBRE DEL
+// ARCHIVO: "nutricion-como-armar-el-plato.png" → categoría Nutrición,
+// título "Como armar el plato". Por eso el nombre importa: primera palabra
+// = categoría, el resto = título, separado por guiones.
+var CAP_FILES = Array.isArray(window.CAPSULAS_FILES) ? window.CAPSULAS_FILES : [];
+
+// Nombre de archivo sin carpeta ni extensión: "capsulas/07-nutricion-x.png"
+// → "07-nutricion-x". Es la llave con la que se cruzan el manifiesto y lo
+// que escribes en capsulas.js, así que da igual si la imagen es .png o .jpg.
+function capBase(ruta){
+  return String(ruta).split('/').pop().replace(/\.(png|jpe?g|webp|avif)$/i, '').toLowerCase();
+}
+
+function capDesdeArchivo(ruta){
+  var base = capBase(ruta);
+  var partes = catSlug(base).split(' ').filter(Boolean);
+
+  // NÚMERO DE ORDEN al principio ("01-entrenamiento-…"): no es parte del
+  // título ni de la categoría, es para decidir en qué orden se ven. Se
+  // guarda aparte y se quita del nombre.
+  var orden = null;
+  if (partes.length > 1 && /^\d+$/.test(partes[0])) {
+    orden = parseInt(partes[0], 10);
+    partes = partes.slice(1);
+  }
+
+  var cat = 'Bienestar general';
+  if (partes.length > 1 && CAT_PREFIJOS[partes[0]]) {
+    cat = CAT_PREFIJOS[partes[0]];
+    partes = partes.slice(1);
+  }
+  var titulo = partes.join(' ');
+  titulo = titulo ? titulo.charAt(0).toUpperCase() + titulo.slice(1) : base;
+  return { id: 'auto-' + base, cat: cat, title: titulo, file: ruta, orden: orden, _auto: true };
+}
+
+// Número de orden de una lámina, venga de donde venga: del campo `orden`
+// si lo escribiste, o del prefijo del nombre del archivo. Sin número, va al
+// final de su categoría.
+function capOrden(c){
+  if (c && typeof c.orden === 'number') return c.orden;
+  var m = capBase((c && c.file) || '').match(/^(\d+)/);
+  return m ? parseInt(m[1], 10) : 9999;
+}
+
+// Lista final = lo que escribiste en capsulas.js + lo que apareció en la
+// carpeta y todavía no tiene texto propio.
+// Arma la lista final: lo que escribiste + lo que hay en la carpeta.
+// Está aparte (y no metida dentro de una función anónima) para que las
+// pruebas puedan llamarla con datos de mentira en vez de tener una copia
+// de esta lógica que se desactualiza sola.
+function capConstruirLista(escritasRaw, archivos){
+  // Copia superficial de cada entrada: así corregir la extensión no muta
+  // el objeto original de capsulas.js.
+  var escritas = (Array.isArray(escritasRaw) ? escritasRaw : []).map(function(c){
+    var copia = {}; for (var k in c) if (Object.prototype.hasOwnProperty.call(c, k)) copia[k] = c[k];
+    return copia;
+  });
+  var files = Array.isArray(archivos) ? archivos : [];
+
+  // Qué archivo hay de verdad para cada nombre. Se cruza SIN la extensión:
+  // si escribiste .png y subiste .jpg, se usa el que existe en vez de
+  // dejar la tarjeta con el marco de "Infografía en camino".
+  var realPorBase = {};
+  files.forEach(function(ruta){ realPorBase[capBase(ruta)] = ruta; });
+
+  var yaPuestas = {};
+  escritas.forEach(function(c){
+    if (!c || !c.file) return;
+    var b = capBase(c.file);
+    yaPuestas[b] = true;
+    if (realPorBase[b]) c.file = realPorBase[b];
+  });
+
+  files.forEach(function(ruta){
+    if (yaPuestas[capBase(ruta)]) return;
+    escritas.push(capDesdeArchivo(ruta));
+  });
+
+  // Dentro de cada categoría manda el número del nombre del archivo
+  // (01-, 02-…). Es la forma de decidir el orden sin tocar código: le
+  // cambias el número al archivo y se mueve de sitio.
+  return catAgrupar(escritas.sort(function(a, b){ return capOrden(a) - capOrden(b); }));
+}
+
+var CAPSULAS = capConstruirLista(window.CAPSULAS_DATA, CAP_FILES);
 
 function capEsc(x){
   return String(x == null ? '' : x)
@@ -11213,10 +11424,11 @@ function capRender(){
   let html = '';
   let lastCat = null;
   CAPSULAS.forEach(function(c, i){
-    if (c.cat !== lastCat) {
+    var cat = catNorm(c.cat);
+    if (cat !== lastCat) {
       if (lastCat !== null) html += '</div>';
-      html += '<div class="cap-cat">' + c.cat + '</div><div class="cap-grid">';
-      lastCat = c.cat;
+      html += '<div class="cap-cat">' + capEsc(cat) + '</div><div class="cap-grid">';
+      lastCat = cat;
     }
     const done = read.indexOf(c.id) !== -1;
     html +=
