@@ -7052,7 +7052,22 @@ body.locked .mt-stains{display:none;}
   background:var(--ico,linear-gradient(135deg,#98A465,#4A5238));
   color:#fff;
 }
+.em-nav-ico{position:relative;}
 .em-nav-ico svg{width:21px;height:21px;display:block;}
+
+/* CIRCULITO DE LO QUE FALTA POR LEER. Rojo, sobre el icono de la sección,
+   con el número dentro — igual que los avisos de una app del teléfono. Solo
+   aparece si queda algo pendiente; cuando la sección está al día, se va. */
+.em-nav-pend{
+  position:absolute;top:-5px;right:-5px;
+  min-width:20px;height:20px;padding:0 5px;border-radius:999px;
+  background:#D9463E;color:#fff;
+  font-size:11px;font-weight:800;line-height:20px;text-align:center;
+  font-variant-numeric:tabular-nums;
+  box-shadow:0 0 0 2px var(--bg-card,#fff),0 2px 6px rgba(0,0,0,.22);
+  pointer-events:none;
+}
+.em-nav-pend[hidden]{display:none;}
 .em-nav-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
 .em-nav-txt strong{
   font-size:14.5px;font-weight:700;letter-spacing:-.015em;line-height:1.2;
@@ -7137,19 +7152,18 @@ body.locked .mt-stains{display:none;}
 @media (max-width:359px){ .cap-grid{grid-template-columns:1fr;} }
 .cap-card:active{transform:scale(.985);}
 .cap-thumb{
-  position:relative;display:block;width:100%;aspect-ratio:4/5;
+  /* El marco toma la proporción de la lámina (2:3), no una fija. Antes era
+     4/5 con "cover": toda lámina más alta que eso se recortaba y el pie de
+     la infografía no se veía nunca en la rejilla. Ahora la miniatura
+     muestra la lámina COMPLETA. */
+  position:relative;display:block;width:100%;aspect-ratio:2/3;
   border-radius:12px;overflow:hidden;
   background:linear-gradient(165deg,#FDFCF8 0%,#F1F3E5 100%);
   box-shadow:0 1px .5px rgba(0,0,0,.05),0 4px 12px rgba(74,82,56,.10);
 }
 .cap-thumb img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  /* ANCLADA ARRIBA. Las láminas son más altas que el marco (2:3 contra 4:5),
-     así que "cover" recorta a lo alto. Centrado se comía el titular, que es
-     justo lo que hace reconocible la lámina en la rejilla. Anclando arriba
-     el título siempre sobrevive y lo que se pierde es el pie. Funciona con
-     cualquier proporción más alta que 4:5. */
-  object-position:top center;
+  width:100%;height:100%;object-fit:contain;display:block;
+  object-position:center;
   transition:transform .35s cubic-bezier(.16,.84,.3,1);
 }
 .cap-card:hover .cap-thumb img{transform:scale(1.035);}
@@ -7251,9 +7265,10 @@ body.locked .mt-stains{display:none;}
   font-size:26px;line-height:1;
 }
 .cap-lb-fig{
-  margin:0;max-width:100%;max-height:100%;
+  margin:0;max-width:100%;max-height:100%;min-height:0;
   display:flex;flex-direction:column;align-items:center;gap:10px;
 }
+.cap-lb-stage{min-height:0;}
 /* ESCENARIO — la lámina se amplía DENTRO de este marco: pellizco, doble
    toque o los botones. El marco no crece: lo que se mueve es la imagen,
    así el visor nunca desborda la pantalla ni empuja el pie de foto. */
@@ -7267,7 +7282,11 @@ body.locked .mt-stains{display:none;}
 .cap-lb-stage.is-zoom{cursor:grab;}
 .cap-lb-stage.is-drag{cursor:grabbing;}
 .cap-lb-stage img{
-  max-width:100%;max-height:calc(100vh - 210px);
+  /* --cap-alto lo calcula capAjustarEncaje() midiendo lo que de verdad
+     queda libre. El valor de aquí es solo el respaldo si el JS no corrió:
+     antes era un calc(100vh - 210px) fijo, y 210px no alcanzaba en cuanto
+     el teléfono sumaba sus márgenes seguros o el pie ocupaba dos líneas. */
+  max-width:100%;max-height:var(--cap-alto, calc(100vh - 260px));
   object-fit:contain;display:block;background:#F7F4ED;
   transform-origin:0 0;will-change:transform;
   -webkit-user-select:none;user-select:none;-webkit-user-drag:none;
@@ -10907,7 +10926,7 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
         <button class="cap-lb-zb" type="button" id="cap-lb-mas" aria-label="Ampliar">+</button>
       </div>
       <figcaption id="cap-lb-cap"></figcaption>
-      <div class="cap-lb-hint">Pellizca o toca dos veces para ampliar</div>
+      <div class="cap-lb-hint">Se abre completa. Pellizca o toca dos veces para ampliar; con &minus; la alejas más</div>
     </figure>
   </div>
 
@@ -11540,6 +11559,7 @@ function capRender(){
 
 // Asistente de lectura de la pantalla de cápsulas
 function capApplyProgress(){
+  try { if (typeof emPintarPendientes === 'function') emPintarPendientes(); } catch(e){}
   const total = CAPSULAS.length;
   const read = capGetRead();
   const done = CAPSULAS.filter(function(c){ return read.indexOf(c.id) !== -1; }).length;
@@ -11574,7 +11594,42 @@ function capContinue(){
 // está bloqueado mientras está abierto), así que el zoom lo hacemos
 // nosotros: pellizco de dos dedos, doble toque, rueda del ratón y los
 // botones − / +. Al ampliar se arrastra con un dedo.
+// El 100% es "la lámina completa dentro del visor". Se puede bajar hasta el
+// 50% por si el cliente quiere alejarse todavía más (o si su teléfono deja
+// menos espacio del que creemos), y subir hasta 5×.
+var CAP_ZOOM_MIN = 0.5;
 var _capZoom = { s:1, x:0, y:0, max:5 };
+
+// ENCAJE — cuánto alto le queda de verdad a la lámina. Se mide en vez de
+// suponerlo: el visor cambia de alto con los márgenes seguros del teléfono,
+// con la barra del navegador y con un pie de foto de dos líneas. Con un
+// número fijo, en cuanto la suma no daba, la lámina se salía por arriba y
+// por abajo del visor y no había forma de ver el pie de la infografía.
+function capAjustarEncaje(){
+  var lb  = document.getElementById('cap-lb');
+  var fig = document.getElementById('cap-lb-fig');
+  var img = document.getElementById('cap-lb-img');
+  if (!lb || !fig || !img || !lb.classList.contains('open')) return;
+  var cs = getComputedStyle(lb);
+  // En iOS la parte de abajo del visor puede quedar tapada por la barra del
+  // navegador: manda la más pequeña de las dos medidas.
+  var alto = lb.clientHeight;
+  if (window.visualViewport && window.visualViewport.height) {
+    alto = Math.min(alto, window.visualViewport.height);
+  }
+  var libre = alto - parseFloat(cs.paddingTop || 0) - parseFloat(cs.paddingBottom || 0);
+  // Todo lo que acompaña a la lámina: los botones de zoom, el pie y la ayuda.
+  var otros = 0, n = 0;
+  Array.prototype.forEach.call(fig.children, function(el){
+    n++;
+    if (el.id === 'cap-lb-stage') return;
+    otros += el.getBoundingClientRect().height;
+  });
+  var gap = parseFloat(getComputedStyle(fig).rowGap) || 10;
+  otros += gap * Math.max(0, n - 1);
+  img.style.setProperty('--cap-alto', Math.max(140, Math.floor(libre - otros)) + 'px');
+  img.style.maxHeight = 'var(--cap-alto)';
+}
 var _capPtrs = new Map();
 var _capPan = null, _capPinch = null, _capUltimoToque = 0;
 
@@ -11606,13 +11661,14 @@ function capZoomPintar(anim){
   if (zv) zv.textContent = Math.round(_capZoom.s * 100) + '%';
   var menos = document.getElementById('cap-lb-menos');
   var mas = document.getElementById('cap-lb-mas');
-  if (menos) menos.disabled = _capZoom.s <= 1.01;
+  if (menos) menos.disabled = _capZoom.s <= CAP_ZOOM_MIN + .01;
   if (mas) mas.disabled = _capZoom.s >= _capZoom.max - .01;
   if (anim) setTimeout(function(){ if (e.img) e.img.classList.remove('is-anim'); }, 240);
 }
 function capZoomReset(){
   _capZoom.s = 1; _capZoom.x = 0; _capZoom.y = 0;
   _capPtrs.clear(); _capPan = null; _capPinch = null;
+  capAjustarEncaje();
   capZoomPintar(false);
 }
 // Amplía dejando quieto el punto que el cliente tocó: si señala una casilla
@@ -11620,7 +11676,7 @@ function capZoomReset(){
 function capZoomA(nueva, px, py, anim){
   var e = capZoomEls();
   if (!e.stage) return;
-  nueva = Math.min(_capZoom.max, Math.max(1, nueva));
+  nueva = Math.min(_capZoom.max, Math.max(CAP_ZOOM_MIN, nueva));
   if (px == null) { px = e.stage.clientWidth / 2; py = e.stage.clientHeight / 2; }
   var k = nueva / _capZoom.s;
   _capZoom.x = px - (px - _capZoom.x) * k;
@@ -11710,6 +11766,17 @@ function capZoomPaso(dir){ capZoomA(_capZoom.s * (dir > 0 ? 1.6 : 1 / 1.6), null
     var mas = document.getElementById('cap-lb-mas');
     if (menos) menos.addEventListener('click', function(ev){ ev.stopPropagation(); capZoomPaso(-1); });
     if (mas) mas.addEventListener('click', function(ev){ ev.stopPropagation(); capZoomPaso(1); });
+
+    // Girar el teléfono, cambiar de pestaña o que el navegador esconda su
+    // barra cambia el alto disponible: hay que volver a medir el encaje.
+    var remedir = function(){
+      if (!document.getElementById('cap-lb').classList.contains('open')) return;
+      capAjustarEncaje();
+      capZoomPintar(false);
+    };
+    window.addEventListener('resize', remedir);
+    window.addEventListener('orientationchange', function(){ setTimeout(remedir, 250); });
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', remedir);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arranca);
   else arranca();
@@ -12785,6 +12852,161 @@ function hubMarkRead(section) {
     try { localStorage.setItem(HUB_READ_KEY, JSON.stringify(read)); } catch(e) {}
   }
 }
+// ═══════════════════════════════════════════════════════════════════════
+// LO QUE FALTA POR LEER — el circulito rojo de cada sección
+// ═══════════════════════════════════════════════════════════════════════
+// El centro ya sabía qué había leído el cliente, pero solo lo decía dentro
+// de cada pantalla. Desde el home no había forma de ver dónde quedaba algo
+// pendiente: había que entrar sección por sección a mirar. Ahora cada
+// tarjeta lleva su cuenta encima del icono.
+//
+// El total de la GUÍA solo se conoce cuando su archivo ya se descargó, así
+// que la primera vez que se sabe se guarda: en las siguientes visitas el
+// circulito aparece sin tener que abrir la guía.
+var EM_GA_TOTAL_KEY = 'em_ga_total';
+
+function emListaLeida(clave){
+  try { var v = JSON.parse(localStorage.getItem(clave) || '[]'); return Array.isArray(v) ? v : []; }
+  catch(e){ return []; }
+}
+
+function emPendientes(){
+  // ── Cápsulas ──
+  var capTotal = 0, capLeidas = 0;
+  try {
+    if (typeof CAPSULAS !== 'undefined' && CAPSULAS && CAPSULAS.length) {
+      var leidasCap = emListaLeida(CAP_READ_KEY);
+      capTotal = CAPSULAS.length;
+      capLeidas = CAPSULAS.filter(function(c){ return leidasCap.indexOf(c.id) !== -1; }).length;
+    }
+  } catch(e){}
+
+  // ── Onboarding ── (las cuatro secciones del método)
+  var onbLeidas = 0;
+  try {
+    var leidasHub = emListaLeida(HUB_READ_KEY);
+    onbLeidas = ONB_SECTIONS.filter(function(k){ return leidasHub.indexOf(k) !== -1; }).length;
+  } catch(e){}
+
+  // ── Preguntas frecuentes ── (solo si la lista ya está en el DOM)
+  var faqTotal = 0, faqLeidas = 0;
+  try {
+    var items = document.querySelectorAll('#faq-list .faq-item');
+    if (items.length) {
+      var leidasFaq = emListaLeida(FAQ_READ_KEY);
+      faqTotal = items.length;
+      Array.prototype.forEach.call(items, function(it){
+        var k = faqKey(it);
+        if (k && leidasFaq.indexOf(k) !== -1) faqLeidas++;
+      });
+    }
+  } catch(e){}
+
+  // ── Guía de alimentación ── (el total se recuerda entre visitas)
+  var gaTotal = 0, gaLeidas = 0;
+  try {
+    var caps = document.querySelectorAll('#s-guia-alimentacion .ga-h1');
+    if (caps.length) {
+      gaTotal = caps.length;
+      try { localStorage.setItem(EM_GA_TOTAL_KEY, String(gaTotal)); } catch(e){}
+    } else {
+      gaTotal = parseInt(localStorage.getItem(EM_GA_TOTAL_KEY) || '0', 10) || 0;
+    }
+    gaLeidas = Math.min(emListaLeida(GA_KEY_READ).length, gaTotal);
+  } catch(e){}
+
+  var falta = function(total, leidas){ return Math.max(0, total - leidas); };
+  var r = {
+    capsulas:   falta(capTotal, capLeidas),
+    onboarding: falta(ONB_SECTIONS.length, onbLeidas),
+    faq:        falta(faqTotal, faqLeidas),
+    guia:       falta(gaTotal, gaLeidas),
+  };
+  r.total = r.capsulas + r.onboarding + r.faq + r.guia;
+  return r;
+}
+
+function emPintarPendientes(){
+  var p;
+  try { p = emPendientes(); } catch(e){ return; }
+  var mapa = {
+    'home-sec-capsulas':   p.capsulas,
+    'home-sec-onboarding': p.onboarding,
+    'home-sec-faq':        p.faq,
+    'home-sec-guia':       p.guia,
+  };
+  Object.keys(mapa).forEach(function(id){
+    var item = document.getElementById(id);
+    if (!item) return;
+    var ico = item.querySelector('.em-nav-ico');
+    if (!ico) return;
+    var b = ico.querySelector('.em-nav-pend');
+    if (!b) {
+      b = document.createElement('span');
+      b.className = 'em-nav-pend';
+      ico.appendChild(b);
+    }
+    var n = mapa[id];
+    if (n > 0) {
+      // El número de verdad. A partir de 100 se corta en "99+", pero con
+      // once cápsulas y trece preguntas eso no va a pasar.
+      b.textContent = n > 99 ? '99+' : String(n);
+      b.hidden = false;
+      item.setAttribute('aria-label', (item.textContent || '').trim().split('\n')[0] + ' · ' + n + ' sin leer');
+    } else {
+      b.hidden = true;
+      item.removeAttribute('aria-label');
+    }
+  });
+  emAvisarAlMealtracker(p);
+}
+
+// El Mealtracker no puede leer este localStorage (es otro dominio), así que
+// el centro le cuenta cuánto queda pendiente. Con eso el botón "Aprende"
+// pinta su punto rojo sin número.
+function emAvisarAlMealtracker(p){
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ tipo: 'em-centro-pendientes', pendientes: p.total, detalle: p }, '*');
+    }
+  } catch(e){}
+}
+
+// Si el Mealtracker lo pregunta (al montar el iframe), se le responde.
+window.addEventListener('message', function(ev){
+  var d = ev && ev.data;
+  if (!d || d.tipo !== 'em-centro-cuantos-faltan') return;
+  try { emAvisarAlMealtracker(emPendientes()); } catch(e){}
+});
+
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(emPintarPendientes, 60); });
+
+// Cuántos capítulos tiene la guía solo se sabe cuando su archivo ya bajó.
+// Se aprende UNA vez, en segundo plano y sin estorbar la carga del home, y
+// queda guardado: a partir de ahí el circulito de la guía sale desde el
+// primer momento, sin tener que entrar a mirar.
+(function emAprenderTotalGuia(){
+  function intentar(){
+    try {
+      if (localStorage.getItem(EM_GA_TOTAL_KEY)) return;
+      if (document.querySelectorAll('#s-guia-alimentacion .ga-h1').length) return;
+    } catch(e){ return; }
+    fetch('guiaalimentacion.html', { cache: 'force-cache' })
+      .then(function(r){ return r.ok ? r.text() : null; })
+      .then(function(html){
+        if (!html) return;
+        var n = (html.match(/<h1[^>]*ga-h1/g) || []).length;
+        if (!n) return;
+        try { localStorage.setItem(EM_GA_TOTAL_KEY, String(n)); } catch(e){}
+        emPintarPendientes();
+      })
+      .catch(function(){});
+  }
+  var lanzar = function(){ setTimeout(intentar, 2500); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', lanzar);
+  else lanzar();
+})();
+
 function hubApplyReadStates() {
   // Secciones válidas actuales (FAQ ya no está en El Método)
   const validSections = ['programa', 'app', 'journey', 'meal-tracker'];
@@ -12834,6 +13056,7 @@ function hubApplyReadStates() {
   // Refleja también el avance en la tarjeta única de orientación del HOME
   homeApplyOrientation();
   homeApplyOrder();
+  emPintarPendientes();
 }
 
 // === ORDEN DEL HOME SEGÚN EL AVANCE ==================================
@@ -13279,6 +13502,7 @@ function faqMarkRead(item){
   faqApplyProgress();
 }
 function faqApplyProgress(){
+  try { if (typeof emPintarPendientes === 'function') emPintarPendientes(); } catch(e){}
   const items = faqItems();
   const read = faqGetRead();
   const total = items.length;
@@ -13482,6 +13706,7 @@ function gaTocRender() {
 }
 
 function gaUpdateProgress() {
+  try { if (typeof emPintarPendientes === 'function') emPintarPendientes(); } catch(e){}
   // Limpiar el array de leídos: solo conservar slugs que existen en el DOM actual
   const validSlugs = new Set();
   document.querySelectorAll('#s-guia-alimentacion .ga-h1').forEach(h => validSlugs.add(h.id));
