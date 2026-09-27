@@ -12578,6 +12578,10 @@ function mtAtajoAplicar(){
   if (document.body.classList.contains('locked')) return false;
   var ir = _MT_GO, id = _MT_ID;
   _MT_GO = null; _MT_ID = null;
+  // La barra nueva del Meal Tracker tiene «Inicio» y «Onboarding» además
+  // de «Cápsulas»: cada una abre su pantalla, sin nada más.
+  if (ir === 'onboarding') { try { go('s-onboarding'); } catch(e){} return true; }
+  if (ir === 'home') { try { go('s-home'); } catch(e){} return true; }
   var pestana = (ir === 'podcast' || ir === 'pod') ? 'pod' : 'info';
   try { go(pestana === 'pod' ? 's-podcast' : 's-capsulas'); } catch(e){ return true; }
   if (!id) return true;
@@ -12598,6 +12602,18 @@ function mtAtajoAplicar(){
   }, 320);
   return true;
 }
+
+// Con el centro ya abierto dentro del Meal Tracker, cambiar de pantalla desde
+// su barra no recarga la página: llega un mensaje y se navega aquí mismo.
+// Solo mueve entre pantallas de quien ya entró; con la puerta cerrada no hace
+// nada.
+window.addEventListener('message', function(e){
+  var d = e && e.data;
+  if (!d || typeof d !== 'object' || d.tipo !== 'em-ir') return;
+  if (document.body.classList.contains('locked')) return;
+  var destino = { home: 's-home', onboarding: 's-onboarding', capsulas: 's-capsulas', podcast: 's-podcast' }[d.a];
+  if (destino) { try { go(destino); } catch(err){} }
+});
 
 (function mtAtajoArrancar(){
   if (!_MT_GO) return;
