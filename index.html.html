@@ -12563,6 +12563,8 @@ function emLogout() {
 // limpia la URL. El salto se aplica después, cuando ya se sabe si el
 // cliente entró: si la puerta sigue cerrada, no se salta a ningún lado.
 var _MT_GO = null, _MT_ID = null;
+var MT_PANTALLAS = { programa: 's-programa', app: 's-app-train', 'meal-tracker': 's-meal-guide',
+  journey: 's-journey', faq: 's-faq', guia: 's-guia-alimentacion' };
 (function mtAtajoLeer(){
   try {
     var p = new URLSearchParams(window.location.search);
@@ -12582,6 +12584,9 @@ function mtAtajoAplicar(){
   // de «Cápsulas»: cada una abre su pantalla, sin nada más.
   if (ir === 'onboarding') { try { go('s-onboarding'); } catch(e){} return true; }
   if (ir === 'home') { try { go('s-home'); } catch(e){} return true; }
+  // «Hoy» de Aprendizaje en el Meal Tracker recomienda piezas concretas: cada
+  // parte del onboarding y la guía abren su pantalla.
+  if (MT_PANTALLAS[ir]) { try { go(MT_PANTALLAS[ir]); } catch(e){} return true; }
   var pestana = (ir === 'podcast' || ir === 'pod') ? 'pod' : 'info';
   try { go(pestana === 'pod' ? 's-podcast' : 's-capsulas'); } catch(e){ return true; }
   if (!id) return true;
@@ -12611,7 +12616,7 @@ window.addEventListener('message', function(e){
   var d = e && e.data;
   if (!d || typeof d !== 'object' || d.tipo !== 'em-ir') return;
   if (document.body.classList.contains('locked')) return;
-  var destino = { home: 's-home', onboarding: 's-onboarding', capsulas: 's-capsulas', podcast: 's-podcast' }[d.a];
+  var destino = { home: 's-home', onboarding: 's-onboarding', capsulas: 's-capsulas', podcast: 's-podcast' }[d.a] || MT_PANTALLAS[d.a];
   if (destino) { try { go(destino); } catch(err){} }
 });
 
