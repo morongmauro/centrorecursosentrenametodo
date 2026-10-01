@@ -9,6 +9,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="guiaalimentacion.css">
+<script>
+// VISUAL NUEVA (en prueba): la misma lista que VISUAL_V2 en src/v2.js del
+// Meal Tracker. Se mira el nombre que manda la app (?mt_name) o el de la
+// sesión guardada. Con la clase em-v2, Onboarding y Cápsulas toman la piel
+// de la marca: letra Figtree, tarjetas blancas, el naranja de Aprendizaje y
+// sin fotos de encabezado.
+(function(){
+  try {
+    var VISUAL_V2 = ['mauro moron'];
+    var norm = function(x){ return String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim(); };
+    var n = new URLSearchParams(location.search).get('mt_name');
+    if (!n) { try { n = (JSON.parse(localStorage.getItem('em_client') || 'null') || {}).name; } catch(e){} }
+    if (VISUAL_V2.indexOf(norm(n)) !== -1) document.documentElement.classList.add('em-v2');
+  } catch(e){}
+})();
+</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 :root{
@@ -9665,6 +9681,80 @@ html,body{overflow-x:hidden !important;max-width:100vw;}
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
           mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
 }
+
+/* ════ VISUAL NUEVA (html.em-v2) · Onboarding y Cápsulas ══════════════════
+   La misma piel que la app por dentro: letra Figtree, fondo crema liso,
+   tarjetas blancas con sombra suave, íconos de línea y el naranja de la
+   sección Aprendizaje como acento. Sin fotos de encabezado. */
+@font-face { font-family: 'ECM Sans'; font-weight: 300 900; font-display: swap;
+  src: url('fonts/figtree.woff2') format('woff2-variations'), url('fonts/figtree.woff2') format('woff2'); }
+html.em-v2 #s-onboarding, html.em-v2 #s-capsulas {
+  --olive:#EE8434; --olive-light:#F4A574; --olive-dark:#A24F0E; --olive-soft:rgba(238,132,52,.12); --olive-chip:rgba(238,132,52,.22);
+  --accent:#EE8434; --accent-dark:#A24F0E; --accent-soft:rgba(238,132,52,.12); --accent-tint:rgba(238,132,52,.06);
+  --c:#EE8434; --c-soft:rgba(238,132,52,.12); --c-mid:rgba(238,132,52,.22); --c-dark:#A24F0E;
+  --bg:#EDECE5; --surface-tint:#EDECE5; --text:#1F1F1F; --text-soft:#6B6B6B; --text-mute:#9A9A9A;
+  background:#EDECE5 !important;
+}
+html.em-v2 #s-onboarding, html.em-v2 #s-onboarding *, html.em-v2 #s-capsulas, html.em-v2 #s-capsulas * {
+  font-family: 'ECM Sans', -apple-system, system-ui, sans-serif !important;
+}
+html.em-v2 #s-onboarding .bg-halo, html.em-v2 #s-capsulas .bg-halo { display:none !important; }
+/* Encabezado sin foto: texto en tinta sobre el fondo crema */
+html.em-v2 #s-onboarding .foto-hero-media, html.em-v2 #s-onboarding .foto-hero-overlay,
+html.em-v2 #s-capsulas .foto-hero-media, html.em-v2 #s-capsulas .foto-hero-overlay { display:none !important; }
+html.em-v2 #s-onboarding .foto-hero, html.em-v2 #s-capsulas .foto-hero {
+  min-height:0 !important; background:transparent !important; box-shadow:none !important; border-radius:0 !important;
+  padding:calc(64px + env(safe-area-inset-top, 0px)) 20px 8px !important; margin:0 0 12px !important;
+}
+html.em-v2 #s-onboarding .hub-eyebrow, html.em-v2 #s-capsulas .sub-eyebrow {
+  color:#A24F0E !important; font-size:14px !important; font-weight:700 !important; letter-spacing:0 !important; text-transform:none !important; text-shadow:none !important;
+}
+html.em-v2 #s-capsulas .sub-eyebrow::before { display:none !important; }
+html.em-v2 #s-onboarding .hub-title, html.em-v2 #s-capsulas .sub-title {
+  color:#1F1F1F !important; text-shadow:none !important; font-size:32px !important; font-weight:800 !important; line-height:1.08 !important;
+  letter-spacing:-0.025em !important; text-transform:lowercase !important; margin-top:2px !important;
+}
+html.em-v2 #s-onboarding .hub-title::first-letter, html.em-v2 #s-capsulas .sub-title::first-letter { text-transform:uppercase !important; }
+html.em-v2 #s-onboarding .hub-title-line, html.em-v2 #s-capsulas .sub-title-line {
+  background:#EE8434 !important; width:44px !important; height:3px !important; border-radius:3px !important; margin:12px 0 10px !important;
+}
+html.em-v2 #s-onboarding .hub-intro, html.em-v2 #s-capsulas .sub-intro {
+  color:#6B6B6B !important; text-shadow:none !important; font-size:15.5px !important; line-height:1.45 !important;
+}
+html.em-v2 #s-onboarding .hub-intro strong, html.em-v2 #s-capsulas .sub-intro strong { color:#1F1F1F !important; }
+html.em-v2 #s-capsulas .sub-header::after { display:none !important; }
+/* El botón de volver de la cabecera: pastilla crema con tinta */
+html.em-v2 #s-onboarding .hub-back-link, html.em-v2 #s-capsulas .sub-back { color:#1F1F1F !important; }
+/* Tarjetas blancas, sin degradados ni bordes */
+html.em-v2 #s-onboarding .hub-card, html.em-v2 #s-onboarding .hub-firsttime, html.em-v2 #s-onboarding .hub-progress-bar,
+html.em-v2 #s-capsulas .cap-card, html.em-v2 #s-capsulas .pod-card {
+  background:#FFFFFF !important; border:none !important; border-radius:20px !important;
+  box-shadow:0 1px 2px rgba(40,40,30,0.04), 0 6px 16px rgba(60,60,40,0.06) !important;
+}
+/* Íconos: línea en naranja sobre un círculo de tinte (no cuadros de color) */
+html.em-v2 #s-onboarding .hub-cards .hub-card[data-section] .hub-card-wm {
+  background:rgba(238,132,52,.14) !important; background-image:none !important; border-radius:999px !important; box-shadow:none !important;
+}
+html.em-v2 #s-onboarding .hub-cards .hub-card[data-section] .hub-card-wm svg { stroke:#A24F0E !important; filter:none !important; }
+html.em-v2 #s-onboarding .hub-cards .hub-card[data-section] .hub-card-wm svg * { stroke:#A24F0E !important; }
+html.em-v2 #s-onboarding .hub-ft-emoji { background:rgba(238,132,52,.14) !important; color:#A24F0E !important; }
+html.em-v2 #s-onboarding .hub-card-eyebrow { color:#EE8434 !important; font-weight:800 !important; }
+html.em-v2 #s-onboarding .hub-card-title { color:#1F1F1F !important; font-weight:750 !important; letter-spacing:-0.01em !important; }
+html.em-v2 #s-onboarding .hub-card-desc { color:#6B6B6B !important; }
+html.em-v2 #s-onboarding .hub-card-time, html.em-v2 #s-onboarding .hub-card-arr { color:#A24F0E !important; }
+html.em-v2 #s-onboarding .hub-step-arrow { color:#EE8434 !important; }
+html.em-v2 #s-onboarding .hub-progress-fill { background:#EE8434 !important; }
+html.em-v2 #s-onboarding .hub-progress-track { background:#F4F1EB !important; }
+html.em-v2 #s-onboarding [class*="status"] *, html.em-v2 #s-onboarding .hub-card-state { text-transform:none !important; letter-spacing:0 !important; }
+/* Cápsulas: pestañas rectangulares con la activa en naranja; etiquetas de marca */
+html.em-v2 #s-capsulas .mx-tabs { background:#FFFFFF !important; border:none !important; border-radius:14px !important; padding:4px !important;
+  box-shadow:0 1px 2px rgba(40,40,30,0.04), 0 6px 16px rgba(60,60,40,0.06) !important; }
+html.em-v2 #s-capsulas .mx-tab { border-radius:10px !important; font-weight:700 !important; color:#6B6B6B !important; background:transparent !important; box-shadow:none !important; }
+html.em-v2 #s-capsulas .mx-tab.is-on { background:#EE8434 !important; color:#FFFFFF !important; }
+html.em-v2 #s-capsulas .cap-badge, html.em-v2 #s-capsulas .pod-badge { background:#EE8434 !important; color:#FFFFFF !important; letter-spacing:0 !important; text-transform:none !important; }
+html.em-v2 #s-capsulas .cap-cat { color:#1F1F1F !important; font-size:18px !important; font-weight:750 !important; letter-spacing:-0.01em !important; text-transform:none !important; }
+html.em-v2 #s-capsulas .cap-title { color:#1F1F1F !important; font-weight:750 !important; }
+html.em-v2 #s-capsulas .cap-note { color:#6B6B6B !important; }
 </style>
 </head>
 <body class="locked">
