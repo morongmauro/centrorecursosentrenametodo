@@ -9759,6 +9759,131 @@ html.em-v2 #s-capsulas .cap-badge, html.em-v2 #s-capsulas .pod-badge { backgroun
 html.em-v2 #s-capsulas .cap-cat { color:#1F1F1F !important; font-size:18px !important; font-weight:750 !important; letter-spacing:-0.01em !important; text-transform:none !important; }
 html.em-v2 #s-capsulas .cap-title { color:#1F1F1F !important; font-weight:750 !important; }
 html.em-v2 #s-capsulas .cap-note { color:#6B6B6B !important; }
+/* ════ VISUAL NUEVA · TODAS LAS PANTALLAS DEL CENTRO ═══════════════════════
+   Las secciones del onboarding (programa, app, journey, FAQ, inicio rápido),
+   la guía de alimentación, lecturas y videos con la misma piel que la app:
+   Figtree, fondo crema liso, títulos en tinta sin mayúsculas forzadas, sin
+   fotos oscuras de portada y el naranja de Aprendizaje como acento. */
+html.em-v2 .screen:not(#_a):not(#_b) {
+  --olive:#EE8434; --olive-light:#F4A574; --olive-dark:#A24F0E; --olive-soft:rgba(238,132,52,.12); --olive-chip:rgba(238,132,52,.22);
+  --accent:#EE8434; --accent-dark:#A24F0E; --accent-soft:rgba(238,132,52,.12); --accent-tint:rgba(238,132,52,.06);
+  --c:#EE8434; --c-soft:rgba(238,132,52,.12); --c-mid:rgba(238,132,52,.22); --c-dark:#A24F0E;
+  --bg:#EDECE5; --bg-soft:#F4F3EE; --surface-tint:#EDECE5; --text:#1F1F1F; --text-soft:#6B6B6B; --text-mute:#9A9A9A;
+  background:#EDECE5 !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b), html.em-v2 .screen:not(#_a):not(#_b) *:not(svg):not(svg *) { font-family:'ECM Sans', -apple-system, system-ui, sans-serif !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .bg-halo, html.em-v2 .screen:not(#_a):not(#_b) .rh-clay { display:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .foto-hero-media, html.em-v2 .screen:not(#_a):not(#_b) .foto-hero-overlay { display:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .foto-hero, html.em-v2 .screen:not(#_a):not(#_b) .sub-hero-plain {
+  min-height:0 !important; background:transparent !important; box-shadow:none !important; border-radius:0 !important;
+  padding:calc(64px + env(safe-area-inset-top, 0px)) 20px 8px !important; margin:0 0 12px !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .sub-header::after, html.em-v2 .screen:not(#_a):not(#_b) .sub-header::before { display:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .sub-eyebrow, html.em-v2 .screen:not(#_a):not(#_b) .hub-eyebrow, html.em-v2 .screen:not(#_a):not(#_b) .qs-eyebrow {
+  color:#A24F0E !important; font-size:14px !important; font-weight:700 !important; letter-spacing:0 !important; text-transform:none !important; text-shadow:none !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .sub-eyebrow::before { display:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .sub-title, html.em-v2 .screen:not(#_a):not(#_b) .hub-title, html.em-v2 .screen:not(#_a):not(#_b) .qs-title {
+  color:#1F1F1F !important; text-shadow:none !important; font-size:32px !important; font-weight:800 !important; line-height:1.08 !important;
+  letter-spacing:-0.025em !important; text-transform:lowercase !important; margin-top:2px !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .sub-title::first-letter, html.em-v2 .screen:not(#_a):not(#_b) .hub-title::first-letter, html.em-v2 .screen:not(#_a):not(#_b) .qs-title::first-letter { text-transform:uppercase !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .sub-title-line, html.em-v2 .screen:not(#_a):not(#_b) .hub-title-line, html.em-v2 .screen:not(#_a):not(#_b) .qs-title-line {
+  background:#EE8434 !important; width:44px !important; height:3px !important; border-radius:3px !important; margin:12px 0 10px !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .sub-intro, html.em-v2 .screen:not(#_a):not(#_b) .hub-intro, html.em-v2 .screen:not(#_a):not(#_b) .qs-lead {
+  color:#6B6B6B !important; text-shadow:none !important; font-size:15.5px !important; line-height:1.45 !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .sub-intro strong, html.em-v2 .screen:not(#_a):not(#_b) .hub-intro strong { color:#1F1F1F !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .rh-contract { color:#6B6B6B !important; background:#FFFFFF !important; border:none !important; }
+/* Títulos de cada bloque: tinta, sin mayúsculas, tamaño de lectura */
+html.em-v2 .screen:not(#_a):not(#_b) .progm-block-title, html.em-v2 .screen:not(#_a):not(#_b) .jrn-card-title, html.em-v2 .screen:not(#_a):not(#_b) .ga-h1, html.em-v2 .screen:not(#_a):not(#_b) .qs-block-title,
+html.em-v2 .screen:not(#_a):not(#_b) .mtg-title, html.em-v2 .screen:not(#_a):not(#_b) .faq-cat-title {
+  color:#1F1F1F !important; text-transform:none !important; letter-spacing:-0.02em !important; font-weight:800 !important;
+  font-size:26px !important; line-height:1.15 !important; text-shadow:none !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .ga-h2 { color:#1F1F1F !important; text-transform:none !important; letter-spacing:-0.015em !important; font-weight:800 !important; font-size:21px !important; line-height:1.2 !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-h3 { color:#1F1F1F !important; text-transform:none !important; letter-spacing:-0.01em !important; font-weight:750 !important; font-size:18px !important; line-height:1.25 !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .progm-block-eyebrow, html.em-v2 .screen:not(#_a):not(#_b) .jrn-card-eyebrow, html.em-v2 .screen:not(#_a):not(#_b) .qs-block-eyebrow, html.em-v2 .screen:not(#_a):not(#_b) .faq-cat-header,
+html.em-v2 .screen:not(#_a):not(#_b) .ga-h1-meta, html.em-v2 .screen:not(#_a):not(#_b) .ga-takeaway-label, html.em-v2 .screen:not(#_a):not(#_b) .rh-dark-kicker {
+  color:#A24F0E !important; text-transform:none !important; letter-spacing:0 !important; font-weight:700 !important; font-size:13.5px !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .progm-block-num, html.em-v2 .screen:not(#_a):not(#_b) .jrn-card-num, html.em-v2 .screen:not(#_a):not(#_b) .faq-q-num, html.em-v2 .screen:not(#_a):not(#_b) .qs-action-num {
+  color:#EE8434 !important; background:transparent !important; font-weight:800 !important; letter-spacing:0 !important;
+}
+/* Íconos de cada bloque: línea naranja sobre círculo de tinte */
+html.em-v2 .screen:not(#_a):not(#_b) .progm-block-icon, html.em-v2 .screen:not(#_a):not(#_b) .jrn-card-wm, html.em-v2 .screen:not(#_a):not(#_b) .mtg-ico, html.em-v2 .screen:not(#_a):not(#_b) .qs-hero-icon {
+  background:rgba(238,132,52,.14) !important; background-image:none !important; border-radius:999px !important; box-shadow:none !important; border:none !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .progm-block-icon svg *, html.em-v2 .screen:not(#_a):not(#_b) .jrn-card-wm svg *, html.em-v2 .screen:not(#_a):not(#_b) .mtg-ico svg *, html.em-v2 .screen:not(#_a):not(#_b) .qs-hero-icon svg * { stroke:#A24F0E !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .progm-block-icon svg, html.em-v2 .screen:not(#_a):not(#_b) .jrn-card-wm svg { filter:none !important; }
+/* Texto de lectura */
+html.em-v2 .screen:not(#_a):not(#_b) .progm-block-text, html.em-v2 .screen:not(#_a):not(#_b) .progm-block-text p, html.em-v2 .screen:not(#_a):not(#_b) .ga-p, html.em-v2 .screen:not(#_a):not(#_b) .jrn-body,
+html.em-v2 .screen:not(#_a):not(#_b) .faq-a, html.em-v2 .screen:not(#_a):not(#_b) .qs-block-text { color:#3A3A38 !important; font-size:16px !important; line-height:1.6 !important; }
+html.em-v2 .screen:not(#_a):not(#_b) strong { color:#1F1F1F; }
+/* Tarjetas blancas */
+html.em-v2 .screen:not(#_a):not(#_b) .faq-item, html.em-v2 .screen:not(#_a):not(#_b) .jrn-card, html.em-v2 .screen:not(#_a):not(#_b) .ga-takeaway, html.em-v2 .screen:not(#_a):not(#_b) .qs-block, html.em-v2 .screen:not(#_a):not(#_b) .rh-takeaway {
+  background:#FFFFFF !important; border:none !important; border-radius:20px !important;
+  box-shadow:0 1px 2px rgba(40,40,30,0.04), 0 6px 16px rgba(60,60,40,0.06) !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .faq-q-text { color:#1F1F1F !important; font-weight:700 !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .faq-q-arr { color:#EE8434 !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .rh-dark { background:#1F1F1F !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .rh-dark em, html.em-v2 .screen:not(#_a):not(#_b) .rh-quote em { color:#F4A574 !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .rh-quote { color:#1F1F1F !important; border-color:#EE8434 !important; }
+/* La guía: el índice y «marcar como leído» con el naranja */
+html.em-v2 .screen:not(#_a):not(#_b) .ga-toc-h1, html.em-v2 .screen:not(#_a):not(#_b) .ga-toc-text { color:#1F1F1F !important; text-transform:none !important; letter-spacing:0 !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-toc-time, html.em-v2 .screen:not(#_a):not(#_b) .ga-h1-time { color:#A24F0E !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-mark-read { border-color:#EE8434 !important; color:#A24F0E !important; }
+/* Separadores de cada bloque al leer (número, ícono y título) */
+html.em-v2 .screen:not(#_a):not(#_b) .flow-sep-title {
+  color:#1F1F1F !important; text-transform:none !important; letter-spacing:-0.02em !important; font-weight:800 !important;
+  font-size:26px !important; line-height:1.15 !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .flow-sep-num { color:#EE8434 !important; font-weight:800 !important; letter-spacing:0 !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .flow-sep-rule { background:rgba(238,132,52,.35) !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .flow-sep-ico {
+  background:rgba(238,132,52,.14) !important; background-image:none !important; border-radius:999px !important; box-shadow:none !important; border:none !important;
+}
+html.em-v2 .screen:not(#_a):not(#_b) .flow-sep-ico svg { filter:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .flow-sep-ico use.pg-b { display:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .flow-sep-ico use, html.em-v2 .screen:not(#_a):not(#_b) .flow-sep-ico svg * { stroke:#A24F0E !important; fill:none !important; }
+/* Portada de la guía: sin foto, título en tinta */
+html.em-v2 .screen:not(#_a):not(#_b) .ga-cover { background:transparent !important; min-height:0 !important; box-shadow:none !important;
+  padding:calc(64px + env(safe-area-inset-top, 0px)) 20px 8px !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-media { display:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-eyebrow { color:#A24F0E !important; font-size:14px !important; font-weight:700 !important; letter-spacing:0 !important; text-transform:none !important; text-shadow:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-title { color:#1F1F1F !important; text-shadow:none !important; font-size:32px !important; font-weight:800 !important;
+  line-height:1.08 !important; letter-spacing:-0.025em !important; text-transform:lowercase !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-title::first-letter { text-transform:uppercase !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-line { background:#EE8434 !important; width:44px !important; height:3px !important; border-radius:3px !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-statement, html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-meta,
+html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-meta-row { color:#6B6B6B !important; text-shadow:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-statement strong, html.em-v2 .screen:not(#_a):not(#_b) .ga-cover-meta strong { color:#1F1F1F !important; }
+/* El encabezado de las secciones: tinta sobre crema (algunas reglas viejas lo pintaban claro) */
+html.em-v2 .screen:not(#_a):not(#_b) .sub-header, html.em-v2 .screen:not(#_a):not(#_b) .sub-header * { text-shadow:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .flow-sep-title, html.em-v2 .screen:not(#_a):not(#_b) .flow-sep * { text-shadow:none !important; }
+/* Lecturas y Videos (visual nueva): Cápsulas y la Guía al mismo nivel, el
+   podcast aparte. Las pestañas viejas de Cápsulas no se usan. */
+html.em-v2 #cap-tabs { display:none !important; }
+.v2-lect { display:none; }
+html.em-v2[data-v2lect] .v2-lect { display:grid; gap:10px; padding:calc(64px + env(safe-area-inset-top, 0px)) 20px 6px; font-family:'ECM Sans', -apple-system, system-ui, sans-serif; }
+.v2-lect-eyebrow { color:#A24F0E; font-size:14px; font-weight:700; }
+.v2-lect-title { color:#1F1F1F; font-size:32px; font-weight:800; letter-spacing:-0.025em; line-height:1.08; }
+.v2-lect-intro { color:#6B6B6B; font-size:15.5px; line-height:1.45; }
+.v2-lect-tabs { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px; }
+.v2-lect-tabs button { display:grid; gap:2px; text-align:left; font:inherit; cursor:pointer; border:none; border-radius:18px; padding:14px 14px 12px;
+  background:#FFFFFF; color:#1F1F1F; box-shadow:0 1px 2px rgba(40,40,30,0.04), 0 6px 16px rgba(60,60,40,0.06); }
+.v2-lect-tabs button b { font-size:16px; font-weight:800; letter-spacing:-0.01em; line-height:1.2; }
+.v2-lect-tabs button span { font-size:13px; color:#6B6B6B; font-weight:600; }
+.v2-lect-tabs button.is-on { background:#EE8434; color:#FFFFFF; box-shadow:0 6px 16px rgba(238,132,52,.28); }
+.v2-lect-tabs button.is-on span { color:rgba(255,255,255,.85); }
+.v2-lect-tabs button:focus-visible { outline:2px solid #A24F0E; outline-offset:2px; }
+html.em-v2[data-v2lect="videos"] .v2-lect-tabs { display:none; }
+/* Con el bloque de arriba, la portada de cada pantalla sube y queda como título de la parte */
+html.em-v2[data-v2lect] .screen:not(#_a):not(#_b) .foto-hero, html.em-v2[data-v2lect] .screen:not(#_a):not(#_b) .ga-cover { padding-top:14px !important; }
+html.em-v2[data-v2lect="videos"] #s-capsulas .foto-hero { display:none !important; }
+html.em-v2[data-v2lect] #s-guia-alimentacion .sub-back { display:none !important; }
 /* Visual nueva: dentro de la app, Onboarding y Cápsulas son opciones de la
    barra de abajo. La flecha que llevaba a la portada vieja del centro sobra
    (y abría una interfaz que ya no existe para el cliente). */
@@ -12695,7 +12820,7 @@ function mtAtajoAplicar(){
   // «Hoy» de Aprendizaje en el Meal Tracker recomienda piezas concretas: cada
   // parte del onboarding y la guía abren su pantalla.
   if (MT_PANTALLAS[ir]) { try { go(MT_PANTALLAS[ir]); } catch(e){} mtListo(); return true; }
-  var pestana = (ir === 'podcast' || ir === 'pod') ? 'pod' : 'info';
+  var pestana = (ir === 'podcast' || ir === 'pod' || ir === 'videos') ? 'pod' : 'info';
   try { go(pestana === 'pod' ? 's-podcast' : 's-capsulas'); } catch(e){ mtListo(); return true; }
   mtListo();
   if (!id) return true;
@@ -12726,7 +12851,7 @@ window.addEventListener('message', function(e){
   if (!d || typeof d !== 'object' || d.tipo !== 'em-ir') return;
   // Aún entrando (la app lo carga por detrás): se recuerda y se aplica al abrir.
   if (document.body.classList.contains('locked')) { _MT_GO = d.a; _MT_ID = null; mtAtajoEsperar(); return; }
-  var destino = { home: 's-home', onboarding: 's-onboarding', capsulas: 's-capsulas', podcast: 's-podcast' }[d.a] || MT_PANTALLAS[d.a];
+  var destino = { home: 's-home', onboarding: 's-onboarding', capsulas: 's-capsulas', podcast: 's-podcast', lecturas: 's-capsulas', videos: 's-podcast' }[d.a] || MT_PANTALLAS[d.a];
   if (destino) { try { go(destino); } catch(err){} }
 });
 
@@ -16003,6 +16128,75 @@ document.addEventListener('keydown', function(e){
   b.setAttribute('onclick', "go('s-onboarding')");
   var t = b.querySelectorAll('span')[1];
   if (t) t.textContent = 'Volver al onboarding';
+})();
+</script>
+<script>
+// ── LECTURAS Y VIDEOS (visual nueva) ─────────────────────────────────────
+// Aprendizaje en la app: Hoy · Lecturas · Videos · Onboarding.
+//   Lecturas = las Cápsulas y la Guía de alimentación, al mismo nivel: dos
+//   botones iguales arriba y se pasa de una a otra con un toque.
+//   Videos   = el podcast (la segunda pestaña de Cápsulas, ahora aparte).
+// Solo con html.em-v2; para los demás el centro sigue igual.
+(function(){
+  if (!document.documentElement.classList.contains('em-v2')) return;
+  var raiz = document.documentElement;
+  function cuantasGuia(){
+    var n = document.querySelectorAll('#s-guia-alimentacion .ga-h1').length;
+    if (!n) { try { n = parseInt(localStorage.getItem(typeof EM_GA_TOTAL_KEY !== 'undefined' ? EM_GA_TOTAL_KEY : '') || '0', 10) || 0; } catch(e){} }
+    return n;
+  }
+  function bloque(modo, activa){
+    var nCap = (typeof CAPSULAS !== 'undefined' && CAPSULAS.length) || 0;
+    var nPod = (typeof PODCASTS !== 'undefined' && PODCASTS.length) || 0;
+    var nGuia = cuantasGuia();
+    var d = document.createElement('div');
+    d.className = 'v2-lect';
+    d.innerHTML = modo === 'videos'
+      ? '<div class="v2-lect-eyebrow">Aprendizaje</div><div class="v2-lect-title">Videos</div>'
+        + '<div class="v2-lect-intro">Los episodios que te recomiendo, para ver o escuchar cuando quieras.' + (nPod ? ' <b>' + nPod + ' en total.</b>' : '') + '</div>'
+      : '<div class="v2-lect-eyebrow">Aprendizaje</div><div class="v2-lect-title">Lecturas</div>'
+        + '<div class="v2-lect-intro">La guía de alimentación y las cápsulas, para leer a tu ritmo.</div>'
+        + '<div class="v2-lect-tabs" role="tablist">'
+        + '<button type="button" role="tab" data-l="s-capsulas" class="' + (activa === 's-capsulas' ? 'is-on' : '') + '" aria-selected="' + (activa === 's-capsulas') + '"><b>Cápsulas</b><span>' + (nCap ? nCap + ' temas cortos' : 'Temas cortos') + '</span></button>'
+        + '<button type="button" role="tab" data-l="s-guia-alimentacion" class="' + (activa === 's-guia-alimentacion' ? 'is-on' : '') + '" aria-selected="' + (activa === 's-guia-alimentacion') + '"><b>Guía de alimentación</b><span>' + (nGuia ? nGuia + ' capítulos' : 'Capítulo a capítulo') + '</span></button>'
+        + '</div>';
+    d.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('[data-l]');
+      if (b && b.dataset.l !== activa) go(b.dataset.l);
+    });
+    return d;
+  }
+  function poner(idPantalla, modo){
+    var scr = document.getElementById(idPantalla);
+    if (!scr) return;
+    var viejo = scr.querySelector(':scope > .v2-lect');
+    if (viejo) viejo.remove();
+    scr.insertBefore(bloque(modo, idPantalla), scr.firstChild);
+  }
+  var goPrevio = window.go;
+  window.go = function(id){
+    var pedido = id;
+    var r = goPrevio.apply(this, arguments);
+    var modo = null;
+    if (pedido === 's-podcast') modo = 'videos';
+    else if (pedido === 's-capsulas' || pedido === 's-biblioteca') modo = 'lecturas';
+    else if (pedido === 's-guia-alimentacion') modo = 'lecturas';
+    if (modo === 'lecturas' && pedido !== 's-guia-alimentacion' && typeof capTab === 'function') capTab('info');
+    if (modo) raiz.setAttribute('data-v2lect', modo); else raiz.removeAttribute('data-v2lect');
+    if (modo === 'videos' || pedido === 's-capsulas' || pedido === 's-biblioteca') poner('s-capsulas', modo);
+    var intro = document.getElementById('cap-intro-txt');
+    if (intro && modo === 'lecturas') intro.innerHTML = 'Temas cortos de entrenamiento, nutrición y bienestar. <strong>Toca uno y ábrelo.</strong>';
+    if (pedido === 's-guia-alimentacion') {
+      // La guía se carga aparte (y reemplaza su contenido): se pone el bloque cuando ya está.
+      var intentos = 0;
+      (function esperar(){
+        var g = document.getElementById('s-guia-alimentacion');
+        if (g && g.classList.contains('active') && g.querySelector('.ga-cover')) { poner('s-guia-alimentacion', 'lecturas'); return; }
+        if (++intentos < 40) setTimeout(esperar, 100);
+      })();
+    }
+    return r;
+  };
 })();
 </script>
 </body>
