@@ -9755,6 +9755,12 @@ html.em-v2 #s-capsulas .cap-badge, html.em-v2 #s-capsulas .pod-badge { backgroun
 html.em-v2 #s-capsulas .cap-cat { color:#1F1F1F !important; font-size:18px !important; font-weight:750 !important; letter-spacing:-0.01em !important; text-transform:none !important; }
 html.em-v2 #s-capsulas .cap-title { color:#1F1F1F !important; font-weight:750 !important; }
 html.em-v2 #s-capsulas .cap-note { color:#6B6B6B !important; }
+/* Visual nueva: dentro de la app, Onboarding y Cápsulas son opciones de la
+   barra de abajo. La flecha que llevaba a la portada vieja del centro sobra
+   (y abría una interfaz que ya no existe para el cliente). */
+html.em-v2 #s-capsulas .sub-back,
+html.em-v2 #s-onboarding .hub-back-link { display: none !important; }
+
 </style>
 </head>
 <body class="locked">
@@ -15959,6 +15965,18 @@ document.addEventListener('keydown', function(e){
 });
 </script>
 
+<script>
+// Visual nueva: la FAQ vuelve al onboarding (donde vive en la barra), no a la
+// portada vieja del centro.
+(function(){
+  if (!document.documentElement.classList.contains('em-v2')) return;
+  var b = document.querySelector('#s-faq .sub-back');
+  if (!b) return;
+  b.setAttribute('onclick', "go('s-onboarding')");
+  var t = b.querySelectorAll('span')[1];
+  if (t) t.textContent = 'Volver al onboarding';
+})();
+</script>
 </body>
 
 </html>
