@@ -22,6 +22,10 @@
     var n = new URLSearchParams(location.search).get('mt_name');
     if (!n) { try { n = (JSON.parse(localStorage.getItem('em_client') || 'null') || {}).name; } catch(e){} }
     if (VISUAL_V2.indexOf(norm(n)) !== -1) document.documentElement.classList.add('em-v2');
+    // Abierto desde la app hacia una pantalla concreta (?mt_go): no se pinta
+    // ninguna pantalla hasta llegar a esa. Antes se veía unos segundos la
+    // portada vieja del centro y luego saltaba.
+    if (new URLSearchParams(location.search).get('mt_go')) document.documentElement.classList.add('em-saltando');
   } catch(e){}
 })();
 </script>
@@ -9758,6 +9762,13 @@ html.em-v2 #s-capsulas .cap-note { color:#6B6B6B !important; }
 /* Visual nueva: dentro de la app, Onboarding y Cápsulas son opciones de la
    barra de abajo. La flecha que llevaba a la portada vieja del centro sobra
    (y abría una interfaz que ya no existe para el cliente). */
+html.em-saltando .screen { visibility: hidden !important; }
+html.em-saltando body:not(.locked)::after {
+  content: ''; position: fixed; left: 50%; top: 38vh; width: 22px; height: 22px; margin-left: -11px;
+  border-radius: 50%; border: 2.5px solid rgba(0,0,0,.12); border-top-color: rgba(0,0,0,.55);
+  animation: em-gira .8s linear infinite;
+}
+@keyframes em-gira { to { transform: rotate(360deg) } }
 html.em-v2 #s-capsulas .sub-back,
 html.em-v2 #s-onboarding .hub-back-link { display: none !important; }
 
@@ -12669,8 +12680,9 @@ var MT_PANTALLAS = { programa: 's-programa', app: 's-app-train', 'meal-tracker':
   } catch(e){}
 })();
 
+function mtListo(){ document.documentElement.classList.remove('em-saltando'); }
 function mtAtajoAplicar(){
-  if (!_MT_GO) return true;
+  if (!_MT_GO) { mtListo(); return true; }
   // Sesión no abierta todavía (el permiso del CRM se consulta en línea):
   // se reintenta, no se salta a una pantalla que el cliente no puede ver.
   if (document.body.classList.contains('locked')) return false;
@@ -12678,13 +12690,14 @@ function mtAtajoAplicar(){
   _MT_GO = null; _MT_ID = null;
   // La barra nueva del Meal Tracker tiene «Inicio» y «Onboarding» además
   // de «Cápsulas»: cada una abre su pantalla, sin nada más.
-  if (ir === 'onboarding') { try { go('s-onboarding'); } catch(e){} return true; }
-  if (ir === 'home') { try { go('s-home'); } catch(e){} return true; }
+  if (ir === 'onboarding') { try { go('s-onboarding'); } catch(e){} mtListo(); return true; }
+  if (ir === 'home') { try { go('s-home'); } catch(e){} mtListo(); return true; }
   // «Hoy» de Aprendizaje en el Meal Tracker recomienda piezas concretas: cada
   // parte del onboarding y la guía abren su pantalla.
-  if (MT_PANTALLAS[ir]) { try { go(MT_PANTALLAS[ir]); } catch(e){} return true; }
+  if (MT_PANTALLAS[ir]) { try { go(MT_PANTALLAS[ir]); } catch(e){} mtListo(); return true; }
   var pestana = (ir === 'podcast' || ir === 'pod') ? 'pod' : 'info';
-  try { go(pestana === 'pod' ? 's-podcast' : 's-capsulas'); } catch(e){ return true; }
+  try { go(pestana === 'pod' ? 's-podcast' : 's-capsulas'); } catch(e){ mtListo(); return true; }
+  mtListo();
   if (!id) return true;
   // La lámina o el episodio concreto, ya abierto. Con margen para que la
   // rejilla termine de pintarse.
@@ -12711,19 +12724,22 @@ function mtAtajoAplicar(){
 window.addEventListener('message', function(e){
   var d = e && e.data;
   if (!d || typeof d !== 'object' || d.tipo !== 'em-ir') return;
-  if (document.body.classList.contains('locked')) return;
+  // Aún entrando (la app lo carga por detrás): se recuerda y se aplica al abrir.
+  if (document.body.classList.contains('locked')) { _MT_GO = d.a; _MT_ID = null; mtAtajoEsperar(); return; }
   var destino = { home: 's-home', onboarding: 's-onboarding', capsulas: 's-capsulas', podcast: 's-podcast' }[d.a] || MT_PANTALLAS[d.a];
   if (destino) { try { go(destino); } catch(err){} }
 });
 
-(function mtAtajoArrancar(){
-  if (!_MT_GO) return;
+var _mtEspera = null;
+function mtAtajoEsperar(){
+  if (!_MT_GO || _mtEspera) return;
   var intentos = 0;
-  var t = setInterval(function(){
+  _mtEspera = setInterval(function(){
     intentos++;
-    if (mtAtajoAplicar() || intentos > 24) clearInterval(t);
-  }, 260);
-})();
+    if (mtAtajoAplicar() || intentos > 40) { clearInterval(_mtEspera); _mtEspera = null; mtListo(); }
+  }, 200);
+}
+mtAtajoEsperar();
 
 // ─── PUENTE CON EL MEAL TRACKER ─────────────────────────────────────────
 // El botón "Aprendizaje" del Meal Tracker abre este centro con la identidad
@@ -12876,6 +12892,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // de "volver" (la que ya traía en el markup).
 
 function go(id){
+  // Visual nueva: la portada vieja del centro no se muestra nunca; lo que
+  // llevaba a ella cae en el Onboarding (que está en la barra de la app).
+  if (id === 's-home' && document.documentElement.classList.contains('em-v2')) id = 's-onboarding';
   // El visor de imagen es fijo: si se navega con él abierto, quedaba
   // tapando la pantalla a la que vuelves. Salir siempre deja en la sección.
   try { if (typeof apptCloseZoom === 'function') apptCloseZoom(); } catch(e){}
@@ -15965,6 +15984,15 @@ document.addEventListener('keydown', function(e){
 });
 </script>
 
+<script>
+// Visual nueva: si nada pidió otra pantalla, se arranca en el Onboarding y no
+// en la portada vieja.
+(function(){
+  if (!document.documentElement.classList.contains('em-v2')) return;
+  var h = document.getElementById('s-home');
+  if (h && h.classList.contains('active')) { try { go('s-onboarding'); } catch(e){} }
+})();
+</script>
 <script>
 // Visual nueva: la FAQ vuelve al onboarding (donde vive en la barra), no a la
 // portada vieja del centro.
