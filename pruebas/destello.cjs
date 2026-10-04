@@ -32,18 +32,30 @@ const F = 'file://' + require('path').join(__dirname, '..', 'index.html.html');
   const o = await b.newPage(); await o.goto(F + '?mt_name=Ana%20Perez'); await o.waitForTimeout(300);
   ok('otra persona: arranca en la portada de siempre', await o.evaluate(() => document.querySelector('.screen.active').id) === 's-home');
   ok('otra persona: la portada sigue existiendo', await o.evaluate(() => { go('s-capsulas'); go('s-home'); return document.querySelector('.screen.active').id; }) === 's-home');
-  // Lecturas: cabecera curva con su frase y el cerebro en blanco; Videos: frase sin curva
+  // Lecturas: cabecera curva con su frase y la kettlebell leyendo; Videos: frase sin curva
   const l = await b.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
   await l.goto(F + '?mt_name=Mauro%20Mor%C3%B3n&mt_go=lecturas'); await l.waitForTimeout(300);
   await l.evaluate(() => document.body.classList.remove('locked')); await l.waitForTimeout(1200);
   const cabL = l.locator('#s-capsulas [data-v2-cab="lecturas"]');
-  ok('Lecturas: cabecera curva, frase y cerebro blanco', (await cabL.count()) === 1 && await cabL.isVisible()
+  ok('Lecturas: cabecera curva, frase y kettlebell leyendo', (await cabL.count()) === 1 && await cabL.isVisible()
     && /Lee poco/.test(await cabL.innerText()) && (await cabL.locator('.v2-cab-banda').count()) === 1 && (await cabL.locator('svg[data-ilustracion="aprende"]').count()) === 1);
   await l.screenshot({ path: require('path').join(__dirname, 'lecturas.png') });
   await l.evaluate(() => window.postMessage({ tipo: 'em-ir', a: 'videos' }, '*')); await l.waitForTimeout(800);
   const cabV = l.locator('#s-capsulas [data-v2-cab="videos"]');
   ok('Videos: su frase, sin curva', (await cabV.count()) === 1 && await cabV.isVisible() && /Dale play/.test(await cabV.innerText()) && (await cabV.locator('.v2-cab-banda').count()) === 0);
   await l.screenshot({ path: require('path').join(__dirname, 'videos.png') });
+  // Cápsulas en historias: portadas por tema, una pantalla por toque, vista al final
+  await l.evaluate(() => window.postMessage({ tipo: 'em-ir', a: 'lecturas' }, '*')); await l.waitForTimeout(600);
+  await l.evaluate(() => { try { localStorage.removeItem('em_cap_read'); } catch (e) {} capRender(); });
+  ok('cápsulas: portadas de historia, una por cápsula', (await l.locator('.v2-hcard[data-historia]').count()) === (await l.evaluate(() => CAPSULAS.length)));
+  await l.locator('[data-historia="ent-04-subir-peso"]').click(); await l.waitForTimeout(400);
+  ok('historia: abre en la portada con sus barras', await l.locator('.v2-hist.abierta [data-pantalla="portada"]').isVisible() && (await l.locator('.v2-hist .barras span').count()) === 7);
+  for (let i = 0; i < 6; i++) { await l.locator('.v2-hist .toque.adelante').click(); await l.waitForTimeout(80); }
+  ok('historia: la última es la regla y queda vista', await l.locator('.v2-hist [data-pantalla="regla"]').isVisible()
+    && await l.evaluate(() => JSON.parse(localStorage.getItem('em_cap_read') || '[]').includes('ent-04-subir-peso')));
+  await l.locator('.v2-hist .ver').click(); await l.waitForTimeout(400);
+  ok('historia: «Ver la lámina» abre la imagen completa', await l.evaluate(() => document.getElementById('cap-lb').classList.contains('open')));
+  await l.evaluate(() => capClose(null, true));
   // La guía (necesita servirse por http para cargar guiaalimentacion.html)
   if (process.env.CENTRO_URL) {
     const g = await b.newPage({ viewport: { width: 390, height: 844 } });

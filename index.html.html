@@ -9907,7 +9907,9 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 @keyframes v2-cab-entra { from { opacity:0; transform:translate3d(14px,6px,0) rotate(-3deg) } to { opacity:1; transform:none } }
 @keyframes v2-pj-sube { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-7px) } }
 .v2-cab-ilus .pj-sube { animation:v2-pj-sube 1.6s ease-in-out .5s 3 both; }
-@media (prefers-reduced-motion: reduce) { .v2-cab-ilus svg, .v2-cab-ilus .pj-sube { animation:none !important; } }
+@keyframes v2-kb-hoja { 0%,100% { transform:scaleX(1) } 45%,55% { transform:scaleX(-1) } }
+.v2-cab-ilus .kb-hoja { transform-box:fill-box; transform-origin:0% 50%; animation:v2-kb-hoja 1.8s ease-in-out .7s 2 both; }
+@media (prefers-reduced-motion: reduce) { .v2-cab-ilus svg, .v2-cab-ilus .pj-sube, .v2-cab-ilus .kb-hoja { animation:none !important; } }
 /* ── Lecturas y Videos · arreglos (visual nueva) ──────────────────────────
    Sin asistente de lectura ni botones flotantes; los «En esencia» de la
    guía con letra oscura (la clara venía de cuando eran cajas negras); la
@@ -11281,6 +11283,7 @@ html.em-v2 #s-onboarding .hub-back-link { display: none !important; }
      sin tocar código. Va ANTES de capsulas.js. -->
 <script src="capsulas/manifest.js"></script>
 <script src="capsulas/capsulas.js"></script>
+<script src="capsulas/historias.js"></script>
 <script src="podcast/podcasts.js"></script>
 
 <script>
@@ -16224,16 +16227,8 @@ document.addEventListener('keydown', function(e){
 (function(){
   if (!document.documentElement.classList.contains('em-v2')) return;
   var raiz = document.documentElement;
-  // El cerebro con sus mancuernas, en blanco (el mismo de la app).
-  var CEREBRO_BLANCO = '<svg viewBox="0 0 200 124" data-ilustracion="aprende"><g transform="translate(110 70)" fill="#fff">'
-    + '<g stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"><path d="M-10 30 L-13 42"/><path d="M10 30 L13 42"/></g>'
-    + '<ellipse cx="-16" cy="43.5" rx="6.5" ry="3"/><ellipse cx="16" cy="43.5" rx="6.5" ry="3"/>'
-    + '<g class="pj-sube"><g stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"><path d="M-32 4 Q-50 -2 -50 -26"/><path d="M32 4 Q50 -2 50 -26"/></g>'
-    + '<g transform="translate(-50 -31)"><rect x="-13" y="-2.2" width="26" height="4.4" rx="2.2"/><rect x="-17" y="-8" width="7" height="16" rx="3"/><rect x="10" y="-8" width="7" height="16" rx="3"/></g>'
-    + '<g transform="translate(50 -31)"><rect x="-13" y="-2.2" width="26" height="4.4" rx="2.2"/><rect x="-17" y="-8" width="7" height="16" rx="3"/><rect x="10" y="-8" width="7" height="16" rx="3"/></g></g>'
-    + '<circle cx="-22" cy="-8" r="18"/><circle cx="-8" cy="-20" r="18"/><circle cx="9" cy="-20" r="18"/><circle cx="23" cy="-8" r="18"/><circle cx="-19" cy="10" r="18"/><circle cx="19" cy="10" r="18"/><circle cx="0" cy="8" r="22"/>'
-    + '<g stroke="rgba(201,95,23,0.30)" stroke-width="2.8" stroke-linecap="round" fill="none"><path d="M0 -37 Q-5 -28 0 -20 Q4 -14 0 -9"/><path d="M-33 -12 q7 -7 14 -1"/><path d="M-22 -28 q6 5 1 11"/><path d="M19 -30 q-5 6 1 11"/><path d="M20 -12 q7 -6 14 0"/><path d="M-35 14 q6 -5 11 1"/><path d="M24 15 q6 -6 11 0"/></g>'
-    + '</g></svg>';
+  // La kettlebell leyendo, en blanco (la misma de la cabecera de la app).
+  var KB_LEE = '<svg viewBox="0 0 200 124" aria-hidden="true" data-ilustracion="aprende" style="overflow:visible"><g transform="translate(110 70)"><g stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" fill="none"><path d="M-11 31 L-14 43"></path><path d="M11 31 L14 43"></path></g><ellipse cx="-17" cy="44.5" rx="6.5" ry="3" fill="#FFFFFF"></ellipse><ellipse cx="17" cy="44.5" rx="6.5" ry="3" fill="#FFFFFF"></ellipse><g class="kb-cuerpo"><path d="M-25 -15C-32 -36 -24 -50 0 -50C24 -50 32 -36 25 -15" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-linecap="round"></path><path d="M-22.6 32A36 36 0 1 1 22.6 32Z" fill="#FFFFFF"></path><path d="M-25 2C-24 -11 -16 -21 -5 -24" fill="none" stroke="rgba(201,95,23,0.35)" stroke-width="4" stroke-linecap="round"></path><path d="M-20 29H20" stroke="rgba(201,95,23,0.35)" stroke-width="3.5" stroke-linecap="round"></path></g><g transform="translate(0 12)"><path d="M-35 -8 Q-44 2 -36 8" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" fill="none"></path><path d="M35 -8 Q44 2 36 8" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" fill="none"></path><path d="M0 -10 C-12 -17 -28 -17 -40 -11 V14 C-28 9 -12 9 0 15 C12 9 28 9 40 14 V-11 C28 -17 12 -17 0 -10 Z" fill="#D9732E"></path><path d="M0 -13 C-11 -19 -25 -19 -35 -14 V9 C-25 4 -11 4 0 10 Z" fill="#FFFFFF"></path><path d="M0 -13 C11 -19 25 -19 35 -14 V9 C25 4 11 4 0 10 Z" fill="#FFFFFF"></path><g stroke="#D9732E" stroke-width="2" stroke-linecap="round" opacity="0.55"><path d="M-28 -9 H-7 M-28 -3 H-7 M-28 3 H-15"></path><path d="M7 -9 H28 M7 -3 H28 M7 3 H21"></path></g><path d="M0 -13 V10" stroke="#D9732E" stroke-width="1.8" opacity="0.6"></path><path class="kb-hoja" d="M0 -13 C8 -18 18 -19 27 -16 V7 C18 5 8 6 0 10 Z" fill="#FFFFFF" stroke="#D9732E" stroke-opacity="0.35" stroke-width="1.5"></path><circle cx="-37" cy="8" r="4.5" fill="#FFFFFF"></circle><circle cx="37" cy="8" r="4.5" fill="#FFFFFF"></circle></g></g></svg>';
   function cuantasGuia(){
     var n = document.querySelectorAll('#s-guia-alimentacion .ga-h1').length;
     if (!n) { try { n = parseInt(localStorage.getItem(typeof EM_GA_TOTAL_KEY !== 'undefined' ? EM_GA_TOTAL_KEY : '') || '0', 10) || 0; } catch(e){} }
@@ -16251,7 +16246,7 @@ document.addEventListener('keydown', function(e){
         + '<p class="v2-cab-sub">Los episodios que te recomiendo, para ver o escuchar cuando quieras.' + (nPod ? ' ' + nPod + ' en total.' : '') + '</p></div>'
       : '<div class="v2-cab curva" data-v2-cab="lecturas">'
         + '<div class="v2-cab-manchas" aria-hidden="true"><i></i><i></i><i></i></div><div class="v2-cab-banda" aria-hidden="true"></div>'
-        + '<div class="v2-cab-ilus" aria-hidden="true">' + CEREBRO_BLANCO + '</div>'
+        + '<div class="v2-cab-ilus" aria-hidden="true">' + KB_LEE + '</div>'
         + '<div class="v2-cab-txt"><div class="v2-cab-et">LECTURAS</div>'
         + '<h1 class="v2-cab-h">Lee poco,<br><span>aplica mucho.</span></h1>'
         + '<p class="v2-cab-sub">Las cápsulas y la guía de alimentación, para leer a tu ritmo.</p></div></div>'
@@ -16347,6 +16342,188 @@ document.addEventListener('keydown', function(e){
     }
     return r;
   };
+})();
+</script>
+<!-- ── Cápsulas en historias (visual nueva) ──────────────────────────────
+     Solo con html.em-v2. La lista pasa a portadas grandes del color de su
+     tema, y cada cápsula se abre como historia: una idea por pantalla,
+     barras de avance arriba, tocar a la derecha avanza y a la izquierda
+     vuelve. Al llegar a la última queda vista; desde ahí se puede abrir la
+     lámina completa. El texto vive en capsulas/historias.js; una cápsula
+     sin historia se sigue abriendo como lámina. -->
+<style>
+html.em-v2 .v2-hgrid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 0 18px; }
+html.em-v2 .v2-hcard { position:relative; display:flex; flex-direction:column; justify-content:flex-end; min-height:178px; padding:14px 13px 13px;
+  border:0; border-radius:20px; color:#fff; text-align:left; cursor:pointer; overflow:hidden; font:inherit; -webkit-tap-highlight-color:transparent;
+  box-shadow:0 1px 2px rgba(40,40,30,.06), 0 8px 20px rgba(40,40,30,.10); transition:transform .15s ease; }
+html.em-v2 .v2-hcard:active { transform:scale(.97); }
+html.em-v2 .v2-hcard .n { font-size:12px; font-weight:700; opacity:.85; letter-spacing:.01em; }
+html.em-v2 .v2-hcard .t { font-size:18px; font-weight:850; line-height:1.08; letter-spacing:-.02em; margin-top:3px; }
+html.em-v2 .v2-hcard .marca { position:absolute; top:11px; left:12px; display:inline-flex; align-items:center; gap:4px; font-size:11.5px; font-weight:800;
+  padding:4px 9px; border-radius:99px; background:rgba(255,255,255,.22); }
+html.em-v2 .v2-hcard.vista { opacity:.78; }
+html.em-v2 .v2-hcard::after { content:''; position:absolute; right:-34px; top:-34px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.12); }
+html.em-v2 .v2-hcat { font-size:19px; font-weight:800; letter-spacing:-.02em; color:#1F1F1F; margin:6px 2px 10px; }
+.v2-hist { position:fixed; inset:0; z-index:10050; display:none; flex-direction:column; color:#fff; font-family:'ECM Sans', -apple-system, system-ui, sans-serif;
+  padding:calc(12px + env(safe-area-inset-top, 0px)) 22px calc(22px + env(safe-area-inset-bottom, 0px)); overflow:hidden; }
+.v2-hist.abierta { display:flex; animation:v2h-entra .28s cubic-bezier(.2,.8,.2,1); }
+@keyframes v2h-entra { from { opacity:0; transform:scale(.96) } to { opacity:1; transform:none } }
+.v2-hist .barras { display:flex; gap:4px; }
+.v2-hist .barras span { flex:1; height:3px; border-radius:2px; background:rgba(255,255,255,.32); overflow:hidden; }
+.v2-hist .barras span.hecha { background:#fff; }
+.v2-hist .arriba { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; }
+.v2-hist .donde { font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; opacity:.82; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.v2-hist .cerrar { flex:none; width:38px; height:38px; border-radius:99px; border:0; background:rgba(255,255,255,.18); color:#fff; display:grid; place-items:center; cursor:pointer; position:relative; z-index:3; }
+.v2-hist .lam { flex:1; display:flex; flex-direction:column; justify-content:center; padding:8px 0 18px; min-height:0; }
+.v2-hist .lam.entra { animation:v2h-lam .32s cubic-bezier(.2,.8,.2,1); }
+@keyframes v2h-lam { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:none } }
+.v2-hist .k { font-size:13px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; opacity:.8; margin-bottom:12px; }
+.v2-hist .h { font-size:clamp(30px, 8.6vw, 40px); font-weight:900; line-height:1.03; letter-spacing:-.03em; margin:0; }
+.v2-hist .num { font-size:clamp(54px, 17vw, 84px); font-weight:900; line-height:.95; letter-spacing:-.04em; }
+.v2-hist .nl { font-size:18px; font-weight:700; opacity:.9; margin-top:6px; }
+.v2-hist .p { font-size:17.5px; line-height:1.45; margin:16px 0 0; opacity:.94; }
+.v2-hist .portada .h { font-size:clamp(40px, 12vw, 56px); }
+.v2-hist .portada .p { font-size:19px; }
+.v2-hist .pasos { display:grid; gap:10px; margin:4px 0 0; padding:0; list-style:none; }
+.v2-hist .pasos li { display:grid; grid-template-columns:34px 1fr; gap:12px; align-items:center; background:rgba(255,255,255,.14); border-radius:16px; padding:12px 14px; }
+.v2-hist .pasos b { width:34px; height:34px; border-radius:99px; background:#fff; display:grid; place-items:center; font-size:16px; font-weight:900; }
+.v2-hist .pasos .t { display:block; font-size:18px; font-weight:800; line-height:1.15; }
+.v2-hist .pasos .d { display:block; font-size:14.5px; opacity:.88; margin-top:2px; line-height:1.3; }
+.v2-hist .lista { display:grid; gap:12px; margin:0; padding:0; list-style:none; }
+.v2-hist .lista li { position:relative; padding-left:30px; font-size:17px; line-height:1.4; }
+.v2-hist .lista li::before { content:''; position:absolute; left:2px; top:5px; width:16px; height:9px; border-left:3px solid #fff; border-bottom:3px solid #fff; transform:rotate(-45deg); }
+.v2-hist .regla .h span { display:block; color:rgba(255,255,255,.62); }
+.v2-hist .finales { display:flex; gap:10px; position:relative; z-index:3; }
+.v2-hist .finales button { flex:1; height:50px; border-radius:16px; border:0; font:inherit; font-size:16px; font-weight:800; cursor:pointer; }
+.v2-hist .finales .ver { background:rgba(255,255,255,.18); color:#fff; }
+.v2-hist .finales .listo { background:#fff; color:#1F1F1F; }
+.v2-hist .toque { position:absolute; top:90px; bottom:90px; width:42%; border:0; background:transparent; z-index:2; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.v2-hist .toque.atras { left:0; width:30%; } .v2-hist .toque.adelante { right:0; width:70%; }
+.v2-hist .sigue { font-size:13px; font-weight:700; opacity:.7; text-align:right; }
+@media (prefers-reduced-motion: reduce) { .v2-hist.abierta, .v2-hist .lam.entra { animation:none; } }
+</style>
+<script>
+(function(){
+  if (!document.documentElement.classList.contains('em-v2')) return;
+  if (typeof CAPSULAS === 'undefined' || typeof capOpen !== 'function') return;
+  var H = window.CAPSULAS_HISTORIAS || {};
+  // El color de cada tema (los de la app): Entrenamiento azul, Nutrición
+  // verde y Bienestar en el ámbar del Dash.
+  var TEMA = {
+    'Entrenamiento': ['#4F8BDE', '#1E4F9A', '#1E4F9A'],
+    'Nutrición': ['#5CAE72', '#22663A', '#22663A'],
+    'Bienestar general': ['#E2A43A', '#9A6410', '#7A4E0A']
+  };
+  var tema = function(c){ return TEMA[catNorm(c.cat)] || TEMA['Bienestar general']; };
+  var esc = function(s){ return capEsc(String(s == null ? '' : s)); };
+  var total = function(c){ var h = H[c.id]; return h ? h.pantallas.length + 1 : 0; };
+
+  // ── La lista: portadas grandes por tema ──
+  var renderViejo = window.capRender;
+  window.capRender = function(){
+    var gal = document.getElementById('cap-gal');
+    if (!gal || !CAPSULAS.length) return renderViejo();
+    var empty = document.getElementById('cap-empty'); if (empty) empty.hidden = true;
+    var read = capGetRead(), html = '', ultima = null;
+    CAPSULAS.forEach(function(c, i){
+      var cat = catNorm(c.cat);
+      if (cat !== ultima) { if (ultima !== null) html += '</div>'; html += '<div class="v2-hcat">' + esc(cat) + '</div><div class="v2-hgrid">'; ultima = cat; }
+      var vista = read.indexOf(c.id) !== -1, t = tema(c), n = total(c);
+      html += '<button type="button" class="v2-hcard' + (vista ? ' vista' : '') + '" data-historia="' + esc(c.id) + '" onclick="capOpen(' + i + ')" style="background:linear-gradient(160deg,' + t[0] + ',' + t[1] + ')">'
+        + (vista ? '<span class="marca">✓ Vista</span>' : (c.nuevo ? '<span class="marca">Nueva</span>' : ''))
+        + '<span class="n">' + (n ? n + ' pantallas' : 'Lámina') + '</span>'
+        + '<span class="t">' + esc(c.title) + '</span></button>';
+    });
+    if (ultima !== null) html += '</div>';
+    gal.innerHTML = html;
+    try { capApplyProgress(); } catch (e) {}
+  };
+
+  // ── El visor ──
+  var caja = null, actual = null, idx = 0;
+  function armar(){
+    if (caja) return caja;
+    caja = document.createElement('div');
+    caja.className = 'v2-hist'; caja.id = 'v2-hist';
+    caja.setAttribute('role', 'dialog'); caja.setAttribute('aria-modal', 'true');
+    caja.innerHTML = '<div class="barras"></div>'
+      + '<div class="arriba"><div class="donde"></div><button type="button" class="cerrar" aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'
+      + '<div class="lam"></div><div class="pie"></div>'
+      + '<button type="button" class="toque atras" aria-label="Anterior"></button><button type="button" class="toque adelante" aria-label="Siguiente"></button>';
+    document.body.appendChild(caja);
+    caja.querySelector('.cerrar').addEventListener('click', cerrar);
+    caja.querySelector('.atras').addEventListener('click', function(){ ir(idx - 1); });
+    caja.querySelector('.adelante').addEventListener('click', function(){ ir(idx + 1); });
+    document.addEventListener('keydown', function(e){
+      if (!caja.classList.contains('abierta')) return;
+      if (e.key === 'Escape') cerrar();
+      else if (e.key === 'ArrowRight') ir(idx + 1);
+      else if (e.key === 'ArrowLeft') ir(idx - 1);
+    });
+    // Deslizar hacia abajo también cierra
+    var y0 = null;
+    caja.addEventListener('touchstart', function(e){ y0 = e.touches[0].clientY; }, { passive: true });
+    caja.addEventListener('touchend', function(e){ if (y0 != null && e.changedTouches[0].clientY - y0 > 90) cerrar(); y0 = null; }, { passive: true });
+    return caja;
+  }
+  function pantalla(c, i){
+    var h = H[c.id];
+    if (i === 0) return '<div class="portada" data-pantalla="portada"><div class="k">' + esc(catNorm(c.cat)) + '</div><h2 class="h">' + esc(c.title) + '</h2>'
+      + (h.sub ? '<p class="p">' + esc(h.sub) + '</p>' : '') + '</div>';
+    var s = h.pantallas[i - 1];
+    if (s.regla) return '<div class="regla" data-pantalla="regla"><div class="k">La regla</div><h2 class="h">' + esc(s.regla[0]) + '<span>' + esc(s.regla[1]) + '</span></h2></div>';
+    var out = '<div data-pantalla="' + (s.lista ? 'lista' : s.pasos ? 'pasos' : s.n ? 'numero' : 'idea') + '">' + (s.k ? '<div class="k">' + esc(s.k) + '</div>' : '');
+    if (s.n) out += '<div class="num">' + esc(s.n) + '</div>' + (s.nl ? '<div class="nl">' + esc(s.nl) + '</div>' : '');
+    if (s.h) out += '<h2 class="h">' + esc(s.h) + '</h2>';
+    if (s.pasos) out += '<ol class="pasos">' + s.pasos.map(function(x, j){ return '<li><b style="color:' + tema(c)[2] + '">' + (j + 1) + '</b><span><span class="t">' + esc(x.t) + '</span>' + (x.d ? '<span class="d">' + esc(x.d) + '</span>' : '') + '</span></li>'; }).join('') + '</ol>';
+    if (s.lista) out += '<ul class="lista">' + s.lista.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    if (s.p) out += '<p class="p">' + esc(s.p) + '</p>';
+    return out + '</div>';
+  }
+  function ir(i){
+    if (!actual) return;
+    var n = total(actual);
+    if (i < 0) i = 0;
+    if (i >= n) { cerrar(); return; }
+    idx = i;
+    var t = tema(actual);
+    caja.style.background = 'linear-gradient(170deg,' + t[0] + ' 0%,' + t[1] + ' 100%)';
+    caja.querySelector('.barras').innerHTML = Array.from({ length: n }, function(_, j){ return '<span' + (j <= i ? ' class="hecha"' : '') + '></span>'; }).join('');
+    caja.querySelector('.donde').textContent = actual.title + ' · ' + (i + 1) + ' de ' + n;
+    var lam = caja.querySelector('.lam');
+    lam.innerHTML = pantalla(actual, i);
+    lam.classList.remove('entra'); void lam.offsetWidth; lam.classList.add('entra');
+    var ultima = i === n - 1;
+    caja.querySelector('.pie').innerHTML = ultima
+      ? '<div class="finales"><button type="button" class="ver">Ver la lámina</button><button type="button" class="listo">Listo</button></div>'
+      : (i === 0 ? '<div class="sigue">Toca para seguir ›</div>' : '');
+    caja.querySelector('.adelante').style.display = ultima ? 'none' : '';
+    if (ultima) {
+      // Llegó al final: queda vista (y viaja al coach por el mismo canal).
+      try { capMarkRead(actual.id); } catch (e) {}
+      caja.querySelector('.listo').addEventListener('click', cerrar);
+      var c = actual;
+      caja.querySelector('.ver').addEventListener('click', function(){ cerrar(); abrirViejo(CAPSULAS.indexOf(c)); });
+    }
+  }
+  function cerrar(){
+    if (!caja) return;
+    caja.classList.remove('abierta');
+    document.body.style.overflow = '';
+    actual = null;
+    try { capRender(); } catch (e) {}
+  }
+  var abrirViejo = window.capOpen;
+  window.capOpen = function(i){
+    var c = CAPSULAS[i];
+    if (!c || !H[c.id]) return abrirViejo(i);
+    armar();
+    actual = c;
+    caja.classList.add('abierta');
+    document.body.style.overflow = 'hidden';
+    ir(0);
+  };
+  try { if (document.getElementById('cap-gal')) capRender(); } catch (e) {}
 })();
 </script>
 </body>
