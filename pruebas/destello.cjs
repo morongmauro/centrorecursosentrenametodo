@@ -44,15 +44,35 @@ const F = 'file://' + require('path').join(__dirname, '..', 'index.html.html');
   const cabV = l.locator('#s-capsulas [data-v2-cab="videos"]');
   ok('Videos: su frase, sin curva', (await cabV.count()) === 1 && await cabV.isVisible() && /Dale play/.test(await cabV.innerText()) && (await cabV.locator('.v2-cab-banda').count()) === 0);
   await l.screenshot({ path: require('path').join(__dirname, 'videos.png') });
+  // Entrando desde la app con un nombre que se valida en línea: mientras
+  // tanto NO se ve la pantalla de entrar con el nombre; si no tiene acceso, sí.
+  {
+    const n = await b.newPage({ viewport: { width: 390, height: 844 } });
+    let soltar; const respuesta = new Promise(r => { soltar = r; });
+    await n.route('**/api/authorize', async r => { await respuesta; r.fulfill({ status: 200, contentType: 'application/json', body: '{"authorized":false}' }); });
+    await n.goto(F + '?mt_name=Persona%20Nueva&mt_go=lecturas', { waitUntil: 'domcontentloaded' }); await n.waitForTimeout(500);
+    const oculto = await n.evaluate(() => { const l = document.querySelector('.login-screen'); return !l || getComputedStyle(l).visibility === 'hidden'; });
+    soltar(); await n.waitForTimeout(800);
+    const visible = await n.evaluate(() => { const l = document.querySelector('.login-screen'); return !!l && getComputedStyle(l).visibility !== 'hidden'; });
+    ok('desde la app: no asoma la pantalla de entrar mientras valida; sin acceso, sí aparece', oculto && visible, JSON.stringify([oculto, visible]));
+    await n.close();
+  }
   // Cápsulas en historias: portadas por tema, una pantalla por toque, vista al final
   await l.evaluate(() => window.postMessage({ tipo: 'em-ir', a: 'lecturas' }, '*')); await l.waitForTimeout(600);
   await l.evaluate(() => { try { localStorage.removeItem('em_cap_read'); } catch (e) {} capRender(); });
   ok('cápsulas: portadas de historia, una por cápsula', (await l.locator('.v2-hcard[data-historia]').count()) === (await l.evaluate(() => CAPSULAS.length)));
   await l.locator('[data-historia="ent-04-subir-peso"]').click(); await l.waitForTimeout(400);
-  ok('historia: abre en la portada con sus barras', await l.locator('.v2-hist.abierta [data-pantalla="portada"]').isVisible() && (await l.locator('.v2-hist .barras span').count()) === 7);
-  for (let i = 0; i < 6; i++) { await l.locator('.v2-hist .toque.adelante').click(); await l.waitForTimeout(80); }
-  ok('historia: la última es la regla y queda vista', await l.locator('.v2-hist [data-pantalla="regla"]').isVisible()
+  const nPant = await l.evaluate(() => window.CAPSULAS_HISTORIAS['ent-04-subir-peso'].pantallas.length + 1);
+  ok('historia: abre en la portada con sus barras', await l.locator('.v2-hist.abierta [data-pantalla="portada"]').isVisible() && (await l.locator('.v2-hist .barras span').count()) === nPant);
+  for (let i = 0; i < nPant - 1; i++) { await l.locator('.v2-hist .toque.adelante').click(); await l.waitForTimeout(80); }
+  ok('historia: la última es la regla, con sus fuentes, y queda vista', await l.locator('.v2-hist [data-pantalla="regla"]').isVisible() && /ACSM/.test(await l.locator('.v2-hist [data-fuente]').innerText())
     && await l.evaluate(() => JSON.parse(localStorage.getItem('em_cap_read') || '[]').includes('ent-04-subir-peso')));
+  // Cada cápsula publicada tiene su historia, con íconos o diagramas, y ninguna pantalla se corta.
+  ok('historias: todas las cápsulas tienen la suya, y con diagramas (escala, curva, barras, plato…)', await l.evaluate(() => {
+    const H = window.CAPSULAS_HISTORIAS;
+    const tipos = new Set(); Object.values(H).forEach(h => h.pantallas.forEach(s => Object.keys(s).forEach(k => tipos.add(k))));
+    return CAPSULAS.every(c => H[c.id]) && ['escala', 'curva', 'barras', 'plato', 'deslizadores', 'segmentos', 'cols', 'filas', 'ico', 'fuente'].every(t => tipos.has(t));
+  }));
   await l.locator('.v2-hist .ver').click(); await l.waitForTimeout(400);
   ok('historia: «Ver la lámina» abre la imagen completa', await l.evaluate(() => document.getElementById('cap-lb').classList.contains('open')));
   await l.evaluate(() => capClose(null, true));
