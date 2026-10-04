@@ -32,5 +32,29 @@ const F = 'file://' + require('path').join(__dirname, '..', 'index.html.html');
   const o = await b.newPage(); await o.goto(F + '?mt_name=Ana%20Perez'); await o.waitForTimeout(300);
   ok('otra persona: arranca en la portada de siempre', await o.evaluate(() => document.querySelector('.screen.active').id) === 's-home');
   ok('otra persona: la portada sigue existiendo', await o.evaluate(() => { go('s-capsulas'); go('s-home'); return document.querySelector('.screen.active').id; }) === 's-home');
+  // Lecturas: cabecera curva con su frase y el cerebro en blanco; Videos: frase sin curva
+  const l = await b.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+  await l.goto(F + '?mt_name=Mauro%20Mor%C3%B3n&mt_go=lecturas'); await l.waitForTimeout(300);
+  await l.evaluate(() => document.body.classList.remove('locked')); await l.waitForTimeout(1200);
+  const cabL = l.locator('#s-capsulas [data-v2-cab="lecturas"]');
+  ok('Lecturas: cabecera curva, frase y cerebro blanco', (await cabL.count()) === 1 && await cabL.isVisible()
+    && /Lee poco/.test(await cabL.innerText()) && (await cabL.locator('.v2-cab-banda').count()) === 1 && (await cabL.locator('svg[data-ilustracion="aprende"]').count()) === 1);
+  await l.screenshot({ path: require('path').join(__dirname, 'lecturas.png') });
+  await l.evaluate(() => window.postMessage({ tipo: 'em-ir', a: 'videos' }, '*')); await l.waitForTimeout(800);
+  const cabV = l.locator('#s-capsulas [data-v2-cab="videos"]');
+  ok('Videos: su frase, sin curva', (await cabV.count()) === 1 && await cabV.isVisible() && /Dale play/.test(await cabV.innerText()) && (await cabV.locator('.v2-cab-banda').count()) === 0);
+  await l.screenshot({ path: require('path').join(__dirname, 'videos.png') });
+  // La guía (necesita servirse por http para cargar guiaalimentacion.html)
+  if (process.env.CENTRO_URL) {
+    const g = await b.newPage({ viewport: { width: 390, height: 844 } });
+    await g.goto(process.env.CENTRO_URL + '?mt_name=Mauro%20Mor%C3%B3n&mt_go=guia'); await g.waitForTimeout(300);
+    await g.evaluate(() => document.body.classList.remove('locked')); await g.waitForTimeout(3000);
+    ok('guía: índice con un botón por capítulo y sin asistente de lectura', (await g.locator('.v2-cap').count()) === 15 && (await g.locator('.ga-fab-stack:visible, .pg-fab:visible').count()) === 0);
+    await g.locator('.v2-cap').nth(2).click(); await g.waitForTimeout(500);
+    ok('guía: el botón abre solo ese capítulo', (await g.locator('.ga-section:visible').count()) === 1);
+    ok('guía: «En esencia» con letra oscura', await g.locator('.v2-abierto .ga-takeaway li').first().evaluate(el => getComputedStyle(el).color === 'rgb(31, 31, 31)'));
+    await g.locator('.v2-abierto .v2-cap-nav .volver').first().click(); await g.waitForTimeout(400);
+    ok('guía: «Índice» vuelve al índice', (await g.locator('.v2-indice:visible').count()) === 1);
+  }
   await b.close(); console.log(mal ? mal + ' MAL' : 'todo bien'); process.exit(mal ? 1 : 0);
 })();

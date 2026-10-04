@@ -9880,9 +9880,93 @@ html.em-v2[data-v2lect] .v2-lect { display:grid; gap:10px; padding:calc(64px + e
 .v2-lect-tabs button.is-on span { color:rgba(255,255,255,.85); }
 .v2-lect-tabs button:focus-visible { outline:2px solid #A24F0E; outline-offset:2px; }
 html.em-v2[data-v2lect="videos"] .v2-lect-tabs { display:none; }
+/* La voz de cada parte: etiqueta, frase en dos tonos y una bajada. En
+   Lecturas va sobre la cabecera curva con las manchas naranja (como el Hoy
+   de cada sección en la app) y el cerebro en blanco; en Videos, sin curva. */
+.v2-cab { position:relative; }
+.v2-cab-et { font-size:12px; font-weight:700; letter-spacing:0.06em; color:#6B6B6B; }
+.v2-cab-h { margin:8px 0 0; font-size:clamp(27px, 7.6vw, 34px); font-weight:800; line-height:1.08; letter-spacing:-0.03em; color:#1F1F1F; max-width:460px; }
+.v2-cab-h span { color:#C95F17; }
+.v2-cab-sub { margin:10px 0 0; font-size:16px; line-height:1.45; color:#6B6B6B; max-width:460px; }
+html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
+.v2-cab.curva { margin:0 -20px 4px; padding:calc(64px + env(safe-area-inset-top, 0px) + 26px) 20px 8px; }
+.v2-cab.curva .v2-cab-h { font-size:clamp(24px, 6.8vw, 29px); }
+.v2-cab.curva .v2-cab-txt { position:relative; padding-right:min(34vw, 150px); }
+.v2-cab-manchas { position:absolute; inset:0; overflow:hidden; pointer-events:none; background:#FDF3EA;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 45%,transparent 100%); mask-image:linear-gradient(180deg,#000 0%,#000 45%,transparent 100%); }
+.v2-cab-manchas i { position:absolute; border-radius:50%; filter:blur(0); }
+.v2-cab-manchas i:nth-child(1) { width:95vw; height:95vw; max-width:520px; max-height:520px; top:-10%; right:-32%; background:radial-gradient(closest-side, #F6B98C, rgba(246,185,140,0)); }
+.v2-cab-manchas i:nth-child(2) { width:80vw; height:80vw; max-width:440px; max-height:440px; bottom:-22%; left:-34%; background:radial-gradient(closest-side, #FBE0CB, rgba(251,224,203,0)); }
+.v2-cab-manchas i:nth-child(3) { width:58vw; height:58vw; max-width:320px; max-height:320px; bottom:-6%; right:-20%; opacity:.75; background:radial-gradient(closest-side, #A9C6EE, rgba(169,198,238,0)); }
+.v2-cab-banda { position:absolute; top:0; left:0; right:0; height:calc(64px + env(safe-area-inset-top, 0px) + 14px); pointer-events:none;
+  background:linear-gradient(180deg, #F7CFAF 0%, #FADFCA 100%);
+  -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
+.v2-cab-ilus { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.v2-cab-ilus svg { position:absolute; right:-18px; top:calc(64px + env(safe-area-inset-top, 0px) + 8px); width:min(42vw, 172px); filter:drop-shadow(0 2px 8px rgba(0,0,0,0.10));
+  animation:v2-cab-entra .7s cubic-bezier(.2,.8,.2,1) .08s both; }
+@keyframes v2-cab-entra { from { opacity:0; transform:translate3d(14px,6px,0) rotate(-3deg) } to { opacity:1; transform:none } }
+@keyframes v2-pj-sube { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-7px) } }
+.v2-cab-ilus .pj-sube { animation:v2-pj-sube 1.6s ease-in-out .5s 3 both; }
+@media (prefers-reduced-motion: reduce) { .v2-cab-ilus svg, .v2-cab-ilus .pj-sube { animation:none !important; } }
+/* ── Lecturas y Videos · arreglos (visual nueva) ──────────────────────────
+   Sin asistente de lectura ni botones flotantes; los «En esencia» de la
+   guía con letra oscura (la clara venía de cuando eran cajas negras); la
+   guía con índice de capítulos que se abren; Videos como el resto de la
+   marca: tarjetas blancas en fila, título en negro y canal en gris. */
+html.em-v2 .pg-fab, html.em-v2 .ga-fab-stack, html.em-v2 #ga-assistant-modal, html.em-v2 .ga-audio-bar { display:none !important; }
+/* Las manchas oliva y la sombra oscura de las portadas viejas hacían un corte en el fondo */
+html.em-v2 .sub-area::before, html.em-v2 .sub-area::after, html.em-v2 .content-area::before, html.em-v2 .content-area::after,
+html.em-v2 .hub-area::before, html.em-v2 .hub-area::after, html.em-v2 .qs-area::before, html.em-v2 .qs-area::after,
+html.em-v2 .foto-hero::before, html.em-v2 .sub-hero-plain::before, html.em-v2 .sub-hero-plain::after, html.em-v2 .em-hero::before { display:none !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-takeaway { background:#FFFFFF !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-takeaway-label { color:#A24F0E !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-takeaway-title { color:#1F1F1F !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-takeaway-list li, html.em-v2 .screen:not(#_a):not(#_b) .ga-takeaway-list li strong { color:#1F1F1F !important; }
+html.em-v2 .screen:not(#_a):not(#_b) .ga-takeaway-list li::before { color:#EE8434 !important; }
+/* El índice de la guía */
+.v2-indice { display:none; }
+html.em-v2 #s-guia-alimentacion.v2-guia .v2-indice { display:grid; gap:8px; padding:6px 20px 24px; font-family:'ECM Sans', -apple-system, system-ui, sans-serif; }
+.v2-indice-t { margin:6px 2px 0; font-size:21px; font-weight:800; letter-spacing:-0.02em; color:#1F1F1F; }
+.v2-indice-s { margin:0 2px 6px; font-size:14.5px; color:#6B6B6B; line-height:1.45; }
+.v2-cap { display:flex; align-items:center; gap:12px; width:100%; text-align:left; font:inherit; cursor:pointer; border:none; border-radius:18px; padding:14px 14px;
+  background:#FFFFFF; box-shadow:0 1px 2px rgba(40,40,30,0.04), 0 6px 16px rgba(60,60,40,0.06); }
+.v2-cap:active { transform:scale(.99); }
+.v2-cap-n { flex:none; width:32px; height:32px; border-radius:99px; display:grid; place-items:center; font-size:13px; font-weight:800; background:rgba(238,132,52,.16); color:#A24F0E; }
+.v2-cap.leido .v2-cap-n { background:#EE8434; color:#FFFFFF; }
+.v2-cap-txt { flex:1; min-width:0; display:grid; gap:2px; }
+.v2-cap-txt b { font-size:15.5px; font-weight:750; color:#1F1F1F; line-height:1.3; letter-spacing:-0.01em; }
+.v2-cap-txt span { font-size:13px; color:#6B6B6B; }
+.v2-cap-arr { flex:none; color:#B3B0A8; font-size:22px; line-height:1; }
+html.em-v2 #s-guia-alimentacion.v2-guia .ga-section { display:none !important; }
+html.em-v2 #s-guia-alimentacion.v2-guia .ga-section.v2-abierto { display:block !important; }
+html.em-v2 #s-guia-alimentacion.v2-guia.v2-leyendo .v2-indice,
+html.em-v2 #s-guia-alimentacion.v2-guia.v2-leyendo .ga-cover,
+html.em-v2 #s-guia-alimentacion.v2-guia.v2-leyendo .v2-lect,
+html.em-v2 #s-guia-alimentacion.v2-guia .ga-resume-collapse, html.em-v2 #s-guia-alimentacion.v2-guia [id^="ga-resume"] { display:none !important; }
+.v2-cap-nav { display:none; }
+html.em-v2 .v2-abierto .v2-cap-nav { display:flex; gap:8px; margin:14px 0 18px; }
+html.em-v2 .v2-abierto .v2-cap-nav.abajo { margin:22px 0 8px; }
+.v2-cap-nav button { flex:1; height:46px; border-radius:14px; border:none; font:inherit; font-size:15px; font-weight:750; cursor:pointer; }
+.v2-cap-nav .volver { flex:none; padding:0 16px; background:#FFFFFF; color:#1F1F1F; box-shadow:0 1px 2px rgba(40,40,30,0.04), 0 6px 16px rgba(60,60,40,0.06); }
+.v2-cap-nav .sig { background:#1F1F1F; color:#FFFFFF; }
+html.em-v2 #s-guia-alimentacion.v2-leyendo .ga-section.v2-abierto { padding-top:calc(64px + env(safe-area-inset-top, 0px)); }
+/* Videos: una fila por episodio */
+html.em-v2 #s-capsulas .pod-cat { margin:26px 2px 10px !important; font-size:20px !important; font-weight:800 !important; letter-spacing:-0.02em !important; text-transform:none !important; color:#1F1F1F !important; }
+html.em-v2 #s-capsulas .pod-cat::after { display:none !important; }
+html.em-v2 #s-capsulas .pod-group { grid-template-columns:1fr !important; gap:10px !important; }
+html.em-v2 #s-capsulas .pod-card { display:grid !important; grid-template-columns:118px 1fr; gap:12px !important; align-items:center; padding:10px !important; font-family:inherit !important; }
+html.em-v2 #s-capsulas .pod-thumb { border-radius:14px !important; background:linear-gradient(135deg, #F6B98C, #EE8434) !important; }
+html.em-v2 #s-capsulas .pod-play { width:30px !important; height:30px !important; background:#FFFFFF !important; box-shadow:0 2px 8px rgba(0,0,0,.18) !important; }
+html.em-v2 #s-capsulas .pod-play svg { fill:#EE8434 !important; }
+html.em-v2 #s-capsulas .pod-play svg polygon { fill:#EE8434 !important; }
+html.em-v2 #s-capsulas .pod-title { font-size:15px !important; font-weight:750 !important; color:#1F1F1F !important; -webkit-line-clamp:2 !important; }
+html.em-v2 #s-capsulas .pod-show { font-size:12.5px !important; font-weight:600 !important; letter-spacing:0 !important; text-transform:none !important; color:#6B6B6B !important; margin-top:3px !important; }
+html.em-v2 #s-capsulas .pod-note { font-size:13px !important; color:#6B6B6B !important; }
+html.em-v2 #s-capsulas .pod-badge { background:#EE8434 !important; text-transform:none !important; letter-spacing:0 !important; font-size:10.5px !important; }
+html.em-v2 #s-capsulas .pod-dur, html.em-v2 #s-capsulas .pod-flag { font-size:10px !important; }
 /* Con el bloque de arriba, la portada de cada pantalla sube y queda como título de la parte */
 html.em-v2[data-v2lect] .screen:not(#_a):not(#_b) .foto-hero, html.em-v2[data-v2lect] .screen:not(#_a):not(#_b) .ga-cover { padding-top:14px !important; }
-html.em-v2[data-v2lect="videos"] #s-capsulas .foto-hero { display:none !important; }
+html.em-v2[data-v2lect] #s-capsulas .foto-hero { display:none !important; }
 html.em-v2[data-v2lect] #s-guia-alimentacion .sub-back { display:none !important; }
 /* Visual nueva: dentro de la app, Onboarding y Cápsulas son opciones de la
    barra de abajo. La flecha que llevaba a la portada vieja del centro sobra
@@ -16132,7 +16216,7 @@ document.addEventListener('keydown', function(e){
 </script>
 <script>
 // ── LECTURAS Y VIDEOS (visual nueva) ─────────────────────────────────────
-// Aprendizaje en la app: Hoy · Lecturas · Videos · Onboarding.
+// Aprendizaje en la app: Lecturas · Videos · Programa («Sobre el programa» es de la app).
 //   Lecturas = las Cápsulas y la Guía de alimentación, al mismo nivel: dos
 //   botones iguales arriba y se pasa de una a otra con un toque.
 //   Videos   = el podcast (la segunda pestaña de Cápsulas, ahora aparte).
@@ -16140,6 +16224,16 @@ document.addEventListener('keydown', function(e){
 (function(){
   if (!document.documentElement.classList.contains('em-v2')) return;
   var raiz = document.documentElement;
+  // El cerebro con sus mancuernas, en blanco (el mismo de la app).
+  var CEREBRO_BLANCO = '<svg viewBox="0 0 200 124" data-ilustracion="aprende"><g transform="translate(110 70)" fill="#fff">'
+    + '<g stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"><path d="M-10 30 L-13 42"/><path d="M10 30 L13 42"/></g>'
+    + '<ellipse cx="-16" cy="43.5" rx="6.5" ry="3"/><ellipse cx="16" cy="43.5" rx="6.5" ry="3"/>'
+    + '<g class="pj-sube"><g stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"><path d="M-32 4 Q-50 -2 -50 -26"/><path d="M32 4 Q50 -2 50 -26"/></g>'
+    + '<g transform="translate(-50 -31)"><rect x="-13" y="-2.2" width="26" height="4.4" rx="2.2"/><rect x="-17" y="-8" width="7" height="16" rx="3"/><rect x="10" y="-8" width="7" height="16" rx="3"/></g>'
+    + '<g transform="translate(50 -31)"><rect x="-13" y="-2.2" width="26" height="4.4" rx="2.2"/><rect x="-17" y="-8" width="7" height="16" rx="3"/><rect x="10" y="-8" width="7" height="16" rx="3"/></g></g>'
+    + '<circle cx="-22" cy="-8" r="18"/><circle cx="-8" cy="-20" r="18"/><circle cx="9" cy="-20" r="18"/><circle cx="23" cy="-8" r="18"/><circle cx="-19" cy="10" r="18"/><circle cx="19" cy="10" r="18"/><circle cx="0" cy="8" r="22"/>'
+    + '<g stroke="rgba(201,95,23,0.30)" stroke-width="2.8" stroke-linecap="round" fill="none"><path d="M0 -37 Q-5 -28 0 -20 Q4 -14 0 -9"/><path d="M-33 -12 q7 -7 14 -1"/><path d="M-22 -28 q6 5 1 11"/><path d="M19 -30 q-5 6 1 11"/><path d="M20 -12 q7 -6 14 0"/><path d="M-35 14 q6 -5 11 1"/><path d="M24 15 q6 -6 11 0"/></g>'
+    + '</g></svg>';
   function cuantasGuia(){
     var n = document.querySelectorAll('#s-guia-alimentacion .ga-h1').length;
     if (!n) { try { n = parseInt(localStorage.getItem(typeof EM_GA_TOTAL_KEY !== 'undefined' ? EM_GA_TOTAL_KEY : '') || '0', 10) || 0; } catch(e){} }
@@ -16152,10 +16246,15 @@ document.addEventListener('keydown', function(e){
     var d = document.createElement('div');
     d.className = 'v2-lect';
     d.innerHTML = modo === 'videos'
-      ? '<div class="v2-lect-eyebrow">Aprendizaje</div><div class="v2-lect-title">Videos</div>'
-        + '<div class="v2-lect-intro">Los episodios que te recomiendo, para ver o escuchar cuando quieras.' + (nPod ? ' <b>' + nPod + ' en total.</b>' : '') + '</div>'
-      : '<div class="v2-lect-eyebrow">Aprendizaje</div><div class="v2-lect-title">Lecturas</div>'
-        + '<div class="v2-lect-intro">La guía de alimentación y las cápsulas, para leer a tu ritmo.</div>'
+      ? '<div class="v2-cab" data-v2-cab="videos"><div class="v2-cab-et">VIDEOS</div>'
+        + '<h1 class="v2-cab-h">Dale play<br><span>y aprende escuchando.</span></h1>'
+        + '<p class="v2-cab-sub">Los episodios que te recomiendo, para ver o escuchar cuando quieras.' + (nPod ? ' ' + nPod + ' en total.' : '') + '</p></div>'
+      : '<div class="v2-cab curva" data-v2-cab="lecturas">'
+        + '<div class="v2-cab-manchas" aria-hidden="true"><i></i><i></i><i></i></div><div class="v2-cab-banda" aria-hidden="true"></div>'
+        + '<div class="v2-cab-ilus" aria-hidden="true">' + CEREBRO_BLANCO + '</div>'
+        + '<div class="v2-cab-txt"><div class="v2-cab-et">LECTURAS</div>'
+        + '<h1 class="v2-cab-h">Lee poco,<br><span>aplica mucho.</span></h1>'
+        + '<p class="v2-cab-sub">Las cápsulas y la guía de alimentación, para leer a tu ritmo.</p></div></div>'
         + '<div class="v2-lect-tabs" role="tablist">'
         + '<button type="button" role="tab" data-l="s-capsulas" class="' + (activa === 's-capsulas' ? 'is-on' : '') + '" aria-selected="' + (activa === 's-capsulas') + '"><b>Cápsulas</b><span>' + (nCap ? nCap + ' temas cortos' : 'Temas cortos') + '</span></button>'
         + '<button type="button" role="tab" data-l="s-guia-alimentacion" class="' + (activa === 's-guia-alimentacion' ? 'is-on' : '') + '" aria-selected="' + (activa === 's-guia-alimentacion') + '"><b>Guía de alimentación</b><span>' + (nGuia ? nGuia + ' capítulos' : 'Capítulo a capítulo') + '</span></button>'
@@ -16173,6 +16272,57 @@ document.addEventListener('keydown', function(e){
     if (viejo) viejo.remove();
     scr.insertBefore(bloque(modo, idPantalla), scr.firstChild);
   }
+  // La guía con índice: después de la portada, un botón por capítulo; al
+  // tocarlo se abre SOLO ese capítulo, con «Índice» arriba y «Siguiente»
+  // abajo. Así no es un muro de texto de punta a punta.
+  function escH(t){ return String(t || '').replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function armarIndiceGuia(){
+    var g = document.getElementById('s-guia-alimentacion');
+    if (!g) return;
+    var secs = [].slice.call(g.querySelectorAll('.ga-section[data-level="1"]'));
+    if (!secs.length) return;
+    g.classList.add('v2-guia');
+    g.classList.remove('v2-leyendo');
+    secs.forEach(function(s){ s.classList.remove('v2-abierto'); });
+    var viejo = g.querySelector('.v2-indice'); if (viejo) viejo.remove();
+    var ind = document.createElement('div');
+    ind.className = 'v2-indice';
+    ind.innerHTML = '<h2 class="v2-indice-t">Índice</h2><p class="v2-indice-s">Toca un capítulo para leerlo. Al terminar, márcalo como leído.</p>'
+      + secs.map(function(s, i){
+        var h = s.querySelector('.ga-h1'), t = s.querySelector('.ga-h1-time'), leido = !!s.querySelector('.ga-mark-read.read');
+        return '<button type="button" class="v2-cap' + (leido ? ' leido' : '') + '" data-i="' + i + '">'
+          + '<span class="v2-cap-n">' + (leido ? '✓' : (i + 1)) + '</span>'
+          + '<span class="v2-cap-txt"><b>' + escH(h ? h.textContent : '') + '</b><span>' + escH(t ? t.textContent : '') + (leido ? ' · leído' : '') + '</span></span>'
+          + '<span class="v2-cap-arr" aria-hidden="true">›</span></button>';
+      }).join('');
+    ind.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('.v2-cap');
+      if (b) abrirCapitulo(Number(b.dataset.i));
+    });
+    var cover = g.querySelector('.ga-cover');
+    if (cover && cover.parentNode) cover.parentNode.insertBefore(ind, cover.nextSibling); else g.appendChild(ind);
+    function abrirCapitulo(i){
+      secs.forEach(function(s, k){ s.classList.toggle('v2-abierto', k === i); });
+      var s = secs[i];
+      if (!s) return;
+      if (!s.querySelector('.v2-cap-nav')) {
+        var arriba = document.createElement('div'); arriba.className = 'v2-cap-nav';
+        arriba.innerHTML = '<button type="button" class="volver">‹ Índice</button>';
+        s.insertBefore(arriba, s.firstChild);
+        var abajo = document.createElement('div'); abajo.className = 'v2-cap-nav abajo';
+        abajo.innerHTML = '<button type="button" class="volver">‹ Índice</button>' + (i < secs.length - 1 ? '<button type="button" class="sig">Siguiente capítulo ›</button>' : '');
+        s.appendChild(abajo);
+        s.addEventListener('click', function(e){
+          if (e.target.closest('.v2-cap-nav .volver')) armarIndiceGuia();
+          else if (e.target.closest('.v2-cap-nav .sig')) abrirCapitulo(i + 1);
+        });
+      }
+      g.classList.add('v2-leyendo');
+      try { g.scrollTop = 0; window.scrollTo(0, 0); } catch(e){}
+    }
+    try { window.scrollTo(0, 0); } catch(e){}
+  }
+  window.v2ArmarIndiceGuia = armarIndiceGuia;
   var goPrevio = window.go;
   window.go = function(id){
     var pedido = id;
@@ -16191,7 +16341,7 @@ document.addEventListener('keydown', function(e){
       var intentos = 0;
       (function esperar(){
         var g = document.getElementById('s-guia-alimentacion');
-        if (g && g.classList.contains('active') && g.querySelector('.ga-cover')) { poner('s-guia-alimentacion', 'lecturas'); return; }
+        if (g && g.classList.contains('active') && g.querySelector('.ga-cover')) { poner('s-guia-alimentacion', 'lecturas'); armarIndiceGuia(); return; }
         if (++intentos < 40) setTimeout(esperar, 100);
       })();
     }
