@@ -9910,8 +9910,20 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
   background:linear-gradient(180deg, #F7CFAF 0%, #FADFCA 100%);
   -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
 .v2-cab-ilus { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
-.v2-cab-ilus svg { position:absolute; right:14px; top:calc(64px + env(safe-area-inset-top, 0px) + 22px); width:min(40vw, 164px); filter:drop-shadow(0 2px 8px rgba(0,0,0,0.10));
-  animation:v2-cab-entra .7s cubic-bezier(.2,.8,.2,1) .08s both; }
+.v2-cab-ilus .v2-kb { position:absolute; right:0; top:calc(64px + env(safe-area-inset-top, 0px) + 12px); width:min(40vw, 156px); aspect-ratio:220 / 170;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,0.10)); animation:v2-cab-entra .7s cubic-bezier(.2,.8,.2,1) .08s both; }
+.v2-cab-ilus .v2-kb svg { display:block; width:100%; height:100%; }
+/* El aro de la gráfica clave (material visto), igual que en las cabeceras de
+   la app: al lado de la kettlebell, a la altura de su cuerpo, en naranja. */
+.v2-cab-aro { position:absolute; right:calc(min(40vw, 156px) * 0.75 - 6px); top:calc(64px + env(safe-area-inset-top, 0px) + 12px + min(40vw, 156px) * 0.3165 - 30px); width:84px;
+  display:flex; flex-direction:column; align-items:center; gap:4px; animation:v2-cab-entra .7s cubic-bezier(.2,.8,.2,1) .16s both; }
+.v2-cab-aro .v2-aro { position:relative; width:60px; height:60px; }
+.v2-cab-aro svg { display:block; }
+.v2-cab-aro .v2-aro-p { transition:stroke-dashoffset 1s cubic-bezier(.22,.8,.24,1); }
+.v2-cab-aro .v2-aro b { position:absolute; inset:0; display:grid; place-items:center; font-size:15px; font-weight:800; color:#1F1F1F; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
+.v2-cab-aro span { font-size:11px; font-weight:500; color:#6B6B6B; text-align:center; line-height:1.2; }
+.v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(46vw, 186px); min-height:118px; }
+.v2-cab.curva.con-aro .v2-cab-h { font-size:clamp(21px, 5.9vw, 26px); }
 @keyframes v2-cab-entra { from { opacity:0; transform:translate3d(14px,6px,0) rotate(-3deg) } to { opacity:1; transform:none } }
 @keyframes v2-pj-sube { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-7px) } }
 .v2-cab-ilus .pj-sube { animation:v2-pj-sube 1.6s ease-in-out .5s 3 both; }
@@ -9921,7 +9933,7 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 @keyframes v2-kb-foco { 0% { transform:scale(0); opacity:0 } 60% { transform:scale(1.15); opacity:1 } 100% { transform:scale(1); opacity:1 } }
 .v2-cab-ilus .kb-foco > * { transform-box:fill-box; transform-origin:50% 80%; animation:v2-kb-foco .6s cubic-bezier(.3,1.4,.5,1) 1.1s both; }
 .v2-cab-ilus .kb-ojos { transform-box:fill-box; transform-origin:50% 50%; animation:v2-kb-parpadea 4s ease-in-out 1.2s 2 both; }
-@media (prefers-reduced-motion: reduce) { .v2-cab-ilus svg, .v2-cab-ilus .pj-sube, .v2-cab-ilus .kb-hoja, .v2-cab-ilus .kb-ojos, .v2-cab-ilus .kb-foco > * { animation:none !important; } }
+@media (prefers-reduced-motion: reduce) { .v2-cab-ilus .v2-kb, .v2-cab-aro, .v2-cab-aro .v2-aro-p, .v2-cab-ilus .pj-sube, .v2-cab-ilus .kb-hoja, .v2-cab-ilus .kb-ojos, .v2-cab-ilus .kb-foco > * { animation:none !important; } }
 /* ── Lecturas y Videos · arreglos (visual nueva) ──────────────────────────
    Sin asistente de lectura ni botones flotantes; los «En esencia» de la
    guía con letra oscura (la clara venía de cuando eran cajas negras); la
@@ -16248,12 +16260,71 @@ document.addEventListener('keydown', function(e){
   if (!document.documentElement.classList.contains('em-v2')) return;
   var raiz = document.documentElement;
   // La kettlebell leyendo, en blanco (la misma de la cabecera de la app).
-  var KB_LEE = '<svg viewBox="0 0 200 124" aria-hidden="true" data-ilustracion="aprende" style="overflow:visible"><style> @keyframes kb-hoja { 0%, 100% { transform: scaleX(1) } 45%, 55% { transform: scaleX(-1) } } @keyframes kb-foco { 0% { transform: scale(0); opacity: 0 } 60% { transform: scale(1.15); opacity: 1 } 100% { transform: scale(1); opacity: 1 } } @keyframes kb-papel { 0% { transform: translate(0, -40px) scale(.2); opacity: 0 } 15% { opacity: 1 } 70% { opacity: 1 } 100% { transform: translate(var(--x), calc(var(--y) + 14px)) scale(1); opacity: 0 } } @keyframes kb-anda { 0% { transform: translate(38px, 0) } 16% { transform: translate(31px, -3px) } 33% { transform: translate(23px, 0) } 50% { transform: translate(15px, -3px) } 67% { transform: translate(8px, 0) } 84% { transform: translate(3px, -2px) } 100% { transform: none } } [data-ilustracion] .kb-anda { animation: kb-anda 1.1s cubic-bezier(.3,.6,.4,1) both; } @keyframes kb-parpadea { 0%, 92%, 100% { transform: scaleY(1) } 96% { transform: scaleY(.15) } } [data-ilustracion] .kb-hoja { transform-box: fill-box; transform-origin: 0% 50%; animation: kb-hoja 1.8s ease-in-out 1.4s 2 both; } [data-ilustracion] .kb-foco &gt; * { transform-box: fill-box; transform-origin: 50% 80%; animation: kb-foco .6s cubic-bezier(.3,1.4,.5,1) 1.8s both; } [data-ilustracion] .kb-papel &gt; g { opacity: 0; animation: kb-papel 1.5s cubic-bezier(.2,.7,.3,1) 2 both; } [data-ilustracion] .kb-ojos { transform-box: fill-box; transform-origin: 50% 50%; animation: kb-parpadea 4s ease-in-out 1.2s 2 both; } @media (prefers-reduced-motion: reduce) { [data-ilustracion] * { animation: none !important; } }</style><g transform="translate(102 60)"><g transform="translate(0 10) scale(0.86)"><g class="kb-anda"><g stroke="#23272D" stroke-width="5.5" stroke-linecap="round" fill="none"><path d="M-11 30 L-14 43"><animate attributeName="d" values="M-11 30 L-14 43;M-11 30 L-6 41;M-11 30 L-14 43" begin="0s" dur="0.36s" repeatCount="3" fill="freeze"></animate></path><path d="M11 30 L14 43"><animate attributeName="d" values="M11 30 L14 43;M11 30 L20 41;M11 30 L14 43" begin="0.18s" dur="0.36s" repeatCount="3" fill="freeze"></animate></path></g><ellipse cx="-18" cy="45.5" rx="7" ry="3.3" fill="#23272D"><animate attributeName="cx" values="-18;-10;-18" begin="0s" dur="0.36s" repeatCount="3" fill="freeze"></animate></ellipse><ellipse cx="18" cy="45.5" rx="7" ry="3.3" fill="#23272D"><animate attributeName="cx" values="18;24;18" begin="0.18s" dur="0.36s" repeatCount="3" fill="freeze"></animate></ellipse><path d="M-30 -6 Q-60 -26 -40 -62" stroke="#23272D" stroke-width="5.5" stroke-linecap="round" fill="none"><animate attributeName="d" values="M-30 -6 Q-60 -26 -40 -62;M-30 -6 Q-59 -30 -40 -68;M-30 -6 Q-60 -26 -40 -62" dur="2.4s" begin="1.15s" repeatCount="2" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"></animate></path><path d="M30 -6 Q60 -26 40 -62" stroke="#23272D" stroke-width="5.5" stroke-linecap="round" fill="none"><animate attributeName="d" values="M30 -6 Q60 -26 40 -62;M30 -6 Q59 -30 40 -68;M30 -6 Q60 -26 40 -62" dur="2.4s" begin="1.15s" repeatCount="2" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"></animate></path><g><defs><clipPath id="kbleeRekb"><path d="M-17 31 C-38 25 -42 -2 -31 -18 C-22 -31 -11 -35 0 -35 C11 -35 22 -31 31 -18 C42 -2 38 25 17 31 C6 33.4 -6 33.4 -17 31 Z"></path></clipPath></defs><path d="M-20 -26 C-25.5 -38 -24 -50 -13 -55.5 L13 -55.5 C24 -50 25.5 -38 20 -26" fill="none" stroke="#E7EAEE" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 -55.5 L13 -55.5 C24 -50 25.5 -38 20 -26" fill="none" stroke="#CFD4DA" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M-17 31 C-38 25 -42 -2 -31 -18 C-22 -31 -11 -35 0 -35 C11 -35 22 -31 31 -18 C42 -2 38 25 17 31 C6 33.4 -6 33.4 -17 31 Z" fill="#C5CAD1"></path><g clip-path="url(#kbleeRekb)"><circle cx="-4" cy="-5" r="36" fill="#DCE0E5"></circle><circle cx="-11" cy="-12" r="29" fill="#EEF0F3"></circle></g></g><g transform="translate(0 -74)"><animateTransform attributeName="transform" type="translate" values="0 -74;0 -80;0 -74" dur="2.4s" begin="1.15s" repeatCount="2" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"></animateTransform><path d="M0 -10 C-14 -18 -32 -18 -46 -11 V18 C-32 12 -14 12 0 19 C14 12 32 12 46 18 V-11 C32 -18 14 -18 0 -10 Z" fill="#D9732E"></path><path d="M0 -13 C-12 -20 -28 -20 -41 -14 V13 C-28 7 -12 7 0 14 Z" fill="#FFFFFF"></path><path d="M0 -13 C12 -20 28 -20 41 -14 V13 C28 7 12 7 0 14 Z" fill="#FFFFFF"></path><path class="kb-hoja" d="M0 -13 C9 -19 21 -20 31 -17 V10 C21 8 9 9 0 14 Z" fill="#FFFFFF" stroke="#D9732E" stroke-opacity="0.3" stroke-width="1.4"></path><circle cx="-40" cy="12" r="4.5" fill="#23272D"></circle><circle cx="40" cy="12" r="4.5" fill="#23272D"></circle></g><g class="kb-foco" transform="translate(64 -84)"><path d="M0 -12 C-8 -12 -12 -6 -12 -1 C-12 4 -8 7 -6 10 H6 C8 7 12 4 12 -1 C12 -6 8 -12 0 -12 Z" fill="#F2C14E"></path><rect x="-5" y="11" width="10" height="5" rx="2" fill="#FFFFFF"></rect><g stroke="#F2C14E" stroke-width="3" stroke-linecap="round"><path d="M0 -18 V-23"></path><path d="M-14 -12 L-18 -16"></path><path d="M14 -12 L18 -16"></path></g></g></g></g></g></svg>';
+  var KB_LEE = '<svg viewBox="0 0 200 124" aria-hidden="true" data-ilustracion="aprende" style="overflow:visible"><style> @keyframes kb-hoja { 0%, 100% { transform: scaleX(1) } 45%, 55% { transform: scaleX(-1) } } @keyframes kb-foco { 0% { transform: scale(0); opacity: 0 } 60% { transform: scale(1.15); opacity: 1 } 100% { transform: scale(1); opacity: 1 } } @keyframes kb-papel { 0% { transform: translate(0, -40px) scale(.2); opacity: 0 } 15% { opacity: 1 } 70% { opacity: 1 } 100% { transform: translate(var(--x), calc(var(--y) + 14px)) scale(1); opacity: 0 } } @keyframes kb-parpadea { 0%, 92%, 100% { transform: scaleY(1) } 96% { transform: scaleY(.15) } } [data-ilustracion] .kb-hoja { transform-box: fill-box; transform-origin: 0% 50%; animation: kb-hoja 1.8s ease-in-out .7s 2 both; } [data-ilustracion] .kb-foco &gt; * { transform-box: fill-box; transform-origin: 50% 80%; animation: kb-foco .6s cubic-bezier(.3,1.4,.5,1) 1.1s both; } [data-ilustracion] .kb-papel &gt; g { opacity: 0; animation: kb-papel 1.5s cubic-bezier(.2,.7,.3,1) 2 both; } [data-ilustracion] .kb-ojos { transform-box: fill-box; transform-origin: 50% 50%; animation: kb-parpadea 4s ease-in-out 1.2s 2 both; } @media (prefers-reduced-motion: reduce) { [data-ilustracion] * { animation: none !important; } }</style><g transform="translate(102 60)"><g transform="translate(0 10) scale(0.86)"><g stroke="#23272D" stroke-width="5.5" stroke-linecap="round" fill="none"><path d="M-11 30 L-14 43"></path><path d="M11 30 L14 43"></path></g><ellipse cx="-18" cy="45.5" rx="7" ry="3.3" fill="#23272D"></ellipse><ellipse cx="18" cy="45.5" rx="7" ry="3.3" fill="#23272D"></ellipse><path d="M-30 -6 Q-60 -26 -40 -62" stroke="#23272D" stroke-width="5.5" stroke-linecap="round" fill="none"><animate attributeName="d" values="M-30 -6 Q-60 -26 -40 -62;M-30 -6 Q-59 -30 -40 -68;M-30 -6 Q-60 -26 -40 -62" dur="2.4s" begin="0.5s" repeatCount="2" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"></animate></path><path d="M30 -6 Q60 -26 40 -62" stroke="#23272D" stroke-width="5.5" stroke-linecap="round" fill="none"><animate attributeName="d" values="M30 -6 Q60 -26 40 -62;M30 -6 Q59 -30 40 -68;M30 -6 Q60 -26 40 -62" dur="2.4s" begin="0.5s" repeatCount="2" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"></animate></path><g><defs><clipPath id="Rekb"><path d="M-17 31 C-38 25 -42 -2 -31 -18 C-22 -31 -11 -35 0 -35 C11 -35 22 -31 31 -18 C42 -2 38 25 17 31 C6 33.4 -6 33.4 -17 31 Z"></path></clipPath></defs><path d="M-20 -26 C-25.5 -38 -24 -50 -13 -55.5 L13 -55.5 C24 -50 25.5 -38 20 -26" fill="none" stroke="#DADEE3" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 -55.5 L13 -55.5 C24 -50 25.5 -38 20 -26" fill="none" stroke="#BFC5CC" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M-17 31 C-38 25 -42 -2 -31 -18 C-22 -31 -11 -35 0 -35 C11 -35 22 -31 31 -18 C42 -2 38 25 17 31 C6 33.4 -6 33.4 -17 31 Z" fill="#B2B8C0"></path><g clip-path="url(#Rekb)"><circle cx="-4" cy="-5" r="36" fill="#CDD2D8"></circle><circle cx="-11" cy="-12" r="29" fill="#E3E6EA"></circle></g></g><g transform="translate(0 -74)"><animateTransform attributeName="transform" type="translate" values="0 -74;0 -80;0 -74" dur="2.4s" begin="0.5s" repeatCount="2" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"></animateTransform><path d="M0 -10 C-14 -18 -32 -18 -46 -11 V18 C-32 12 -14 12 0 19 C14 12 32 12 46 18 V-11 C32 -18 14 -18 0 -10 Z" fill="#D9732E"></path><path d="M0 -13 C-12 -20 -28 -20 -41 -14 V13 C-28 7 -12 7 0 14 Z" fill="#FFFFFF"></path><path d="M0 -13 C12 -20 28 -20 41 -14 V13 C28 7 12 7 0 14 Z" fill="#FFFFFF"></path><path class="kb-hoja" d="M0 -13 C9 -19 21 -20 31 -17 V10 C21 8 9 9 0 14 Z" fill="#FFFFFF" stroke="#D9732E" stroke-opacity="0.3" stroke-width="1.4"></path><circle cx="-40" cy="12" r="4.5" fill="#23272D"></circle><circle cx="40" cy="12" r="4.5" fill="#23272D"></circle></g><g class="kb-foco" transform="translate(64 -84)"><path d="M0 -12 C-8 -12 -12 -6 -12 -1 C-12 4 -8 7 -6 10 H6 C8 7 12 4 12 -1 C12 -6 8 -12 0 -12 Z" fill="#F2C14E"></path><rect x="-5" y="11" width="10" height="5" rx="2" fill="#FFFFFF"></rect><g stroke="#F2C14E" stroke-width="3" stroke-linecap="round"><path d="M0 -18 V-23"></path><path d="M-14 -12 L-18 -16"></path><path d="M14 -12 L18 -16"></path></g></g></g></g></svg>';
   function cuantasGuia(){
     var n = document.querySelectorAll('#s-guia-alimentacion .ga-h1').length;
     if (!n) { try { n = parseInt(localStorage.getItem(typeof EM_GA_TOTAL_KEY !== 'undefined' ? EM_GA_TOTAL_KEY : '') || '0', 10) || 0; } catch(e){} }
     return n;
   }
+  // El aro «Material visto»: el mismo % que muestra el Dash de la app (la
+  // app se lo manda al abrir el centro, mensaje em-aprende; se guarda para
+  // pintarlo al instante la próxima vez). Arranca en 0 y se llena.
+  var AV_KEY = 'em_v2_material_visto';
+  var R_ARO = (60 - 7) / 2, C_ARO = 2 * Math.PI * R_ARO;
+  function pctVisto(){ try { var v = localStorage.getItem(AV_KEY); return v === null ? null : Math.max(0, Math.min(100, parseInt(v, 10) || 0)); } catch(e){ return null; } }
+  function aroVisto(){
+    var p = pctVisto();
+    return '<div class="v2-cab-aro" data-aro-cabecera="aprende"><div class="v2-aro">'
+      + '<svg width="60" height="60" role="img" aria-label="Material visto"><circle cx="30" cy="30" r="' + R_ARO + '" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7"/>'
+      + '<circle class="v2-aro-p" cx="30" cy="30" r="' + R_ARO + '" fill="none" stroke="#EE8434" stroke-width="7" stroke-linecap="round" transform="rotate(-90 30 30)" stroke-dasharray="' + C_ARO + '" stroke-dashoffset="' + C_ARO + '"/></svg>'
+      + '<b>' + (p === null ? '–' : p + ' %') + '</b></div><span>Material visto</span></div>';
+  }
+  function llenarAros(){
+    var p = pctVisto();
+    document.querySelectorAll('.v2-cab-aro').forEach(function(a){
+      var c = a.querySelector('.v2-aro-p'), b = a.querySelector('b');
+      if (b) b.textContent = p === null ? '–' : p + ' %';
+      if (!c) return;
+      c.style.opacity = p ? '1' : '0';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ c.style.strokeDashoffset = String(C_ARO * (1 - (p || 0) / 100)); }); });
+    });
+  }
+  // Deslizar el dedo de lado pasa de página en la app (Lecturas → Videos →
+  // Programa, y de vuelta a Alimentación): el gesto se le avisa a la app,
+  // que es la que navega. No cuenta en campos de texto, carruseles de lado
+  // ni dentro de algo fijo encima (como las historias de las cápsulas).
+  (function(){
+    if (!window.parent || window.parent === window) return;
+    var ini = null;
+    function vale(el){
+      if (!el || !el.closest || el.closest('input, textarea, select, [contenteditable="true"], [data-sin-deslizar]')) return false;
+      for (var n = el; n && n.nodeType === 1 && n !== document.body; n = n.parentElement) {
+        var cs = getComputedStyle(n);
+        if ((cs.overflowX === 'auto' || cs.overflowX === 'scroll') && n.scrollWidth > n.clientWidth + 4) return false;
+        if (cs.position === 'fixed') return false;
+      }
+      return true;
+    }
+    document.addEventListener('touchstart', function(e){
+      var t = e.touches[0];
+      ini = (e.touches.length === 1 && vale(e.target)) ? { x: t.clientX, y: t.clientY, ms: Date.now() } : null;
+    }, { passive: true });
+    document.addEventListener('touchend', function(e){
+      if (!ini) return;
+      var t = e.changedTouches[0], dx = t.clientX - ini.x, dy = t.clientY - ini.y, ms = Date.now() - ini.ms;
+      ini = null;
+      if (ms > 700 || Math.abs(dx) < 70 || Math.abs(dx) < 1.8 * Math.abs(dy)) return;
+      try { if (String(window.getSelection()).length) return; } catch(err){}
+      try { window.parent.postMessage({ tipo: 'em-deslizar', dir: dx < 0 ? 1 : -1 }, '*'); } catch(err){}
+    }, { passive: true });
+    document.addEventListener('touchcancel', function(){ ini = null; }, { passive: true });
+  })();
+  window.addEventListener('message', function(e){
+    var d = e && e.data;
+    if (!d || typeof d !== 'object' || d.tipo !== 'em-aprende' || typeof d.pct !== 'number') return;
+    try { localStorage.setItem(AV_KEY, String(Math.round(d.pct))); } catch(err){}
+    llenarAros();
+  });
   function bloque(modo, activa){
     var nCap = (typeof CAPSULAS !== 'undefined' && CAPSULAS.length) || 0;
     var nPod = (typeof PODCASTS !== 'undefined' && PODCASTS.length) || 0;
@@ -16264,9 +16335,9 @@ document.addEventListener('keydown', function(e){
       ? '<div class="v2-cab" data-v2-cab="videos"><div class="v2-cab-et">VIDEOS</div>'
         + '<h1 class="v2-cab-h">Dale play<br><span>y aprende escuchando.</span></h1>'
         + '<p class="v2-cab-sub">Los episodios que te recomiendo, para ver o escuchar cuando quieras.' + (nPod ? ' ' + nPod + ' en total.' : '') + '</p></div>'
-      : '<div class="v2-cab curva" data-v2-cab="lecturas">'
+      : '<div class="v2-cab curva con-aro" data-v2-cab="lecturas">'
         + '<div class="v2-cab-manchas" aria-hidden="true"><i></i><i></i><i></i></div><div class="v2-cab-banda" aria-hidden="true"></div>'
-        + '<div class="v2-cab-ilus" aria-hidden="true">' + KB_LEE + '</div>'
+        + '<div class="v2-cab-ilus" aria-hidden="true"><div class="v2-kb">' + KB_LEE + '</div>' + aroVisto() + '</div>'
         + '<div class="v2-cab-txt"><div class="v2-cab-et">LECTURAS</div>'
         + '<h1 class="v2-cab-h">Lee poco,<br><span>aplica mucho.</span></h1>'
         + '<p class="v2-cab-sub">Las cápsulas y la guía de alimentación, para leer a tu ritmo.</p></div></div>'
@@ -16286,6 +16357,7 @@ document.addEventListener('keydown', function(e){
     var viejo = scr.querySelector(':scope > .v2-lect');
     if (viejo) viejo.remove();
     scr.insertBefore(bloque(modo, idPantalla), scr.firstChild);
+    llenarAros();
   }
   // La guía con índice: después de la portada, un botón por capítulo; al
   // tocarlo se abre SOLO ese capítulo, con «Índice» arriba y «Siguiente»
