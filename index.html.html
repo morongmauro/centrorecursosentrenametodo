@@ -9918,10 +9918,24 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-aro { position:absolute; right:calc(min(40vw, 156px) * 0.75 - 6px); top:calc(64px + env(safe-area-inset-top, 0px) + 12px + min(40vw, 156px) * 0.3165 - 30px); width:84px;
   display:flex; flex-direction:column; align-items:center; gap:4px; animation:v2-cab-entra .7s cubic-bezier(.2,.8,.2,1) .16s both; }
 .v2-cab-aro .v2-aro { position:relative; width:60px; height:60px; }
-.v2-cab-aro svg { display:block; }
-.v2-cab-aro .v2-aro-p { transition:stroke-dashoffset 1s cubic-bezier(.22,.8,.24,1); }
+/* Estilo Apple: riel naranja suave, degradado a lo largo del aro (oscuro → claro),
+   punta con sombrita y el punto blanco de la marca. */
+@property --v2g { syntax:'<angle>'; inherits:true; initial-value:0deg; }
+.v2-cab-aro .v2-aro { --v2g:0deg; transition:--v2g 1s cubic-bezier(.22,.8,.24,1); }
+.v2-cab-aro .v2-aro i { position:absolute; inset:0; border-radius:50%;
+  -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); }
+.v2-cab-aro .v2-aro-riel { background:rgba(238,132,52,0.2); }
+.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #C36C2B 0deg, #F3A971 var(--v2g), transparent var(--v2g)); }
+.v2-cab-aro .v2-aro-inicio, .v2-cab-aro .v2-aro-punta { position:absolute; inset:0; pointer-events:none; }
+.v2-cab-aro .v2-aro-inicio::before, .v2-cab-aro .v2-aro-punta::before, .v2-cab-aro .v2-aro-punta::after { content:''; position:absolute; left:calc(50% - 3.5px); top:0; width:7px; height:7px; border-radius:50%; }
+.v2-cab-aro .v2-aro-inicio::before { background:#C36C2B; }
+.v2-cab-aro .v2-aro-punta { transform:rotate(var(--v2g)); }
+.v2-cab-aro .v2-aro-punta::before { background:#F3A971; box-shadow:0 0 3px rgba(0,0,0,.3); }
+.v2-cab-aro .v2-aro-punta::after { left:calc(50% - 1.5px); top:2px; width:3px; height:3px; background:#fff; }
+.v2-cab-aro .v2-aro.cero .v2-aro-inicio, .v2-cab-aro .v2-aro.cero .v2-aro-punta { opacity:0; }
+.v2-cab-aro .v2-aro.lleno .v2-aro-punta::after { opacity:0; }
 .v2-cab-aro .v2-aro b { position:absolute; inset:0; display:grid; place-items:center; font-size:15px; font-weight:800; color:#1F1F1F; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
-.v2-cab-aro span { font-size:11px; font-weight:500; color:#6B6B6B; text-align:center; line-height:1.2; }
+.v2-cab-aro > span { font-size:11px; font-weight:500; color:#6B6B6B; text-align:center; line-height:1.2; }
 .v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(46vw, 186px); min-height:118px; }
 .v2-cab.curva.con-aro .v2-cab-h { font-size:clamp(21px, 5.9vw, 26px); }
 @keyframes v2-cab-entra { from { opacity:0; transform:translate3d(14px,6px,0) rotate(-3deg) } to { opacity:1; transform:none } }
@@ -9933,7 +9947,7 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 @keyframes v2-kb-foco { 0% { transform:scale(0); opacity:0 } 60% { transform:scale(1.15); opacity:1 } 100% { transform:scale(1); opacity:1 } }
 .v2-cab-ilus .kb-foco > * { transform-box:fill-box; transform-origin:50% 80%; animation:v2-kb-foco .6s cubic-bezier(.3,1.4,.5,1) 1.1s both; }
 .v2-cab-ilus .kb-ojos { transform-box:fill-box; transform-origin:50% 50%; animation:v2-kb-parpadea 4s ease-in-out 1.2s 2 both; }
-@media (prefers-reduced-motion: reduce) { .v2-cab-ilus .v2-kb, .v2-cab-aro, .v2-cab-aro .v2-aro-p, .v2-cab-ilus .pj-sube, .v2-cab-ilus .kb-hoja, .v2-cab-ilus .kb-ojos, .v2-cab-ilus .kb-foco > * { animation:none !important; } }
+@media (prefers-reduced-motion: reduce) { .v2-cab-ilus .v2-kb, .v2-cab-aro, .v2-cab-aro .v2-aro, .v2-cab-ilus .pj-sube, .v2-cab-ilus .kb-hoja, .v2-cab-ilus .kb-ojos, .v2-cab-ilus .kb-foco > * { animation:none !important; } }
 /* ── Lecturas y Videos · arreglos (visual nueva) ──────────────────────────
    Sin asistente de lectura ni botones flotantes; los «En esencia» de la
    guía con letra oscura (la clara venía de cuando eran cajas negras); la
@@ -16270,23 +16284,22 @@ document.addEventListener('keydown', function(e){
   // app se lo manda al abrir el centro, mensaje em-aprende; se guarda para
   // pintarlo al instante la próxima vez). Arranca en 0 y se llena.
   var AV_KEY = 'em_v2_material_visto';
-  var R_ARO = (60 - 7) / 2, C_ARO = 2 * Math.PI * R_ARO;
   function pctVisto(){ try { var v = localStorage.getItem(AV_KEY); return v === null ? null : Math.max(0, Math.min(100, parseInt(v, 10) || 0)); } catch(e){ return null; } }
   function aroVisto(){
     var p = pctVisto();
-    return '<div class="v2-cab-aro" data-aro-cabecera="aprende"><div class="v2-aro">'
-      + '<svg width="60" height="60" role="img" aria-label="Material visto"><circle cx="30" cy="30" r="' + R_ARO + '" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="7"/>'
-      + '<circle class="v2-aro-p" cx="30" cy="30" r="' + R_ARO + '" fill="none" stroke="#EE8434" stroke-width="7" stroke-linecap="round" transform="rotate(-90 30 30)" stroke-dasharray="' + C_ARO + '" stroke-dashoffset="' + C_ARO + '"/></svg>'
+    return '<div class="v2-cab-aro" data-aro-cabecera="aprende"><div class="v2-aro cero" role="img" aria-label="Material visto">'
+      + '<i class="v2-aro-riel"></i><i class="v2-aro-arco"></i><span class="v2-aro-inicio"></span><span class="v2-aro-punta"></span>'
       + '<b>' + (p === null ? '–' : p + ' %') + '</b></div><span>Material visto</span></div>';
   }
   function llenarAros(){
     var p = pctVisto();
     document.querySelectorAll('.v2-cab-aro').forEach(function(a){
-      var c = a.querySelector('.v2-aro-p'), b = a.querySelector('b');
+      var c = a.querySelector('.v2-aro'), b = a.querySelector('b');
       if (b) b.textContent = p === null ? '–' : p + ' %';
       if (!c) return;
-      c.style.opacity = p ? '1' : '0';
-      requestAnimationFrame(function(){ requestAnimationFrame(function(){ c.style.strokeDashoffset = String(C_ARO * (1 - (p || 0) / 100)); }); });
+      c.classList.toggle('cero', !p);
+      c.classList.toggle('lleno', p >= 100);
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ c.style.setProperty('--v2g', ((p || 0) * 3.6) + 'deg'); }); });
     });
   }
   // Deslizar el dedo de lado pasa de página en la app (Lecturas → Videos →
