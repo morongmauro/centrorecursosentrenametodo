@@ -9910,7 +9910,8 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
   background:linear-gradient(180deg, #F7CFAF 0%, #FADFCA 100%);
   -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
 .v2-cab-ilus { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
-.v2-cab-ilus .v2-kb { position:absolute; right:-6px; top:calc(64px + env(safe-area-inset-top, 0px) + 6px); width:min(34vw, 132px); aspect-ratio:1 / 1; }
+/* El libro en su espacio (del alto del aro, a su derecha), igual que en la app. */
+.v2-cab-ilus .v2-kb { position:absolute; right:-3.5px; top:calc(64px + env(safe-area-inset-top, 0px) + 10px); width:112px; height:112px; }
 .v2-cab-ilus .v2-kb img { display:block; width:100%; height:100%; transition:opacity .18s ease-out; }
 @keyframes v2-kb-flota { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-2.5px) } }
 .v2-cab-ilus .v2-kb.flota { animation:v2-kb-flota 4.5s ease-in-out infinite; }
@@ -9919,29 +9920,29 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 /* Al lado del libro, sin taparse (termina donde empieza lo dibujado) y
    centrado a su altura; con la misma luz: sombra suave hacia la derecha y su
    sombrita en el piso, para que no se vea pegado. Igual que en la app. */
-.v2-cab-aro { position:absolute; right:calc(min(34vw, 132px) * 0.873 - 14px); top:calc(64px + env(safe-area-inset-top, 0px) + 6px + min(34vw, 132px) * 0.499 - 30px); width:84px;
+.v2-cab-aro { position:absolute; right:98px; top:calc(64px + env(safe-area-inset-top, 0px) + 36px); width:84px;
   display:flex; flex-direction:column; align-items:center; gap:4px; animation:v2-cab-entra .7s cubic-bezier(.2,.8,.2,1) .16s both; }
-.v2-cab-aro .v2-aro { position:relative; width:60px; height:60px; filter:drop-shadow(1.5px 3px 2.2px rgba(0,0,0,0.16)); }
-.v2-cab-aro .v2-aro::before { content:''; position:absolute; left:4px; right:-8px; bottom:-7px; height:10px; border-radius:50%; background:radial-gradient(closest-side, rgba(0,0,0,0.2), rgba(0,0,0,0)); }
+/* Plano: un solo color, sin sombras, y el riel casi blanco. */
+.v2-cab-aro .v2-aro { position:relative; width:60px; height:60px; }
 /* Estilo Apple: riel naranja suave, degradado a lo largo del aro (oscuro → claro),
    punta con sombrita y el punto blanco de la marca. */
 @property --v2g { syntax:'<angle>'; inherits:true; initial-value:0deg; }
 .v2-cab-aro .v2-aro { --v2g:0deg; transition:--v2g 1s cubic-bezier(.22,.8,.24,1); }
 .v2-cab-aro .v2-aro i { position:absolute; inset:0; border-radius:50%;
   -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); }
-.v2-cab-aro .v2-aro-riel { background:rgba(255,255,255,0.55); }
-.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #C36C2B 0deg, #F3A971 var(--v2g), transparent var(--v2g)); }
+.v2-cab-aro .v2-aro-riel { background:rgba(255,255,255,0.9); }
+.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #EE8434 0deg, #EE8434 var(--v2g), transparent var(--v2g)); }
 .v2-cab-aro .v2-aro-inicio, .v2-cab-aro .v2-aro-punta { position:absolute; inset:0; pointer-events:none; }
 .v2-cab-aro .v2-aro-inicio::before, .v2-cab-aro .v2-aro-punta::before, .v2-cab-aro .v2-aro-punta::after { content:''; position:absolute; left:calc(50% - 3.5px); top:0; width:7px; height:7px; border-radius:50%; }
-.v2-cab-aro .v2-aro-inicio::before { background:#C36C2B; }
+.v2-cab-aro .v2-aro-inicio::before { background:#EE8434; }
 .v2-cab-aro .v2-aro-punta { transform:rotate(var(--v2g)); }
-.v2-cab-aro .v2-aro-punta::before { background:#F3A971; box-shadow:0 0 3px rgba(0,0,0,.3); }
+.v2-cab-aro .v2-aro-punta::before { background:#EE8434; }
 .v2-cab-aro .v2-aro-punta::after { left:calc(50% - 1.5px); top:2px; width:3px; height:3px; background:#fff; }
 .v2-cab-aro .v2-aro.cero .v2-aro-inicio, .v2-cab-aro .v2-aro.cero .v2-aro-punta { opacity:0; }
 .v2-cab-aro .v2-aro.lleno .v2-aro-punta::after { opacity:0; }
 .v2-cab-aro .v2-aro b { position:absolute; inset:0; display:grid; place-items:center; font-size:15px; font-weight:800; color:#1F1F1F; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
 .v2-cab-aro > span { font-size:11px; font-weight:500; color:#6B6B6B; text-align:center; line-height:1.2; }
-.v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(44vw, 176px); min-height:118px; }
+.v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(44vw, 162px); min-height:118px; }
 .v2-cab.curva.con-aro .v2-cab-h { font-size:clamp(21px, 5.9vw, 26px); }
 @keyframes v2-cab-entra { from { opacity:0; transform:translate3d(14px,6px,0) rotate(-3deg) } to { opacity:1; transform:none } }
 @keyframes v2-pj-sube { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-7px) } }
