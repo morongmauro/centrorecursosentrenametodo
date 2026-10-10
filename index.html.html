@@ -9944,6 +9944,17 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-aro > span { font-size:11px; font-weight:500; color:#6B6B6B; text-align:center; line-height:1.2; }
 .v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(46vw, 168px); min-height:118px; }
 .v2-cab.curva.con-aro .v2-cab-h { font-size:clamp(21px, 5.9vw, 26px); }
+/* Como en la app: la gráfica grande es la protagonista, con el libro chico y
+   tenue adentro, y el porcentaje y su texto debajo. */
+.v2-cab-aro { right:16px; top:calc(64px + env(safe-area-inset-top, 0px) + 8px); width:128px; gap:0; }
+.v2-cab-aro .v2-aro { width:112px; height:112px; }
+.v2-cab-aro .v2-aro i { -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 9.5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 9.5px)); }
+.v2-cab-aro .v2-aro-inicio::before, .v2-cab-aro .v2-aro-punta::before { left:calc(50% - 5px); width:10px; height:10px; }
+.v2-cab-aro .v2-aro-punta::after { left:calc(50% - 2px); top:3px; width:4px; height:4px; }
+.v2-cab-aro > b { margin-top:6px; font-size:22px; font-weight:800; color:#1D1D1F; letter-spacing:-0.02em; line-height:1; font-variant-numeric:tabular-nums; }
+.v2-cab-aro > span { margin-top:3px; font-size:11.5px; font-weight:600; }
+.v2-cab.con-aro .v2-cab-ilus .v2-kb { right:32.6px; top:calc(64px + env(safe-area-inset-top, 0px) + 20.2px); width:87.7px; height:87.7px; opacity:.5; }
+.v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(38vw, 138px); min-height:168px; }
 @keyframes v2-cab-entra { from { opacity:0; transform:translate3d(14px,6px,0) rotate(-3deg) } to { opacity:1; transform:none } }
 @keyframes v2-pj-sube { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-7px) } }
 .v2-cab-ilus .pj-sube { animation:v2-pj-sube 1.6s ease-in-out .5s 3 both; }
@@ -16310,7 +16321,7 @@ document.addEventListener('keydown', function(e){
     var p = pctVisto();
     return '<div class="v2-cab-aro" data-aro-cabecera="aprende"><div class="v2-aro cero" role="img" aria-label="Material visto">'
       + '<i class="v2-aro-riel"></i><i class="v2-aro-arco"></i><span class="v2-aro-inicio"></span><span class="v2-aro-punta"></span>'
-      + '<b>' + (p === null ? '–' : p + ' %') + '</b></div><span>Material visto</span></div>';
+      + '</div><b>' + (p === null ? '–' : p + ' %') + '</b><span>Material visto</span></div>';
   }
   function llenarAros(){
     var p = pctVisto();
