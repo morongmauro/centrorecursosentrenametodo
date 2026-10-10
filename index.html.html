@@ -9911,7 +9911,7 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
   -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
 .v2-cab-ilus { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
 /* El libro en su espacio (del alto del aro, a su derecha), igual que en la app. */
-.v2-cab-ilus .v2-kb { position:absolute; right:-3.5px; top:calc(64px + env(safe-area-inset-top, 0px) + 10px); width:112px; height:112px; }
+.v2-cab-ilus .v2-kb { position:absolute; right:10.4px; top:calc(64px + env(safe-area-inset-top, 0px) + 14.6px); width:102.9px; height:102.9px; }
 .v2-cab-ilus .v2-kb img { display:block; width:100%; height:100%; transition:opacity .18s ease-out; }
 @keyframes v2-kb-flota { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-2.5px) } }
 .v2-cab-ilus .v2-kb.flota { animation:v2-kb-flota 4.5s ease-in-out infinite; }
@@ -9920,7 +9920,7 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 /* Al lado del libro, sin taparse (termina donde empieza lo dibujado) y
    centrado a su altura; con la misma luz: sombra suave hacia la derecha y su
    sombrita en el piso, para que no se vea pegado. Igual que en la app. */
-.v2-cab-aro { position:absolute; right:98px; top:calc(64px + env(safe-area-inset-top, 0px) + 36px); width:84px;
+.v2-cab-aro { position:absolute; right:104px; top:calc(64px + env(safe-area-inset-top, 0px) + 36px); width:84px;
   display:flex; flex-direction:column; align-items:center; gap:4px; animation:v2-cab-entra .7s cubic-bezier(.2,.8,.2,1) .16s both; }
 /* Plano: un solo color, sin sombras, y el riel casi blanco. */
 .v2-cab-aro .v2-aro { position:relative; width:60px; height:60px; }
@@ -9942,7 +9942,7 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-aro .v2-aro.lleno .v2-aro-punta::after { opacity:0; }
 .v2-cab-aro .v2-aro b { position:absolute; inset:0; display:grid; place-items:center; font-size:15px; font-weight:800; color:#1F1F1F; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
 .v2-cab-aro > span { font-size:11px; font-weight:500; color:#6B6B6B; text-align:center; line-height:1.2; }
-.v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(44vw, 162px); min-height:118px; }
+.v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(46vw, 168px); min-height:118px; }
 .v2-cab.curva.con-aro .v2-cab-h { font-size:clamp(21px, 5.9vw, 26px); }
 @keyframes v2-cab-entra { from { opacity:0; transform:translate3d(14px,6px,0) rotate(-3deg) } to { opacity:1; transform:none } }
 @keyframes v2-pj-sube { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-7px) } }
@@ -16461,6 +16461,46 @@ html.em-v2 .v2-hcard .ico-portada { position:absolute; right:12px; top:12px; wid
 html.em-v2 .v2-hcard.vista { opacity:.78; }
 html.em-v2 .v2-hcard::after { content:''; position:absolute; right:-34px; top:-34px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.12); }
 html.em-v2 .v2-hcat { font-size:19px; font-weight:800; letter-spacing:-.02em; color:#1F1F1F; margin:6px 2px 10px; }
+/* Estilo Libros / App Store */
+html.em-v2 .v2-cap-eyebrow { font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#C95F17; margin:4px 2px 8px; }
+html.em-v2 .v2-cap-dest { position:relative; display:block; width:100%; height:290px; border:0; border-radius:24px; color:#fff; text-align:left; cursor:pointer; overflow:hidden; font:inherit;
+  box-shadow:0 14px 30px rgba(120,60,20,.18); -webkit-tap-highlight-color:transparent; transition:transform .15s ease; }
+html.em-v2 .v2-cap-dest:active, html.em-v2 .v2-estante .v2-hcard:active, html.em-v2 .v2-cap-media:active { transform:scale(.97); }
+html.em-v2 .v2-cap-dest::after { content:''; position:absolute; right:-70px; top:-70px; width:260px; height:260px; border-radius:50%; border:34px solid rgba(255,255,255,.12); }
+html.em-v2 .v2-cap-dest .cat, html.em-v2 .v2-estante .v2-hcard .cat { position:absolute; left:20px; top:18px; font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; opacity:.78; }
+html.em-v2 .v2-cap-dest .t { position:absolute; left:20px; right:20px; bottom:20px; font-size:30px; font-weight:850; line-height:1.04; letter-spacing:-.03em; }
+html.em-v2 .v2-cap-dest .ico-portada { position:absolute; right:22px; top:54px; width:64px; height:64px; opacity:.9; z-index:1; }
+html.em-v2 .v2-cap-dest .marca { position:absolute; right:18px; top:14px; font-size:11.5px; font-weight:800; padding:4px 9px; border-radius:99px; background:rgba(255,255,255,.22); z-index:1; }
+html.em-v2 .v2-cap-dest-pie { display:flex; align-items:center; justify-content:space-between; margin:10px 2px 0; font-size:14px; color:#6B6B6B; }
+html.em-v2 .v2-cap-dest-pie button { border:0; border-radius:99px; background:#1D1D1F; color:#fff; font:inherit; font-size:14px; font-weight:800; padding:8px 18px; cursor:pointer; }
+html.em-v2 .v2-cap-sec { display:flex; align-items:baseline; justify-content:space-between; font-size:21px; font-weight:800; letter-spacing:-.02em; color:#1F1F1F; margin:26px 2px 12px; }
+html.em-v2 .v2-cap-sec span { font-size:14px; font-weight:700; color:#8E8E93; }
+html.em-v2 .v2-cap-medias { display:grid; gap:10px; }
+html.em-v2 .v2-cap-media { display:flex; align-items:center; gap:14px; width:100%; border:0; border-radius:18px; background:rgba(255,255,255,.88); padding:12px; text-align:left; font:inherit; cursor:pointer;
+  box-shadow:0 1px 2px rgba(40,40,30,.05), 0 6px 16px rgba(40,40,30,.06); transition:transform .15s ease; }
+html.em-v2 .v2-cap-media .mini { width:56px; height:72px; flex:none; border-radius:10px; display:grid; place-items:center; }
+html.em-v2 .v2-cap-media .mini svg { width:26px; height:26px; }
+html.em-v2 .v2-cap-media .txt { flex:1; min-width:0; display:grid; gap:3px; }
+html.em-v2 .v2-cap-media b { font-size:16px; font-weight:800; color:#1F1F1F; line-height:1.2; }
+html.em-v2 .v2-cap-media .txt > span { font-size:13px; color:#8E8E93; }
+html.em-v2 .v2-cap-media i { display:block; height:4px; border-radius:2px; background:#E5E5EA; margin-top:5px; overflow:hidden; }
+html.em-v2 .v2-cap-media i em { display:block; height:100%; border-radius:2px; background:#EE8434; }
+html.em-v2 .v2-estante { display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-inline:20px; margin:0 -20px; padding:2px 20px 10px; scrollbar-width:none; }
+html.em-v2 .v2-estante::-webkit-scrollbar { display:none; }
+html.em-v2 .v2-cap-item { flex:none; width:150px; scroll-snap-align:start; }
+html.em-v2 .v2-estante .v2-hcard { width:150px; height:200px; min-height:0; padding:12px; border-radius:16px; justify-content:flex-end; }
+html.em-v2 .v2-estante .v2-hcard .cat { left:12px; top:12px; font-size:10px; }
+html.em-v2 .v2-estante .v2-hcard .t { font-size:17px; margin:0; }
+html.em-v2 .v2-estante .v2-hcard .marca { top:auto; bottom:auto; left:auto; right:10px; top:30px; font-size:10.5px; padding:3px 8px; }
+html.em-v2 .v2-estante .v2-hcard .ico-portada { right:12px; top:52px; width:40px; height:40px; }
+html.em-v2 .v2-cap-item .m { font-size:13px; color:#8E8E93; margin:8px 2px 0; }
+/* Cápsulas | Guía de alimentación: control segmentado (en vez de las dos tarjetas) */
+html.em-v2 .v2-lect-tabs { display:flex; gap:0; padding:2px; border-radius:11px; background:rgba(118,118,128,.12); margin-top:6px; }
+html.em-v2 .v2-lect-tabs button { flex:1; display:block; text-align:center; border-radius:9px; padding:8px 6px; background:transparent; box-shadow:none; color:#1F1F1F; }
+html.em-v2 .v2-lect-tabs button b { font-size:14.5px; font-weight:700; }
+html.em-v2 .v2-lect-tabs button span { display:none; }
+html.em-v2 .v2-lect-tabs button.is-on { background:#fff; color:#1F1F1F; box-shadow:0 3px 8px rgba(0,0,0,.12), 0 3px 1px rgba(0,0,0,.04); }
+html.em-v2[data-v2lect] #cap-hint { display:none !important; }
 .v2-hist { position:fixed; inset:0; z-index:10050; display:none; flex-direction:column; color:#fff; font-family:'ECM Sans', -apple-system, system-ui, sans-serif;
   padding:calc(12px + env(safe-area-inset-top, 0px)) 22px calc(20px + env(safe-area-inset-bottom, 0px)); overflow:hidden; }
 .v2-hist.abierta { display:flex; animation:v2h-entra .28s cubic-bezier(.2,.8,.2,1); }
@@ -16601,24 +16641,64 @@ html.em-v2 .v2-hcat { font-size:19px; font-weight:800; letter-spacing:-.02em; co
   // El ícono de la portada de cada cápsula: el de su primera pantalla.
   var icoDe = function(c){ var h = H[c.id]; if (!h) return null; for (var j = 0; j < h.pantallas.length; j++) if (h.pantallas[j].ico) return h.pantallas[j].ico; return null; };
 
-  // ── La lista: portadas grandes por tema ──
+  // ── La lista, como Libros / App Store: la cápsula de la semana grande,
+  // «Sigue leyendo» con lo que quedó a medias y un estante por tema con
+  // portadas de color (cada una con su tono, dentro del color del tema). ──
+  var TONOS = {
+    'Entrenamiento': [['#4F8BDE', '#1E4F9A'], ['#4A525C', '#1D2228'], ['#6A727C', '#33383F'], ['#3C7BD6', '#173E7A']],
+    'Nutrición': [['#5CAE72', '#22663A'], ['#3F8A53', '#164A26'], ['#EE8434', '#9C430C'], ['#46965A', '#1F5A31']],
+    'Bienestar general': [['#E2A43A', '#9A6410'], ['#EE8434', '#9C430C'], ['#6A727C', '#33383F'], ['#C98A22', '#7A4E0A']]
+  };
+  var tono = function(c, k){ var l = TONOS[catNorm(c.cat)] || TONOS['Bienestar general']; return l[k % l.length]; };
+  // Dónde quedó cada cápsula (solo en este teléfono): para «Sigue leyendo».
+  var POS_KEY = 'em_v2_hist_pos';
+  var leerPos = function(){ try { return JSON.parse(localStorage.getItem(POS_KEY) || '{}') || {}; } catch (e) { return {}; } };
+  var guardarPos = function(id, i){ var m = leerPos(); if (i > 0) m[id] = i; else delete m[id]; try { localStorage.setItem(POS_KEY, JSON.stringify(m)); } catch (e) {} };
+  var minutos = function(n){ return Math.max(1, Math.round(n * 0.35)) + ' min'; };
+  var meta = function(c){ var n = total(c); return n ? n + ' pantallas · ' + minutos(n) : 'Lámina'; };
+  var portadaHTML = function(c, i, k, clase){
+    var t = tono(c, k), ic = icoDe(c), read = capGetRead(), vista = read.indexOf(c.id) !== -1;
+    return '<button type="button" class="' + clase + (vista ? ' vista' : '') + '" data-historia="' + esc(c.id) + '" onclick="capOpen(' + i + ')" style="background:radial-gradient(120% 85% at 85% 0%,' + t[0] + ',' + t[1] + ')">'
+      + '<span class="cat">' + esc(catNorm(c.cat)) + '</span>'
+      + (vista ? '<span class="marca">✓ Vista</span>' : (c.nuevo ? '<span class="marca">Nueva</span>' : ''))
+      + (ic ? '<span class="ico-portada">' + ico(ic) + '</span>' : '')
+      + '<span class="t">' + esc(c.title) + '</span></button>';
+  };
   var renderViejo = window.capRender;
   window.capRender = function(){
     var gal = document.getElementById('cap-gal');
     if (!gal || !CAPSULAS.length) return renderViejo();
     var empty = document.getElementById('cap-empty'); if (empty) empty.hidden = true;
-    var read = capGetRead(), html = '', ultima = null;
-    CAPSULAS.forEach(function(c, i){
-      var cat = catNorm(c.cat);
-      if (cat !== ultima) { if (ultima !== null) html += '</div>'; html += '<div class="v2-hcat">' + esc(cat) + '</div><div class="v2-hgrid">'; ultima = cat; }
-      var vista = read.indexOf(c.id) !== -1, t = tema(c), n = total(c), ic = icoDe(c);
-      html += '<button type="button" class="v2-hcard' + (vista ? ' vista' : '') + '" data-historia="' + esc(c.id) + '" onclick="capOpen(' + i + ')" style="background:linear-gradient(160deg,' + t[0] + ',' + t[1] + ')">'
-        + (vista ? '<span class="marca">✓ Vista</span>' : (c.nuevo ? '<span class="marca">Nueva</span>' : ''))
-        + (ic ? '<span class="ico-portada">' + ico(ic) + '</span>' : '')
-        + '<span class="n">' + (n ? n + ' pantallas' : 'Lámina') + '</span>'
-        + '<span class="t">' + esc(c.title) + '</span></button>';
+    var read = capGetRead(), pos = leerPos(), html = '';
+    var sinLeer = function(c){ return read.indexOf(c.id) === -1; };
+    // La de la semana: la primera nueva sin leer; si no hay, la primera sin leer.
+    var dest = CAPSULAS.filter(function(c){ return c.nuevo && sinLeer(c) && !pos[c.id]; })[0] || CAPSULAS.filter(function(c){ return sinLeer(c) && !pos[c.id]; })[0];
+    if (dest) {
+      var di = CAPSULAS.indexOf(dest);
+      html += '<div class="v2-cap-eyebrow">Cápsula de la semana</div>'
+        + portadaHTML(dest, di, 2, 'v2-cap-dest')
+        + '<div class="v2-cap-dest-pie"><span>' + esc(meta(dest)) + '</span><button type="button" onclick="capOpen(' + di + ')">Leer</button></div>';
+    }
+    // Sigue leyendo: las que quedaron a medias.
+    var medias = CAPSULAS.filter(function(c){ return pos[c.id] && sinLeer(c) && H[c.id]; }).slice(0, 2);
+    if (medias.length) {
+      html += '<div class="v2-cap-sec">Sigue leyendo</div><div class="v2-cap-medias">' + medias.map(function(c){
+        var i = CAPSULAS.indexOf(c), n = total(c), en = pos[c.id] + 1, t = tono(c, 0);
+        return '<button type="button" class="v2-cap-media" data-sigue="' + esc(c.id) + '" onclick="capOpen(' + i + ')">'
+          + '<span class="mini" style="background:radial-gradient(120% 85% at 85% 0%,' + t[0] + ',' + t[1] + ')">' + (icoDe(c) ? ico(icoDe(c)) : '') + '</span>'
+          + '<span class="txt"><b>' + esc(c.title) + '</b><span>Pantalla ' + en + ' de ' + n + '</span><i><em style="width:' + Math.round(en / n * 100) + '%"></em></i></span></button>';
+      }).join('') + '</div>';
+    }
+    // Un estante por tema.
+    var cats = [];
+    CAPSULAS.forEach(function(c){ var k = catNorm(c.cat); if (cats.indexOf(k) === -1) cats.push(k); });
+    cats.forEach(function(cat){
+      var de = CAPSULAS.filter(function(c){ return catNorm(c.cat) === cat; });
+      html += '<div class="v2-cap-sec">' + esc(cat) + '<span>' + de.length + '</span></div><div class="v2-estante">' + de.map(function(c, k){
+        var i = CAPSULAS.indexOf(c);
+        return '<div class="v2-cap-item">' + portadaHTML(c, i, k, 'v2-hcard') + '<div class="m">' + esc(meta(c)) + '</div></div>';
+      }).join('') + '</div>';
     });
-    if (ultima !== null) html += '</div>';
     gal.innerHTML = html;
     try { capApplyProgress(); } catch (e) {}
   };
@@ -16722,6 +16802,7 @@ html.em-v2 .v2-hcat { font-size:19px; font-weight:800; letter-spacing:-.02em; co
     if (i < 0) i = 0;
     if (i >= n) { cerrar(); return; }
     idx = i;
+    guardarPos(actual.id, i === n - 1 ? 0 : i);
     var t = tema(actual);
     caja.style.background = 'linear-gradient(170deg,' + t[0] + ' 0%,' + t[1] + ' 100%)';
     caja.querySelector('.barras').innerHTML = Array.from({ length: n }, function(_, j){ return '<span' + (j <= i ? ' class="hecha"' : '') + '></span>'; }).join('');
@@ -16758,9 +16839,91 @@ html.em-v2 .v2-hcat { font-size:19px; font-weight:800; letter-spacing:-.02em; co
     actual = c;
     caja.classList.add('abierta');
     document.body.style.overflow = 'hidden';
-    ir(0);
+    // Retoma donde quedó (si no la terminó).
+    var p0 = leerPos()[c.id] || 0;
+    ir(p0 < total(c) - 1 ? p0 : 0);
   };
   try { if (document.getElementById('cap-gal')) capRender(); } catch (e) {}
+})();
+</script>
+<!-- ── Podcast estilo Podcasts de Apple (visual nueva) ──────────────────
+     Solo con html.em-v2. Arriba «A continuación» (lo que dejó a medias, o
+     el primero nuevo) y después un estante por tema con la miniatura de
+     cada video, su duración y lo ya visto. Abre igual que siempre. -->
+<style>
+html.em-v2 #pod-list.v2-pod { display:block !important; }
+html.em-v2 .v2-pod-sec { display:flex; align-items:baseline; justify-content:space-between; font-size:21px; font-weight:800; letter-spacing:-.02em; color:#1F1F1F; margin:26px 2px 12px; }
+html.em-v2 .v2-pod-sec:first-child { margin-top:6px; }
+html.em-v2 .v2-pod-sec span { font-size:14px; font-weight:700; color:#8E8E93; }
+html.em-v2 .v2-pod-sig { display:flex; gap:14px; width:100%; border:0; border-radius:24px; padding:16px; text-align:left; color:#fff; font:inherit; cursor:pointer;
+  background:radial-gradient(120% 100% at 0% 0%, #EE8434, #9C430C); box-shadow:0 14px 30px rgba(201,95,23,.25); transition:transform .15s ease; -webkit-tap-highlight-color:transparent; }
+html.em-v2 .v2-pod-sig:active, html.em-v2 .v2-pod-item:active { transform:scale(.97); }
+html.em-v2 .v2-pod-sig .arte { display:block; width:104px; height:104px; flex:none; border-radius:16px; overflow:hidden; background:#7A3409; box-shadow:0 8px 20px rgba(0,0,0,.25); }
+html.em-v2 .v2-pod-sig .arte img { width:100%; height:100%; object-fit:cover; display:block; }
+html.em-v2 .v2-pod-sig .txt { flex:1; min-width:0; display:flex; flex-direction:column; }
+html.em-v2 .v2-pod-sig .k { font-size:11.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; opacity:.78; }
+html.em-v2 .v2-pod-sig b { font-size:17px; font-weight:800; line-height:1.18; margin-top:4px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+html.em-v2 .v2-pod-sig .show { font-size:13px; opacity:.82; margin-top:3px; }
+html.em-v2 .v2-pod-sig .boton { margin-top:auto; padding-top:10px; }
+html.em-v2 .v2-pod-sig .boton span { display:inline-flex; align-items:center; gap:6px; background:#fff; color:#1D1D1F; font-size:13.5px; font-weight:800; padding:7px 14px; border-radius:99px; }
+html.em-v2 .v2-pod-est { display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-inline:20px; margin:0 -20px; padding:2px 20px 10px; scrollbar-width:none; }
+html.em-v2 .v2-pod-est::-webkit-scrollbar { display:none; }
+html.em-v2 .v2-pod-item { flex:none; width:232px; scroll-snap-align:start; border:0; padding:0; background:none; text-align:left; font:inherit; cursor:pointer; transition:transform .15s ease; -webkit-tap-highlight-color:transparent; }
+html.em-v2 .v2-pod-item .arte { position:relative; display:block; width:232px; aspect-ratio:16/9; border-radius:14px; overflow:hidden; background:linear-gradient(160deg,#4A525C,#1D2228); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+html.em-v2 .v2-pod-item .arte img { width:100%; height:100%; object-fit:cover; display:block; }
+html.em-v2 .v2-pod-item .dur { position:absolute; right:8px; bottom:8px; font-size:11.5px; font-weight:800; color:#fff; background:rgba(0,0,0,.55); padding:3px 7px; border-radius:7px; }
+html.em-v2 .v2-pod-item .est { position:absolute; left:8px; top:8px; font-size:11px; font-weight:800; color:#1D1D1F; background:rgba(255,255,255,.9); padding:3px 8px; border-radius:99px; }
+html.em-v2 .v2-pod-item.visto .arte { opacity:.72; }
+html.em-v2 .v2-pod-item b { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; font-size:15px; font-weight:800; color:#1F1F1F; line-height:1.22; margin-top:9px; }
+html.em-v2 .v2-pod-item .s { display:block; font-size:13px; color:#8E8E93; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+</style>
+<script>
+(function(){
+  if (!document.documentElement.classList.contains('em-v2')) return;
+  if (typeof podRender !== 'function') return;
+  var viejo = podRender;
+  var esc = podEsc;
+  var arte = function(p){
+    var th = podThumb(p), v = podVideoId(p);
+    if (!th) return '';
+    var fb = v ? 'if(!this.dataset.fb){this.dataset.fb=1;this.src=\'https://i.ytimg.com/vi/' + v + '/hqdefault.jpg\';}else{this.remove();}' : 'this.remove()';
+    return '<img src="' + esc(th) + '" alt="" loading="lazy" onerror="' + fb + '">';
+  };
+  var play = '<svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.6v14.8c0 .7.8 1.1 1.4.7l11.6-7.4c.5-.3.5-1.1 0-1.4L8.4 3.9C7.8 3.5 7 3.9 7 4.6z" fill="currentColor"/></svg>';
+  window.podRender = function(){
+    var list = document.getElementById('pod-list');
+    if (!list) return;
+    viejo();   // agrupa por tema (una vez) y resuelve el «vacío»
+    if (!PODCASTS.length) return;
+    list.classList.add('v2-pod');
+    var visto = podGetSeen(), viendo = podGetWatching(), html = '';
+    // A continuación: el que quedó a medias; si no, el primero nuevo sin ver.
+    var sig = PODCASTS.filter(function(p){ return viendo.indexOf(p.id) !== -1 && visto.indexOf(p.id) === -1; })[0]
+      || PODCASTS.filter(function(p){ return p.nuevo && visto.indexOf(p.id) === -1; })[0]
+      || PODCASTS.filter(function(p){ return visto.indexOf(p.id) === -1; })[0];
+    if (sig) {
+      var si = PODCASTS.indexOf(sig), aMedias = viendo.indexOf(sig.id) !== -1;
+      html += '<div class="v2-pod-sec">A continuación</div>'
+        + '<button type="button" class="v2-pod-sig" data-a-continuacion onclick="podOpen(' + si + ')"><span class="arte">' + arte(sig) + '</span>'
+        + '<span class="txt"><span class="k">' + (aMedias ? 'Lo dejaste a medias' : 'Para empezar') + (sig.dur ? ' · ' + esc(sig.dur) : '') + '</span>'
+        + '<b>' + esc(sig.title) + '</b>' + (sig.show ? '<span class="show">' + esc(sig.show) + '</span>' : '')
+        + '<span class="boton"><span>' + play + (aMedias ? 'Seguir' : 'Ver') + '</span></span></span></button>';
+    }
+    var cats = [];
+    PODCASTS.forEach(function(p){ var k = catNorm(p.cat); if (cats.indexOf(k) === -1) cats.push(k); });
+    cats.forEach(function(cat){
+      var de = PODCASTS.filter(function(p){ return catNorm(p.cat) === cat; });
+      html += '<div class="v2-pod-sec">' + esc(cat) + '<span>' + de.length + '</span></div><div class="v2-pod-est">' + de.map(function(p){
+        var i = PODCASTS.indexOf(p), v = visto.indexOf(p.id) !== -1, en = !v && viendo.indexOf(p.id) !== -1;
+        return '<button type="button" class="v2-pod-item' + (v ? ' visto' : '') + '" onclick="podOpen(' + i + ')"><span class="arte">' + arte(p)
+          + (p.dur ? '<span class="dur">' + esc(p.dur) + '</span>' : '')
+          + (v ? '<span class="est">✓ Visto</span>' : en ? '<span class="est">A medias</span>' : p.nuevo ? '<span class="est">Nuevo</span>' : '')
+          + '</span><b>' + esc(p.title) + '</b><span class="s">' + esc([p.show, p.dur].filter(Boolean).join(' · ')) + '</span></button>';
+      }).join('') + '</div>';
+    });
+    list.innerHTML = html;
+  };
+  try { window.podRender(); } catch (e) {}
 })();
 </script>
 </body>
