@@ -21,7 +21,11 @@
     var norm = function(x){ return String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim(); };
     var n = new URLSearchParams(location.search).get('mt_name');
     if (!n) { try { n = (JSON.parse(localStorage.getItem('em_client') || 'null') || {}).name; } catch(e){} }
-    if (VISUAL_V2.indexOf(norm(n)) !== -1) document.documentElement.classList.add('em-v2');
+    // Abierto desde la app nueva (?mt_v2=1): visual nueva para todos. Se
+    // recuerda en esta pestaña por si el centro se recarga sin la marca.
+    var v2app = new URLSearchParams(location.search).get('mt_v2') === '1';
+    try { if (v2app) sessionStorage.setItem('em_v2', '1'); else v2app = sessionStorage.getItem('em_v2') === '1'; } catch(e){}
+    if (v2app || VISUAL_V2.indexOf(norm(n)) !== -1) document.documentElement.classList.add('em-v2');
     // Abierto desde la app hacia una pantalla concreta (?mt_go): no se pinta
     // ninguna pantalla hasta llegar a esa. Antes se veía unos segundos la
     // portada vieja del centro y luego saltaba.
