@@ -9958,7 +9958,10 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-aro > b { margin-top:8px; font-size:17px; font-weight:750; color:#1D1D1F; letter-spacing:-0.01em; line-height:1; font-variant-numeric:tabular-nums; }
 .v2-cab-aro > span { margin-top:3px; font-size:11px; font-weight:500; line-height:1.25; }
 .v2-cab.con-aro .v2-cab-ilus .v2-kb { right:42.6px; top:calc(64px + env(safe-area-inset-top, 0px) + 34.2px); width:87.7px; height:87.7px; opacity:.5; }
-.v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(38vw, 138px); min-height:182px; }
+/* El alto justo de la gráfica (aro + % + «Material visto») y el texto
+   centrado a su altura: sin subtexto y sin hueco antes de los botones. */
+.v2-cab.curva.con-aro { padding-bottom:0; margin-bottom:0; }
+.v2-cab.curva.con-aro .v2-cab-txt { padding-right:min(38vw, 138px); min-height:146px; display:flex; flex-direction:column; justify-content:center; }
 @keyframes v2-cab-entra { from { opacity:0; transform:translate3d(14px,6px,0) rotate(-3deg) } to { opacity:1; transform:none } }
 @keyframes v2-pj-sube { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-7px) } }
 .v2-cab-ilus .pj-sube { animation:v2-pj-sube 1.6s ease-in-out .5s 3 both; }
@@ -16358,8 +16361,7 @@ document.addEventListener('keydown', function(e){
         + '<div class="v2-cab-manchas" aria-hidden="true"><i></i><i></i><i></i></div><div class="v2-cab-banda" aria-hidden="true"></div>'
         + '<div class="v2-cab-ilus" aria-hidden="true"><div class="v2-kb">' + KB_LEE + '</div>' + aroVisto() + '</div>'
         + '<div class="v2-cab-txt"><div class="v2-cab-et">LECTURAS</div>'
-        + '<h1 class="v2-cab-h">Lee poco,<br><span>aplica mucho.</span></h1>'
-        + '<p class="v2-cab-sub">Las cápsulas y la guía de alimentación, para leer a tu ritmo.</p></div></div>'
+        + '<h1 class="v2-cab-h">Lee poco,<br><span>aplica mucho.</span></h1></div></div>'
         + '<div class="v2-lect-tabs" role="tablist">'
         + '<button type="button" role="tab" data-l="s-capsulas" class="' + (activa === 's-capsulas' ? 'is-on' : '') + '" aria-selected="' + (activa === 's-capsulas') + '"><b>Cápsulas</b><span>' + (nCap ? nCap + ' temas cortos' : 'Temas cortos') + '</span></button>'
         + '<button type="button" role="tab" data-l="s-guia-alimentacion" class="' + (activa === 's-guia-alimentacion' ? 'is-on' : '') + '" aria-selected="' + (activa === 's-guia-alimentacion') + '"><b>Guía de alimentación</b><span>' + (nGuia ? nGuia + ' capítulos' : 'Capítulo a capítulo') + '</span></button>'

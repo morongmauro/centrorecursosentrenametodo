@@ -38,7 +38,12 @@ const F = 'file://' + require('path').join(__dirname, '..', 'index.html.html');
   await l.evaluate(() => document.body.classList.remove('locked')); await l.waitForTimeout(1200);
   const cabL = l.locator('#s-capsulas [data-v2-cab="lecturas"]');
   ok('Lecturas: cabecera curva, frase y kettlebell leyendo', (await cabL.count()) === 1 && await cabL.isVisible()
-    && /Lee poco/.test(await cabL.innerText()) && (await cabL.locator('.v2-cab-banda').count()) === 1 && (await cabL.locator('svg[data-ilustracion="aprende"]').count()) === 1);
+    && /Lee poco/.test(await cabL.innerText()) && (await cabL.locator('.v2-cab-banda').count()) === 1 && (await cabL.locator('.v2-kb').count()) === 1
+    && (await cabL.locator('.v2-cab-sub').count()) === 0);
+  ok('Lecturas: los botones arrancan pegados a la gráfica (sin chocar ni hueco)', await l.evaluate(() => {
+    const a = document.querySelector('#s-capsulas .v2-cab-aro').getBoundingClientRect(), t = document.querySelector('#s-capsulas .v2-lect-tabs').getBoundingClientRect();
+    return t.top >= a.bottom && t.top - a.bottom <= 14;
+  }));
   await l.screenshot({ path: require('path').join(__dirname, 'lecturas.png') });
   await l.evaluate(() => window.postMessage({ tipo: 'em-ir', a: 'videos' }, '*')); await l.waitForTimeout(800);
   const cabV = l.locator('#s-capsulas [data-v2-cab="videos"]');
