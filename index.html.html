@@ -7492,6 +7492,38 @@ body.locked .mt-stains{display:none;}
   color:rgba(255,255,255,.62);text-align:center;
 }
 .pod-lb-hint b{color:rgba(255,255,255,.85);font-weight:600;}
+/* Visual nueva: el reproductor como lo haría Apple. Grande (todo el ancho),
+   el video sin los botones ni la franja de YouTube (el reproductor va más
+   alto que el cuadro y lo que sobra queda fuera, arriba y abajo), y los
+   controles son nuestros: barra de avance, ±15 s y play. */
+html.em-v2 .pod-lb{background:#0F0F10;justify-content:flex-start;padding:calc(env(safe-area-inset-top, 0px) + 74px) 0 calc(env(safe-area-inset-bottom, 0px) + 22px);}
+html.em-v2 .pod-lb-x{top:calc(env(safe-area-inset-top, 0px) + 22px);background:rgba(255,255,255,.12);}
+html.em-v2 .pod-lb-inner{max-width:none;width:100%;padding:0 16px;gap:18px;}
+html.em-v2 .pod-lb-frame{border-radius:22px;box-shadow:0 26px 60px rgba(0,0,0,.55);background:#000;}
+html.em-v2 .pod-lb-frame iframe,html.em-v2 .pod-lb-frame #pod-yt{position:absolute;left:0;width:100%;top:-17%;height:134%;}
+html.em-v2 .pod-lb-tapa{position:absolute;inset:0;z-index:2;cursor:pointer;}
+html.em-v2 .pod-lb-cap{text-align:left;font-size:20px;font-weight:800;letter-spacing:-.025em;line-height:1.15;color:#fff;}
+html.em-v2 .pod-lb-cap b{margin-top:6px;font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;color:rgba(255,255,255,.55);}
+html.em-v2 .pod-lb-ctl{display:flex;flex-direction:column;gap:8px;margin-top:-4px;}
+html.em-v2 .pod-lb-ctl[hidden]{display:none;}
+html.em-v2 .pod-lb-barra{position:relative;height:28px;cursor:pointer;touch-action:none;}
+html.em-v2 .pod-lb-barra::before{content:'';position:absolute;left:0;right:0;top:12px;height:4px;border-radius:9px;background:rgba(255,255,255,.18);}
+html.em-v2 .pod-lb-barra i{position:absolute;left:0;top:12px;height:4px;border-radius:9px;background:#fff;width:0;}
+html.em-v2 .pod-lb-barra b{position:absolute;top:7px;width:14px;height:14px;border-radius:50%;background:#fff;margin-left:-7px;left:0;box-shadow:0 2px 6px rgba(0,0,0,.4);}
+html.em-v2 .pod-lb-tiempos{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:rgba(255,255,255,.55);font-variant-numeric:tabular-nums;margin-top:-6px;}
+html.em-v2 .pod-lb-botones{display:flex;align-items:center;justify-content:center;gap:34px;margin-top:4px;}
+html.em-v2 .pod-lb-salto{position:relative;width:54px;height:54px;border:0;background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center;}
+html.em-v2 .pod-lb-salto svg{width:40px;height:40px;}
+html.em-v2 .pod-lb-salto span{position:absolute;left:0;right:0;top:21px;text-align:center;font-size:10.5px;font-weight:800;font-family:inherit;}
+html.em-v2 .pod-lb-play{width:76px;height:76px;border-radius:50%;border:0;background:#fff;color:#0F0F10;cursor:pointer;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.45);}
+html.em-v2 .pod-lb-play svg{width:34px;height:34px;}
+html.em-v2 .pod-lb-play .ic-pause{display:none;}
+html.em-v2 .pod-lb-play.sonando .ic-pause{display:block;}
+html.em-v2 .pod-lb-play.sonando .ic-play{display:none;}
+html.em-v2 .pod-lb-acts{justify-content:center;}
+html.em-v2 .pod-lb-acts .pod-lb-out{flex:0 1 auto;background:rgba(255,255,255,.1);font-size:12.5px;padding:10px 16px;}
+html.em-v2 .pod-lb-out.is-audio{background:#EE8434;}
+html.em-v2 .pod-lb-hint{font-size:11px;}
 
 
 @media (max-width:360px){
@@ -11350,6 +11382,17 @@ html.em-v2 #s-onboarding .hub-back-link { display: none !important; }
     <div class="pod-lb-inner" onclick="event.stopPropagation()">
       <div class="pod-lb-frame" id="pod-lb-frame"></div>
       <div class="pod-lb-cap" id="pod-lb-cap"></div>
+      <!-- Visual nueva: controles propios (el reproductor de YouTube va sin
+           sus botones, que tapaban el video). -->
+      <div class="pod-lb-ctl" id="pod-lb-ctl" hidden>
+        <div class="pod-lb-barra" id="pod-lb-barra"><i id="pod-lb-avance"></i><b id="pod-lb-perilla"></b></div>
+        <div class="pod-lb-tiempos"><span id="pod-lb-t0">0:00</span><span id="pod-lb-t1">–:––</span></div>
+        <div class="pod-lb-botones">
+          <button type="button" class="pod-lb-salto" data-salto="-15" aria-label="Atrás 15 segundos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>15</span></button>
+          <button type="button" class="pod-lb-play" id="pod-lb-play" aria-label="Reproducir"><svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg><svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4.5" height="14" rx="1.2"/><rect x="13.5" y="5" width="4.5" height="14" rx="1.2"/></svg></button>
+          <button type="button" class="pod-lb-salto" data-salto="15" aria-label="Adelante 15 segundos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg><span>15</span></button>
+        </div>
+      </div>
       <div class="pod-lb-acts">
         <a class="pod-lb-out" id="pod-lb-out" href="#" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
@@ -11577,6 +11620,74 @@ function podCasiEntero(){
   } catch(e){ return false; }
 }
 
+function esV2(){ return document.documentElement.classList.contains('em-v2'); }
+
+// ── Controles propios del reproductor (visual nueva) ────────────────────
+// Encima del video va una capa que recibe el toque (si no, lo recibe
+// YouTube y muestra su interfaz): un toque = play/pausa. Abajo, la barra
+// de avance (se toca o se arrastra), los tiempos y ±15 s.
+var _podTic = null;
+function podFmt(seg){ seg = Math.max(0, Math.round(seg || 0)); var h = Math.floor(seg / 3600), m = Math.floor((seg % 3600) / 60), sg = seg % 60; return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(sg).padStart(2, '0'); }
+function podControlesEstado(estado){
+  var play = document.getElementById('pod-lb-play');
+  if (!play) return;
+  var sonando = estado === 1 || estado === 3;
+  play.classList.toggle('sonando', sonando);
+  play.setAttribute('aria-label', sonando ? 'Pausar' : 'Reproducir');
+}
+function podControlesPintar(){
+  if (!_podPlayer || !_podPlayer.getDuration) return;
+  var d = 0, t = 0;
+  try { d = _podPlayer.getDuration() || 0; t = _podPlayer.getCurrentTime() || 0; } catch(e){ return; }
+  var f = d > 0 ? Math.min(1, t / d) : 0;
+  var av = document.getElementById('pod-lb-avance'), per = document.getElementById('pod-lb-perilla');
+  if (av) av.style.width = (f * 100) + '%';
+  if (per) per.style.left = (f * 100) + '%';
+  var t0 = document.getElementById('pod-lb-t0'), t1 = document.getElementById('pod-lb-t1');
+  if (t0) t0.textContent = podFmt(t);
+  if (t1) t1.textContent = d > 0 ? '-' + podFmt(d - t) : '–:––';
+}
+function podControles(p){
+  var frame = document.getElementById('pod-lb-frame'), ctl = document.getElementById('pod-lb-ctl');
+  if (!frame || !ctl) return;
+  if (!frame.querySelector('.pod-lb-tapa')) {
+    var tapa = document.createElement('div'); tapa.className = 'pod-lb-tapa'; tapa.setAttribute('aria-hidden', 'true');
+    tapa.addEventListener('click', function(){ podAlternar(); });
+    frame.appendChild(tapa);
+  }
+  ctl.hidden = false;
+  var play = document.getElementById('pod-lb-play');
+  if (play && !play._listo) { play._listo = true; play.addEventListener('click', function(ev){ ev.stopPropagation(); podAlternar(); }); }
+  ctl.querySelectorAll('.pod-lb-salto').forEach(function(b){
+    if (b._listo) return; b._listo = true;
+    b.addEventListener('click', function(ev){ ev.stopPropagation(); if (!_podPlayer || !_podPlayer.seekTo) return; try { _podPlayer.seekTo(Math.max(0, _podPlayer.getCurrentTime() + Number(b.getAttribute('data-salto'))), true); } catch(e){} podControlesPintar(); });
+  });
+  var barra = document.getElementById('pod-lb-barra');
+  if (barra && !barra._listo) {
+    barra._listo = true;
+    var irA = function(ev){
+      if (!_podPlayer || !_podPlayer.seekTo) return;
+      var r = barra.getBoundingClientRect(), x = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left;
+      var f = Math.max(0, Math.min(1, x / r.width));
+      try { _podPlayer.seekTo(f * _podPlayer.getDuration(), true); } catch(e){}
+      podControlesPintar();
+    };
+    var arrastrando = false;
+    barra.addEventListener('pointerdown', function(ev){ arrastrando = true; barra.setPointerCapture && barra.setPointerCapture(ev.pointerId); irA(ev); });
+    barra.addEventListener('pointermove', function(ev){ if (arrastrando) irA(ev); });
+    barra.addEventListener('pointerup', function(){ arrastrando = false; });
+    barra.addEventListener('pointercancel', function(){ arrastrando = false; });
+  }
+  if (_podTic) clearInterval(_podTic);
+  _podTic = setInterval(podControlesPintar, 500);
+  podControlesPintar();
+  try { podControlesEstado(_podPlayer.getPlayerState()); } catch(e){}
+}
+function podAlternar(){
+  if (!_podPlayer || !_podPlayer.getPlayerState) return;
+  try { var e = _podPlayer.getPlayerState(); if (e === 1 || e === 3) _podPlayer.pauseVideo(); else _podPlayer.playVideo(); } catch(err){}
+}
+
 function podIframeSimple(frame, p){
   frame.innerHTML = '<iframe src="' + podEsc(podEmbedUrl(p)) + '" title="' + podEsc(p.title) + '" ' +
     'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
@@ -11641,9 +11752,14 @@ function podOpen(i){
     if (!ok || !window.YT || !window.YT.Player) { podIframeSimple(frame, p); return; }
     var opciones = {
       host: 'https://www.youtube-nocookie.com',
-      playerVars: { autoplay:1, rel:0, modestbranding:1, playsinline:1 },
+      playerVars: { autoplay:1, rel:0, modestbranding:1, playsinline:1,
+        // Visual nueva: sin los botones ni el teclado de YouTube; los
+        // controles son los de abajo.
+        controls: esV2() ? 0 : 1, disablekb: esV2() ? 1 : 0, iv_load_policy: 3, fs: 0 },
       events: {
+        onReady: function(){ if (esV2()) podControles(p); },
         onStateChange: function(e){
+          if (esV2()) podControlesEstado(e.data);
           if (e.data === 1) podMarkWatching(p.id);                              // sonando
           if (e.data === 0) { podMarkSeen(p.id); podRender(); }                 // terminó
           if (e.data === 2 && podCasiEntero()) { podMarkSeen(p.id); podRender(); } // pausó al final
@@ -11671,6 +11787,8 @@ function podClose(ev, force){
   // audio: sin esto sigue sonando con el visor cerrado.
   if (_podPlayer && _podPlayer.destroy) { try { _podPlayer.destroy(); } catch(e){} }
   _podPlayer = null;
+  if (_podTic) { clearInterval(_podTic); _podTic = null; }
+  var ctl = document.getElementById('pod-lb-ctl'); if (ctl) ctl.hidden = true;
   if (frame) frame.innerHTML = '';
   if (lb) { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); }
   document.body.style.overflow = '';
