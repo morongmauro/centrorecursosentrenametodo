@@ -9972,6 +9972,30 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-ilus .kb-foco > * { transform-box:fill-box; transform-origin:50% 80%; animation:v2-kb-foco .6s cubic-bezier(.3,1.4,.5,1) 1.1s both; }
 .v2-cab-ilus .kb-ojos { transform-box:fill-box; transform-origin:50% 50%; animation:v2-kb-parpadea 4s ease-in-out 1.2s 2 both; }
 @media (prefers-reduced-motion: reduce) { .v2-cab-ilus .v2-kb, .v2-cab-ilus .v2-kb.flota, .v2-cab-aro, .v2-cab-aro .v2-aro, .v2-cab-ilus .pj-sube, .v2-cab-ilus .kb-hoja, .v2-cab-ilus .kb-ojos, .v2-cab-ilus .kb-foco > * { animation:none !important; } }
+/* ── La cabecera de Lecturas como en la app: el blob naranja girado 12° con
+   su sombra, el aro en blanco encima (riel blanco al 30 %, punto de la punta
+   naranja), el libro a tres tonos y el % en blanco adentro, el pie debajo. ── */
+/* Como en la app, el blob cruza un poco la banda de arriba (su borde baja
+   hasta 64 + 14 px): arranca 2 px antes de que la banda termine. */
+.v2-cab-aro { right:26px; top:calc(64px + env(safe-area-inset-top, 0px) - 2px); width:128px; gap:0; }
+.v2-cab-aro .v2-blob { position:relative; width:122px; height:122px; }
+.v2-cab-aro .v2-blob-svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; transform:rotate(-12deg);
+  filter:drop-shadow(0 16px 28px rgba(238,132,52,.4)) drop-shadow(0 2px 6px rgba(30,30,40,.08)); }
+.v2-cab-aro .v2-blob .v2-aro { position:absolute; left:15px; top:15px; width:92px; height:92px; opacity:1; }
+.v2-cab-aro .v2-aro i { -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); }
+.v2-cab-aro .v2-aro-riel { background:rgba(255,255,255,0.3); }
+.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #FFFFFF 0deg, #FFFFFF var(--v2g), transparent var(--v2g)); }
+.v2-cab-aro .v2-aro-inicio::before, .v2-cab-aro .v2-aro-punta::before { left:calc(50% - 3.5px); width:7px; height:7px; background:#FFFFFF; }
+.v2-cab-aro .v2-aro-punta::after { left:calc(50% - 1.5px); top:2px; width:3px; height:3px; background:#EE8434; }
+.v2-cab-aro .v2-aro.lleno .v2-aro-punta::after { opacity:1; }
+.v2-cab-aro .v2-aro-dentro { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.v2-cab.con-aro .v2-cab-ilus .v2-aro-dentro .v2-kb { position:relative; right:auto; top:auto; width:46px; height:34px; opacity:1; }
+.v2-cab.con-aro .v2-cab-ilus .v2-aro-dentro .v2-kb img { position:absolute; left:-9px; top:-17.8px; width:69.6px; height:69.6px; display:block; transition:opacity .18s ease-out; }
+/* El alto justo: el blob, su pie y 8 px hasta los botones. */
+.v2-cab.curva.con-aro .v2-cab-txt { min-height:114px; }
+.v2-cab-aro .v2-aro-dentro b { position:static; display:block; margin-top:1px; font-size:18px; font-weight:800; color:#FFFFFF; letter-spacing:-0.02em; line-height:1; font-variant-numeric:tabular-nums; }
+.v2-cab-aro > span { margin-top:8px; font-size:11.5px; font-weight:600; color:#6B6B6B; line-height:1.25; }
+.v2-cab.con-aro .v2-cab-ilus > .v2-kb { display:none; }
 /* ── Lecturas y Videos · arreglos (visual nueva) ──────────────────────────
    Sin asistente de lectura ni botones flotantes; los «En esencia» de la
    guía con letra oscura (la clara venía de cuando eran cajas negras); la
@@ -16302,17 +16326,24 @@ document.addEventListener('keydown', function(e){
   // El WebP animado se trae una vez y cada entrada lo pinta con una URL nueva,
   // para que la animación arranque de cero.
   var KB_LEE = '<img class="v2-kb-img" alt="" draggable="false" src="img/cabecera-aprende-fin.webp">';
-  var libroBlob = null;
+  // El mismo libro a tres tonos (blanco, gris y naranja claro), sin sombra de
+  // piso: va dentro del aro, sobre el blob naranja de la cabecera.
+  var KB_TRES = '<img class="v2-kb-img tres" alt="" draggable="false" src="img/cabecera-aprende-tres-fin.webp">';
+  var libroBlob = {};
   function animarLibro(){
     var imgs = document.querySelectorAll('.v2-kb-img:not([data-lista])');
     if (!imgs.length) return;
     var quieto = false; try { quieto = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
     imgs.forEach(function(im){ im.dataset.lista = '1'; if (!quieto) im.style.opacity = '0'; });
     if (quieto) return;
-    (libroBlob || (libroBlob = fetch('img/cabecera-aprende.webp').then(function(r){ if (!r.ok) throw 0; return r.blob(); })))
-      .then(function(b){ imgs.forEach(function(im){ var u = URL.createObjectURL(b); im.onload = function(){ im.style.opacity = '1'; setTimeout(function(){ URL.revokeObjectURL(u); }, 0); }; im.src = u;
-        setTimeout(function(){ im.parentNode && im.parentNode.classList.add('flota'); }, 2600); }); })
-      ['catch'](function(){ imgs.forEach(function(im){ im.style.opacity = '1'; }); });
+    // Entra con su animación (se abre y pasa una hoja) y después se queda
+    // quieto: nada flota permanentemente.
+    imgs.forEach(function(im){
+      var k = im.classList.contains('tres') ? 'img/cabecera-aprende-tres.webp' : 'img/cabecera-aprende.webp';
+      (libroBlob[k] || (libroBlob[k] = fetch(k).then(function(r){ if (!r.ok) throw 0; return r.blob(); })))
+        .then(function(b){ var u = URL.createObjectURL(b); im.onload = function(){ im.style.opacity = '1'; setTimeout(function(){ URL.revokeObjectURL(u); }, 0); }; im.src = u; })
+        ['catch'](function(){ im.style.opacity = '1'; });
+    });
   }
   function cuantasGuia(){
     var n = document.querySelectorAll('#s-guia-alimentacion .ga-h1').length;
@@ -16326,9 +16357,14 @@ document.addEventListener('keydown', function(e){
   function pctVisto(){ try { var v = localStorage.getItem(AV_KEY); return v === null ? null : Math.max(0, Math.min(100, parseInt(v, 10) || 0)); } catch(e){ return null; } }
   function aroVisto(){
     var p = pctVisto();
-    return '<div class="v2-cab-aro" data-aro-cabecera="aprende"><div class="v2-aro cero" role="img" aria-label="Material visto">'
+    // Como en la app: el blob naranja (cuadrado curvo girado 12°), encima el
+    // aro en blanco con el libro a tres tonos y el % adentro, y el pie debajo.
+    return '<div class="v2-cab-aro" data-aro-cabecera="aprende"><div class="v2-blob">'
+      + '<svg class="v2-blob-svg" viewBox="0 0 200 200" aria-hidden="true"><path d="M200.0 100.0L199.8 127.7L199.2 139.8L198.2 149.1L196.8 156.9L195.0 163.6L192.7 169.4L190.0 174.6L186.9 179.2L183.3 183.3L179.2 186.9L174.6 190.0L169.4 192.7L163.6 195.0L156.9 196.8L149.1 198.2L139.8 199.2L127.7 199.8L100.0 200.0L72.3 199.8L60.2 199.2L50.9 198.2L43.1 196.8L36.4 195.0L30.6 192.7L25.4 190.0L20.8 186.9L16.7 183.3L13.1 179.2L10.0 174.6L7.3 169.4L5.0 163.6L3.2 156.9L1.8 149.1L0.8 139.8L0.2 127.7L0.0 100.0L0.2 72.3L0.8 60.2L1.8 50.9L3.2 43.1L5.0 36.4L7.3 30.6L10.0 25.4L13.1 20.8L16.7 16.7L20.8 13.1L25.4 10.0L30.6 7.3L36.4 5.0L43.1 3.2L50.9 1.8L60.2 0.8L72.3 0.2L100.0 0.0L127.7 0.2L139.8 0.8L149.1 1.8L156.9 3.2L163.6 5.0L169.4 7.3L174.6 10.0L179.2 13.1L183.3 16.7L186.9 20.8L190.0 25.4L192.7 30.6L195.0 36.4L196.8 43.1L198.2 50.9L199.2 60.2L199.8 72.3Z" fill="#EE8434"/></svg>'
+      + '<div class="v2-aro cero" role="img" aria-label="Material visto">'
       + '<i class="v2-aro-riel"></i><i class="v2-aro-arco"></i><span class="v2-aro-inicio"></span><span class="v2-aro-punta"></span>'
-      + '</div><b>' + (p === null ? '–' : p + ' %') + '</b><span>Material visto</span></div>';
+      + '<div class="v2-aro-dentro"><div class="v2-kb">' + KB_TRES + '</div><b>' + (p === null ? '–' : p + ' %') + '</b></div>'
+      + '</div></div><span>Material visto</span></div>';
   }
   function llenarAros(){
     var p = pctVisto();
@@ -16359,7 +16395,7 @@ document.addEventListener('keydown', function(e){
         + '<p class="v2-cab-sub">Los episodios que te recomiendo, para ver o escuchar cuando quieras.' + (nPod ? ' ' + nPod + ' en total.' : '') + '</p></div>'
       : '<div class="v2-cab curva con-aro" data-v2-cab="lecturas">'
         + '<div class="v2-cab-manchas" aria-hidden="true"><i></i><i></i><i></i></div><div class="v2-cab-banda" aria-hidden="true"></div>'
-        + '<div class="v2-cab-ilus" aria-hidden="true"><div class="v2-kb">' + KB_LEE + '</div>' + aroVisto() + '</div>'
+        + '<div class="v2-cab-ilus" aria-hidden="true">' + aroVisto() + '</div>'
         + '<div class="v2-cab-txt"><div class="v2-cab-et">LECTURAS</div>'
         + '<h1 class="v2-cab-h">Lee poco,<br><span>aplica mucho.</span></h1></div></div>'
         + '<div class="v2-lect-tabs" role="tablist">'
@@ -16479,7 +16515,8 @@ html.em-v2 .v2-hcard.vista { opacity:.78; }
 html.em-v2 .v2-hcard::after { content:''; position:absolute; right:-34px; top:-34px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.12); }
 html.em-v2 .v2-hcat { font-size:19px; font-weight:800; letter-spacing:-.02em; color:#1F1F1F; margin:6px 2px 10px; }
 /* Estilo Libros / App Store */
-html.em-v2 .v2-cap-eyebrow { font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#C95F17; margin:4px 2px 8px; }
+/* «Cápsula de la semana»: un título como los demás (Sigue leyendo, Entrenamiento…), en grafito. */
+html.em-v2 .v2-cap-eyebrow { font-size:21px; font-weight:800; letter-spacing:-.02em; color:#1F1F1F; margin:18px 2px 12px; }
 html.em-v2 .v2-cap-dest { position:relative; display:block; width:100%; height:188px; border:0; border-radius:24px; color:#fff; text-align:left; cursor:pointer; overflow:hidden; font:inherit;
   box-shadow:0 14px 30px rgba(120,60,20,.18); -webkit-tap-highlight-color:transparent; transition:transform .15s ease; }
 html.em-v2 .v2-cap-dest:active, html.em-v2 .v2-estante .v2-hcard:active, html.em-v2 .v2-cap-media:active { transform:scale(.97); }
