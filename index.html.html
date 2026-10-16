@@ -15820,6 +15820,9 @@ function initBlurCarousel(scroller){ return initStepFlow(scroller); }
       device_id: deviceId
     });
     log('POST →', source, sectionKey, 'cliente:', name);
+    // La app (que tiene el centro abierto adentro) se entera de cada pieza
+    // vista: con eso arma el reconocimiento de aprendizaje.
+    try { window.parent.postMessage({ tipo: 'em-visto', source: source, key: sectionKey }, '*'); } catch (e) {}
     return fetch(SUPABASE_URL + '/rest/v1/reading_events', {
       method: 'POST',
       headers: {

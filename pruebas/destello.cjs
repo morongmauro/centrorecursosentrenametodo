@@ -54,6 +54,14 @@ const F = 'file://' + require('path').join(__dirname, '..', 'index.html.html');
   await l.screenshot({ path: require('path').join(__dirname, 'lecturas-aro.png') });
   await l.locator('.v2-hoja-x').click(); await l.waitForTimeout(300);
   ok('Lecturas: la hoja se cierra con la ✕', (await l.locator('[data-explicacion-aro]').count()) === 0);
+  // Cada pieza vista se le avisa a la app (em-visto): con eso arma el reconocimiento.
+  const visto = await l.evaluate(() => new Promise((res) => {
+    const al = (e) => { if (e.data && e.data.tipo === 'em-visto') { window.removeEventListener('message', al); res(e.data); } };
+    window.addEventListener('message', al);
+    try { window.__emPost('capsula', 'cap:prueba-visto'); } catch (e) { res({ error: String(e) }); }
+    setTimeout(() => res(null), 1500);
+  }));
+  ok('al ver una pieza, el centro le avisa a la app (em-visto con la fuente y la clave)', !!visto && visto.source === 'capsula' && visto.key === 'cap:prueba-visto', JSON.stringify(visto));
   await l.screenshot({ path: require('path').join(__dirname, 'lecturas.png') });
   await l.evaluate(() => window.postMessage({ tipo: 'em-ir', a: 'videos' }, '*')); await l.waitForTimeout(800);
   const cabV = l.locator('#s-capsulas [data-v2-cab="videos"]');
