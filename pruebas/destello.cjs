@@ -44,6 +44,16 @@ const F = 'file://' + require('path').join(__dirname, '..', 'index.html.html');
     const a = document.querySelector('#s-capsulas .v2-cab-aro').getBoundingClientRect(), t = document.querySelector('#s-capsulas .v2-lect-tabs').getBoundingClientRect();
     return t.top >= a.bottom && t.top - a.bottom <= 14;
   }));
+  // Tocar el aro explica qué mide, como los aros de la app: el % grande, qué
+  // es y sus partes (las manda la app con el mensaje em-aprende).
+  await l.evaluate(() => window.postMessage({ tipo: 'em-aprende', pct: 62, vistas: 8, total: 13, bloques: [{ titulo: 'Cápsulas', vistas: 3, total: 6 }, { titulo: 'Guía de alimentación', vistas: 5, total: 5 }, { titulo: 'Videos', vistas: 0, total: 2 }] }, '*')); await l.waitForTimeout(400);
+  await l.locator('#s-capsulas .v2-cab-aro').click(); await l.waitForTimeout(400);
+  const hoja = l.locator('[data-explicacion-aro]');
+  const hojaTxt = (await hoja.count()) ? await hoja.innerText() : '';
+  ok('Lecturas: tocar el aro abre «Tu aprendizaje» con el %, las piezas y sus partes', (await hoja.count()) === 1 && /62 %/.test(hojaTxt) && /8 de 13 piezas/.test(hojaTxt) && /Cápsulas/.test(hojaTxt) && /3 de 6/.test(hojaTxt) && /Todo visto/.test(hojaTxt) && /Todavía sin abrir/.test(hojaTxt), hojaTxt.slice(0, 160));
+  await l.screenshot({ path: require('path').join(__dirname, 'lecturas-aro.png') });
+  await l.locator('.v2-hoja-x').click(); await l.waitForTimeout(300);
+  ok('Lecturas: la hoja se cierra con la ✕', (await l.locator('[data-explicacion-aro]').count()) === 0);
   await l.screenshot({ path: require('path').join(__dirname, 'lecturas.png') });
   await l.evaluate(() => window.postMessage({ tipo: 'em-ir', a: 'videos' }, '*')); await l.waitForTimeout(800);
   const cabV = l.locator('#s-capsulas [data-v2-cab="videos"]');

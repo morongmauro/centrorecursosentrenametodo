@@ -10035,6 +10035,26 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab.curva.con-aro .v2-cab-txt { min-height:114px; }
 .v2-cab-aro .v2-aro-dentro b { position:static; display:block; margin-top:1px; font-size:18px; font-weight:800; color:#FFFFFF; letter-spacing:-0.02em; line-height:1; font-variant-numeric:tabular-nums; }
 .v2-cab-aro > span { margin-top:8px; font-size:11.5px; font-weight:600; color:#6B6B6B; line-height:1.25; }
+/* Al tocar el aro se explica qué mide (como los aros de la app). */
+.v2-cab-aro { pointer-events:auto; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+/* El texto de la cabecera (relative, con su padding) tapaba el aro: la capa
+   de la ilustración va por encima; como no recibe toques, no estorba. */
+.v2-cab.con-aro .v2-cab-ilus { z-index:2; }
+.v2-cab-aro .v2-blob { transition:transform .15s ease-out; }
+.v2-cab-aro:active .v2-blob { transform:scale(.97); }
+@keyframes v2-velo-entra { from { opacity:0 } }
+@keyframes v2-hoja-sube { from { transform:translateY(28px); opacity:.5 } }
+.v2-hoja-velo { position:fixed; inset:0; z-index:95; background:rgba(31,31,31,.38); display:flex; align-items:flex-end; justify-content:center; animation:v2-velo-entra .2s ease-out; }
+.v2-hoja { width:100%; max-width:560px; max-height:70vh; overflow:auto; background:#F3F1EB; border-radius:26px 26px 0 0; padding:12px 20px calc(24px + env(safe-area-inset-bottom, 0px)); color:#1D1D1F; animation:v2-hoja-sube .26s cubic-bezier(.2,.8,.2,1); box-shadow:0 -12px 40px rgba(0,0,0,.18); }
+.v2-hoja-asa { width:38px; height:5px; border-radius:99px; background:rgba(29,29,31,.18); margin:0 auto 12px; }
+.v2-hoja-t { display:flex; justify-content:space-between; align-items:center; font-size:17px; font-weight:800; margin-bottom:10px; }
+.v2-hoja-x { width:30px; height:30px; border-radius:50%; border:0; background:rgba(29,29,31,.07); color:#1D1D1F; font-size:15px; cursor:pointer; display:grid; place-items:center; }
+.v2-hoja-grande { font-size:34px; font-weight:800; letter-spacing:-.03em; }
+.v2-hoja-que { color:#6E6B65; font-size:14.5px; margin-left:8px; }
+.v2-hoja-parte { margin-top:12px; padding:12px 14px; border-radius:16px; background:#FFFFFF; font-size:14.5px; line-height:1.4; }
+.v2-hoja-parte .v { float:right; font-size:20px; font-weight:800; white-space:nowrap; margin-left:8px; }
+.v2-hoja-parte small { display:block; color:#6E6B65; font-size:13px; margin-top:3px; }
+.v2-hoja-nota { font-size:12.5px; color:#9C9A94; margin-top:14px; line-height:1.45; }
 .v2-cab.con-aro .v2-cab-ilus > .v2-kb { display:none; }
 /* ── Lecturas y Videos · arreglos (visual nueva) ──────────────────────────
    Sin asistente de lectura ni botones flotantes; los «En esencia» de la
@@ -16490,7 +16510,7 @@ document.addEventListener('keydown', function(e){
     var p = pctVisto();
     // Como en la app: el blob naranja (cuadrado curvo girado 12°), encima el
     // aro en blanco con el libro a tres tonos y el % adentro, y el pie debajo.
-    return '<div class="v2-cab-aro con-blob" data-aro-cabecera="aprende"><div class="v2-blob">'
+    return '<div class="v2-cab-aro con-blob" data-aro-cabecera="aprende" data-aro-tocar="1" role="button" tabindex="0" aria-label="Material visto: ' + (p === null ? 'sin dato' : p + ' %') + '. Ver cómo se calcula"><div class="v2-blob">'
       + '<svg class="v2-blob-svg" viewBox="0 0 200 200" aria-hidden="true"><path d="M200.0 100.0L199.8 127.7L199.2 139.8L198.2 149.1L196.8 156.9L195.0 163.6L192.7 169.4L190.0 174.6L186.9 179.2L183.3 183.3L179.2 186.9L174.6 190.0L169.4 192.7L163.6 195.0L156.9 196.8L149.1 198.2L139.8 199.2L127.7 199.8L100.0 200.0L72.3 199.8L60.2 199.2L50.9 198.2L43.1 196.8L36.4 195.0L30.6 192.7L25.4 190.0L20.8 186.9L16.7 183.3L13.1 179.2L10.0 174.6L7.3 169.4L5.0 163.6L3.2 156.9L1.8 149.1L0.8 139.8L0.2 127.7L0.0 100.0L0.2 72.3L0.8 60.2L1.8 50.9L3.2 43.1L5.0 36.4L7.3 30.6L10.0 25.4L13.1 20.8L16.7 16.7L20.8 13.1L25.4 10.0L30.6 7.3L36.4 5.0L43.1 3.2L50.9 1.8L60.2 0.8L72.3 0.2L100.0 0.0L127.7 0.2L139.8 0.8L149.1 1.8L156.9 3.2L163.6 5.0L169.4 7.3L174.6 10.0L179.2 13.1L183.3 16.7L186.9 20.8L190.0 25.4L192.7 30.6L195.0 36.4L196.8 43.1L198.2 50.9L199.2 60.2L199.8 72.3Z" fill="#EE8434"/></svg>'
       + '<div class="v2-aro cero" role="img" aria-label="Material visto">'
       + '<i class="v2-aro-riel"></i><i class="v2-aro-arco"></i><span class="v2-aro-inicio"></span><span class="v2-aro-punta"></span>'
@@ -16508,11 +16528,45 @@ document.addEventListener('keydown', function(e){
       requestAnimationFrame(function(){ requestAnimationFrame(function(){ c.style.setProperty('--v2g', ((p || 0) * 3.6) + 'deg'); }); });
     });
   }
+  // Las partes del aro (cápsulas, guía, videos…): las manda la app con el %
+  // y se guardan para explicarlo al tocarlo.
+  var AV_DATOS_KEY = 'em_v2_material_visto_datos';
   window.addEventListener('message', function(e){
     var d = e && e.data;
     if (!d || typeof d !== 'object' || d.tipo !== 'em-aprende' || typeof d.pct !== 'number') return;
     try { localStorage.setItem(AV_KEY, String(Math.round(d.pct))); } catch(err){}
+    if (Array.isArray(d.bloques)) { try { localStorage.setItem(AV_DATOS_KEY, JSON.stringify({ vistas: d.vistas, total: d.total, bloques: d.bloques })); } catch(err){} }
     llenarAros();
+  });
+  // ¿Qué mide este aro? La misma hoja que abren los aros de la app: el número
+  // grande, qué es y las partes que lo componen.
+  function abrirExplicacionAro(){
+    if (document.querySelector('[data-explicacion-aro]')) return;
+    var p = pctVisto(), datos = null;
+    try { datos = JSON.parse(localStorage.getItem(AV_DATOS_KEY) || 'null'); } catch(e){}
+    var txt = function(x){ return String(x == null ? '' : x).replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    var partes = ((datos && datos.bloques) || []).map(function(b){
+      var n = Number(b.vistas) || 0, t = Number(b.total) || 0;
+      return '<div class="v2-hoja-parte"><span class="v">' + n + ' de ' + t + '</span><b>' + txt(b.titulo) + '</b>'
+        + '<small>' + (t && n >= t ? 'Todo visto.' : n ? 'Lo que ya abriste de este bloque.' : 'Todavía sin abrir.') + '</small></div>';
+    }).join('');
+    var velo = document.createElement('div');
+    velo.className = 'v2-hoja-velo'; velo.setAttribute('data-explicacion-aro', '');
+    velo.innerHTML = '<div class="v2-hoja" role="dialog" aria-label="Tu aprendizaje"><div class="v2-hoja-asa"></div>'
+      + '<div class="v2-hoja-t"><span>Tu aprendizaje</span><button type="button" class="v2-hoja-x" aria-label="Cerrar">✕</button></div>'
+      + '<div><span class="v2-hoja-grande">' + (p === null ? '–' : p + ' %') + '</span><span class="v2-hoja-que">'
+      + (datos && datos.total ? 'del material visto: ' + (Number(datos.vistas) || 0) + ' de ' + datos.total + ' piezas' : 'del material visto') + '</span></div>'
+      + partes
+      + '<div class="v2-hoja-nota">Cuenta las cápsulas, los capítulos de la guía y los videos que ya abriste, de todo el programa (no de la semana). Es el mismo número que ves en el Dash de tu app.</div></div>';
+    var esc = function(e){ if (e.key === 'Escape') cerrar(); };
+    var cerrar = function(){ velo.remove(); document.removeEventListener('keydown', esc); };
+    velo.addEventListener('click', function(e){ if (e.target === velo || (e.target.closest && e.target.closest('.v2-hoja-x'))) cerrar(); });
+    document.addEventListener('keydown', esc);
+    document.body.appendChild(velo);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target && e.target.closest && e.target.closest('.v2-cab-aro');
+    if (a) abrirExplicacionAro();
   });
   function bloque(modo, activa){
     var nCap = (typeof CAPSULAS !== 'undefined' && CAPSULAS.length) || 0;
@@ -16526,7 +16580,7 @@ document.addEventListener('keydown', function(e){
         + '<p class="v2-cab-sub">Los episodios que te recomiendo, para ver o escuchar cuando quieras.' + (nPod ? ' ' + nPod + ' en total.' : '') + '</p></div>'
       : '<div class="v2-cab curva con-aro" data-v2-cab="lecturas">'
         + '<div class="v2-cab-manchas" aria-hidden="true"><i></i><i></i><i></i></div><div class="v2-cab-banda" aria-hidden="true"></div>'
-        + '<div class="v2-cab-ilus" aria-hidden="true">' + aroVisto() + '</div>'
+        + '<div class="v2-cab-ilus">' + aroVisto() + '</div>'
         + '<div class="v2-cab-txt"><div class="v2-cab-et">LECTURAS</div>'
         + '<h1 class="v2-cab-h">Lee poco,<br><span>aplica mucho.</span></h1></div></div>'
         + '<div class="v2-lect-tabs" role="tablist">'
