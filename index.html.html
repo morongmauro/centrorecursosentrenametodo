@@ -16452,9 +16452,9 @@ document.addEventListener('keydown', function(e){
   // El WebP animado se trae una vez y cada entrada lo pinta con una URL nueva,
   // para que la animación arranque de cero.
   var KB_LEE = '<img class="v2-kb-img" alt="" draggable="false" src="img/cabecera-aprende-fin.webp">';
-  // El mismo libro a tres tonos (blanco, gris y naranja claro), sin sombra de
-  // piso: va dentro del aro, sobre el blob naranja de la cabecera.
-  var KB_TRES = '<img class="v2-kb-img tres" alt="" draggable="false" src="img/cabecera-aprende-tres-fin.webp">';
+  // El mismo libro a DOS colores (blanco + naranja claro), sin brillos y con
+  // su sombra suave: va dentro del aro, sobre el blob naranja de la cabecera.
+  var KB_TRES = '<img class="v2-kb-img tres" alt="" draggable="false" src="img/cabecera-aprende-dos-fin.webp">';
   var libroBlob = {};
   // El libro entra con su animación SOLO la primera vez que se ve en esta
   // visita (la pantalla se vuelve a armar al navegar, y repetirla cansaba).
@@ -16470,7 +16470,7 @@ document.addEventListener('keydown', function(e){
     // Entra con su animación (se abre y pasa una hoja) y después se queda
     // quieto: nada flota permanentemente.
     imgs.forEach(function(im){
-      var k = im.classList.contains('tres') ? 'img/cabecera-aprende-tres.webp' : 'img/cabecera-aprende.webp';
+      var k = im.classList.contains('tres') ? 'img/cabecera-aprende-dos.webp' : 'img/cabecera-aprende.webp';
       (libroBlob[k] || (libroBlob[k] = fetch(k).then(function(r){ if (!r.ok) throw 0; return r.blob(); })))
         .then(function(b){ var u = URL.createObjectURL(b); im.onload = function(){ im.style.opacity = '1'; setTimeout(function(){ URL.revokeObjectURL(u); }, 0); }; im.src = u; })
         ['catch'](function(){ im.style.opacity = '1'; });
