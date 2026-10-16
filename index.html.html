@@ -9924,6 +9924,11 @@ html.em-v2[data-v2lect] .v2-lect { display:grid; gap:10px; padding:calc(64px + e
 .v2-lect-tabs button.is-on span { color:rgba(255,255,255,.85); }
 .v2-lect-tabs button:focus-visible { outline:2px solid #A24F0E; outline-offset:2px; }
 html.em-v2[data-v2lect="videos"] .v2-lect-tabs { display:none; }
+/* Al cambiar entre Cápsulas y Guía, lo de abajo de la cabecera entra con un
+   fundido corto; la cabecera (blob, aro, pestañas) se queda quieta. */
+@keyframes v2-lect-fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+html.em-v2[data-v2lect="lecturas"] .screen.active > :not(.v2-lect) { animation:v2-lect-fade .24s ease-out both; }
+@media (prefers-reduced-motion: reduce) { html.em-v2[data-v2lect="lecturas"] .screen.active > :not(.v2-lect) { animation:none; } }
 /* La voz de cada parte: etiqueta, frase en dos tonos y una bajada. En
    Lecturas va sobre la cabecera curva con las manchas naranja (como el Hoy
    de cada sección en la app) y el cerebro en blanco; en Videos, sin curva. */
@@ -16538,8 +16543,18 @@ document.addEventListener('keydown', function(e){
     var scr = document.getElementById(idPantalla);
     if (!scr) return;
     var viejo = scr.querySelector(':scope > .v2-lect');
+    // Si la cabecera de esa pantalla ya está armada en ese modo, no se
+    // vuelve a armar: entre Cápsulas y Guía (y al volver de una cápsula)
+    // solo cambia la pestaña marcada y el aro se vuelve a llenar. Así el
+    // cambio es un fundido del contenido, no una recarga.
+    if (viejo && viejo.getAttribute('data-modo') === modo) {
+      viejo.querySelectorAll('[data-l]').forEach(function(b){ var on = b.getAttribute('data-l') === idPantalla; b.classList.toggle('is-on', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      llenarAros();
+      return;
+    }
     if (viejo) viejo.remove();
-    scr.insertBefore(bloque(modo, idPantalla), scr.firstChild);
+    var nuevo = bloque(modo, idPantalla); nuevo.setAttribute('data-modo', modo);
+    scr.insertBefore(nuevo, scr.firstChild);
     llenarAros(); animarLibro();
   }
   // La guía con índice: después de la portada, un botón por capítulo; al
@@ -16551,6 +16566,9 @@ document.addEventListener('keydown', function(e){
     if (!g) return;
     var secs = [].slice.call(g.querySelectorAll('.ga-section[data-level="1"]'));
     if (!secs.length) return;
+    // El índice ya armado y a la vista: se deja como está (volver a armarlo
+    // se veía como una recarga). Si estaba leyendo un capítulo, se vuelve al índice.
+    if (g.classList.contains('v2-guia') && g.querySelector('.v2-indice') && !g.classList.contains('v2-leyendo')) return;
     g.classList.add('v2-guia');
     g.classList.remove('v2-leyendo');
     secs.forEach(function(s){ s.classList.remove('v2-abierto'); });
