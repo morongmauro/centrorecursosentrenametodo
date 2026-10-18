@@ -16846,6 +16846,83 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
 .v2-hist .quiz-res b { font-weight:850; }
 .v2-hist .quiz-sigue { display:block; margin-top:14px; margin-left:auto; height:44px; padding:0 18px; border-radius:14px; border:0; background:#fff; color:#1F1F1F;
   font:inherit; font-size:15px; font-weight:800; cursor:pointer; }
+/* ── Estilo láminas: hoja blanca, texto grafito, el color del tema en los acentos,
+   la ilustración de la lámina abajo y la regla en negro con su mitad en amarillo.
+   La portada va en grafito. --tinta y --suave las pone el visor según el tema. ── */
+.v2-hist { background:#fff; color:#1D1D1F; --tinta:#1E4F9A; --suave:#4F8BDE; --crema:#F4F2EE; --gris:#6E6E73; }
+.v2-hist .barras span { background:#E4E1DA; }
+.v2-hist .barras span.hecha { background:#1D1D1F; }
+.v2-hist .donde { color:var(--gris); opacity:1; }
+.v2-hist .cerrar { background:var(--crema); color:#1D1D1F; }
+.v2-hist .lam { justify-content:flex-start; padding:22px 0 12px; }
+.v2-hist .lam > div { display:flex; flex-direction:column; min-height:100%; }
+.v2-hist .ico { background:color-mix(in srgb, var(--suave) 14%, #fff); width:48px; height:48px; margin-bottom:14px; }
+.v2-hist .ico svg { width:25px; height:25px; }
+.v2-hist .k { color:var(--tinta); opacity:1; font-size:12.5px; letter-spacing:.09em; margin-bottom:10px; }
+.v2-hist .h { font-size:clamp(25px, 7vw, 32px); font-weight:850; line-height:1.1; letter-spacing:-.025em; color:#1D1D1F; }
+.v2-hist .num { color:var(--tinta); }
+.v2-hist .nl { color:#1D1D1F; opacity:1; font-size:16px; }
+.v2-hist .p { color:#3A3A3C; opacity:1; font-size:16px; line-height:1.5; margin-top:14px; }
+.v2-hist .ilus { margin:auto 0 0; padding:18px 0 0; }
+.v2-hist .ilus div { background:var(--crema); border-radius:22px; padding:16px 14px; display:flex; justify-content:center; align-items:center; }
+.v2-hist .ilus img { display:block; width:100%; height:auto; max-height:230px; object-fit:contain; }
+/* La portada, en grafito */
+.v2-hist.oscura { background:#1D1D1F; color:#fff; }
+.v2-hist.oscura .barras span { background:rgba(255,255,255,.22); } .v2-hist.oscura .barras span.hecha { background:#fff; }
+.v2-hist.oscura .donde { color:rgba(255,255,255,.7); }
+.v2-hist.oscura .cerrar { background:rgba(255,255,255,.14); color:#fff; }
+.v2-hist .portada .k { color:var(--suave); }
+.v2-hist .portada .h { color:#fff; font-size:clamp(36px, 10.5vw, 50px); }
+.v2-hist .portada .p { color:rgba(255,255,255,.78); font-size:18px; }
+.v2-hist .portada .ico { background:rgba(255,255,255,.1); }
+.v2-hist .portada .idea { margin-top:auto; padding-top:26px; font-size:17px; font-weight:750; line-height:1.45; color:#fff; }
+.v2-hist .portada .idea span { display:block; font-weight:500; color:rgba(255,255,255,.72); margin-top:8px; }
+.v2-hist .portada .cuanto { font-size:13px; color:rgba(255,255,255,.55); margin-top:18px; }
+/* Pasos, lista, filas y columnas sobre crema */
+.v2-hist .pasos li { background:var(--crema); }
+.v2-hist .pasos b { background:#fff; }
+.v2-hist .pasos .t { color:var(--tinta); }
+.v2-hist .pasos .d { color:#3A3A3C; opacity:1; }
+.v2-hist .lista li { color:#1D1D1F; font-size:16px; }
+.v2-hist .lista li::before { border-color:var(--tinta); }
+.v2-hist .filas div { background:var(--crema); }
+.v2-hist .filas i { background:#fff; }
+.v2-hist .filas em { color:var(--gris); opacity:1; }
+.v2-hist .cols > div { background:var(--crema); }
+.v2-hist .cols > div.fuerte { background:#1D1D1F; color:#fff !important; }
+.v2-hist .cols .ct { color:var(--gris); opacity:1; } .v2-hist .cols .fuerte .ct { color:rgba(255,255,255,.7); }
+.v2-hist .cols .cd { color:#3A3A3C; opacity:1; } .v2-hist .cols .fuerte .cd { color:rgba(255,255,255,.85); }
+.v2-hist .radar { display:block; width:100%; max-width:340px; height:auto; margin:0 auto 12px; }
+/* Gráficas: grafito sobre claro, la zona útil en el color del tema */
+.v2-hist .barras-diag .bb { background:#E4E1DA; }
+.v2-hist .barras-diag .fuerte .bb { background:#1D1D1F; }
+.v2-hist .barras-diag .bd { color:var(--gris); opacity:1; }
+.v2-hist .escala span { background:var(--crema); color:#1D1D1F; }
+.v2-hist .escala span.si { background:#1D1D1F; color:#fff !important; }
+.v2-hist .escala-pie { color:var(--gris); opacity:1; }
+.v2-hist .desl .pista { background:#E4E1DA; }
+.v2-hist .desl .lleno { background:var(--tinta); }
+.v2-hist .desl .bola { background:#fff; box-shadow:0 0 0 3px var(--tinta); }
+.v2-hist .desl .extremos { color:var(--gris); opacity:1; }
+.v2-hist .seg div { background:#E4E1DA; }
+.v2-hist .seg div.fuerte { background:#1D1D1F; color:#fff !important; }
+.v2-hist .seg-pie { color:var(--gris); opacity:1; }
+/* La regla: caja negra, la segunda mitad en amarillo */
+.v2-hist .regla .caja-regla { background:#1D1D1F; color:#fff; border-radius:22px; padding:22px 20px; }
+.v2-hist .regla .h { color:#fff; font-size:clamp(23px, 6.4vw, 28px); }
+.v2-hist .regla .h span { color:#F2C94C; }
+.v2-hist .fuente { color:var(--gris); opacity:1; margin-top:16px; }
+.v2-hist .finales .ver { background:var(--crema); color:#1D1D1F; }
+.v2-hist .finales .listo { background:#1D1D1F; color:#fff; }
+.v2-hist .sigue { color:var(--gris); opacity:1; }
+.v2-hist.oscura .sigue { color:rgba(255,255,255,.6); }
+/* Pregunta rápida */
+.v2-hist .quiz-op { background:var(--crema); color:#1D1D1F; }
+.v2-hist .quiz-op.bien { background:#46965A; color:#fff; }
+.v2-hist .quiz-op.bien::after { color:#fff; }
+.v2-hist .quiz-op.mal { background:var(--crema); color:var(--gris); }
+.v2-hist .quiz-res { color:#3A3A3C; }
+.v2-hist .quiz-sigue { background:#1D1D1F; color:#fff; }
 @media (prefers-reduced-motion: reduce) { .v2-hist.abierta, .v2-hist .lam.entra > * { animation:none; } }
 </style>
 <script>
@@ -16866,10 +16943,13 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
   var seq = function(c){
     var h = H[c.id]; if (!h) return [];
     var l = h.pantallas.slice();
+    if (ideaDe(c)) l.shift();
     if (h.quiz) { var u = l.length && l[l.length - 1].regla ? l.length - 1 : l.length; l.splice(u, 0, { quiz: h.quiz }); }
     return l;
   };
   var total = function(c){ var h = H[c.id]; return h ? seq(c).length + 1 : 0; };
+  // «La idea» (frase y texto, sin número) va dentro de la portada, como en la lámina.
+  function ideaDe(c){ var h = H[c.id], s0 = h && h.pantallas[0]; return s0 && s0.k === 'La idea' && s0.h && !s0.n ? s0 : null; }
 
   // ── Íconos de línea (24 × 24), en blanco o en el color que se pida ──
   var I = {
@@ -16980,60 +17060,77 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
   };
 
   // ── Diagramas ──
-  function curva(z){
-    // Respuesta que sube, se aplana; la zona útil en el medio.
+  function curva(z, t){
+    // Respuesta que sube, se aplana; la zona útil en el medio, en el color del tema.
+    var g = '#1D1D1F', m = '#6E6E73';
+    var et = function(x, y, txt, tam, peso, col){ return '<text x="' + x + '" y="' + y + '" text-anchor="middle" fill="' + col + '" font-size="' + tam + '" font-weight="' + peso + '">' + esc(txt) + '</text>'; };
     return '<svg class="diag" viewBox="0 0 320 150" aria-hidden="true">'
-      + '<rect x="108" y="10" width="108" height="100" rx="8" fill="#fff" opacity=".16"/>'
-      + '<path d="M10 104 C 60 102, 90 80, 120 62 S 190 24, 236 22 S 300 22, 312 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>'
-      + '<circle cx="120" cy="62" r="5.5" fill="#fff"/><circle cx="216" cy="23" r="5.5" fill="#fff"/>'
-      + '<path d="M10 110 H312" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>'
-      + '<text x="54" y="130" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" opacity=".85">' + esc(z[0].split(' · ')[0]) + '</text>'
-      + '<text x="54" y="145" text-anchor="middle" fill="#fff" font-size="11" opacity=".75">' + esc(z[0].split(' · ')[1] || '') + '</text>'
-      + '<text x="162" y="130" text-anchor="middle" fill="#fff" font-size="13" font-weight="900">' + esc(z[1].split(' · ')[0]) + '</text>'
-      + '<text x="162" y="145" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">' + esc(z[1].split(' · ')[1] || '') + '</text>'
-      + '<text x="270" y="130" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" opacity=".85">' + esc(z[2].split(' · ')[0]) + '</text>'
-      + '<text x="270" y="145" text-anchor="middle" fill="#fff" font-size="11" opacity=".75">' + esc(z[2].split(' · ')[1] || '') + '</text>'
+      + '<rect x="108" y="10" width="108" height="100" rx="8" fill="' + t[0] + '" opacity=".16"/>'
+      + '<path d="M10 104 C 60 102, 90 80, 120 62 S 190 24, 236 22 S 300 22, 312 24" fill="none" stroke="' + g + '" stroke-width="3.5" stroke-linecap="round"/>'
+      + '<circle cx="120" cy="62" r="5.5" fill="' + g + '"/><circle cx="216" cy="23" r="5.5" fill="' + g + '"/>'
+      + '<path d="M10 110 H312" stroke="#D9D6CF" stroke-width="1.5"/>'
+      + et(54, 130, z[0].split(' · ')[0], 12, 700, m) + et(54, 145, z[0].split(' · ')[1] || '', 11, 500, m)
+      + et(162, 130, z[1].split(' · ')[0], 13, 900, t[2]) + et(162, 145, z[1].split(' · ')[1] || '', 11.5, 700, t[2])
+      + et(270, 130, z[2].split(' · ')[0], 12, 700, m) + et(270, 145, z[2].split(' · ')[1] || '', 11, 500, m)
       + '</svg>';
   }
-  function plato(){
+  function plato(t){
     // ½ verduras y frutas, ¼ granos, ¼ proteína.
     return '<svg class="diag" viewBox="0 0 320 150" aria-hidden="true">'
-      + '<circle cx="70" cy="75" r="64" fill="#fff" opacity=".18"/>'
-      + '<path d="M70 75 V11 A64 64 0 0 0 70 139 Z" fill="#fff"/>'
-      + '<path d="M70 75 V11 A64 64 0 0 1 134 75 Z" fill="#fff" opacity=".55"/>'
-      + '<path d="M70 75 H134 A64 64 0 0 1 70 139 Z" fill="#fff" opacity=".32"/>'
-      + '<g font-size="14" font-weight="800" fill="#fff"><circle cx="160" cy="40" r="7" fill="#fff"/><text x="174" y="45">½ verduras y frutas</text>'
-      + '<circle cx="160" cy="76" r="7" fill="#fff" opacity=".55"/><text x="174" y="81">¼ granos</text>'
-      + '<circle cx="160" cy="112" r="7" fill="#fff" opacity=".32"/><text x="174" y="117">¼ proteína</text></g></svg>';
+      + '<circle cx="70" cy="75" r="64" fill="#F4F2EE"/>'
+      + '<path d="M70 75 V11 A64 64 0 0 0 70 139 Z" fill="' + t[2] + '"/>'
+      + '<path d="M70 75 V11 A64 64 0 0 1 134 75 Z" fill="' + t[0] + '"/>'
+      + '<path d="M70 75 H134 A64 64 0 0 1 70 139 Z" fill="' + t[0] + '" opacity=".45"/>'
+      + '<g font-size="14" font-weight="800" fill="#1D1D1F"><circle cx="160" cy="40" r="7" fill="' + t[2] + '"/><text x="174" y="45">½ verduras y frutas</text>'
+      + '<circle cx="160" cy="76" r="7" fill="' + t[0] + '"/><text x="174" y="81">¼ granos</text>'
+      + '<circle cx="160" cy="112" r="7" fill="' + t[0] + '" opacity=".45"/><text x="174" y="117">¼ proteína</text></g></svg>';
   }
+  // Las cinco capacidades en pentágono (como en la lámina): todas presentes, ninguna sola.
+  function radar(filas, t){
+    var cx = 160, cy = 112, R = 78, n = filas.length, V = [.92, .62, .82, .58, .7];
+    var pt = function(k, r){ var a = -Math.PI / 2 + k * 2 * Math.PI / n; return [cx + Math.cos(a) * r, cy + Math.sin(a) * r]; };
+    var pol = function(r){ return filas.map(function(_, k){ return pt(k, typeof r === 'function' ? r(k) : r).map(function(v){ return v.toFixed(1); }).join(','); }).join(' '); };
+    var out = '<svg class="radar" viewBox="-30 0 380 228" aria-hidden="true">';
+    [1, .66, .33].forEach(function(f){ out += '<polygon points="' + pol(R * f) + '" fill="none" stroke="#DDD9D1" stroke-width="1.2"/>'; });
+    filas.forEach(function(_, k){ var q = pt(k, R); out += '<path d="M' + cx + ' ' + cy + 'L' + q[0].toFixed(1) + ' ' + q[1].toFixed(1) + '" stroke="#E7E4DD" stroke-width="1"/>'; });
+    out += '<polygon points="' + pol(function(k){ return R * V[k % V.length]; }) + '" fill="' + t[0] + '" fill-opacity=".2" stroke="#1D1D1F" stroke-width="2.4" stroke-linejoin="round"/>';
+    filas.forEach(function(_, k){ var q = pt(k, R * V[k % V.length]); out += '<circle cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="4" fill="#1D1D1F"/>'; });
+    filas.forEach(function(f, k){ var q = pt(k, R + 18), a = q[0] < cx - 8 ? 'end' : q[0] > cx + 8 ? 'start' : 'middle';
+      out += '<text x="' + q[0].toFixed(1) + '" y="' + (q[1] + 4).toFixed(1) + '" text-anchor="' + a + '" font-size="12.5" font-weight="800" fill="#1D1D1F">' + esc(f.t) + '</text>'; });
+    return out + '</svg>';
+  }
+  var ilus = function(s){ return s.img ? '<figure class="ilus"><div><img src="capsulas/ilus/' + esc(s.img) + '.webp" alt="" loading="lazy" decoding="async"></div></figure>' : ''; };
   function pantalla(c, i){
     var h = H[c.id], t = tema(c);
     if (i === 0) {
-      var ic0 = icoDe(c);
+      var ic0 = icoDe(c), id0 = ideaDe(c);
       return '<div class="portada" data-pantalla="portada">' + (ic0 ? '<div class="ico">' + ico(ic0) + '</div>' : '')
         + '<div class="k">' + esc(catNorm(c.cat)) + '</div><h2 class="h">' + esc(c.title) + '</h2>'
-        + (h.sub ? '<p class="p">' + esc(h.sub) + '</p>' : '') + '</div>';
+        + (h.sub ? '<p class="p">' + esc(h.sub) + '</p>' : '')
+        + (id0 ? '<div class="idea">' + esc(id0.h) + (id0.p ? '<span>' + esc(id0.p) + '</span>' : '') + '</div>' : '')
+        + '<div class="cuanto"' + (id0 ? '' : ' style="margin-top:auto"') + '>' + esc(meta(c)) + '</div></div>';
     }
     var s = seq(c)[i - 1];
     if (s.quiz) { var qz = s.quiz;
       return '<div class="quiz" data-pantalla="quiz"><div class="k">Pregunta rápida</div><h2 class="h">' + esc(qz.q) + '</h2>'
         + qz.op.map(function(o, j){ return '<button type="button" class="quiz-op" data-op="' + j + '">' + esc(o) + '</button>'; }).join('')
         + '<div class="quiz-res" hidden></div></div>'; }
-    if (s.regla) return '<div class="regla" data-pantalla="regla"><div class="k">La regla</div><h2 class="h">' + esc(s.regla[0]) + '<span>' + esc(s.regla[1]) + '</span></h2>'
+    if (s.regla) return '<div class="regla" data-pantalla="regla"><div class="k">La regla</div><div class="caja-regla"><h2 class="h">' + esc(s.regla[0]) + '<span>' + esc(s.regla[1]) + '</span></h2></div>'
       + (s.fuente ? '<div class="fuente" data-fuente>Fuentes: ' + esc(s.fuente) + '</div>' : '') + '</div>';
     var tipo = s.lista ? 'lista' : s.pasos ? 'pasos' : s.filas ? 'filas' : s.cols ? 'cols' : s.curva ? 'curva' : s.barras ? 'barras'
       : s.escala ? 'escala' : s.deslizadores ? 'deslizadores' : s.segmentos ? 'segmentos' : s.plato ? 'plato' : s.n ? 'numero' : 'idea';
-    var out = '<div data-pantalla="' + tipo + '">' + (s.ico ? '<div class="ico">' + ico(s.ico) + '</div>' : '') + (s.k ? '<div class="k">' + esc(s.k) + '</div>' : '');
+    var out = '<div data-pantalla="' + tipo + '">' + (s.ico && !s.img ? '<div class="ico">' + ico(s.ico, t[2]) + '</div>' : '') + (s.k ? '<div class="k">' + esc(s.k) + '</div>' : '');
     if (s.n) out += '<div class="num">' + esc(s.n) + '</div>' + (s.nl ? '<div class="nl">' + esc(s.nl) + '</div>' : '');
     if (s.h) out += '<h2 class="h">' + esc(s.h) + '</h2>';
     if (s.pasos) out += '<ol class="pasos">' + s.pasos.map(function(x, j){
       return '<li><b style="color:' + t[2] + '">' + (x.ico ? ico(x.ico, t[2]) : (j + 1)) + '</b><span><span class="t">' + esc(x.t) + '</span>' + (x.d ? '<span class="d">' + esc(x.d) + '</span>' : '') + '</span></li>'; }).join('') + '</ol>';
     if (s.lista) out += '<ul class="lista">' + s.lista.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
-    if (s.filas) out += '<div class="filas">' + s.filas.map(function(x){ return '<div><i>' + ico(x.ico) + '</i><span>' + esc(x.t) + '</span><em>' + esc(x.v) + '</em></div>'; }).join('') + '</div>';
+    if (s.radar && s.filas) out += radar(s.filas, t);
+    if (s.filas) out += '<div class="filas">' + s.filas.map(function(x){ return '<div><i>' + ico(x.ico, t[2]) + '</i><span>' + esc(x.t) + '</span><em>' + esc(x.v) + '</em></div>'; }).join('') + '</div>';
     if (s.cols) out += '<div class="cols" style="grid-template-columns:repeat(' + s.cols.length + ',1fr)">' + s.cols.map(function(x){
       return '<div' + (x.fuerte ? ' class="fuerte" style="color:' + t[2] + '"' : '') + '><div class="ct">' + esc(x.t) + '</div><div class="cv">' + esc(x.v) + '</div><div class="cd">' + esc(x.d) + '</div></div>'; }).join('') + '</div>';
-    if (s.curva) out += curva(s.curva);
-    if (s.plato) out += plato();
+    if (s.curva) out += curva(s.curva, t);
+    if (s.plato && !s.img) out += plato(t);
     if (s.barras) out += '<div class="barras-diag">' + s.barras.map(function(x){
       return '<div' + (x.fuerte ? ' class="fuerte"' : '') + '><span class="bv">' + esc(x.v) + '</span><span class="bb" style="height:' + Math.round((x.alto || .5) * 120) + 'px"></span><span class="bt">' + esc(x.t) + '</span><span class="bd">' + esc(x.d) + '</span></div>'; }).join('') + '</div>';
     if (s.escala) { var e = s.escala, cel = '';
@@ -17046,7 +17143,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
       return '<div' + (x.fuerte ? ' class="fuerte"' : '') + ' style="flex:' + x.v + (x.fuerte ? ';color:' + t[2] : '') + '">' + (x.v >= 8 ? x.v + ' %' : '') + '</div>'; }).join('') + '</div>'
       + '<div class="seg-pie">' + s.segmentos.map(function(x){ return '<span style="flex:' + x.v + '">' + esc(x.t) + '</span>'; }).join('') + '</div>';
     if (s.p) out += '<p class="p">' + esc(s.p) + '</p>';
-    return out + '</div>';
+    return out + ilus(s) + '</div>';
   }
 
   // ── El visor ──
@@ -17084,7 +17181,8 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     idx = i;
     guardarPos(actual.id, i === n - 1 ? 0 : i);
     var t = tema(actual);
-    caja.style.background = 'linear-gradient(170deg,' + t[0] + ' 0%,' + t[1] + ' 100%)';
+    caja.classList.toggle('oscura', i === 0);
+    caja.style.setProperty('--tinta', t[2]); caja.style.setProperty('--suave', t[0]);
     caja.querySelector('.barras').innerHTML = Array.from({ length: n }, function(_, j){ return '<span' + (j <= i ? ' class="hecha"' : '') + '></span>'; }).join('');
     caja.querySelector('.donde').textContent = actual.title + ' · ' + (i + 1) + ' de ' + n;
     var lam = caja.querySelector('.lam');
