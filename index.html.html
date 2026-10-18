@@ -9926,7 +9926,15 @@ html.em-v2[data-v2lect] .v2-lect { display:grid; gap:10px; padding:calc(64px + e
 html.em-v2[data-v2lect="videos"] .v2-lect-tabs { display:none; }
 /* Al cambiar entre Cápsulas y Guía, lo de abajo de la cabecera entra con un
    fundido corto; la cabecera (blob, aro, pestañas) se queda quieta. */
-@keyframes v2-lect-fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+@keyframes v2-lect-fade { from { opacity:0; } to { opacity:1; } }
+/* Entre Cápsulas y Guía la cabecera no se mueve ni se vuelve a pintar: la
+   pantalla entera ya no entra con su fundido (con el desplazamiento, las
+   manchas y el blob se veían como un cuadro con sombra); solo el contenido
+   de abajo aparece suave, como al cambiar de sección en la app. */
+html.em-v2[data-v2lect] .screen { animation:none; }
+/* La portada de la guía traía un degradado oscuro arriba (de cuando era una
+   foto): bajo la cabecera clara se veía como un cuadro con sombra. */
+html.em-v2 #s-guia-alimentacion .ga-cover::before { display:none; }
 html.em-v2[data-v2lect="lecturas"] .screen.active > :not(.v2-lect) { animation:v2-lect-fade .24s ease-out both; }
 @media (prefers-reduced-motion: reduce) { html.em-v2[data-v2lect="lecturas"] .screen.active > :not(.v2-lect) { animation:none; } }
 /* La voz de cada parte: etiqueta, frase en dos tonos y una bajada. En
@@ -15314,6 +15322,8 @@ function gaBack() {
       .catch(err => { _gaLoading = null; console.error('Error cargando guía:', err); throw err; });
     return _gaLoading;
   }
+  // Visual nueva: se precarga desde Cápsulas para que pasar a la Guía sea inmediato.
+  window.gaPrecargar = gaLoadContent;
   const origGo = window.go;
   window.go = function(id) {
     const guia = document.getElementById('s-guia-alimentacion');
@@ -16592,7 +16602,9 @@ document.addEventListener('keydown', function(e){
         + '</div>';
     d.addEventListener('click', function(e){
       var b = e.target.closest && e.target.closest('[data-l]');
-      if (b && b.dataset.l !== activa) go(b.dataset.l);
+      // La cabecera se mueve entre Cápsulas y Guía: cuenta la pantalla donde está ahora.
+      var aqui = (d.parentNode && d.parentNode.id) || activa;
+      if (b && b.dataset.l !== aqui) go(b.dataset.l);
     });
     return d;
   }
@@ -16600,6 +16612,15 @@ document.addEventListener('keydown', function(e){
     var scr = document.getElementById(idPantalla);
     if (!scr) return;
     var viejo = scr.querySelector(':scope > .v2-lect');
+    // Cápsulas y Guía comparten UNA cabecera: si ya está armada en la otra
+    // pantalla, se mueve aquí tal cual (sin volver a pintar el aro, las
+    // manchas ni el libro).
+    var otra = document.querySelector('.v2-lect[data-modo="' + modo + '"]');
+    if (otra && otra.parentNode !== scr && modo === 'lecturas') {
+      if (viejo) viejo.remove();
+      scr.insertBefore(otra, scr.firstChild);
+      viejo = otra;
+    }
     // Si la cabecera de esa pantalla ya está armada en ese modo, no se
     // vuelve a armar: entre Cápsulas y Guía (y al volver de una cápsula)
     // solo cambia la pestaña marcada y el aro se vuelve a llenar. Así el
@@ -16681,7 +16702,13 @@ document.addEventListener('keydown', function(e){
     if (modo === 'videos' || pedido === 's-capsulas' || pedido === 's-biblioteca') poner('s-capsulas', modo);
     var intro = document.getElementById('cap-intro-txt');
     if (intro && modo === 'lecturas') intro.innerHTML = 'Temas cortos de entrenamiento, nutrición y bienestar. <strong>Toca uno y ábrelo.</strong>';
+    // Desde Cápsulas se deja la guía cargada por detrás.
+    if (modo === 'lecturas' && pedido !== 's-guia-alimentacion' && typeof window.gaPrecargar === 'function')
+      setTimeout(function(){ try { window.gaPrecargar()['catch'](function(){}); } catch(e){} }, 700);
     if (pedido === 's-guia-alimentacion') {
+      // Ya cargada: la cabecera pasa en el mismo instante, sin esperar.
+      var gYa = document.getElementById('s-guia-alimentacion');
+      if (gYa && gYa.querySelector('.ga-cover')) { poner('s-guia-alimentacion', 'lecturas'); armarIndiceGuia(); return r; }
       // La guía se carga aparte (y reemplaza su contenido): se pone el bloque cuando ya está.
       var intentos = 0;
       (function esperar(){
