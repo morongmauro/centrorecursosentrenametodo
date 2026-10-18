@@ -11505,6 +11505,7 @@ html.em-v2 #s-onboarding .hub-back-link { display: none !important; }
 <script src="capsulas/manifest.js"></script>
 <script src="capsulas/capsulas.js"></script>
 <script src="capsulas/historias.js"></script>
+<script src="capsulas/portadas.js"></script>
 <script src="podcast/podcasts.js"></script>
 
 <script>
@@ -16919,6 +16920,24 @@ html.em-v2 .v2-estante .v2-hcard .cat { left:12px; top:12px; font-size:10px; }
 html.em-v2 .v2-estante .v2-hcard .t { font-size:17px; margin:0; }
 html.em-v2 .v2-estante .v2-hcard .marca { top:auto; bottom:auto; left:auto; right:10px; top:30px; font-size:10.5px; padding:3px 8px; }
 html.em-v2 .v2-estante .v2-hcard .ico-portada { right:12px; top:52px; width:40px; height:40px; }
+/* Portadas con dibujo (opción C): el dibujo arriba, el título y su frase
+   abajo. En la de la semana, el dibujo a la derecha. */
+html.em-v2 .con-arte::after { display:none; }
+html.em-v2 .con-arte .arte { position:absolute; pointer-events:none; }
+html.em-v2 .con-arte .arte svg { display:block; width:100%; height:100%; overflow:visible; }
+html.em-v2 .con-arte .txt { position:absolute; display:flex; flex-direction:column; gap:5px; }
+html.em-v2 .con-arte .txt .t { position:static; margin:0; }
+html.em-v2 .con-arte .s { font-size:12.5px; font-weight:600; line-height:1.28; letter-spacing:-.005em; opacity:.84; }
+html.em-v2 .v2-estante .v2-hcard.con-arte { height:262px; }
+/* En el estante el tema ya está en su título: la tarjeta no lo repite. */
+html.em-v2 .v2-estante .v2-hcard.con-arte .cat { display:none; }
+html.em-v2 .v2-estante .v2-hcard.con-arte .arte { left:12px; right:12px; top:36px; height:94px; }
+html.em-v2 .v2-estante .v2-hcard.con-arte .marca { top:11px; left:12px; right:auto; }
+html.em-v2 .v2-estante .v2-hcard.con-arte .txt { left:12px; right:12px; bottom:13px; }
+html.em-v2 .v2-cap-dest.con-arte { height:204px; }
+html.em-v2 .v2-cap-dest.con-arte .arte { right:12px; top:46px; width:46%; max-width:176px; height:132px; }
+html.em-v2 .v2-cap-dest.con-arte .txt { left:20px; right:52%; bottom:18px; }
+html.em-v2 .v2-cap-dest.con-arte .s { font-size:13.5px; }
 html.em-v2 .v2-cap-item .m { font-size:13px; color:#8E8E93; margin:8px 2px 0; }
 /* Cápsulas | Guía de alimentación: control segmentado (en vez de las dos tarjetas) */
 html.em-v2 .v2-lect-tabs { display:flex; gap:2px; padding:3px; border-radius:999px; background:rgba(118,118,128,.12); margin-top:6px; }
@@ -17075,13 +17094,17 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
   var leerPos = function(){ try { return JSON.parse(localStorage.getItem(POS_KEY) || '{}') || {}; } catch (e) { return {}; } };
   var guardarPos = function(id, i){ var m = leerPos(); if (i > 0) m[id] = i; else delete m[id]; try { localStorage.setItem(POS_KEY, JSON.stringify(m)); } catch (e) {} };
   var meta = function(c){ return H[c.id] ? Math.max(1, Math.round(palabras(c) / 180)) + ' min de lectura' : 'Lámina'; };
+  // La portada: el dibujo de la cápsula (capsulas/portadas.js), el título
+  // y la frase que dice qué te llevas. Sin dibujo, el ícono de antes.
+  var _uPort = 0;
   var portadaHTML = function(c, i, k, clase){
     var t = tono(c, k), ic = icoDe(c), read = capGetRead(), vista = read.indexOf(c.id) !== -1;
-    return '<button type="button" class="' + clase + (vista ? ' vista' : '') + '" data-historia="' + esc(c.id) + '" onclick="capOpen(' + i + ')" style="background:radial-gradient(120% 85% at 85% 0%,' + t[0] + ',' + t[1] + ')">'
+    var dib = window.CAP_PORTADAS && window.CAP_PORTADAS[c.id], sub = H[c.id] && H[c.id].sub;
+    return '<button type="button" class="' + clase + (vista ? ' vista' : '') + (dib ? ' con-arte' : '') + '" data-historia="' + esc(c.id) + '" onclick="capOpen(' + i + ')" style="background:radial-gradient(120% 85% at 85% 0%,' + t[0] + ',' + t[1] + ')">'
       + '<span class="cat">' + esc(catNorm(c.cat)) + '</span>'
       + (vista ? '<span class="marca">✓ Vista</span>' : (c.nuevo ? '<span class="marca">Nueva</span>' : ''))
-      + (ic ? '<span class="ico-portada">' + ico(ic) + '</span>' : '')
-      + '<span class="t">' + esc(c.title) + '</span></button>';
+      + (dib ? '<span class="arte">' + dib('p' + (++_uPort)) + '</span>' : (ic ? '<span class="ico-portada">' + ico(ic) + '</span>' : ''))
+      + '<span class="txt"><span class="t">' + esc(c.title) + '</span>' + (dib && sub ? '<span class="s">' + esc(sub) + '</span>' : '') + '</span></button>';
   };
   var renderViejo = window.capRender;
   window.capRender = function(){

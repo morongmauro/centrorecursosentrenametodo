@@ -5,7 +5,8 @@
    Cada cápsula se abre como una lectura de una sola página (como los
    capítulos de la Guía): título e idea arriba, una tarjeta por cada tema
    de la lámina con su número clave, «Cómo lo aplicas», la regla y las
-   fuentes. Al final, el botón para abrir la lámina completa.
+   fuentes. La portada de la lista lleva su dibujo (capsulas/portadas.js)
+   y la frase `sub`.
 
    EL CONTENIDO ES EL DE CADA LÁMINA, COMPLETO: cada dato, cifra, ejemplo y
    punto de «Cómo lo aplicas» está aquí. Si cambias una lámina, cambia
