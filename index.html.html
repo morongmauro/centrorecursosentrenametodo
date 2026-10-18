@@ -16938,6 +16938,11 @@ html.em-v2 .v2-cap-dest.con-arte { height:204px; }
 html.em-v2 .v2-cap-dest.con-arte .arte { right:12px; top:46px; width:46%; max-width:176px; height:132px; }
 html.em-v2 .v2-cap-dest.con-arte .txt { left:20px; right:52%; bottom:18px; }
 html.em-v2 .v2-cap-dest.con-arte .s { font-size:13.5px; }
+/* Opción A: las del estante, blancas como las tarjetas de la app. */
+html.em-v2 .v2-estante .v2-hcard.clara { color:#1D1D1F; box-shadow:0 1px 2px rgba(40,40,30,.05), 0 8px 20px rgba(40,40,30,.07); }
+html.em-v2 .v2-estante .v2-hcard.clara .s { color:#6E6E73; opacity:1; }
+html.em-v2 .v2-estante .v2-hcard.clara .marca { background:rgba(29,29,31,.07); color:#1D1D1F; }
+html.em-v2 .v2-cap-dest.con-arte { box-shadow:0 14px 30px rgba(201,95,23,.22); }
 html.em-v2 .v2-cap-item .m { font-size:13px; color:#8E8E93; margin:8px 2px 0; }
 /* Cápsulas | Guía de alimentación: control segmentado (en vez de las dos tarjetas) */
 html.em-v2 .v2-lect-tabs { display:flex; gap:2px; padding:3px; border-radius:999px; background:rgba(118,118,128,.12); margin-top:6px; }
@@ -17088,6 +17093,8 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     'Nutrición': [['#5CAE72', '#22663A'], ['#3F8A53', '#164A26'], ['#EE8434', '#9C430C'], ['#46965A', '#1F5A31']],
     'Bienestar general': [['#E2A43A', '#9A6410'], ['#EE8434', '#9C430C'], ['#6A727C', '#33383F'], ['#C98A22', '#7A4E0A']]
   };
+  // El color de cada tema (el de su módulo en la app).
+  var ACENTO_TEMA = { 'Entrenamiento': '#3C7BD6', 'Nutrición': '#46965A', 'Bienestar general': '#EE8434' };
   var tono = function(c, k){ var l = TONOS[catNorm(c.cat)] || TONOS['Bienestar general']; return l[k % l.length]; };
   // Dónde quedó cada cápsula (solo en este teléfono): para «Sigue leyendo».
   var POS_KEY = 'em_v2_hist_pos';
@@ -17099,11 +17106,17 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
   var _uPort = 0;
   var portadaHTML = function(c, i, k, clase){
     var t = tono(c, k), ic = icoDe(c), read = capGetRead(), vista = read.indexOf(c.id) !== -1;
-    var dib = window.CAP_PORTADAS && window.CAP_PORTADAS[c.id], sub = H[c.id] && H[c.id].sub;
-    return '<button type="button" class="' + clase + (vista ? ' vista' : '') + (dib ? ' con-arte' : '') + '" data-historia="' + esc(c.id) + '" onclick="capOpen(' + i + ')" style="background:radial-gradient(120% 85% at 85% 0%,' + t[0] + ',' + t[1] + ')">'
+    var dib = window.CAP_PORTADA && window.CAP_PORTADAS && window.CAP_PORTADAS[c.id], sub = H[c.id] && H[c.id].sub;
+    // Con dibujo: las del estante en tarjeta blanca (como el resto de la app)
+    // con un solo toque del color del tema; la de la semana, la única de
+    // color (el naranja de Aprendizaje), para que sea la que llama.
+    var clara = dib && clase === 'v2-hcard', semana = dib && clase === 'v2-cap-dest';
+    var fondo = clara ? '#FFFFFF' : semana ? 'radial-gradient(120% 90% at 85% 0%,#F09A55,#D96A1F)' : 'radial-gradient(120% 85% at 85% 0%,' + t[0] + ',' + t[1] + ')';
+    var arte = dib ? window.CAP_PORTADA(c.id, 'p' + (++_uPort), clara ? { claro: true, acento: ACENTO_TEMA[catNorm(c.cat)] || '#EE8434' } : null) : '';
+    return '<button type="button" class="' + clase + (vista ? ' vista' : '') + (dib ? ' con-arte' : '') + (clara ? ' clara' : '') + '" data-historia="' + esc(c.id) + '" onclick="capOpen(' + i + ')" style="background:' + fondo + '">'
       + '<span class="cat">' + esc(catNorm(c.cat)) + '</span>'
       + (vista ? '<span class="marca">✓ Vista</span>' : (c.nuevo ? '<span class="marca">Nueva</span>' : ''))
-      + (dib ? '<span class="arte">' + dib('p' + (++_uPort)) + '</span>' : (ic ? '<span class="ico-portada">' + ico(ic) + '</span>' : ''))
+      + (dib ? '<span class="arte">' + arte + '</span>' : (ic ? '<span class="ico-portada">' + ico(ic) + '</span>' : ''))
       + '<span class="txt"><span class="t">' + esc(c.title) + '</span>' + (dib && sub ? '<span class="s">' + esc(sub) + '</span>' : '') + '</span></button>';
   };
   var renderViejo = window.capRender;
@@ -17125,9 +17138,9 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     var medias = CAPSULAS.filter(function(c){ return pos[c.id] && sinLeer(c) && H[c.id]; }).slice(0, 2);
     if (medias.length) {
       html += '<div class="v2-cap-sec">Sigue leyendo</div><div class="v2-cap-medias">' + medias.map(function(c){
-        var i = CAPSULAS.indexOf(c), pc = Math.max(1, Math.min(97, pos[c.id])), t = tono(c, 0);
+        var i = CAPSULAS.indexOf(c), pc = Math.max(1, Math.min(97, pos[c.id]));
         return '<button type="button" class="v2-cap-media" data-sigue="' + esc(c.id) + '" onclick="capOpen(' + i + ')">'
-          + '<span class="mini" style="background:radial-gradient(120% 85% at 85% 0%,' + t[0] + ',' + t[1] + ')">' + (icoDe(c) ? ico(icoDe(c)) : '') + '</span>'
+          + '<span class="mini" style="background:' + (ACENTO_TEMA[catNorm(c.cat)] || '#EE8434') + '">' + (icoDe(c) ? ico(icoDe(c)) : '') + '</span>'
           + '<span class="txt"><b>' + esc(c.title) + '</b><span>Vas en el ' + pc + ' %</span><i><em style="width:' + pc + '%"></em></i></span></button>';
       }).join('') + '</div>';
     }

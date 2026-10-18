@@ -224,4 +224,36 @@
   };
 
   window.CAP_PORTADAS = P;
+
+  // ── La versión para tarjeta blanca (la de la lista) ──
+  // Sin resplandores (no son de la marca): plano, con la sombra suave. El
+  // vidrio pasa a gris muy claro, las líneas a grafito y el amarillo al color
+  // del tema de la cápsula (azul, verde o naranja): un solo toque de color.
+  var sinBrillo = function (t) { return t.replace(/<[^>]*filter="url\(#br[^"]*\)"[^>]*\/>/g, ''); };
+  function claro(t, ac) {
+    t = sinBrillo(t);
+    t = t.replace(/(id="(vi|bo|ar)[^"]*"[^>]*>)(.*?)<\/linearGradient>/g, function (m, a, k, b) {
+      return a + b.replace(/#fff/g, '#1D1D1F').replace(/stop-opacity="([.\d]+)"/g, function (x, v) { return 'stop-opacity="' + (v * 0.28).toFixed(3) + '"'; }) + '</linearGradient>';
+    });
+    t = t.replace(/fill="#fff" fill-opacity="\.38"/g, 'fill="#1D1D1F" fill-opacity=".07"')
+      .replace(/fill="url\(#bl([^)]*)\)" fill-opacity="\.9"/g, 'fill="#E9E8E3"')
+      .replace(/fill="#fff" fill-opacity="\.45"/g, 'fill="#D9D7D0"')
+      .replace(/fill="#fff" fill-opacity="\.1"/g, 'fill="#1D1D1F" fill-opacity=".03"')
+      // Las perillas de los deslizadores y los números del orden siguen
+      // blancos, con su borde.
+      .replace(/r="9" fill="#fff"/g, 'r="9" fill="#FFFFFF" stroke="#1D1D1F" stroke-opacity=".12"')
+      .replace(/r="7\.5" fill="(#fff|rgba\(255,255,255,\.92\))"/g, 'r="7.5" fill="#FFFFFF" stroke="#1D1D1F" stroke-opacity=".14"');
+    t = t.replace(/#fff\b/gi, '#1D1D1F').replace(/rgba\(255,255,255,\.92\)/g, '#1D1D1F')
+      .replace(/#FFE7A3/g, ac).replace(new RegExp(AM, 'g'), ac);
+    // La luna, en el color del tema (en grafito pesaba demasiado).
+    t = t.replace(/(<path d="M70 6 [^"]*" )fill="url\(#bl[^)]*\)"/, '$1fill="' + ac + '"');
+    return t;
+  }
+  // opciones: { claro: true, acento: '#3C7BD6' } para la tarjeta blanca; sin
+  // opciones, el dibujo blanco plano (para fondo de color).
+  window.CAP_PORTADA = function (id, u, op) {
+    if (!P[id]) return '';
+    var t = P[id](u);
+    return op && op.claro ? claro(t, op.acento || AM) : sinBrillo(t);
+  };
 })();
