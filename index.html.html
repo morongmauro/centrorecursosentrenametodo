@@ -16833,6 +16833,19 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
 .v2-hist .toque { position:absolute; top:90px; bottom:90px; border:0; background:transparent; z-index:2; cursor:pointer; -webkit-tap-highlight-color:transparent; }
 .v2-hist .toque.atras { left:0; width:30%; } .v2-hist .toque.adelante { right:0; width:70%; }
 .v2-hist .sigue { font-size:13px; font-weight:700; opacity:.7; text-align:right; }
+/* Pregunta rápida: por encima de las zonas de toque para poder responder */
+.v2-hist .quiz { position:relative; z-index:3; }
+.v2-hist .quiz-op { display:block; width:100%; text-align:left; margin-top:10px; padding:15px 16px; border-radius:16px; border:0; cursor:pointer;
+  background:rgba(255,255,255,.18); color:#fff; font:inherit; font-size:16.5px; font-weight:750; -webkit-tap-highlight-color:transparent; transition:transform .12s ease, background .2s ease; }
+.v2-hist .quiz-op:active { transform:scale(.98); }
+.v2-hist .quiz-op.bien { background:#fff; color:#1F1F1F; }
+.v2-hist .quiz-op.bien::after { content:' ✓'; color:#46965A; }
+.v2-hist .quiz-op.mal { background:rgba(0,0,0,.18); text-decoration:line-through; opacity:.8; }
+.v2-hist .quiz-op.otra { opacity:.55; }
+.v2-hist .quiz-res { margin-top:16px; font-size:15.5px; line-height:1.45; }
+.v2-hist .quiz-res b { font-weight:850; }
+.v2-hist .quiz-sigue { display:block; margin-top:14px; margin-left:auto; height:44px; padding:0 18px; border-radius:14px; border:0; background:#fff; color:#1F1F1F;
+  font:inherit; font-size:15px; font-weight:800; cursor:pointer; }
 @media (prefers-reduced-motion: reduce) { .v2-hist.abierta, .v2-hist .lam.entra > * { animation:none; } }
 </style>
 <script>
@@ -16849,7 +16862,14 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
   };
   var tema = function(c){ return TEMA[catNorm(c.cat)] || TEMA['Bienestar general']; };
   var esc = function(s){ return capEsc(String(s == null ? '' : s)); };
-  var total = function(c){ var h = H[c.id]; return h ? h.pantallas.length + 1 : 0; };
+  // Las pantallas de una cápsula; la pregunta rápida (si tiene) justo antes de la regla.
+  var seq = function(c){
+    var h = H[c.id]; if (!h) return [];
+    var l = h.pantallas.slice();
+    if (h.quiz) { var u = l.length && l[l.length - 1].regla ? l.length - 1 : l.length; l.splice(u, 0, { quiz: h.quiz }); }
+    return l;
+  };
+  var total = function(c){ var h = H[c.id]; return h ? seq(c).length + 1 : 0; };
 
   // ── Íconos de línea (24 × 24), en blanco o en el color que se pida ──
   var I = {
@@ -16994,7 +17014,11 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
         + '<div class="k">' + esc(catNorm(c.cat)) + '</div><h2 class="h">' + esc(c.title) + '</h2>'
         + (h.sub ? '<p class="p">' + esc(h.sub) + '</p>' : '') + '</div>';
     }
-    var s = h.pantallas[i - 1];
+    var s = seq(c)[i - 1];
+    if (s.quiz) { var qz = s.quiz;
+      return '<div class="quiz" data-pantalla="quiz"><div class="k">Pregunta rápida</div><h2 class="h">' + esc(qz.q) + '</h2>'
+        + qz.op.map(function(o, j){ return '<button type="button" class="quiz-op" data-op="' + j + '">' + esc(o) + '</button>'; }).join('')
+        + '<div class="quiz-res" hidden></div></div>'; }
     if (s.regla) return '<div class="regla" data-pantalla="regla"><div class="k">La regla</div><h2 class="h">' + esc(s.regla[0]) + '<span>' + esc(s.regla[1]) + '</span></h2>'
       + (s.fuente ? '<div class="fuente" data-fuente>Fuentes: ' + esc(s.fuente) + '</div>' : '') + '</div>';
     var tipo = s.lista ? 'lista' : s.pasos ? 'pasos' : s.filas ? 'filas' : s.cols ? 'cols' : s.curva ? 'curva' : s.barras ? 'barras'
@@ -17067,6 +17091,26 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     lam.innerHTML = pantalla(actual, i);
     lam.scrollTop = 0;
     lam.classList.remove('entra'); void lam.offsetWidth; lam.classList.add('entra');
+    var qz = lam.querySelector('.quiz');
+    if (qz) {
+      var dato = seq(actual)[i - 1].quiz, c0 = actual;
+      qz.querySelectorAll('.quiz-op').forEach(function(b){
+        b.addEventListener('click', function(ev){
+          ev.stopPropagation();
+          if (qz.dataset.respondida) return;
+          var j = Number(b.dataset.op), bien = j === dato.ok;
+          qz.dataset.respondida = bien ? 'bien' : 'mal';
+          qz.querySelectorAll('.quiz-op').forEach(function(x){ var k = Number(x.dataset.op);
+            x.classList.add(k === dato.ok ? 'bien' : k === j ? 'mal' : 'otra'); });
+          var res = qz.querySelector('.quiz-res');
+          res.innerHTML = '<b>' + (bien ? '¡Exacto!' : 'Casi.') + '</b> ' + esc(dato.por)
+            + '<button type="button" class="quiz-sigue">Seguir ›</button>';
+          res.hidden = false;
+          res.querySelector('.quiz-sigue').addEventListener('click', function(e2){ e2.stopPropagation(); ir(idx + 1); });
+          try { var r = JSON.parse(localStorage.getItem('em_v2_quiz') || '{}') || {}; r[c0.id] = bien ? 1 : 0; localStorage.setItem('em_v2_quiz', JSON.stringify(r)); } catch (e) {}
+        });
+      });
+    }
     var ultima = i === n - 1;
     caja.querySelector('.pie').innerHTML = ultima
       ? '<div class="finales"><button type="button" class="ver">Ver la lámina</button><button type="button" class="listo">Listo</button></div>'

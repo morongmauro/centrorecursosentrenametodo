@@ -29,12 +29,16 @@
      { k, segmentos:[{t, v, fuerte}] }       de dónde sale un total (%)
      { k, plato:true }              el plato repartido
      { regla:[a, b], fuente }       la frase final (b va en color)
+   `quiz: { q, op:[…], ok, por }` (opcional, en la cápsula): una pregunta
+   rápida antes de la regla, con respuesta inmediata. `ok` es el índice de
+   la opción correcta y `por` la explicación que se ve al responder.
    Cualquier pantalla acepta `ico` (el ícono de arriba) y `p` (texto).
    ═══════════════════════════════════════════════════════════════════════ */
 
 window.CAPSULAS_HISTORIAS = {
 
   'ent-01-capacidades': {
+    quiz: { q: "¿Qué capacidad marca tu techo?", op: ["La que más entrenas", "La más rezagada"], ok: 1, por: "Ninguna capacidad se sostiene sola: la que queda atrás le pone límite a las demás." },
     sub: 'Cuál de ellas te está poniendo el techo.',
     pantallas: [
       { k: 'La idea', ico: 'capas', h: 'Tu cuerpo no entrena una sola cualidad: entrena cinco a la vez.', p: 'Y todas se apoyan entre sí. La que quede rezagada le pone límite a las demás.' },
@@ -60,6 +64,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'ent-02-crece-musculo': {
+    quiz: { q: "¿Cuántas series por semana necesita un músculo para crecer?", op: ["3 a 5", "10 a 20", "30 o más"], ok: 1, por: "Por debajo de diez la respuesta se queda corta; por encima de veinte el beneficio se aplana y la fatiga sube." },
     sub: 'La dosis que realmente produce hipertrofia.',
     pantallas: [
       { k: 'La idea', ico: 'musculo', h: 'Hipertrofia es el aumento del tamaño de tus fibras musculares.',
@@ -82,6 +87,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'ent-03-lenguaje-rutina': {
+    quiz: { q: "No puedes subir el peso. ¿Qué te queda por mover?", op: ["Nada: toca esperar", "Más repeticiones, bajada más controlada o más rango"], ok: 1, por: "Son tres palancas, y un entrenamiento estructurado mueve una a la vez." },
     sub: 'Las variables que definen tu entrenamiento.',
     pantallas: [
       { k: 'La idea', ico: 'regla', h: 'Decir que un entreno fue «duro» no describe nada.',
@@ -106,6 +112,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'ent-04-subir-peso': {
+    quiz: { q: "Mismo peso, pero hiciste una repetición más. ¿Progresaste?", op: ["Sí", "No: solo cuenta subir kilos"], ok: 0, por: "Progresar es superar tu registro anterior, aunque sea por una repetición." },
     sub: 'Y por qué no tiene que ser cada semana.',
     pantallas: [
       { k: 'La idea', ico: 'escalera', h: 'Progresar no es subir kilos cada semana.',
@@ -139,6 +146,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'ent-05-orden-sesion': {
+    quiz: { q: "Hoy tienes poco tiempo. ¿Qué recortas?", op: ["Las series del final", "El primer ejercicio"], ok: 0, por: "Recorta por el final, nunca por el principio: los compuestos van con la fuerza intacta." },
     sub: 'Dónde gastas la fuerza que tienes disponible.',
     pantallas: [
       { k: 'La idea', ico: 'orden', h: 'Mismo entreno, mismo esfuerzo, distinto resultado.',
@@ -169,6 +177,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'ent-06-entiende-rutina': {
+    quiz: { q: "Paraste sintiendo que podías hacer dos más. ¿Qué RIR fue?", op: ["RIR 2", "RIR 8"], ok: 0, por: "RIR cuenta las repeticiones que te sobraron." },
     sub: 'Las abreviaturas que sí necesitas ahora.',
     pantallas: [
       { k: 'La idea', ico: 'lista', h: 'Unas pocas abreviaturas son esenciales.',
@@ -193,6 +202,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'nut-07-cada-macro': {
+    quiz: { q: "¿Cuánta proteína por kilo de peso?", op: ["0,8 g", "1,6 a 2,2 g", "4 g"], ok: 1, por: "Ahí se aplana el beneficio. Trátala como innegociable en cualquier fase." },
     sub: 'Proteína, grasa y carbohidrato en gramos por kilo.',
     pantallas: [
       { k: 'La idea', ico: 'balanza', h: 'Las calorías deciden hacia dónde se mueve tu peso.',
@@ -217,6 +227,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'nut-08-grasa-y-musculo': {
+    quiz: { q: "¿Cuánto tiempo sostienes una dirección (déficit, superávit o recomposición)?", op: ["3 semanas y cambio", "8 a 12 semanas"], ok: 1, por: "Cambiar cada tres semanas no produce nada." },
     sub: 'Balance energético y composición corporal.',
     pantallas: [
       { k: 'La idea', ico: 'balanza', h: 'El objetivo no es el peso: es la composición.',
@@ -242,6 +253,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'nut-09-comer-sin-pesar': {
+    quiz: { q: "Con MyPlate, ¿qué va en la mitad del plato?", op: ["Verduras y frutas", "Granos", "Proteína"], ok: 0, por: "La mitad en verduras y frutas (más verdura que fruta), un cuarto de granos y un cuarto de proteína." },
     sub: 'Dos métodos para los días sin registro.',
     pantallas: [
       { k: 'La idea', ico: 'plato', h: 'Un restaurante, una reunión, la casa de alguien más.',
@@ -270,6 +282,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'bie-10-dormir-mejor': {
+    quiz: { q: "¿Cuál es la palanca más barata para dormir mejor?", op: ["Horas parecidas para acostarte y levantarte", "Cambiarlo todo la misma noche"], ok: 0, por: "Tu reloj interno se sincroniza con horarios estables, y no te cuesta ni tiempo ni dinero." },
     sub: 'Las palancas que sí puedes mover hoy.',
     pantallas: [
       { k: 'La idea', ico: 'luna', n: '7 a 9 h', nl: 'la referencia de sueño',
@@ -296,6 +309,7 @@ window.CAPSULAS_HISTORIAS = {
     ] },
 
   'bie-11-muevete-fuera': {
+    quiz: { q: "Hoy caminas 5.000 pasos. ¿Cuál es el siguiente paso?", op: ["Subir de 1.000 a 1.500 y quedarte ahí dos semanas", "Saltar a 10.000 mañana"], ok: 0, por: "Sube en escalones y sostenlo dos semanas: los saltos grandes no se mantienen." },
     sub: 'El NEAT, y por qué se mide caminando.',
     pantallas: [
       { k: 'La idea', ico: 'huellas', h: 'Todo lo que te mueves fuera del entreno tiene nombre: NEAT.',
