@@ -16939,12 +16939,15 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
   };
   var tema = function(c){ return TEMA[catNorm(c.cat)] || TEMA['Bienestar general']; };
   var esc = function(s){ return capEsc(String(s == null ? '' : s)); };
-  // Las pantallas de una cápsula; la pregunta rápida (si tiene) justo antes de la regla.
+  // La pregunta rápida está apagada por ahora (Mauro no aprobó las preguntas).
+  // Las preguntas siguen en historias.js; ponerlo en true las vuelve a mostrar.
+  var CON_PREGUNTA = false;
+  // Las pantallas de una cápsula; la pregunta rápida (si la hay y está prendida) justo antes de la regla.
   var seq = function(c){
     var h = H[c.id]; if (!h) return [];
     var l = h.pantallas.slice();
     if (ideaDe(c)) l.shift();
-    if (h.quiz) { var u = l.length && l[l.length - 1].regla ? l.length - 1 : l.length; l.splice(u, 0, { quiz: h.quiz }); }
+    if (h.quiz && CON_PREGUNTA) { var u = l.length && l[l.length - 1].regla ? l.length - 1 : l.length; l.splice(u, 0, { quiz: h.quiz }); }
     return l;
   };
   var total = function(c){ var h = H[c.id]; return h ? seq(c).length + 1 : 0; };

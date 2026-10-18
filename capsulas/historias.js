@@ -32,6 +32,7 @@
    `quiz: { q, op:[…], ok, por }` (opcional, en la cápsula): una pregunta
    rápida antes de la regla, con respuesta inmediata. `ok` es el índice de
    la opción correcta y `por` la explicación que se ve al responder.
+   HOY ESTÁ APAGADA: no se muestra (CON_PREGUNTA en index.html.html).
    Cualquier pantalla acepta `ico` (el ícono de arriba) y `p` (texto), e
    `img`: la ilustración de la lámina (capsulas/ilus/<img>.webp, recortada de
    la lámina en grafito con fondo transparente) que va al pie de la pantalla.

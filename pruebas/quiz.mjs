@@ -1,5 +1,4 @@
-// Cápsulas: la pregunta rápida antes de la regla (responder marca la correcta,
-// explica y «Seguir» lleva al final).  NODE_PATH=… node pruebas/quiz.mjs
+// Cápsulas: la pregunta rápida está apagada por ahora; ninguna cápsula la muestra.  NODE_PATH=… node pruebas/quiz.mjs
 import { createRequire } from 'module'; import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path';
 const r = createRequire(import.meta.url); const { chromium } = r('playwright');
 const RAIZ = path.join(import.meta.dirname, '..');
@@ -12,18 +11,14 @@ const p = await ctx.newPage(); const err = []; p.on('pageerror', e => err.push(e
 await p.route('**/*', r2 => r2.request().url().startsWith(BASE) ? r2.continue() : r2.fulfill({ status: 200, body: '[]', contentType: 'application/json' }));
 await p.goto(BASE + '/?mt_v2=1&mt_name=Prueba'); await p.waitForTimeout(2500);
 let mal = 0; const ok = (n, c, x = '') => { if (!c) mal++; console.log(`  ${c ? 'ok ' : 'MAL'}  ${n}${c ? '' : '  ' + x}`); };
-const i = await p.evaluate(() => CAPSULAS.findIndex(c => c.id === 'ent-04-subir-peso'));
-await p.evaluate((i) => capOpen(i), i); await p.waitForTimeout(400);
-const n = await p.evaluate(() => document.querySelectorAll('#v2-hist .barras span').length);
-for (let k = 0; k < n - 2; k++) { await p.locator('#v2-hist .toque.adelante').click(); await p.waitForTimeout(120); }
-ok('la penúltima pantalla es la pregunta rápida', await p.locator('#v2-hist [data-pantalla="quiz"]').count() === 1, await p.locator('#v2-hist .lam').innerText());
-await p.screenshot({ path: path.join(import.meta.dirname, 'quiz-1.png') });
-await p.locator('#v2-hist .quiz-op').nth(1).click(); await p.waitForTimeout(300);
-const res = await p.locator('#v2-hist .quiz-res').innerText();
-ok('al responder mal: marca la correcta y explica', /Casi\./.test(res) && /aunque sea por una repetición/.test(res) && await p.locator('#v2-hist .quiz-op.bien').count() === 1, res);
-await p.screenshot({ path: path.join(import.meta.dirname, 'quiz-2.png') });
-await p.locator('#v2-hist .quiz-sigue').click(); await p.waitForTimeout(300);
-ok('«Seguir» lleva a la regla final', await p.locator('#v2-hist [data-pantalla="regla"]').count() === 1);
-ok('queda la respuesta guardada', await p.evaluate(() => JSON.parse(localStorage.getItem('em_v2_quiz') || '{}')['ent-04-subir-peso'] === 0));
+// La pregunta rápida está apagada por ahora: ninguna cápsula la muestra.
+let conPregunta = [];
+for (const id of await p.evaluate(() => Object.keys(window.CAPSULAS_HISTORIAS))) {
+  await p.evaluate((id) => { localStorage.removeItem('em_v2_hist_pos'); capOpen(CAPSULAS.findIndex(c => c.id === id)); }, id); await p.waitForTimeout(250);
+  const n = await p.evaluate(() => document.querySelectorAll('#v2-hist .barras span').length);
+  for (let k = 0; k < n - 1; k++) { if (await p.locator('#v2-hist [data-pantalla="quiz"]').count()) conPregunta.push(id); await p.locator('#v2-hist .toque.adelante').click(); await p.waitForTimeout(80); }
+  await p.locator('#v2-hist .listo').click(); await p.waitForTimeout(150);
+}
+ok('ninguna cápsula muestra la pregunta rápida', conPregunta.length === 0, conPregunta.join(', '));
 ok('sin errores', err.length === 0, err.join(' | '));
 console.log(mal ? `${mal} MAL` : 'todo bien'); await b.close(); srv.close();
