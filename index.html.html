@@ -10031,12 +10031,12 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-aro .v2-aro i { position:absolute; inset:0; border-radius:50%;
   -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); }
 .v2-cab-aro .v2-aro-riel { background:rgba(255,255,255,0.9); }
-.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #EE8434 0deg, #EE8434 var(--v2g), transparent var(--v2g)); }
+.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #EE8434 0deg, #EE8434 max(0deg, calc(var(--v2g) - 110deg)), #F3A971 var(--v2g), transparent var(--v2g)); }
 .v2-cab-aro .v2-aro-inicio, .v2-cab-aro .v2-aro-punta { position:absolute; inset:0; pointer-events:none; }
 .v2-cab-aro .v2-aro-inicio::before, .v2-cab-aro .v2-aro-punta::before, .v2-cab-aro .v2-aro-punta::after { content:''; position:absolute; left:calc(50% - 3.5px); top:0; width:7px; height:7px; border-radius:50%; }
 .v2-cab-aro .v2-aro-inicio::before { background:#EE8434; }
 .v2-cab-aro .v2-aro-punta { transform:rotate(var(--v2g)); }
-.v2-cab-aro .v2-aro-punta::before { background:#EE8434; }
+.v2-cab-aro .v2-aro-punta::before { background:#F3A971; }
 .v2-cab-aro .v2-aro-punta::after { left:calc(50% - 1.5px); top:2px; width:3px; height:3px; background:#fff; }
 .v2-cab-aro .v2-aro.cero .v2-aro-inicio, .v2-cab-aro .v2-aro.cero .v2-aro-punta { opacity:0; }
 .v2-cab-aro .v2-aro.lleno .v2-aro-punta::after { opacity:0; }
@@ -10085,8 +10085,11 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-aro .v2-blob .v2-aro { position:absolute; left:15px; top:15px; width:92px; height:92px; opacity:1; }
 .v2-cab-aro .v2-aro i { -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); }
 .v2-cab-aro .v2-aro-riel { background:rgba(255,255,255,0.85); }
-.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #EE8434 0deg, #EE8434 var(--v2g), transparent var(--v2g)); }
+.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #EE8434 0deg, #EE8434 max(0deg, calc(var(--v2g) - 110deg)), #F3A971 var(--v2g), transparent var(--v2g)); }
 .v2-cab-aro .v2-aro-inicio::before, .v2-cab-aro .v2-aro-punta::before { left:calc(50% - 3.5px); width:7px; height:7px; background:#EE8434; }
+/* Opción B (como la app): naranja pleno y, en el último tramo, una luz
+   continua que se aclara hasta la punta, donde va el punto blanco. */
+.v2-cab-aro .v2-aro-punta::before { background:#F3A971; }
 .v2-cab-aro .v2-aro-punta::after { left:calc(50% - 1.5px); top:2px; width:3px; height:3px; background:#FFFFFF; }
 .v2-cab-aro .v2-aro.lleno .v2-aro-punta::after { opacity:1; }
 .v2-cab-aro .v2-aro-dentro { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
