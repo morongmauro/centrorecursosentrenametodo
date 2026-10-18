@@ -34,7 +34,7 @@ for (const id of ids) {
   }, id);
   if (d.falta.length) faltan.push(id + ': ' + d.falta.slice(0, 3).join(' | '));
   if (d.ancha) anchas.push(id);
-  ok(`${id}: se abre como lectura, con la regla y «Ver la lámina»`, d.abierta && d.regla && d.ver, JSON.stringify(d).slice(0, 200));
+  ok(`${id}: se abre como lectura, con la regla y sin «Ver la lámina»`, d.abierta && d.regla && !d.ver, JSON.stringify(d).slice(0, 200));
   if (['ent-01-capacidades', 'ent-04-subir-peso', 'nut-09-comer-sin-pesar', 'bie-11-muevete-fuera'].includes(id))
     await p.locator('#v2-lec').screenshot({ path: path.join(SAL, id + '.png') }).catch(() => {});
   await p.evaluate(() => { const c = document.getElementById('v2-lec'); c.scrollTop = c.scrollHeight; }); await p.waitForTimeout(400);

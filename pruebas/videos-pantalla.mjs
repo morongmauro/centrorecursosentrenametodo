@@ -33,4 +33,42 @@ for (const [tag, ua, w, h] of [['iPhone', IPHONE, 390, 844], ['computador', null
   ok(`${tag} · sin errores`, err.length === 0, err.join(' | '));
   await ctx.close();
 }
+// Girar el teléfono con el video abierto (iPhone): entra solo a pantalla
+// completa, sin nada encima, con su botón para salir; al volver a vertical
+// sale solo. Y la app recibe el aviso para esconder su barra.
+{
+  const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, userAgent: IPHONE, hasTouch: true, isMobile: true });
+  let p = await ctx.newPage(); const err = []; p.on('pageerror', e => err.push(e.message));
+  // Dentro de un marco, como en la app; la página de afuera anota los avisos.
+  await p.route('**/*', r2 => r2.request().url().startsWith(BASE) ? r2.continue() : r2.abort());
+  await p.route(BASE + '/envoltura', r2 => r2.fulfill({ contentType: 'text/html', body: '<!doctype html><body style="margin:0"><script>window.__avisos=[];addEventListener("message",e=>__avisos.push(e.data))</script><iframe src="/?mt_v2=1&mt_name=Prueba&mt_go=videos" style="border:0;position:fixed;inset:0;width:100%;height:100%"></iframe>' }));
+  await p.goto(BASE + '/envoltura'); await p.waitForTimeout(1800);
+  const afuera = p; const avisos = () => afuera.evaluate(() => JSON.stringify(window.__avisos.filter(m => m && m.tipo === 'em-pantalla-completa')));
+  p = afuera.frames()[1];
+  const i = await p.evaluate(() => PODCASTS.findIndex(x => !x.sinEmbed && podEmbedUrl(x)));
+  await p.evaluate((i) => { document.body.classList.remove('locked'); podOpen(i); }, i); await p.waitForTimeout(1500);
+  ok('girar · en vertical se abre normal', await p.evaluate(() => !document.getElementById('pod-lb').classList.contains('pod-cine')));
+  await afuera.setViewportSize({ width: 844, height: 390 }); await p.waitForTimeout(700);
+  const e = await p.evaluate(() => { const lb = document.getElementById('pod-lb'), f = document.getElementById('pod-lb-frame'), a = f.getBoundingClientRect(), v = f.querySelector('iframe, #pod-yt').getBoundingClientRect(), bt = f.querySelector('.pod-lb-full').getBoundingClientRect();
+    const tapan = [...document.querySelectorAll('.pod-lb-x, .pod-lb-cap, .pod-lb-acts')].filter(x => x.offsetParent && x.getBoundingClientRect().height > 0).length;
+    return { cine: lb.classList.contains('pod-cine'), w: Math.round(a.width), h: Math.round(a.height), vw: Math.round(v.width), vh: Math.round(v.height), W: innerWidth, H: innerHeight, tapan,
+      boton: bt.top >= 0 && bt.right <= innerWidth && bt.top < 80 && bt.width >= 40 }; });
+  e.avisos = await avisos();
+  ok('girar · a lo horizontal entra solo a pantalla completa, el video entero en 16:9', e.cine && e.w >= e.W - 1 && e.h >= e.H - 1 && Math.abs(e.vw / e.vh - 16 / 9) < 0.02 && e.vh >= e.H - 1, JSON.stringify(e));
+  ok('girar · sin título, cerrar ni botones encima del video', e.tapan === 0, JSON.stringify(e));
+  ok('girar · botón para salir visible arriba a la derecha', e.boton, JSON.stringify(e));
+  ok('girar · le avisa a la app para que esconda su barra', /"em-pantalla-completa","on":true/.test(e.avisos), e.avisos);
+  await afuera.screenshot({ path: path.join(import.meta.dirname, 'video-girado.png') });
+  await afuera.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(700);
+  ok('girar · al volver a vertical sale solo y le avisa a la app', await p.evaluate(() => !document.getElementById('pod-lb').classList.contains('pod-cine') && document.getElementById('pod-lb').classList.contains('open')) && /"on":false/.test(await avisos()));
+  await afuera.setViewportSize({ width: 844, height: 390 }); await p.waitForTimeout(700);
+  await p.locator('#pod-lb-frame .pod-lb-full').click(); await p.waitForTimeout(400);
+  const n = await p.evaluate(() => { const lb = document.getElementById('pod-lb'), f = document.getElementById('pod-lb-frame').getBoundingClientRect(), x = document.querySelector('.pod-lb-x').getBoundingClientRect();
+    return { cine: lb.classList.contains('pod-cine'), fBottom: Math.round(f.bottom), H: innerHeight, xTop: Math.round(x.top), scroll: lb.scrollHeight > lb.clientHeight }; });
+  ok('girar · el botón sale de pantalla completa; de lado el video cabe y se puede cerrar', !n.cine && n.fBottom <= n.H && n.xTop >= 0, JSON.stringify(n));
+  await afuera.screenshot({ path: path.join(import.meta.dirname, 'video-girado-normal.png') });
+  await p.evaluate(() => podClose(null, true));
+  ok('girar · sin errores', err.length === 0, err.join(' | '));
+  await ctx.close();
+}
 console.log(mal ? `${mal} MAL` : 'todo bien'); await b.close(); srv.close();

@@ -7488,6 +7488,31 @@ body.locked .mt-stains{display:none;}
 .pod-lb-frame:fullscreen{width:100%;height:100%;aspect-ratio:auto;border-radius:0;background:#000;}
 .pod-lb-frame:-webkit-full-screen{width:100%;height:100%;aspect-ratio:auto;border-radius:0;background:#000;}
 .pod-cine .pod-lb-full,.pod-lb-frame:fullscreen .pod-lb-full,.pod-lb-frame:-webkit-full-screen .pod-lb-full{right:calc(14px + env(safe-area-inset-right, 0px));bottom:calc(14px + env(safe-area-inset-bottom, 0px));width:44px;height:44px;}
+/* Al girar el teléfono con el video abierto entra solo a pantalla completa
+   (y sale al volver a vertical). En el modo cine: nada de la app encima
+   (la app esconde su barra cuando el centro se lo pide), el botón para
+   salir arriba a la derecha y los controles sobre el video, que se
+   esconden solos a los 3 s y vuelven al tocar. Sin desenfoque de fondo:
+   con el video detrás, el iPhone se trababa al girar. */
+.pod-cine.pod-lb{-webkit-backdrop-filter:none !important;backdrop-filter:none !important;background:#000 !important;padding:0 !important;animation:none !important;}
+.pod-cine .pod-lb-x,.pod-cine .pod-lb-cap,.pod-cine .pod-lb-acts,.pod-cine .pod-lb-hint{display:none !important;}
+.pod-cine .pod-lb-full{top:calc(14px + env(safe-area-inset-top, 0px)) !important;bottom:auto !important;right:calc(14px + env(safe-area-inset-right, 0px)) !important;-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(15,15,16,.6);}
+html.em-v2 .pod-cine .pod-lb-ctl{position:fixed;inset:0;z-index:10062;margin:0;display:block;pointer-events:none;
+  background:linear-gradient(0deg,rgba(0,0,0,.62) 0,rgba(0,0,0,0) 32%);transition:opacity .3s ease;}
+html.em-v2 .pod-cine .pod-lb-ctl[hidden]{display:none;}
+html.em-v2 .pod-cine .pod-lb-ctl > *{pointer-events:auto;}
+html.em-v2 .pod-cine .pod-lb-barra{position:absolute;left:calc(24px + env(safe-area-inset-left, 0px));right:calc(24px + env(safe-area-inset-right, 0px));bottom:calc(24px + env(safe-area-inset-bottom, 0px));}
+html.em-v2 .pod-cine .pod-lb-tiempos{position:absolute;left:calc(24px + env(safe-area-inset-left, 0px));right:calc(24px + env(safe-area-inset-right, 0px));bottom:calc(8px + env(safe-area-inset-bottom, 0px));margin:0;}
+html.em-v2 .pod-cine .pod-lb-botones{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;gap:44px;}
+html.em-v2 .pod-cine .pod-lb-play{width:64px;height:64px;}
+html.em-v2 .pod-cine.pod-ctl-oculto .pod-lb-ctl{opacity:0;}
+html.em-v2 .pod-cine.pod-ctl-oculto .pod-lb-ctl > *{pointer-events:none;}
+/* Horizontal sin modo cine (si salió a mano): todo cabe y se puede bajar. */
+@media (orientation:landscape) and (max-height:560px){
+  .pod-lb:not(.pod-cine),html.em-v2 .pod-lb:not(.pod-cine){overflow-y:auto;justify-content:flex-start;padding:calc(env(safe-area-inset-top, 0px) + 12px) 0 calc(env(safe-area-inset-bottom, 0px) + 16px);}
+  .pod-lb:not(.pod-cine) .pod-lb-inner,html.em-v2 .pod-lb:not(.pod-cine) .pod-lb-inner{max-width:min(100%, calc((100dvh - 40px) * 16 / 9));margin:0 auto;}
+  .pod-lb:not(.pod-cine) .pod-lb-x{top:calc(env(safe-area-inset-top, 0px) + 10px);right:calc(10px + env(safe-area-inset-right, 0px));}
+}
 .pod-lb-cap{
   font-size:12.5px;font-weight:500;letter-spacing:-.01em;line-height:1.45;
   color:rgba(243,239,228,.78);text-align:center;
@@ -11709,7 +11734,9 @@ function podControles(p){
   if (!frame || !ctl) return;
   if (!frame.querySelector('.pod-lb-tapa')) {
     var tapa = document.createElement('div'); tapa.className = 'pod-lb-tapa'; tapa.setAttribute('aria-hidden', 'true');
-    tapa.addEventListener('click', function(){ podAlternar(); });
+    // En pantalla completa, el primer toque con los controles escondidos
+    // solo los muestra.
+    tapa.addEventListener('click', function(){ if (_podCtlEstabaOculto) { _podCtlEstabaOculto = false; return; } podAlternar(); });
     frame.appendChild(tapa);
   }
   ctl.hidden = false;
@@ -11763,6 +11790,48 @@ function podBotonPantalla(frame){
   b.addEventListener('click', function(ev){ ev.stopPropagation(); podPantallaCompleta(); });
   frame.appendChild(b);
 }
+// El modo cine: la clase, avisar a la app (que esconde su barra y deja el
+// centro a pantalla entera) y los controles que se esconden solos.
+var _podCineAuto = false, _podCtlTimer = 0, _podCtlEstabaOculto = false;
+function podCine(on, auto){
+  var lb = document.getElementById('pod-lb'); if (!lb) return;
+  if (on === lb.classList.contains('pod-cine')) { if (!on) _podCineAuto = false; return; }
+  lb.classList.toggle('pod-cine', on);
+  _podCineAuto = !!(on && auto);
+  try { if (window.parent && window.parent !== window) window.parent.postMessage({ tipo: 'em-pantalla-completa', on: !!on }, '*'); } catch (e) {}
+  var b = document.querySelector('#pod-lb-frame .pod-lb-full');
+  if (b) b.setAttribute('aria-label', on ? 'Salir de pantalla completa' : 'Pantalla completa');
+  podCtlMostrar();
+}
+function podCtlMostrar(){
+  var lb = document.getElementById('pod-lb'); if (!lb) return;
+  lb.classList.remove('pod-ctl-oculto');
+  clearTimeout(_podCtlTimer);
+  if (!lb.classList.contains('pod-cine')) return;
+  _podCtlTimer = setTimeout(function(){
+    var sonando = false; try { sonando = _podPlayer && _podPlayer.getPlayerState && _podPlayer.getPlayerState() === 1; } catch (e) {}
+    if (sonando && lb.classList.contains('pod-cine')) lb.classList.add('pod-ctl-oculto');
+  }, 3000);
+}
+function podHorizontal(){ return window.innerWidth > window.innerHeight && window.innerHeight < 560; }
+var _podOrient = null;
+function podGiro(){
+  var lb = document.getElementById('pod-lb');
+  var h = podHorizontal();
+  if (h === _podOrient) return;
+  _podOrient = h;
+  if (!lb || !lb.classList.contains('open') || podEnPantalla()) return;
+  if (h && !lb.classList.contains('pod-cine')) podCine(true, true);
+  else if (!h && _podCineAuto) podCine(false);
+}
+window.addEventListener('resize', podGiro);
+window.addEventListener('orientationchange', function(){ setTimeout(podGiro, 250); });
+document.addEventListener('pointerdown', function(){
+  var lb = document.getElementById('pod-lb');
+  if (!lb || !lb.classList.contains('pod-cine')) return;
+  _podCtlEstabaOculto = lb.classList.contains('pod-ctl-oculto');
+  podCtlMostrar();
+}, true);
 function podPantallaCompleta(forzarSalir){
   var lb = document.getElementById('pod-lb'), frame = document.getElementById('pod-lb-frame');
   if (!lb || !frame) return;
@@ -11771,11 +11840,7 @@ function podPantallaCompleta(forzarSalir){
     try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) {}
     return;
   }
-  if (lb.classList.contains('pod-cine') || forzarSalir) {
-    lb.classList.remove('pod-cine');
-    if (b) b.setAttribute('aria-label', 'Pantalla completa');
-    return;
-  }
+  if (lb.classList.contains('pod-cine') || forzarSalir) { podCine(false); return; }
   // La de verdad, donde el navegador la deja (el iPhone no la da para un
   // cuadro con un video incrustado: ahí, modo cine).
   var pedir = frame.requestFullscreen || frame.webkitRequestFullscreen;
@@ -11784,9 +11849,9 @@ function podPantallaCompleta(forzarSalir){
     try {
       var r = pedir.call(frame);
       var girar = function(){ try { screen.orientation && screen.orientation.lock && screen.orientation.lock('landscape').catch(function(){}); } catch (e) {} };
-      if (r && r.then) r.then(girar).catch(function(){ lb.classList.add('pod-cine'); }); else girar();
-    } catch (e) { lb.classList.add('pod-cine'); }
-  } else lb.classList.add('pod-cine');
+      if (r && r.then) r.then(girar).catch(function(){ podCine(true); }); else girar();
+    } catch (e) { podCine(true); }
+  } else podCine(true);
   if (b) b.setAttribute('aria-label', 'Salir de pantalla completa');
 }
 
@@ -11839,6 +11904,8 @@ function podOpen(i){
   frame.innerHTML = '<div id="pod-yt"></div>';
   podBotonPantalla(frame);
   lb.classList.add('open');
+  // Si ya tiene el teléfono de lado, abre directo en pantalla completa.
+  _podOrient = null; podGiro();
   lb.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
 
@@ -11857,6 +11924,7 @@ function podOpen(i){
         onReady: function(){ if (esV2()) podControles(p); },
         onStateChange: function(e){
           if (esV2()) podControlesEstado(e.data);
+          if (e.data === 1) podCtlMostrar();                                     // en pantalla completa: se esconden en 3 s
           if (e.data === 1) podMarkWatching(p.id);                              // sonando
           if (e.data === 0) { podMarkSeen(p.id); podRender(); }                 // terminó
           if (e.data === 2 && podCasiEntero()) { podMarkSeen(p.id); podRender(); } // pausó al final
@@ -11883,7 +11951,7 @@ function podClose(ev, force){
   // Destruir el reproductor (o vaciar el iframe) es lo que detiene el
   // audio: sin esto sigue sonando con el visor cerrado.
   if (podEnPantalla()) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) {} }
-  if (lb) lb.classList.remove('pod-cine');
+  podCine(false);
   if (_podPlayer && _podPlayer.destroy) { try { _podPlayer.destroy(); } catch(e){} }
   _podPlayer = null;
   if (_podTic) { clearInterval(_podTic); _podTic = null; }
@@ -16928,7 +16996,6 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
 .v2-lec .fuente { font-size:12.5px; color:#8E8E93; margin-top:12px; line-height:1.4; }
 .v2-lec .botones { display:flex; gap:10px; margin-top:16px; }
 .v2-lec .botones button { flex:1; height:50px; border-radius:16px; border:0; font:inherit; font-size:16px; font-weight:800; cursor:pointer; }
-.v2-lec .botones .ver { background:#fff; color:#1D1D1F; }
 .v2-lec .botones .listo { background:#1D1D1F; color:#fff; }
 @media (prefers-reduced-motion: reduce) { .v2-lec.abierta { animation:none; } }
 </style>
@@ -17147,7 +17214,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     if (regla) out += '<div class="regla" data-fin>' + esc(regla.regla[0]) + '<span>' + esc(regla.regla[1]) + '</span></div>'
       + (regla.fuente ? '<div class="fuente">Fuentes: ' + esc(regla.fuente) + '</div>' : '');
     var leida = capGetRead().indexOf(c.id) !== -1;
-    return out + '<div class="botones"><button type="button" class="ver">Ver la lámina</button><button type="button" class="listo">' + (leida ? 'Listo' : 'Marcar como leída') + '</button></div></div>';
+    return out + '<div class="botones"><button type="button" class="listo">' + (leida ? 'Listo' : 'Marcar como leída') + '</button></div></div>';
   }
 
   // ── El visor ──
@@ -17187,7 +17254,6 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     caja.classList.add('abierta');
     document.body.style.overflow = 'hidden';
     caja.querySelector('.volver').addEventListener('click', cerrar);
-    caja.querySelector('.ver').addEventListener('click', function(){ cerrar(); abrirViejo(CAPSULAS.indexOf(c)); });
     caja.querySelector('.listo').addEventListener('click', function(){ try { capMarkRead(c.id); } catch (e) {} guardarPos(c.id, 0); cerrar(); });
     // Al llegar a la regla queda leída (y viaja al coach por el mismo canal).
     var fin = caja.querySelector('[data-fin]') || caja.querySelector('.botones');
