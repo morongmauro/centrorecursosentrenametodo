@@ -10073,21 +10073,23 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
    cuadro, como en Entrenamiento y Alimentación. Solo el aro se llena. */
 .v2-cab-aro.con-blob { animation:none; }
 .v2-cab-aro .v2-blob { position:relative; width:122px; height:122px; }
+/* Tinte suave (como en la app): la misma forma en un pastel del naranja de
+   Aprendizaje, con el aro encima en el naranja pleno. */
 .v2-cab-aro .v2-blob-svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; transform:rotate(-12deg);
-  filter:drop-shadow(0 16px 28px rgba(238,132,52,.4)) drop-shadow(0 2px 6px rgba(30,30,40,.08)); }
+  filter:drop-shadow(0 16px 28px rgba(238,132,52,.25)) drop-shadow(0 2px 6px rgba(30,30,40,.06)); }
 .v2-cab-aro .v2-blob .v2-aro { position:absolute; left:15px; top:15px; width:92px; height:92px; opacity:1; }
 .v2-cab-aro .v2-aro i { -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px)); }
-.v2-cab-aro .v2-aro-riel { background:rgba(255,255,255,0.3); }
-.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #FFFFFF 0deg, #FFFFFF var(--v2g), transparent var(--v2g)); }
-.v2-cab-aro .v2-aro-inicio::before, .v2-cab-aro .v2-aro-punta::before { left:calc(50% - 3.5px); width:7px; height:7px; background:#FFFFFF; }
-.v2-cab-aro .v2-aro-punta::after { left:calc(50% - 1.5px); top:2px; width:3px; height:3px; background:#EE8434; }
+.v2-cab-aro .v2-aro-riel { background:rgba(255,255,255,0.85); }
+.v2-cab-aro .v2-aro-arco { background:conic-gradient(from 0deg, #EE8434 0deg, #EE8434 var(--v2g), transparent var(--v2g)); }
+.v2-cab-aro .v2-aro-inicio::before, .v2-cab-aro .v2-aro-punta::before { left:calc(50% - 3.5px); width:7px; height:7px; background:#EE8434; }
+.v2-cab-aro .v2-aro-punta::after { left:calc(50% - 1.5px); top:2px; width:3px; height:3px; background:#FFFFFF; }
 .v2-cab-aro .v2-aro.lleno .v2-aro-punta::after { opacity:1; }
 .v2-cab-aro .v2-aro-dentro { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
 .v2-cab.con-aro .v2-cab-ilus .v2-aro-dentro .v2-kb { position:relative; right:auto; top:auto; width:46px; height:34px; opacity:1; }
 .v2-cab.con-aro .v2-cab-ilus .v2-aro-dentro .v2-kb img { position:absolute; left:-9px; top:-17.8px; width:69.6px; height:69.6px; display:block; transition:opacity .18s ease-out; }
 /* El alto justo: el blob, su pie y 8 px hasta los botones. */
 .v2-cab.curva.con-aro .v2-cab-txt { min-height:114px; }
-.v2-cab-aro .v2-aro-dentro b { position:static; display:block; margin-top:1px; font-size:18px; font-weight:800; color:#FFFFFF; letter-spacing:-0.02em; line-height:1; font-variant-numeric:tabular-nums; }
+.v2-cab-aro .v2-aro-dentro b { position:static; display:block; margin-top:1px; font-size:18px; font-weight:800; color:#1D1D1F; letter-spacing:-0.02em; line-height:1; font-variant-numeric:tabular-nums; }
 .v2-cab-aro > span { margin-top:8px; font-size:11.5px; font-weight:600; color:#6B6B6B; line-height:1.25; }
 /* Al tocar el aro se explica qué mide (como los aros de la app). */
 .v2-cab-aro { pointer-events:auto; cursor:pointer; -webkit-tap-highlight-color:transparent; }
@@ -13704,6 +13706,25 @@ function emAvisarAlMealtracker(p){
   } catch(e){}
 }
 
+// Dentro de la app, la píldora de arriba («Aprendizaje») se va al bajar y
+// vuelve al subir del todo, como en las otras secciones. La app no ve el
+// scroll de este iframe, así que se le cuenta cuánto se bajó.
+(function(){
+  if (!window.parent || window.parent === window) return;
+  var pend = false;
+  document.addEventListener('scroll', function(e){
+    if (pend) return; pend = true;
+    requestAnimationFrame(function(){
+      pend = false;
+      var el = e.target === document ? document.scrollingElement : e.target;
+      var y = el && typeof el.scrollTop === 'number' ? el.scrollTop : (window.scrollY || 0);
+      // Los carruseles (scroll de lado) no cuentan: solo lo que baja.
+      if (el && el !== document.scrollingElement && el.scrollHeight <= el.clientHeight + 1) return;
+      try { window.parent.postMessage({ tipo: 'em-scroll', y: y }, '*'); } catch(_){}
+    });
+  }, { passive: true, capture: true });
+})();
+
 // Si el Mealtracker lo pregunta (al montar el iframe), se le responde.
 window.addEventListener('message', function(ev){
   var d = ev && ev.data;
@@ -16660,10 +16681,10 @@ document.addEventListener('keydown', function(e){
     // Como en la app: el blob naranja (cuadrado curvo girado 12°), encima el
     // aro en blanco con el libro a tres tonos y el % adentro, y el pie debajo.
     return '<div class="v2-cab-aro con-blob" data-aro-cabecera="aprende" data-aro-tocar="1" role="button" tabindex="0" aria-label="Material visto: ' + (p === null ? 'sin dato' : p + ' %') + '. Ver cómo se calcula"><div class="v2-blob">'
-      + '<svg class="v2-blob-svg" viewBox="0 0 200 200" aria-hidden="true"><path d="M200.0 100.0L199.8 127.7L199.2 139.8L198.2 149.1L196.8 156.9L195.0 163.6L192.7 169.4L190.0 174.6L186.9 179.2L183.3 183.3L179.2 186.9L174.6 190.0L169.4 192.7L163.6 195.0L156.9 196.8L149.1 198.2L139.8 199.2L127.7 199.8L100.0 200.0L72.3 199.8L60.2 199.2L50.9 198.2L43.1 196.8L36.4 195.0L30.6 192.7L25.4 190.0L20.8 186.9L16.7 183.3L13.1 179.2L10.0 174.6L7.3 169.4L5.0 163.6L3.2 156.9L1.8 149.1L0.8 139.8L0.2 127.7L0.0 100.0L0.2 72.3L0.8 60.2L1.8 50.9L3.2 43.1L5.0 36.4L7.3 30.6L10.0 25.4L13.1 20.8L16.7 16.7L20.8 13.1L25.4 10.0L30.6 7.3L36.4 5.0L43.1 3.2L50.9 1.8L60.2 0.8L72.3 0.2L100.0 0.0L127.7 0.2L139.8 0.8L149.1 1.8L156.9 3.2L163.6 5.0L169.4 7.3L174.6 10.0L179.2 13.1L183.3 16.7L186.9 20.8L190.0 25.4L192.7 30.6L195.0 36.4L196.8 43.1L198.2 50.9L199.2 60.2L199.8 72.3Z" fill="#EE8434"/></svg>'
+      + '<svg class="v2-blob-svg" viewBox="0 0 200 200" aria-hidden="true"><path d="M200.0 100.0L199.8 127.7L199.2 139.8L198.2 149.1L196.8 156.9L195.0 163.6L192.7 169.4L190.0 174.6L186.9 179.2L183.3 183.3L179.2 186.9L174.6 190.0L169.4 192.7L163.6 195.0L156.9 196.8L149.1 198.2L139.8 199.2L127.7 199.8L100.0 200.0L72.3 199.8L60.2 199.2L50.9 198.2L43.1 196.8L36.4 195.0L30.6 192.7L25.4 190.0L20.8 186.9L16.7 183.3L13.1 179.2L10.0 174.6L7.3 169.4L5.0 163.6L3.2 156.9L1.8 149.1L0.8 139.8L0.2 127.7L0.0 100.0L0.2 72.3L0.8 60.2L1.8 50.9L3.2 43.1L5.0 36.4L7.3 30.6L10.0 25.4L13.1 20.8L16.7 16.7L20.8 13.1L25.4 10.0L30.6 7.3L36.4 5.0L43.1 3.2L50.9 1.8L60.2 0.8L72.3 0.2L100.0 0.0L127.7 0.2L139.8 0.8L149.1 1.8L156.9 3.2L163.6 5.0L169.4 7.3L174.6 10.0L179.2 13.1L183.3 16.7L186.9 20.8L190.0 25.4L192.7 30.6L195.0 36.4L196.8 43.1L198.2 50.9L199.2 60.2L199.8 72.3Z" fill="#FBE1CE"/></svg>'
       + '<div class="v2-aro cero" role="img" aria-label="Material visto">'
       + '<i class="v2-aro-riel"></i><i class="v2-aro-arco"></i><span class="v2-aro-inicio"></span><span class="v2-aro-punta"></span>'
-      + '<div class="v2-aro-dentro"><div class="v2-kb">' + KB_TRES + '</div><b>' + (p === null ? '–' : p + ' %') + '</b></div>'
+      + '<div class="v2-aro-dentro"><div class="v2-kb">' + KB_LEE + '</div><b>' + (p === null ? '–' : p + ' %') + '</b></div>'
       + '</div></div><span>Material visto</span></div>';
   }
   function llenarAros(){
