@@ -7879,6 +7879,11 @@ html.em-v2 .pod-lb-hint{font-size:11px;}
   -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
   mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
 }
+/* Mientras se ve la banda de color de la cabecera, la franja se apaga: no
+   hay nada que desenfocar y lavaba el naranja, que se veía degradado y no
+   plano como en las otras secciones. */
+.em-top-fade{transition:opacity .2s ease;}
+body.em-banda-arriba .em-top-fade{opacity:0 !important;}
 /* El botón de volver, siempre por encima de la franja. */
 .sub-back,.hub-back-link,.mg-back{z-index:70 !important;}
 
@@ -10002,7 +10007,7 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-manchas i:nth-child(2) { width:80vw; height:80vw; max-width:440px; max-height:440px; bottom:-22%; left:-34%; background:radial-gradient(closest-side, #FBE0CB, rgba(251,224,203,0)); }
 .v2-cab-manchas i:nth-child(3) { width:58vw; height:58vw; max-width:320px; max-height:320px; bottom:-6%; right:-20%; opacity:.75; background:radial-gradient(closest-side, #A9C6EE, rgba(169,198,238,0)); }
 .v2-cab-banda { position:absolute; top:0; left:0; right:0; height:calc(64px + env(safe-area-inset-top, 0px) + 14px); pointer-events:none;
-  background:linear-gradient(180deg, #F7CFAF 0%, #FADFCA 100%);
+  background:linear-gradient(180deg, #F2A66B 0%, #F3AD78 100%);
   -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
 .v2-cab-ilus { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
 /* El libro en su espacio (del alto del aro, a su derecha), igual que en la app. */
@@ -10089,7 +10094,7 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab.con-aro .v2-cab-ilus .v2-aro-dentro .v2-kb img { position:absolute; left:-9px; top:-17.8px; width:69.6px; height:69.6px; display:block; transition:opacity .18s ease-out; }
 /* El alto justo: el blob, su pie y 8 px hasta los botones. */
 .v2-cab.curva.con-aro .v2-cab-txt { min-height:114px; }
-.v2-cab-aro .v2-aro-dentro b { position:static; display:block; margin-top:1px; font-size:18px; font-weight:800; color:#1D1D1F; letter-spacing:-0.02em; line-height:1; font-variant-numeric:tabular-nums; }
+.v2-cab-aro .v2-aro-dentro b { position:static; display:block; margin-top:1px; font-size:18px; font-weight:800; color:#FFFFFF; letter-spacing:-0.02em; line-height:1; font-variant-numeric:tabular-nums; }
 .v2-cab-aro > span { margin-top:8px; font-size:11.5px; font-weight:600; color:#6B6B6B; line-height:1.25; }
 /* Al tocar el aro se explica qué mide (como los aros de la app). */
 .v2-cab-aro { pointer-events:auto; cursor:pointer; -webkit-tap-highlight-color:transparent; }
@@ -10400,6 +10405,26 @@ html.em-v2 #s-onboarding .hub-back-link { display: none !important; }
   document.addEventListener('DOMContentLoaded', emFadeSync);
   setTimeout(emFadeSync, 400);
   window.emFadeSync = emFadeSync;
+  // ¿Hay una banda de cabecera visible bajo la franja de arriba?
+  function emBandaSync(){
+    try {
+      var hay = false, bs = document.querySelectorAll('.v2-cab-banda');
+      for (var i = 0; i < bs.length; i++) {
+        var r = bs[i].getBoundingClientRect();
+        if (r.width > 0 && r.bottom > 24 && r.top <= 0) { hay = true; break; }
+      }
+      document.body.classList.toggle('em-banda-arriba', hay);
+    } catch(e){}
+  }
+  var emBandaPend = false;
+  function emBandaLuego(){ if (emBandaPend) return; emBandaPend = true; requestAnimationFrame(function(){ emBandaPend = false; emBandaSync(); }); }
+  document.addEventListener('scroll', emBandaLuego, { passive: true, capture: true });
+  window.addEventListener('resize', emBandaLuego);
+  document.addEventListener('DOMContentLoaded', function(){
+    emBandaSync();
+    try { new MutationObserver(emBandaLuego).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] }); } catch(e){}
+  });
+  setTimeout(emBandaSync, 400);
 })();
 </script>
 
