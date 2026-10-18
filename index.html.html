@@ -7469,6 +7469,25 @@ body.locked .mt-stains{display:none;}
   border-radius:14px;overflow:hidden;background:#000;
 }
 .pod-lb-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+/* Pantalla completa: el botón va en la esquina del video, por encima de la
+   tapa que pausa al tocar. La real (Android, computador, iPad) o, donde el
+   navegador no la deja para un video incrustado (iPhone), «modo cine»: el
+   video llena la pantalla en negro y al girar el teléfono se ve en grande. */
+.pod-lb-full{position:absolute;right:10px;bottom:10px;z-index:4;width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(15,15,16,.55);color:#fff;display:grid;place-items:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+.pod-lb-full svg{width:18px;height:18px;}
+.pod-lb-full .ic-salir{display:none;}
+.pod-cine .pod-lb-full .ic-entrar,.pod-lb-frame:fullscreen .pod-lb-full .ic-entrar,.pod-lb-frame:-webkit-full-screen .pod-lb-full .ic-entrar{display:none;}
+.pod-cine .pod-lb-full .ic-salir,.pod-lb-frame:fullscreen .pod-lb-full .ic-salir,.pod-lb-frame:-webkit-full-screen .pod-lb-full .ic-salir{display:block;}
+.pod-cine .pod-lb-frame{position:fixed !important;inset:0 !important;z-index:10060;width:100vw !important;height:100vh !important;height:100dvh !important;aspect-ratio:auto !important;border-radius:0 !important;box-shadow:none !important;background:#000 !important;}
+.pod-cine .pod-lb-frame iframe,.pod-cine .pod-lb-frame #pod-yt,
+.pod-lb-frame:fullscreen iframe,.pod-lb-frame:fullscreen #pod-yt,
+.pod-lb-frame:-webkit-full-screen iframe,.pod-lb-frame:-webkit-full-screen #pod-yt{
+  inset:auto !important;top:50% !important;left:50% !important;transform:translate(-50%,-50%);
+  width:min(100vw, calc(100dvh * 16 / 9)) !important;height:min(100dvh, calc(100vw * 9 / 16)) !important;}
+.pod-lb-frame:fullscreen{width:100%;height:100%;aspect-ratio:auto;border-radius:0;background:#000;}
+.pod-lb-frame:-webkit-full-screen{width:100%;height:100%;aspect-ratio:auto;border-radius:0;background:#000;}
+.pod-cine .pod-lb-full,.pod-lb-frame:fullscreen .pod-lb-full,.pod-lb-frame:-webkit-full-screen .pod-lb-full{right:calc(14px + env(safe-area-inset-right, 0px));bottom:calc(14px + env(safe-area-inset-bottom, 0px));width:44px;height:44px;}
 .pod-lb-cap{
   font-size:12.5px;font-weight:500;letter-spacing:-.01em;line-height:1.45;
   color:rgba(243,239,228,.78);text-align:center;
@@ -7500,7 +7519,9 @@ html.em-v2 .pod-lb{background:#0F0F10;justify-content:flex-start;padding:calc(en
 html.em-v2 .pod-lb-x{top:calc(env(safe-area-inset-top, 0px) + 22px);background:rgba(255,255,255,.12);}
 html.em-v2 .pod-lb-inner{max-width:none;width:100%;padding:0 16px;gap:18px;}
 html.em-v2 .pod-lb-frame{border-radius:22px;box-shadow:0 26px 60px rgba(0,0,0,.55);background:#000;}
-html.em-v2 .pod-lb-frame iframe,html.em-v2 .pod-lb-frame #pod-yt{position:absolute;left:0;width:100%;top:-17%;height:134%;}
+/* El video entero, sin recortes: antes el reproductor iba más alto que el
+   cuadro para esconder la franja de YouTube y el video se veía cortado. */
+html.em-v2 .pod-lb-frame iframe,html.em-v2 .pod-lb-frame #pod-yt{position:absolute;inset:0;width:100%;height:100%;}
 html.em-v2 .pod-lb-tapa{position:absolute;inset:0;z-index:2;cursor:pointer;}
 html.em-v2 .pod-lb-cap{text-align:left;font-size:20px;font-weight:800;letter-spacing:-.025em;line-height:1.15;color:#fff;}
 html.em-v2 .pod-lb-cap b{margin-top:6px;font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;color:rgba(255,255,255,.55);}
@@ -11726,8 +11747,47 @@ function podAlternar(){
 
 function podIframeSimple(frame, p){
   frame.innerHTML = '<iframe src="' + podEsc(podEmbedUrl(p)) + '" title="' + podEsc(p.title) + '" ' +
-    'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+    'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" ' +
     'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+  podBotonPantalla(frame);
+}
+
+// ── Pantalla completa ──
+function podEnPantalla(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+function podBotonPantalla(frame){
+  if (!frame || frame.querySelector('.pod-lb-full')) return;
+  var b = document.createElement('button');
+  b.type = 'button'; b.className = 'pod-lb-full'; b.setAttribute('aria-label', 'Pantalla completa');
+  b.innerHTML = '<svg class="ic-entrar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>'
+    + '<svg class="ic-salir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+  b.addEventListener('click', function(ev){ ev.stopPropagation(); podPantallaCompleta(); });
+  frame.appendChild(b);
+}
+function podPantallaCompleta(forzarSalir){
+  var lb = document.getElementById('pod-lb'), frame = document.getElementById('pod-lb-frame');
+  if (!lb || !frame) return;
+  var b = frame.querySelector('.pod-lb-full');
+  if (podEnPantalla()) {
+    try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) {}
+    return;
+  }
+  if (lb.classList.contains('pod-cine') || forzarSalir) {
+    lb.classList.remove('pod-cine');
+    if (b) b.setAttribute('aria-label', 'Pantalla completa');
+    return;
+  }
+  // La de verdad, donde el navegador la deja (el iPhone no la da para un
+  // cuadro con un video incrustado: ahí, modo cine).
+  var pedir = frame.requestFullscreen || frame.webkitRequestFullscreen;
+  var iphone = /iPhone|iPod/.test(navigator.userAgent);
+  if (pedir && !iphone) {
+    try {
+      var r = pedir.call(frame);
+      var girar = function(){ try { screen.orientation && screen.orientation.lock && screen.orientation.lock('landscape').catch(function(){}); } catch (e) {} };
+      if (r && r.then) r.then(girar).catch(function(){ lb.classList.add('pod-cine'); }); else girar();
+    } catch (e) { lb.classList.add('pod-cine'); }
+  } else lb.classList.add('pod-cine');
+  if (b) b.setAttribute('aria-label', 'Salir de pantalla completa');
 }
 
 function podOpen(i){
@@ -11777,6 +11837,7 @@ function podOpen(i){
       : 'Aquí dentro el video se pausa al bloquear el teléfono — es una restricción de YouTube. Para dejarlo sonando de fondo, ábrelo con <b>Ver en YouTube</b>.';
   }
   frame.innerHTML = '<div id="pod-yt"></div>';
+  podBotonPantalla(frame);
   lb.classList.add('open');
   lb.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
@@ -11821,6 +11882,8 @@ function podClose(ev, force){
   if (p && podCasiEntero()) podMarkSeen(p.id);
   // Destruir el reproductor (o vaciar el iframe) es lo que detiene el
   // audio: sin esto sigue sonando con el visor cerrado.
+  if (podEnPantalla()) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) {} }
+  if (lb) lb.classList.remove('pod-cine');
   if (_podPlayer && _podPlayer.destroy) { try { _podPlayer.destroy(); } catch(e){} }
   _podPlayer = null;
   if (_podTic) { clearInterval(_podTic); _podTic = null; }
