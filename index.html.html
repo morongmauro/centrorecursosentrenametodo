@@ -10128,6 +10128,9 @@ html.em-v2[data-v2lect] #s-guia-alimentacion .sub-back { display:none !important
    barra de abajo. La flecha que llevaba a la portada vieja del centro sobra
    (y abría una interfaz que ya no existe para el cliente). */
 html.em-saltando .screen { visibility: hidden !important; }
+/* Visual nueva: la portada y el onboarding viejos nunca se ven, ni un instante
+   al cargar (la portada es la pantalla activa por defecto del HTML). */
+html.em-v2 #s-home, html.em-v2 #s-onboarding { display: none !important; }
 html.em-saltando body:not(.locked)::after {
   content: ''; position: fixed; left: 50%; top: 38vh; width: 22px; height: 22px; margin-left: -11px;
   border-radius: 50%; border: 2.5px solid rgba(0,0,0,.12); border-top-color: rgba(0,0,0,.55);
@@ -13352,9 +13355,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // de "volver" (la que ya traía en el markup).
 
 function go(id){
-  // Visual nueva: la portada vieja del centro no se muestra nunca; lo que
-  // llevaba a ella cae en el Onboarding (que está en la barra de la app).
-  if (id === 's-home' && document.documentElement.classList.contains('em-v2')) id = 's-onboarding';
+  // Visual nueva: ni la portada vieja del centro ni el onboarding viejo se
+  // muestran nunca (el programa vive en la app, «Acerca del programa»); lo
+  // que llevaba a ellos cae en Lecturas.
+  if ((id === 's-home' || id === 's-onboarding') && document.documentElement.classList.contains('em-v2')) id = 's-capsulas';
   // El visor de imagen es fijo: si se navega con él abierto, quedaba
   // tapando la pantalla a la que vuelves. Salir siempre deja en la sección.
   try { if (typeof apptCloseZoom === 'function') apptCloseZoom(); } catch(e){}
@@ -16691,6 +16695,8 @@ document.addEventListener('keydown', function(e){
   window.v2ArmarIndiceGuia = armarIndiceGuia;
   var goPrevio = window.go;
   window.go = function(id){
+    // La portada y el onboarding viejos no existen en la visual nueva: Lecturas.
+    if (id === 's-home' || id === 's-onboarding') id = 's-capsulas';
     var pedido = id;
     var r = goPrevio.apply(this, arguments);
     var modo = null;
@@ -16719,6 +16725,12 @@ document.addEventListener('keydown', function(e){
     }
     return r;
   };
+  // Al cargar, la pantalla activa es la portada vieja (la del HTML) o ya
+  // Lecturas, pero puesta antes de que existiera esta cabecera: se entra
+  // a Lecturas por aquí, con su cabecera (si viene un destino en la
+  // dirección, después se salta a él).
+  var activa = document.querySelector('.screen.active');
+  if (!activa || ['s-home', 's-onboarding', 's-capsulas'].indexOf(activa.id) !== -1) { try { window.go('s-capsulas'); } catch (e) {} }
 })();
 </script>
 <!-- ── Cápsulas como lectura (visual nueva) ──────────────────────────────
