@@ -1,26 +1,27 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   CÁPSULAS EN HISTORIAS — la visual nueva
+   CÁPSULAS — el texto de cada lámina, para leerla en el teléfono
    ═══════════════════════════════════════════════════════════════════════
 
-   Cada cápsula, contada en pantallas cortas (como las historias de
-   Instagram): una idea por pantalla, letra grande, un ícono o un diagrama
-   que la acompaña y el color de su tema. Se avanza tocando a la derecha y
-   se vuelve tocando a la izquierda. Al final, la regla, las fuentes y el
-   botón para abrir la lámina completa.
+   Cada cápsula se abre como una lectura de una sola página (como los
+   capítulos de la Guía): título e idea arriba, una tarjeta por cada tema
+   de la lámina con su número clave, «Cómo lo aplicas», la regla y las
+   fuentes. Al final, el botón para abrir la lámina completa.
 
    EL CONTENIDO ES EL DE CADA LÁMINA, COMPLETO: cada dato, cifra, ejemplo y
-   punto de «Cómo lo aplicas» está aquí, redactado para leerse en pantalla.
-   Si cambias una lámina, cambia también su historia.
+   punto de «Cómo lo aplicas» está aquí. Si cambias una lámina, cambia
+   también su texto.
 
    La llave es el `id` de la cápsula en capsulas.js. Una cápsula que no
    esté aquí se sigue abriendo como lámina.
 
-   Tipos de pantalla (la primera, la portada, se arma sola con el título):
-     { k, h, p }                    etiqueta, frase grande, texto
+   Cada bloque de `pantallas` es una tarjeta (la primera, «La idea», va
+   arriba, junto al título):
+     { k, h, p }                    título, frase en negrita, texto
      { k, n, nl, p }                número grande con su leyenda
-     { k, pasos:[{t, d, ico}] }     pasos numerados (o con ícono)
+     { k, pasos:[{t, d}] }          puntos con su título
      { k, lista:[…] }               «Cómo lo aplicas»
-     { k, filas:[{ico, t, v}] }     tabla corta (dato y valor)
+     { k, filas:[{t, v}] }          tabla corta (dato y valor); con
+                                    `radar: true` se dibuja en pentágono
      { k, cols:[{t, v, d, fuerte}] } columnas para comparar
      { k, curva:[a, b, c] }         curva de respuesta con su zona útil
      { k, barras:[{t, v, d, alto, fuerte}] } barras (semanas, series)
@@ -28,17 +29,10 @@
      { k, deslizadores:[{t, izq, der, v}] }  variables entre dos extremos
      { k, segmentos:[{t, v, fuerte}] }       de dónde sale un total (%)
      { k, plato:true }              el plato repartido
-     { regla:[a, b], fuente }       la frase final (b va en color)
-   `quiz: { q, op:[…], ok, por }` (opcional, en la cápsula): una pregunta
-   rápida antes de la regla, con respuesta inmediata. `ok` es el índice de
-   la opción correcta y `por` la explicación que se ve al responder.
-   HOY ESTÁ APAGADA: no se muestra (CON_PREGUNTA en index.html.html).
-   Cualquier pantalla acepta `ico` (el ícono de arriba) y `p` (texto), e
-   `img`: la ilustración de la lámina (capsulas/ilus/<img>.webp, recortada de
-   la lámina en grafito con fondo transparente) que va al pie de la pantalla.
-   `radar: true` en una pantalla de filas dibuja las filas en pentágono.
-   La primera pantalla, si es «La idea» con frase (sin número), se lee dentro
-   de la portada.
+     { regla:[a, b], fuente }       la frase final (b va en amarillo)
+   `ico` quedó de la versión anterior y ya no se dibuja dentro de la
+   lectura (solo en la portada de la lista). `quiz` (una pregunta rápida)
+   está guardado pero no se muestra.
    ═══════════════════════════════════════════════════════════════════════ */
 
 window.CAPSULAS_HISTORIAS = {
@@ -48,11 +42,11 @@ window.CAPSULAS_HISTORIAS = {
     sub: 'Cuál de ellas te está poniendo el techo.',
     pantallas: [
       { k: 'La idea', ico: 'capas', h: 'Tu cuerpo no entrena una sola cualidad: entrena cinco a la vez.', p: 'Y todas se apoyan entre sí. La que quede rezagada le pone límite a las demás.' },
-      { k: 'Fuerza · la base de todo', img: '01-fuerza', ico: 'pesa', n: '2 a 4', nl: 'sesiones por semana, con carga progresiva y cubriendo el cuerpo completo',
+      { k: 'Fuerza · la base de todo', ico: 'pesa', n: '2 a 4', nl: 'sesiones por semana, con carga progresiva y cubriendo el cuerpo completo',
         p: 'Es tu capacidad de producir tensión contra una resistencia, y la que más transfiere: sostiene tu masa muscular, protege tus articulaciones y mantiene la densidad ósea con los años.' },
-      { k: 'Movilidad · el rango que controlas', img: '01-movilidad', ico: 'ciclo', h: 'El rango que no controlas, tu sistema nervioso lo limita apenas aparece carga.',
+      { k: 'Movilidad · el rango que controlas', ico: 'ciclo', h: 'El rango que no controlas, tu sistema nervioso lo limita apenas aparece carga.',
         p: 'Movilidad es el recorrido articular que sostienes con tu propia fuerza; flexibilidad es hasta dónde te lleva algo externo. Se trabaja a diario y en todo el cuerpo: tobillo, cadera, columna y hombro son una cadena.' },
-      { k: 'Resistencia, potencia y coordinación', img: '01-tres', pasos: [
+      { k: 'Resistencia, potencia y coordinación', pasos: [
         { ico: 'pulso', t: 'Resistencia', d: 'Sostiene tu recuperación entre series y entre sesiones: 150 minutos semanales de intensidad moderada.' },
         { ico: 'rayo', t: 'Potencia', d: 'Es fuerza aplicada rápido, y es la primera que se pierde con la edad.' },
         { ico: 'cono', t: 'Coordinación', d: 'Es eficiencia, y se entrena repitiendo patrones con buena técnica.' } ] },
@@ -75,13 +69,13 @@ window.CAPSULAS_HISTORIAS = {
     pantallas: [
       { k: 'La idea', ico: 'musculo', h: 'Hipertrofia es el aumento del tamaño de tus fibras musculares.',
         p: 'Ocurre cuando tu cuerpo construye más proteína muscular de la que degrada, durante semanas seguidas.' },
-      { k: 'Lo que la dispara es la tensión, no el cansancio', img: '02-tension', ico: 'rayo', n: '24 a 48 h', nl: 'construyendo proteína después de una serie con tensión alta',
+      { k: 'Lo que la dispara es la tensión, no el cansancio', ico: 'rayo', n: '24 a 48 h', nl: 'construyendo proteína después de una serie con tensión alta',
         p: 'Tensión mecánica es la fuerza que atraviesa el músculo mientras trabaja. Pasadas esas horas, la construcción vuelve a su nivel normal: por eso entrenar un músculo dos veces por semana rinde más que una.' },
-      { k: 'La dosis se cuenta en series por músculo', img: '02-series', ico: 'calendario', n: '10 a 20', nl: 'series semanales por grupo muscular',
+      { k: 'La dosis se cuenta en series por músculo', ico: 'calendario', n: '10 a 20', nl: 'series semanales por grupo muscular',
         p: 'Por debajo de diez, la respuesta se queda corta en alguien que ya entrena; por encima de veinte, el beneficio se aplana y la fatiga sube más rápido que el resultado. No se cuenta en horas ni en ejercicios.' },
       { k: 'Volumen semanal y respuesta', curva: ['menos de 10 · insuficiente', '10 a 20 series · tu zona de trabajo', 'más de 20 · ya no compensa'],
         p: 'Si llevas poco tiempo entrenando, la parte baja del rango ya produce resultados. Con años de entrenamiento vas a necesitar acercarte al extremo alto.' },
-      { k: 'La condición: que la serie sea exigente', img: '02-exigente', ico: 'medidor', n: '0 a 3', nl: 'repeticiones de margen (RIR)',
+      { k: 'La condición: que la serie sea exigente', ico: 'medidor', n: '0 a 3', nl: 'repeticiones de margen (RIR)',
         p: 'Una serie cuenta cuando terminas cerca del punto en que no podrías hacer otra con buena técnica. Dentro de esa condición, de 5 a 30 repeticiones el crecimiento es comparable. Lo que no funciona es acumular series cómodas.' },
       { k: 'Cómo lo aplicas', lista: [
         'Cuenta tus series semanales por músculo: si alguno no llega a diez, ahí está el problema.',
@@ -98,11 +92,11 @@ window.CAPSULAS_HISTORIAS = {
     pantallas: [
       { k: 'La idea', ico: 'regla', h: 'Decir que un entreno fue «duro» no describe nada.',
         p: '«Duro» puede ser mucho peso, muchas series, poco descanso o mucha fatiga previa, y cada uno produce un efecto distinto.' },
-      { k: 'Carga e intensidad', img: '03-carga', ico: 'disco', h: 'El peso, y qué tan pesado es para ti.',
+      { k: 'Carga e intensidad', ico: 'disco', h: 'El peso, y qué tan pesado es para ti.',
         p: 'La carga son los kilos que tienes en la mano. La intensidad es ese peso comparado con tu máximo personal, que se llama 1RM (una repetición máxima). Cuarenta kilos pueden ser el 50 % del 1RM de alguien y el 90 % del de otro.' },
-      { k: 'Volumen y densidad', img: '03-volumen', ico: 'arena', h: 'Cuánto trabajo, y en cuánto tiempo.',
+      { k: 'Volumen y densidad', ico: 'arena', h: 'Cuánto trabajo, y en cuánto tiempo.',
         p: 'El volumen es el trabajo total acumulado: series × repeticiones × peso. La densidad es cuánto trabajo metes por unidad de tiempo, y la controlas con el descanso. Descansar menos te deja menos repeticiones y termina bajando el volumen total.' },
-      { k: 'Tempo y rango', img: '03-tempo', ico: 'flechas', h: 'Cómo ejecutas la repetición.',
+      { k: 'Tempo y rango', ico: 'flechas', h: 'Cómo ejecutas la repetición.',
         p: 'El tempo es la velocidad de cada fase: la excéntrica es cuando el músculo se alarga bajo carga (bajar en una sentadilla) y la concéntrica cuando se acorta. El rango, o ROM, es cuánto recorrido completas en cada repetición.' },
       { k: 'Las variables, y hacia dónde las mueves', deslizadores: [
         { t: 'Carga', izq: 'liviano', der: 'pesado', v: 0.78 }, { t: 'Volumen', izq: 'pocas series', der: 'muchas series', v: 0.6 },
@@ -136,7 +130,7 @@ window.CAPSULAS_HISTORIAS = {
         { t: 'Semana 1', v: '40 kg', d: '9 · 10 · 8', alto: 0.62 }, { t: 'Semana 2', v: '40 kg', d: '10 · 11 · 9', alto: 0.62 },
         { t: 'Semana 3', v: '40 kg', d: '12 · 12 · 12', alto: 0.62 }, { t: 'Semana 4', v: '42,5 kg', d: '10 · 9 · 8', alto: 0.82, fuerte: true } ],
         p: 'Primero suben las repeticiones, y solo ahí sube el peso. El valor está en lo que se acumula: sumar una repetición con el mismo peso ya es más trabajo total que la semana pasada.' },
-      { k: 'Progresión dentro de la sesión · sentadilla', img: '04-escalones', pasos: [
+      { k: 'Progresión dentro de la sesión · sentadilla', pasos: [
         { t: 'Serie 1 · 40 kg', d: '8 repeticiones @ RIR 2' },
         { t: 'Serie 2 · +2,5 kg → 42,5 kg', d: '8 repeticiones @ RIR 2' },
         { t: 'Serie 3 · +2,5 kg → 45 kg', d: '7 a 8 repeticiones @ RIR 2' },
@@ -157,13 +151,13 @@ window.CAPSULAS_HISTORIAS = {
     pantallas: [
       { k: 'La idea', ico: 'orden', h: 'Mismo entreno, mismo esfuerzo, distinto resultado.',
         p: 'Con la misma sesión y el mismo esfuerzo puedes sacar bastante más o bastante menos según el orden. Tu capacidad de producir fuerza cae a lo largo del entrenamiento.' },
-      { k: 'Los compuestos van primero', img: '05-compuestos', ico: 'pesa', h: 'Sentadilla, peso muerto, press, dominada, remo.',
+      { k: 'Los compuestos van primero', ico: 'pesa', h: 'Sentadilla, peso muerto, press, dominada, remo.',
         p: 'Un ejercicio compuesto involucra varias articulaciones y grandes grupos musculares: más carga, más energía y más transferencia. Por eso son los que más pierden cuando llegan cansados: menos peso y peor técnica.' },
-      { k: 'El aislamiento previo cambia quién termina la serie', img: '05-aislamiento', cols: [
+      { k: 'El aislamiento previo cambia quién termina la serie', cols: [
         { t: 'Aislamiento antes', v: 'Fatiga el tríceps', d: 'la serie del press termina por el tríceps' },
         { t: 'Compuesto primero', v: 'El pecho limita', d: 'la serie termina por el músculo objetivo', fuerte: true } ],
         p: 'Un ejercicio de aislamiento trabaja un músculo alrededor de una articulación. Si fatigas el tríceps antes de un press, la serie acaba por una razón distinta a la que querías y el músculo objetivo se queda sin el trabajo duro.' },
-      { k: 'El criterio es tu prioridad, no una lista fija', img: '05-criterio', pasos: [
+      { k: 'El criterio es tu prioridad, no una lista fija', pasos: [
         { ico: 'objetivo', t: 'Define tu prioridad', d: 'qué quieres mejorar ahora' },
         { ico: 'flecha', t: 'Ponlo primero', d: 'cuando tienes más fuerza disponible' },
         { ico: 'grafica', t: 'Progresa mejor', d: 'con más calidad y más carga' } ],
@@ -213,11 +207,11 @@ window.CAPSULAS_HISTORIAS = {
     pantallas: [
       { k: 'La idea', ico: 'balanza', h: 'Las calorías deciden hacia dónde se mueve tu peso.',
         p: 'Los macronutrientes deciden de qué está hecho ese peso, y cada uno cumple una función que los otros no cubren.' },
-      { k: 'Proteína · el material con el que se construye', img: '07-proteina', ico: 'cuadros', n: '1,6 a 2,2 g', nl: 'por kilo de peso: ahí se aplana el beneficio',
+      { k: 'Proteína · el material con el que se construye', ico: 'cuadros', n: '1,6 a 2,2 g', nl: 'por kilo de peso: ahí se aplana el beneficio',
         p: 'Aporta los aminoácidos con los que fabricas y reparas músculo, tendón, piel, enzimas y hormonas, y es el macro que más sacia. Por encima de eso puede tener sentido en un déficit exigente o con mucho volumen, pero pasado cierto punto solo desplaza al resto de la dieta.' },
-      { k: 'Grasa · hormonas, membranas y transporte', img: '07-grasa', ico: 'gota', n: '0,5 a 0,8 g', nl: 'por kilo: el mínimo funcional, entre el 20 y el 35 % de tus calorías',
+      { k: 'Grasa · hormonas, membranas y transporte', ico: 'gota', n: '0,5 a 0,8 g', nl: 'por kilo: el mínimo funcional, entre el 20 y el 35 % de tus calorías',
         p: 'Forma las membranas de tus células, es la materia prima de las hormonas esteroideas y permite absorber las vitaminas A, D, E y K. Por eso no se recorta a cero para ganar margen calórico.' },
-      { k: 'Carbohidrato · el combustible del trabajo duro', img: '07-carbo', ico: 'llama', n: '3 a 5 g', nl: 'por kilo con entrenamiento moderado · 5 a 8 con mucho volumen',
+      { k: 'Carbohidrato · el combustible del trabajo duro', ico: 'llama', n: '3 a 5 g', nl: 'por kilo con entrenamiento moderado · 5 a 8 con mucho volumen',
         p: 'Se almacena como glucógeno y sostiene el esfuerzo intenso; tu cerebro además consume glucosa todo el día. Es el macro que más nota tu rendimiento. Y con él viene la fibra: 25 a 38 g diarios.' },
       { k: 'El orden en que se fijan', pasos: [
         { ico: 'cuadros', t: 'Primero, la proteína', d: 'se protege incluso cuando bajan las calorías' },
@@ -238,11 +232,11 @@ window.CAPSULAS_HISTORIAS = {
     pantallas: [
       { k: 'La idea', ico: 'balanza', h: 'El objetivo no es el peso: es la composición.',
         p: 'La diferencia entre lo que comes y lo que gastas mueve tu peso. Lo que importa es cuánto de ti es músculo y cuánto es grasa.' },
-      { k: 'Recomposición · las dos cosas a la vez', img: '08-recompo', ico: 'ciclo', n: '±5 %', nl: 'alrededor de tu mantenimiento',
+      { k: 'Recomposición · las dos cosas a la vez', ico: 'ciclo', n: '±5 %', nl: 'alrededor de tu mantenimiento',
         p: 'Significa subir masa muscular mientras baja la grasa corporal. La báscula se mueve poco y aun así el cuerpo cambia. Se trabaja con proteína alta y entrenamiento progresivo, y para quien ya está en un punto intermedio es el camino que se sostiene durante años.' },
-      { k: 'Déficit · cuando hay grasa que reducir', img: '08-deficit', ico: 'abajo', n: '−10 a −25 %', nl: 'por debajo de tu gasto · perdiendo 0,5 a 1 % de tu peso por semana',
+      { k: 'Déficit · cuando hay grasa que reducir', ico: 'abajo', n: '−10 a −25 %', nl: 'por debajo de tu gasto · perdiendo 0,5 a 1 % de tu peso por semana',
         p: 'Tiene sentido cuando reducir grasa es la prioridad y hay margen para hacerlo. Más agresivo aumenta la parte que sale de masa muscular y baja tu rendimiento.' },
-      { k: 'Superávit · cuando buscas ganar tamaño', img: '08-superavit', ico: 'flecha', n: '+5 a +15 %', nl: 'por encima de tu gasto · ganando 0,25 a 0,5 % del peso por semana',
+      { k: 'Superávit · cuando buscas ganar tamaño', ico: 'flecha', n: '+5 a +15 %', nl: 'por encima de tu gasto · ganando 0,25 a 0,5 % del peso por semana',
         p: 'Es la fase para construir músculo más rápido y suele responder a un objetivo estético concreto. Comer mucho más no acelera el músculo: acelera la grasa, que después toca revertir.' },
       { k: 'Las tres direcciones, y para quién es cada una', cols: [
         { t: 'Déficit', v: '−10 a −25 %', d: 'cuando hay grasa que reducir' },
@@ -264,15 +258,15 @@ window.CAPSULAS_HISTORIAS = {
     pantallas: [
       { k: 'La idea', ico: 'plato', h: 'Un restaurante, una reunión, la casa de alguien más.',
         p: 'Para esos días existen dos métodos distintos que se complementan: uno reparte el plato, el otro mide las porciones.' },
-      { k: 'Método 1 · MyPlate reparte el plato', img: '09-plato', plato: true,
+      { k: 'Método 1 · MyPlate reparte el plato', plato: true,
         p: 'Es la guía oficial del Departamento de Agricultura de Estados Unidos y funciona por proporciones visuales: la mitad en verduras y frutas (más verdura que fruta), un cuarto en granos, con al menos la mitad integrales, y un cuarto en proteína. Te dice en qué proporción, pero no cuánta comida.' },
-      { k: 'Método 2 · la mano mide la cantidad', img: '09-mano', pasos: [
+      { k: 'Método 2 · la mano mide la cantidad', pasos: [
         { ico: 'mano', t: 'Palma', d: 'proteína · unos 20 a 30 g' },
         { ico: 'puno', t: 'Puño cerrado', d: 'verduras' },
         { ico: 'mano', t: 'Mano ahuecada', d: 'carbohidrato · otros 20 a 30 g' },
         { ico: 'pulgar', t: 'Pulgar', d: 'la grasa de acompañamiento' } ],
         p: 'Aquí sí hay cantidad, y funciona porque tu mano escala con tu tamaño corporal.' },
-      { k: 'Cuántas porciones, y la diferencia por sexo', img: '09-sexo', cols: [
+      { k: 'Cuántas porciones, y la diferencia por sexo', cols: [
         { t: 'Hombres', v: '2 de cada', d: '2 palmas · 2 puños · 2 manos · 2 pulgares por comida' },
         { t: 'Mujeres', v: '1 de cada', d: '1 palma · 1 puño · 1 mano · 1 pulgar por comida' } ],
         p: 'No es que un hombre necesite el doble: son cifras de arranque sobre unas cuatro comidas diarias y diferencias promedio de tamaño, que después se ajustan por hambre y resultado.' },
@@ -293,11 +287,11 @@ window.CAPSULAS_HISTORIAS = {
     pantallas: [
       { k: 'La idea', ico: 'luna', n: '7 a 9 h', nl: 'la referencia de sueño',
         p: 'El sueño es cuando ocurre la adaptación de todo lo que entrenaste. Si hoy no llegas ahí no pasa nada dramático: lo que mueve la aguja es mejorar poco a poco.' },
-      { k: 'Cuánto, y qué hacer si tu vida no da para eso', img: '10-cuanto', ico: 'cama', h: 'Si hoy duermes seis, ganar treinta minutos ya es una mejora real.',
+      { k: 'Cuánto, y qué hacer si tu vida no da para eso', ico: 'cama', h: 'Si hoy duermes seis, ganar treinta minutos ya es una mejora real.',
         p: 'La recomendación de las sociedades del sueño es siete horas o más para un adulto. Es un objetivo, no un requisito para funcionar, y mejorar media hora vale más que quedarte con la sensación de que estás haciendo todo mal.' },
-      { k: 'La regularidad es la palanca más barata', img: '10-regular', ico: 'calendario', h: 'Horas parecidas para acostarte y para levantarte.',
+      { k: 'La regularidad es la palanca más barata', ico: 'calendario', h: 'Horas parecidas para acostarte y para levantarte.',
         p: 'Tu reloj interno se sincroniza con horarios estables: eso mejora la calidad de lo que duermes aunque no aumentes el total, y no te cuesta ni tiempo ni dinero. Dormir poco entre semana y recuperar el domingo funciona solo a medias.' },
-      { k: 'Qué notas cuando el descanso queda corto', img: '10-corto', ico: 'bateria', h: 'Menos fuerza, más hambre.',
+      { k: 'Qué notas cuando el descanso queda corto', ico: 'bateria', h: 'Menos fuerza, más hambre.',
         p: 'Baja la producción de fuerza y la calidad de tus series, se alarga la recuperación y el hambre sube inclinándose hacia lo más calórico. No es una catástrofe, es información: si una semana entrenaste peor, mirar cómo dormiste suele explicar más que cambiar la rutina.' },
       { k: 'Tu día, y las palancas por orden de facilidad', pasos: [
         { ico: 'reloj', t: 'Horario estable', d: 'lo que más rinde y menos cuesta' },
@@ -320,14 +314,14 @@ window.CAPSULAS_HISTORIAS = {
     pantallas: [
       { k: 'La idea', ico: 'huellas', h: 'Todo lo que te mueves fuera del entreno tiene nombre: NEAT.',
         p: 'Gasto energético por actividad no asociada al ejercicio. Es el bloque más variable de tu día.' },
-      { k: 'Qué es el NEAT, exactamente', img: '11-neat', ico: 'zapato', h: 'Todo lo que no es dormir, digerir ni entrenar.',
+      { k: 'Qué es el NEAT, exactamente', ico: 'zapato', h: 'Todo lo que no es dormir, digerir ni entrenar.',
         p: 'Caminar, cocinar, hacer diligencias, estar de pie, subir escaleras. Entre dos personas del mismo tamaño, el NEAT puede diferir cientos de calorías al día.' },
       { k: 'De dónde sale tu gasto', segmentos: [
         { t: 'Metabolismo basal', v: 65 }, { t: 'NEAT', v: 10, fuerte: true }, { t: 'Entreno', v: 20 }, { t: '', v: 5 } ],
         p: 'Tu metabolismo basal es el bloque más grande, pero es estable, y tu sesión de gimnasio es una porción pequeña del total. El NEAT es el único bloque grande que mueves cada día.' },
-      { k: 'Por qué los pasos son la forma de medirlo', img: '11-pasos', ico: 'telefono', h: 'Los pasos son la parte que sí se cuenta.',
+      { k: 'Por qué los pasos son la forma de medirlo', ico: 'telefono', h: 'Los pasos son la parte que sí se cuenta.',
         p: 'El NEAT completo no se puede contar: nadie mide cuántas veces te levantas de la silla. Los pasos funcionan como termómetro del resto: si suben, estás más activo en general. No es que caminar sea mágico, es que es lo medible.' },
-      { k: 'Cuántos pasos tienen sentido', img: '11-curva', ico: 'objetivo', n: '8.000 a 10.000', nl: 'pasos antes de los 60 años · 6.000 a 8.000 después',
+      { k: 'Cuántos pasos tienen sentido', ico: 'objetivo', n: '8.000 a 10.000', nl: 'pasos antes de los 60 años · 6.000 a 8.000 después',
         p: 'Para salud, el beneficio se acumula hasta ahí y luego la curva se aplana. Pero para cambiar tu composición, la cifra que importa es tu propio promedio: si hoy caminas 4.000, subir a 6.000 cambia tu gasto de verdad.' },
       { k: 'Cómo subir los pasos', pasos: [
         { t: 'Tu promedio', d: 'de las últimas 2 semanas' },
