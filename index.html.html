@@ -10010,6 +10010,41 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
   background:linear-gradient(180deg, #F2A66B 0%, #F3AD78 100%);
   -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
 .em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 34px)); }
+.em-prueba .v2-cab-banda { left:calc(50% - 50vw); right:auto; width:100vw; }
+/* Vista en prueba de la app: lo mismo que Dash, Entreno y Alimentación.
+   Fondo blanco con el naranja del módulo muy suave (y un toque de azul). */
+html.em-prueba, html.em-prueba body { background:#FCFCFD radial-gradient(90% 40% at 100% 0%, rgba(238,132,52,0.12), transparent 70%) no-repeat !important; }
+html.em-prueba body::before { content:''; position:fixed; inset:auto 0 0 0; height:50vh; pointer-events:none; z-index:-1; background:radial-gradient(80% 60% at 0% 100%, rgba(60,123,214,0.06), transparent 70%); }
+.em-prueba .v2-cab-manchas, .em-prueba .em-top-fade, .em-prueba .mt-stains, .em-prueba .em-fade-bottom { display:none !important; }
+/* La cabecera arranca más arriba (sin la píldora de arriba sobraba aire). */
+.em-prueba .v2-cab.curva { padding-top:calc(var(--em-banda-prueba, 34px) + 16px); }
+.em-prueba .v2-cab:not(.curva) { margin-top:-28px; }
+.em-prueba .v2-cab.curva.con-aro .v2-cab-txt { min-height:0; padding-top:4px; }
+/* El blob: vidrio blanco con la mancha naranja suave, cruzando un poco la
+   franja como en las demás secciones; adentro el ícono sólido chico y la
+   cifra grande en grafito; el pie pasa debajo de la frase. */
+.em-prueba .v2-cab-aro { top:calc(var(--em-banda-prueba, 34px) - 2px); }
+.em-prueba .v2-cab-aro .v2-blob-svg { filter:drop-shadow(0 14px 22px rgba(238,132,52,0.16)) drop-shadow(0 2px 4px rgba(30,30,40,0.06)); }
+.em-prueba .v2-cab-aro .v2-blob-svg path { fill:#FFFFFF; }
+.em-prueba .v2-cab-aro .v2-blob::after { content:''; position:absolute; inset:0; border-radius:31%; transform:rotate(-12deg); pointer-events:none;
+  background:radial-gradient(70% 70% at 76% 88%, rgba(238,132,52,0.2), rgba(238,132,52,0.07) 45%, transparent 72%), radial-gradient(48% 48% at 14% 96%, rgba(60,123,214,0.12), transparent 70%); }
+.em-prueba .v2-cab-aro .v2-blob .v2-aro { z-index:1; }
+.em-prueba .v2-cab-aro .v2-aro-riel { background:rgba(238,132,52,0.13) !important; }
+.em-prueba .v2-cab-aro .v2-aro-dentro .v2-kb { display:none !important; }
+.em-prueba .v2-cab-aro .v2-aro-dentro { display:flex !important; flex-direction:column; align-items:center; justify-content:center; gap:3px; }
+.em-prueba .v2-cab-aro .v2-ic-prueba { display:block; width:18px; height:18px; color:#EE8434; }
+.em-prueba .v2-cab-aro .v2-aro b { position:static; font-size:26px; line-height:.9; letter-spacing:-0.045em; color:#1F1F1F; }
+.em-prueba .v2-cab-aro > span { display:none; }
+.em-prueba .v2-cab-pie { font-size:13.5px; font-weight:600; color:#6E6E73; margin-top:8px; }
+.v2-cab-pie { display:none; }
+.em-prueba .v2-cab-pie { display:block; }
+html.em-v2.em-prueba .screen:not(#_a):not(#_b):not(#_c), html.em-v2.em-prueba #s-capsulas, html.em-v2.em-prueba #s-onboarding, html.em-v2.em-prueba #s-videos, html.em-v2.em-prueba #s-podcasts { background:transparent !important; --bg:#FCFCFD; --surface-tint:#FCFCFD; }
+/* El blob se ve entero (la cabecera, más baja, lo cortaba). */
+.em-prueba .v2-cab.con-aro .v2-cab-ilus { overflow:visible; }
+.em-prueba .v2-cab.curva.con-aro { min-height:calc(var(--em-banda-prueba, 34px) + 132px); }
+/* Tarjetas sobre blanco: sombra suave para que se despeguen del fondo. */
+.em-prueba .v2-hcard { box-shadow:0 1px 2px rgba(20,20,30,0.04), 0 8px 22px rgba(20,30,60,0.08) !important; }
+.em-prueba .v2-lect-tabs { background:rgba(118,118,128,0.10); }
 .v2-cab-ilus { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
 /* El libro en su espacio (del alto del aro, a su derecha), igual que en la app. */
 .v2-cab-ilus .v2-kb { position:absolute; right:10.4px; top:calc(64px + env(safe-area-inset-top, 0px) + 14.6px); width:102.9px; height:102.9px; }
@@ -16730,6 +16765,19 @@ document.addEventListener('keydown', function(e){
   // Las partes del aro (cápsulas, guía, videos…): las manda la app con el %
   // y se guardan para explicarlo al tocarlo.
   var AV_DATOS_KEY = 'em_v2_material_visto_datos';
+  // Vista en prueba: dentro del blob, la mente sólida chica (como el ícono de
+  // la app) y, bajo la frase, «Material visto».
+  var IC_MENTE = '<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M212,76V72a44,44,0,0,0-74.86-31.31,3.93,3.93,0,0,0-1.14,2.8v88.72a4,4,0,0,0,6.2,3.33A47.67,47.67,0,0,1,167.68,128a8.18,8.18,0,0,1,8.31,7.58,8,8,0,0,1-8,8.42,32,32,0,0,0-32,32v33.88a4,4,0,0,0,1.49,3.12,47.92,47.92,0,0,0,74.21-17.16,4,4,0,0,0-4.49-5.56A68.06,68.06,0,0,1,192,192h-7.73a8.18,8.18,0,0,1-8.25-7.47,8,8,0,0,1,8-8.53h8a51.6,51.6,0,0,0,24-5.88v0A52,52,0,0,0,212,76Zm-12,36h-4a36,36,0,0,1-36-36V72a8,8,0,0,1,16,0v4a20,20,0,0,0,20,20h4a8,8,0,0,1,0,16ZM88,28A44.05,44.05,0,0,0,44,72v4a52,52,0,0,0-4,94.12h0A51.6,51.6,0,0,0,64,176h7.73A8.18,8.18,0,0,1,80,183.47,8,8,0,0,1,72,192H64a67.48,67.48,0,0,1-15.21-1.73,4,4,0,0,0-4.5,5.55A47.93,47.93,0,0,0,118.51,213a4,4,0,0,0,1.49-3.12V176a32,32,0,0,0-32-32,8,8,0,0,1-8-8.42A8.18,8.18,0,0,1,88.32,128a47.67,47.67,0,0,1,25.48,7.54,4,4,0,0,0,6.2-3.33V43.49a4,4,0,0,0-1.14-2.81A43.85,43.85,0,0,0,88,28Zm8,48a36,36,0,0,1-36,36H56a8,8,0,0,1,0-16h4A20,20,0,0,0,80,76V72a8,8,0,0,1,16,0Z"></path></svg>';
+  function ponerPrueba(){
+    document.querySelectorAll('.v2-cab-aro .v2-aro-dentro').forEach(function(x){
+      if (!x.querySelector('.v2-ic-prueba')) x.insertAdjacentHTML('afterbegin', '<span class="v2-ic-prueba">' + IC_MENTE + '</span>');
+    });
+    document.querySelectorAll('.v2-cab.con-aro .v2-cab-txt').forEach(function(t){
+      if (!t.querySelector('.v2-cab-pie')) t.insertAdjacentHTML('beforeend', '<div class="v2-cab-pie">Material visto</div>');
+    });
+  }
+  // Las cabeceras se vuelven a pintar al cambiar de pestaña: se repone.
+  new MutationObserver(function(){ if (document.documentElement.classList.contains('em-prueba')) ponerPrueba(); }).observe(document.documentElement, { childList: true, subtree: true });
   // «Vista en prueba» de la app: la franja curva de arriba mide lo mismo que
   // la de las demás secciones (la app manda su alto en px, con el borde del
   // teléfono ya sumado, que dentro del iframe no se puede leer).
@@ -16738,6 +16786,7 @@ document.addEventListener('keydown', function(e){
     if (!d || typeof d !== 'object' || d.tipo !== 'em-vista') return;
     var h = document.documentElement;
     h.classList.toggle('em-prueba', !!d.prueba);
+    if (d.prueba) ponerPrueba();
     if (d.prueba && typeof d.banda === 'number' && d.banda > 0) h.style.setProperty('--em-banda-prueba', Math.round(d.banda) + 'px');
   });
   window.addEventListener('message', function(e){
