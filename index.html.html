@@ -10009,6 +10009,7 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-banda { position:absolute; top:0; left:0; right:0; height:calc(64px + env(safe-area-inset-top, 0px) + 14px); pointer-events:none;
   background:linear-gradient(180deg, #F2A66B 0%, #F3AD78 100%);
   -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
+.em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 34px)); }
 .v2-cab-ilus { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
 /* El libro en su espacio (del alto del aro, a su derecha), igual que en la app. */
 .v2-cab-ilus .v2-kb { position:absolute; right:10.4px; top:calc(64px + env(safe-area-inset-top, 0px) + 14.6px); width:102.9px; height:102.9px; }
@@ -16729,6 +16730,16 @@ document.addEventListener('keydown', function(e){
   // Las partes del aro (cápsulas, guía, videos…): las manda la app con el %
   // y se guardan para explicarlo al tocarlo.
   var AV_DATOS_KEY = 'em_v2_material_visto_datos';
+  // «Vista en prueba» de la app: la franja curva de arriba mide lo mismo que
+  // la de las demás secciones (la app manda su alto en px, con el borde del
+  // teléfono ya sumado, que dentro del iframe no se puede leer).
+  window.addEventListener('message', function(e){
+    var d = e && e.data;
+    if (!d || typeof d !== 'object' || d.tipo !== 'em-vista') return;
+    var h = document.documentElement;
+    h.classList.toggle('em-prueba', !!d.prueba);
+    if (d.prueba && typeof d.banda === 'number' && d.banda > 0) h.style.setProperty('--em-banda-prueba', Math.round(d.banda) + 'px');
+  });
   window.addEventListener('message', function(e){
     var d = e && e.data;
     if (!d || typeof d !== 'object' || d.tipo !== 'em-aprende' || typeof d.pct !== 'number') return;
