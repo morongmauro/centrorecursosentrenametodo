@@ -10011,6 +10011,10 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
   -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
 .em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 34px)); }
 .em-prueba .v2-cab-banda { left:calc(50% - 50vw); right:auto; width:100vw; }
+/* Sin rebote: la franja se queda pegada arriba y, si un teléfono viejo
+   rebota igual, sigue hacia arriba con su color (nunca se ve un hueco). */
+html.em-prueba, html.em-prueba body, .em-prueba .v2-lec { overscroll-behavior:none !important; }
+.em-prueba .v2-cab-banda { top:-100vh; border-top:100vh solid #F2A66B; box-sizing:content-box; }
 /* Vista en prueba de la app: lo mismo que Dash, Entreno y Alimentación.
    Fondo blanco con el naranja del módulo muy suave (y un toque de azul). */
 html.em-prueba, html.em-prueba body { background:#FCFCFD radial-gradient(90% 40% at 100% 0%, rgba(238,132,52,0.12), transparent 70%) no-repeat !important; }
@@ -10019,11 +10023,15 @@ html.em-prueba body::before { content:''; position:fixed; inset:auto 0 0 0; heig
 /* La cabecera arranca más arriba (sin la píldora de arriba sobraba aire). */
 .em-prueba .v2-cab.curva { padding-top:calc(var(--em-banda-prueba, 34px) + 16px); }
 .em-prueba .v2-cab:not(.curva) { margin-top:-46px; }
+/* Páginas sin franja curva (Videos, Lecturas…): arriba, detrás del título,
+   un degradado suave del naranja de Aprendizaje con un toque de azul. */
+.em-prueba .v2-cab:not(.curva)::before { content:''; position:absolute; z-index:-1; pointer-events:none; left:calc(50% - 50vw); width:100vw; top:-60vh; height:calc(60vh + 300px);
+  background:radial-gradient(70% 220px at 100% calc(60vh + 10px), rgba(60,123,214,.16), transparent 70%), linear-gradient(180deg, rgba(238,132,52,.24) 0%, rgba(238,132,52,.24) 60vh, rgba(238,132,52,.10) calc(60vh + 140px), rgba(238,132,52,0) 100%); }
 .em-prueba .v2-cab.curva.con-aro .v2-cab-txt { min-height:0; padding-top:4px; }
 /* El blob: vidrio blanco con la mancha naranja suave, cruzando un poco la
    franja como en las demás secciones; adentro el ícono sólido chico y la
    cifra grande en grafito; el pie pasa debajo de la frase. */
-.em-prueba .v2-cab-aro { top:calc(var(--em-banda-prueba, 34px) - 2px); }
+.em-prueba .v2-cab-aro { top:calc(var(--em-banda-prueba, 34px) - 22px); }
 .em-prueba .v2-cab-aro .v2-blob-svg { filter:drop-shadow(0 14px 22px rgba(238,132,52,0.16)) drop-shadow(0 2px 4px rgba(30,30,40,0.06)); }
 .em-prueba .v2-cab-aro .v2-blob-svg path { fill:#FFFFFF; }
 .em-prueba .v2-cab-aro .v2-blob::after { content:''; position:absolute; inset:0; border-radius:31%; transform:rotate(-12deg); pointer-events:none;
@@ -10035,6 +10043,8 @@ html.em-prueba body::before { content:''; position:fixed; inset:auto 0 0 0; heig
 .em-prueba .v2-cab-aro .v2-ic-prueba { display:block; width:18px; height:18px; color:#EE8434; }
 .em-prueba .v2-cab-aro .v2-aro b { position:static; font-size:26px; line-height:.9; letter-spacing:-0.045em; color:#1F1F1F; }
 .em-prueba .v2-cab-aro > span { display:none; }
+html.em-v2.em-prueba body #s-guia-alimentacion .ga-cover-title[data-prueba] { font-size:30px !important; line-height:1.12 !important; letter-spacing:-0.025em !important; text-transform:none !important; color:#1F1F1F !important; }
+html.em-v2.em-prueba body #s-guia-alimentacion .ga-cover-statement[data-prueba] { font-size:17px !important; line-height:1.4 !important; color:#3A3A3C !important; font-weight:600 !important; margin-top:10px !important; }
 .em-prueba .v2-cab-pie { font-size:13.5px; font-weight:600; color:#6E6E73; margin-top:8px; }
 .v2-cab-pie { display:none; }
 .em-prueba .v2-cab-pie { display:block; }
@@ -16775,6 +16785,17 @@ document.addEventListener('keydown', function(e){
     document.querySelectorAll('.v2-cab.con-aro .v2-cab-txt').forEach(function(t){
       if (!t.querySelector('.v2-cab-pie')) t.insertAdjacentHTML('beforeend', '<div class="v2-cab-pie">Material visto</div>');
     });
+    // Guía de alimentación: el título dice de una qué es y el lema queda en
+    // una frase que se lee; sin la línea de arriba ni la firma (ya va en el
+    // pie de la página) y sin «Volver a Biblioteca» (ya no lleva a ningún lado).
+    var g = document.getElementById('s-guia-alimentacion');
+    if (g) {
+      var tit = g.querySelector('.ga-cover-title');
+      if (tit && !tit.dataset.prueba) { tit.dataset.prueba = '1'; tit.textContent = 'Guía para aprender a gestionar tu alimentación'; }
+      var lem = g.querySelector('.ga-cover-statement');
+      if (lem && !lem.dataset.prueba) { lem.dataset.prueba = '1'; lem.textContent = 'Comer bien no es comer perfecto, es tener un método.'; }
+      g.querySelectorAll('.ga-cover-eyebrow, .ga-cover-meta, .sub-next').forEach(function(x){ x.remove(); });
+    }
   }
   // Las cabeceras se vuelven a pintar al cambiar de pestaña: se repone.
   new MutationObserver(function(){ if (document.documentElement.classList.contains('em-prueba')) ponerPrueba(); }).observe(document.documentElement, { childList: true, subtree: true });
@@ -16785,8 +16806,10 @@ document.addEventListener('keydown', function(e){
     var d = e && e.data;
     if (!d || typeof d !== 'object' || d.tipo !== 'em-vista') return;
     var h = document.documentElement;
+    var antes = h.classList.contains('em-prueba');
     h.classList.toggle('em-prueba', !!d.prueba);
     if (d.prueba) ponerPrueba();
+    if (antes !== !!d.prueba && typeof window.podRender === 'function') { try { window.podRender(); } catch (err) {} }
     if (d.prueba && typeof d.banda === 'number' && d.banda > 0) h.style.setProperty('--em-banda-prueba', Math.round(d.banda) + 'px');
   });
   window.addEventListener('message', function(e){
@@ -17053,6 +17076,17 @@ html.em-v2 .v2-estante .v2-hcard.clara .s { color:#6E6E73; opacity:1; }
 html.em-v2 .v2-estante .v2-hcard.clara .marca { background:rgba(29,29,31,.07); color:#1D1D1F; }
 html.em-v2 .v2-cap-dest.con-arte { box-shadow:0 14px 30px rgba(201,95,23,.22); }
 html.em-v2 .v2-cap-item .m { font-size:13px; color:#8E8E93; margin:8px 2px 0; }
+/* Vista en prueba: en las tarjetas manda el texto. El dibujo se queda
+   chico arriba, como un ícono, y el título y su frase crecen. */
+html.em-v2.em-prueba .v2-estante .v2-hcard.con-arte { width:168px; height:232px; }
+html.em-v2.em-prueba .v2-estante .v2-hcard.con-arte .arte { left:12px; right:auto; top:40px; width:76px; height:52px; }
+html.em-v2.em-prueba .v2-estante .v2-hcard.con-arte .txt { gap:6px; }
+html.em-v2.em-prueba .v2-estante .v2-hcard.con-arte .t { font-size:19px; line-height:1.12; }
+html.em-v2.em-prueba .v2-estante .v2-hcard.con-arte .s { font-size:14px; line-height:1.32; color:#3A3A3C; }
+html.em-v2.em-prueba .v2-cap-dest.con-arte .arte { right:16px; top:50px; width:30%; max-width:112px; height:84px; opacity:.85; }
+html.em-v2.em-prueba .v2-cap-dest.con-arte .txt { right:36%; gap:7px; }
+html.em-v2.em-prueba .v2-cap-dest.con-arte .t { font-size:27px; line-height:1.05; }
+html.em-v2.em-prueba .v2-cap-dest.con-arte .s { font-size:15px; line-height:1.32; opacity:.92; }
 /* Cápsulas | Guía de alimentación: control segmentado (en vez de las dos tarjetas) */
 html.em-v2 .v2-lect-tabs { display:flex; gap:2px; padding:3px; border-radius:999px; background:rgba(118,118,128,.12); margin-top:6px; }
 html.em-v2 .v2-lect-tabs button { flex:1; display:block; text-align:center; border-radius:999px; padding:8px 6px; background:transparent; box-shadow:none; color:#6E6E73; }
@@ -17426,6 +17460,7 @@ html.em-v2 .v2-pod-sec span { font-size:14px; font-weight:700; color:#8E8E93; }
 html.em-v2 .v2-pod-sig { display:flex; gap:14px; width:100%; border:0; border-radius:24px; padding:16px; text-align:left; color:#fff; font:inherit; cursor:pointer;
   background:radial-gradient(120% 100% at 0% 0%, #EE8434, #9C430C); box-shadow:0 14px 30px rgba(201,95,23,.25); transition:transform .15s ease; -webkit-tap-highlight-color:transparent; }
 html.em-v2 .v2-pod-sig:active, html.em-v2 .v2-pod-item:active { transform:scale(.97); }
+html.em-v2 .v2-pod-pila { display:grid; gap:10px; }
 html.em-v2 .v2-pod-sig .arte { display:block; width:104px; height:104px; flex:none; border-radius:16px; overflow:hidden; background:#7A3409; box-shadow:0 8px 20px rgba(0,0,0,.25); }
 html.em-v2 .v2-pod-sig .arte img { width:100%; height:100%; object-fit:cover; display:block; }
 html.em-v2 .v2-pod-sig .txt { flex:1; min-width:0; display:flex; flex-direction:column; }
@@ -17469,6 +17504,31 @@ html.em-v2 .v2-pod-item .s { display:block; font-size:13px; color:#8E8E93; margi
     var sig = PODCASTS.filter(function(p){ return viendo.indexOf(p.id) !== -1 && visto.indexOf(p.id) === -1; })[0]
       || PODCASTS.filter(function(p){ return p.nuevo && visto.indexOf(p.id) === -1; })[0]
       || PODCASTS.filter(function(p){ return visto.indexOf(p.id) === -1; })[0];
+    var tarjeta = function(p, k, boton, attr){
+      return '<button type="button" class="v2-pod-sig" ' + attr + ' onclick="podOpen(' + PODCASTS.indexOf(p) + ')"><span class="arte">' + arte(p) + '</span>'
+        + '<span class="txt"><span class="k">' + k + (p.dur ? ' · ' + esc(p.dur) : '') + '</span>'
+        + '<b>' + esc(p.title) + '</b>' + (p.show ? '<span class="show">' + esc(p.show) + '</span>' : '')
+        + '<span class="boton"><span>' + play + boton + '</span></span></span></button>';
+    };
+    // Vista en prueba: arriba, lo que está viendo (a medias) y el recomendado
+    // de la semana (uno fijo toda la semana, entre los que aún no ha visto);
+    // después, por categorías.
+    if (document.documentElement.classList.contains('em-prueba')) {
+      var aMediasL = PODCASTS.filter(function(p){ return viendo.indexOf(p.id) !== -1 && visto.indexOf(p.id) === -1; });
+      if (aMediasL.length) {
+        html += '<div class="v2-pod-sec">Estás viendo</div><div class="v2-pod-pila">'
+          + aMediasL.map(function(p){ return tarjeta(p, 'Lo dejaste a medias', 'Seguir', 'data-estas-viendo'); }).join('') + '</div>';
+      }
+      var libres = PODCASTS.filter(function(p){ return visto.indexOf(p.id) === -1 && viendo.indexOf(p.id) === -1; });
+      var nuevos = libres.filter(function(p){ return p.nuevo; });
+      var pool = nuevos.length ? nuevos : libres;
+      if (pool.length) {
+        var semana = Math.floor((Date.now() - Date.UTC(2026, 0, 5)) / (7 * 864e5));
+        var rec = pool[((semana % pool.length) + pool.length) % pool.length];
+        html += '<div class="v2-pod-sec">Recomendado de la semana</div>' + tarjeta(rec, 'Para ti esta semana', 'Ver', 'data-recomendado-semana');
+      }
+      sig = null;
+    }
     if (sig) {
       var si = PODCASTS.indexOf(sig), aMedias = viendo.indexOf(sig.id) !== -1;
       html += '<div class="v2-pod-sec">A continuación</div>'
