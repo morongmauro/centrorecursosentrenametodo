@@ -10195,6 +10195,15 @@ html.em-v2 #s-guia-alimentacion.v2-guia .v2-indice { display:grid; gap:8px; padd
 .v2-cap-txt b { font-size:15.5px; font-weight:750; color:#1F1F1F; line-height:1.3; letter-spacing:-0.01em; }
 .v2-cap-txt span { font-size:13px; color:#6B6B6B; }
 .v2-cap-arr { flex:none; color:#B3B0A8; font-size:22px; line-height:1; }
+/* Lote 25 (solo Mauro, la app manda lote25): índice como lista agrupada estilo
+   Ajustes del iPhone: un rótulo por grupo y una sola tarjeta con renglones. */
+html.em-l25 #s-guia-alimentacion.v2-guia .v2-indice { gap:0; padding:0 0 24px; }
+.v2-ind-grupo { margin:18px 6px 8px; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#8E8E93; }
+.v2-ind-tarjeta { background:#FFFFFF; border-radius:22px; padding:2px 14px; box-shadow:0 1px 2px rgba(40,40,30,0.04), 0 8px 24px rgba(60,60,40,0.06); }
+.v2-ind-tarjeta .v2-cap { background:transparent; box-shadow:none; border-radius:0; padding:12px 0; border-bottom:1px solid rgba(60,60,67,0.09); }
+.v2-ind-tarjeta .v2-cap:last-child { border-bottom:none; }
+.v2-ind-tarjeta .v2-cap-n { width:30px; height:30px; }
+.v2-ind-tarjeta .v2-cap-txt b { font-size:15px; font-weight:700; }
 html.em-v2 #s-guia-alimentacion.v2-guia .ga-section { display:none !important; }
 html.em-v2 #s-guia-alimentacion.v2-guia .ga-section.v2-abierto { display:block !important; }
 html.em-v2 #s-guia-alimentacion.v2-guia.v2-leyendo .v2-indice,
@@ -16809,6 +16818,12 @@ document.addEventListener('keydown', function(e){
     var antes = h.classList.contains('em-prueba');
     h.classList.toggle('em-prueba', !!d.prueba);
     if (d.prueba) ponerPrueba();
+    var l25antes = h.classList.contains('em-l25');
+    h.classList.toggle('em-l25', !!d.lote25);
+    if (l25antes !== !!d.lote25) {
+      var gi = document.getElementById('s-guia-alimentacion'), vi = gi && gi.querySelector('.v2-indice');
+      if (vi && !gi.classList.contains('v2-leyendo')) { vi.remove(); try { (window.v2ArmarIndiceGuia || function(){})(); } catch (err) {} }
+    }
     if (antes !== !!d.prueba && typeof window.podRender === 'function') { try { window.podRender(); } catch (err) {} }
     if (d.prueba && typeof d.banda === 'number' && d.banda > 0) h.style.setProperty('--em-banda-prueba', Math.round(d.banda) + 'px');
   });
@@ -16921,7 +16936,29 @@ document.addEventListener('keydown', function(e){
     var viejo = g.querySelector('.v2-indice'); if (viejo) viejo.remove();
     var ind = document.createElement('div');
     ind.className = 'v2-indice';
-    ind.innerHTML = '<h2 class="v2-indice-t">Índice</h2><p class="v2-indice-s">Toca un capítulo para leerlo. Al terminar, márcalo como leído.</p>'
+    var agrupado = document.documentElement.classList.contains('em-l25');
+    var fila = function(s, i, num, titulo){
+      var t = s.querySelector('.ga-h1-time'), leido = !!s.querySelector('.ga-mark-read.read');
+      return '<button type="button" class="v2-cap' + (leido ? ' leido' : '') + '" data-i="' + i + '">'
+        + '<span class="v2-cap-n">' + (leido ? '✓' : num) + '</span>'
+        + '<span class="v2-cap-txt"><b>' + escH(titulo) + '</b><span>' + escH(t ? t.textContent : '') + (leido ? ' · leído' : '') + '</span></span>'
+        + '<span class="v2-cap-arr" aria-hidden="true">›</span></button>';
+    };
+    if (agrupado) {
+      // Grupos por cómo empieza el título: Introducción, Capítulos, Bonus y Cierre.
+      var grupos = [['Introducción', []], ['Capítulos', []], ['Bonus', []], ['Cierre', []]];
+      secs.forEach(function(s, i){
+        var h = s.querySelector('.ga-h1'), txt = (h ? h.textContent : '').trim();
+        var m = /^(Cap[ií]tulo|Bonus)\s*(\d+)\s*[—–-]\s*(.*)$/i.exec(txt);
+        if (m) { var k = /^bonus/i.test(m[1]) ? 2 : 1; grupos[k][1].push(fila(s, i, m[2], m[3])); }
+        else { var cierre = grupos[1][1].length || grupos[2][1].length; grupos[cierre ? 3 : 0][1].push(fila(s, i, grupos[cierre ? 3 : 0][1].length + 1, txt)); }
+      });
+      var leidos = function(k){ return (grupos[k][1].join('').match(/v2-cap leido/g) || []).length; };
+      ind.innerHTML = grupos.map(function(g, k){
+        if (!g[1].length) return '';
+        return '<div class="v2-ind-grupo">' + g[0] + (k === 1 ? ' · ' + leidos(1) + ' de ' + g[1].length : '') + '</div><div class="v2-ind-tarjeta">' + g[1].join('') + '</div>';
+      }).join('');
+    } else ind.innerHTML = '<h2 class="v2-indice-t">Índice</h2><p class="v2-indice-s">Toca un capítulo para leerlo. Al terminar, márcalo como leído.</p>'
       + secs.map(function(s, i){
         var h = s.querySelector('.ga-h1'), t = s.querySelector('.ga-h1-time'), leido = !!s.querySelector('.ga-mark-read.read');
         return '<button type="button" class="v2-cap' + (leido ? ' leido' : '') + '" data-i="' + i + '">'
