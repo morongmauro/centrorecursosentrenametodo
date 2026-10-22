@@ -10017,7 +10017,10 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-banda { position:absolute; top:0; left:0; right:0; height:calc(64px + env(safe-area-inset-top, 0px) + 14px); pointer-events:none;
   background:linear-gradient(180deg, #F2A66B 0%, #F3AD78 100%);
   -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
-.em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 34px)); }
+.em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 36px));
+  /* Curva «C + luz», igual que en la app: ola asimétrica con filo de luz y reflejo suave arriba. */
+  -webkit-mask-image:radial-gradient(ellipse 75% 26px at 36% 100%, transparent 98%, #000 100%); mask-image:radial-gradient(ellipse 75% 26px at 36% 100%, transparent 98%, #000 100%);
+  background:radial-gradient(ellipse 75% 29.5px at 36% 100%, rgba(255,255,255,.85) 96%, rgba(255,255,255,0) 100%), linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,.08) 55%, rgba(255,255,255,0) 100%), linear-gradient(180deg, #F2A66B 0%, #F2A66B 100%); }
 .em-prueba .v2-cab-banda { left:calc(50% - 50vw); right:auto; width:100vw; }
 /* Sin rebote: la franja se queda pegada arriba y, si un teléfono viejo
    rebota igual, sigue hacia arriba con su color (nunca se ve un hueco). */
