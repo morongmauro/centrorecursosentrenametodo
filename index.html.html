@@ -17324,14 +17324,8 @@ html.em-l25.em-prueba.em-v2 .v2-lect-tabs button { position:relative; }
     var empty = document.getElementById('cap-empty'); if (empty) empty.hidden = true;
     var read = capGetRead(), pos = leerPos(), html = '';
     var sinLeer = function(c){ return read.indexOf(c.id) === -1; };
-    // La de la semana: la primera nueva sin leer; si no hay, la primera sin leer.
-    var dest = CAPSULAS.filter(function(c){ return c.nuevo && sinLeer(c) && !pos[c.id]; })[0] || CAPSULAS.filter(function(c){ return sinLeer(c) && !pos[c.id]; })[0];
-    if (dest) {
-      var di = CAPSULAS.indexOf(dest);
-      html += '<div class="v2-cap-eyebrow">Cápsula de la semana</div>'
-        + portadaHTML(dest, di, 2, 'v2-cap-dest')
-        + '<div class="v2-cap-dest-pie"><span>' + esc(meta(dest)) + '</span><button type="button" onclick="capOpen(' + di + ')">Leer</button></div>';
-    }
+    // Sin «Cápsula de la semana» (se quitó: la lista va directo a los
+    // estantes por tema, y «Sigue leyendo» si hay alguna a medias).
     // Sigue leyendo: las que quedaron a medias.
     var medias = CAPSULAS.filter(function(c){ return pos[c.id] && sinLeer(c) && H[c.id]; }).slice(0, 2);
     if (medias.length) {
