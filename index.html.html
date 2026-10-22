@@ -10017,8 +10017,10 @@ html.em-v2[data-v2lect="lecturas"] .v2-lect { padding-top:0; }
 .v2-cab-banda { position:absolute; top:0; left:0; right:0; height:calc(64px + env(safe-area-inset-top, 0px) + 14px); pointer-events:none;
   background:linear-gradient(180deg, #F2A66B 0%, #F3AD78 100%);
   -webkit-mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); mask-image:radial-gradient(ellipse 60% 18px at 50% 100%, transparent 97%, #000 100%); }
-.em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 36px));
-  /* Curva «C + luz», igual que en la app: ola asimétrica con filo de luz y reflejo suave arriba. */
+.em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 34px)); }
+/* Lote 28 (solo Mauro): curva «C + luz», igual que en la app: ola asimétrica
+   con filo de luz y reflejo suave arriba. La app manda el alto (36 px). */
+html.em-l25.em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 36px));
   -webkit-mask-image:radial-gradient(ellipse 75% 26px at 36% 100%, transparent 98%, #000 100%); mask-image:radial-gradient(ellipse 75% 26px at 36% 100%, transparent 98%, #000 100%);
   background:radial-gradient(ellipse 75% 29.5px at 36% 100%, rgba(255,255,255,.85) 96%, rgba(255,255,255,0) 100%), linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,.08) 55%, rgba(255,255,255,0) 100%), linear-gradient(180deg, #F2A66B 0%, #F2A66B 100%); }
 .em-prueba .v2-cab-banda { left:calc(50% - 50vw); right:auto; width:100vw; }
@@ -10074,7 +10076,6 @@ html.em-v2.em-prueba .screen:not(#_a):not(#_b):not(#_c), html.em-v2.em-prueba #s
 .em-prueba .v2-cab.curva.con-aro { min-height:calc(var(--em-banda-prueba, 34px) + 132px); }
 /* Tarjetas sobre blanco: sombra suave para que se despeguen del fondo. */
 .em-prueba .v2-hcard { box-shadow:0 1px 2px rgba(20,20,30,0.04), 0 8px 22px rgba(20,30,60,0.08) !important; }
-.em-prueba .v2-lect-tabs { background:rgba(118,118,128,0.10); }
 .v2-cab-ilus { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
 /* El libro en su espacio (del alto del aro, a su derecha), igual que en la app. */
 .v2-cab-ilus .v2-kb { position:absolute; right:10.4px; top:calc(64px + env(safe-area-inset-top, 0px) + 14.6px); width:102.9px; height:102.9px; }
@@ -16844,6 +16845,10 @@ document.addEventListener('keydown', function(e){
     if (l25antes !== !!d.lote25) {
       var gi = document.getElementById('s-guia-alimentacion'), vi = gi && gi.querySelector('.v2-indice');
       if (vi && !gi.classList.contains('v2-leyendo')) { vi.remove(); try { (window.v2ArmarIndiceGuia || function(){})(); } catch (err) {} }
+      // Las listas ya estaban pintadas: con el lote 25 cambia el orden
+      // (primero lo no leído / no visto), así que se vuelven a pintar.
+      try { if (typeof window.capRender === 'function') window.capRender(); } catch (err) {}
+      try { if (typeof window.podRender === 'function') window.podRender(); } catch (err) {}
     }
     if (antes !== !!d.prueba && typeof window.podRender === 'function') { try { window.podRender(); } catch (err) {} }
     if (d.prueba && typeof d.banda === 'number' && d.banda > 0) h.style.setProperty('--em-banda-prueba', Math.round(d.banda) + 'px');
@@ -17180,14 +17185,8 @@ html.em-v2 .v2-lect-tabs button.is-on b { font-weight:700; }
 html.em-v2 .v2-lect-tabs button span { display:none; }
 html.em-v2 .v2-lect-tabs button.is-on { background:#fff; color:#A24F0E; box-shadow:0 3px 8px rgba(0,0,0,.12), 0 3px 1px rgba(0,0,0,.04); }
 html.em-v2[data-v2lect] #cap-hint { display:none !important; }
-/* Lote 25 (solo Mauro): el control segmentado con Liquid Glass (opción B),
-   la misma receta que la barra y los blobs de la app. */
-html.em-l25.em-prueba.em-v2 .v2-lect-tabs { position:relative; background:linear-gradient(160deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.05) 50%, rgba(255,255,255,.12) 100%);
-  -webkit-backdrop-filter:blur(36px) saturate(2) contrast(1.05); backdrop-filter:blur(36px) saturate(2) contrast(1.05);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(255,255,255,.35), inset 0 0 0 .8px rgba(255,255,255,.28), inset 0 0 30px rgba(255,255,255,.35), inset 0 -16px 24px rgba(30,30,40,.10), 0 0 0 .5px rgba(30,30,40,.045), 0 1px 2px rgba(30,30,40,.06), 0 18px 44px rgba(40,44,30,.18); }
-html.em-l25.em-prueba.em-v2 .v2-lect-tabs::before { content:''; position:absolute; inset:0; border-radius:999px; pointer-events:none;
-  background:radial-gradient(55% 55% at 16% 10%, rgba(255,255,255,.8), rgba(255,255,255,0) 68%), radial-gradient(40% 40% at 86% 92%, rgba(255,255,255,.4), rgba(255,255,255,0) 70%); }
-html.em-l25.em-prueba.em-v2 .v2-lect-tabs button { position:relative; }
+/* Lote 28: Cápsulas / Guía con el mismo carril gris que Mes / Semana del
+   calendario de entreno (sin vidrio). */
 /* ── La cápsula como lectura: una sola página, como los capítulos de la Guía.
    Arriba el título y la idea; cada tema de la lámina en una tarjeta blanca con
    su número clave; «Cómo lo aplicas» con checks; la regla en negro con su
@@ -17390,6 +17389,8 @@ html.em-l25.em-prueba.em-v2 .v2-lect-tabs button { position:relative; }
     if (q && !CAPSULAS.some(coincide)) html += '<div class="v2-cap-nada">Nada con «' + esc((window._capBusca || '').trim()) + '».</div>';
     cats.forEach(function(cat){
       var de = CAPSULAS.filter(function(c){ return catNorm(c.cat) === cat && coincide(c); });
+      // Lote 28 (solo Mauro): primero lo que falta por leer; lo ya leído, al final.
+      if (document.documentElement.classList.contains('em-l25')) de = de.slice().sort(function(a, b){ return (read.indexOf(a.id) !== -1 ? 1 : 0) - (read.indexOf(b.id) !== -1 ? 1 : 0); });
       if (!de.length) return;
       var ac = ACENTO_TEMA[cat] || '#EE8434';
       html += '<div class="v2-cap-sec">' + esc(cat) + '<span>' + de.length + '</span></div><div class="v2-lista">' + de.map(function(c){
@@ -17631,6 +17632,7 @@ html.em-v2 .v2-pod-item .s { display:block; font-size:13px; color:#8E8E93; margi
     var coincideV = function(p){ if (catSel && catNorm(p.cat) !== catSel) return false; if (!qv) return true; return ((p.title || '') + ' ' + (p.show || '') + ' ' + (p.cat || '')).toLowerCase().indexOf(qv) !== -1; };
     if (enPrueba && (qv || catSel)) {
       var hits = PODCASTS.filter(coincideV);
+      if (document.documentElement.classList.contains('em-l25')) hits = hits.slice().sort(function(a, b){ return (visto.indexOf(a.id) !== -1 ? 1 : 0) - (visto.indexOf(b.id) !== -1 ? 1 : 0); });
       html += hits.length ? '<div class="v2-pod-sec">' + (catSel ? esc(catSel) : 'Resultados') + '<span>' + hits.length + '</span></div><div class="v2-pod-est">' + hits.map(function(p){
         var i = PODCASTS.indexOf(p), v = visto.indexOf(p.id) !== -1, en = !v && viendo.indexOf(p.id) !== -1;
         return '<button type="button" class="v2-pod-item' + (v ? ' visto' : '') + '" onclick="podOpen(' + i + ')"><span class="arte">' + arte(p)
@@ -17668,6 +17670,8 @@ html.em-v2 .v2-pod-item .s { display:block; font-size:13px; color:#8E8E93; margi
     PODCASTS.forEach(function(p){ var k = catNorm(p.cat); if (cats.indexOf(k) === -1) cats.push(k); });
     cats.forEach(function(cat){
       var de = PODCASTS.filter(function(p){ return catNorm(p.cat) === cat; });
+      // Lote 28 (solo Mauro): primero lo que falta por ver; lo visto, al final.
+      if (document.documentElement.classList.contains('em-l25')) de = de.slice().sort(function(a, b){ return (visto.indexOf(a.id) !== -1 ? 1 : 0) - (visto.indexOf(b.id) !== -1 ? 1 : 0); });
       html += '<div class="v2-pod-sec">' + esc(cat) + '<span>' + de.length + '</span></div><div class="v2-pod-est">' + de.map(function(p){
         var i = PODCASTS.indexOf(p), v = visto.indexOf(p.id) !== -1, en = !v && viendo.indexOf(p.id) !== -1;
         return '<button type="button" class="v2-pod-item' + (v ? ' visto' : '') + '" onclick="podOpen(' + i + ')"><span class="arte">' + arte(p)
