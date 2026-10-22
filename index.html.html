@@ -17081,6 +17081,11 @@ html.em-v2 .v2-cap-eyebrow { font-size:21px; font-weight:800; letter-spacing:-.0
 html.em-v2 .v2-cap-busca { display:flex; align-items:center; gap:8px; margin:14px 0 2px; padding:0 14px; height:42px; border-radius:999px; background:rgba(118,118,128,.12); color:#6E6E73; }
 html.em-v2 .v2-cap-busca input { flex:1; min-width:0; border:0; background:transparent; font:inherit; font-size:16px; color:#1F1F1F; outline:none; -webkit-appearance:none; appearance:none; }
 html.em-v2 .v2-cap-busca input::-webkit-search-cancel-button { display:none; }
+html.em-v2 .v2-pod-busca { margin:2px 0 10px; }
+html.em-v2 .v2-pod-filtros { display:flex; gap:6px; overflow-x:auto; margin:0 -20px 14px; padding:0 20px 4px; scrollbar-width:none; -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 36px),transparent); mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 36px),transparent); }
+html.em-v2 .v2-pod-filtros::-webkit-scrollbar { display:none; }
+html.em-v2 .v2-pod-filtros button { flex:none; border:0; border-radius:999px; padding:9px 16px; font:inherit; font-size:14px; font-weight:650; color:#1F1F1F; background:rgba(118,118,128,.12); cursor:pointer; transition:background .18s,color .18s,box-shadow .18s; -webkit-tap-highlight-color:transparent; }
+html.em-v2 .v2-pod-filtros button.on { background:#1F1F1F; color:#fff; box-shadow:0 6px 16px rgba(31,31,31,.22), 0 1px 2px rgba(31,31,31,.10); }
 html.em-v2 .v2-cap-busca button { border:0; background:rgba(118,118,128,.24); color:#1F1F1F; width:22px; height:22px; border-radius:99px; font:inherit; font-size:12px; cursor:pointer; }
 html.em-v2 .v2-cap-nada { margin-top:18px; font-size:15px; color:#6E6E73; }
 /* Cápsulas como lista agrupada (opción A): bloque blanco por tema, fila por cápsula. */
@@ -17611,7 +17616,28 @@ html.em-v2 .v2-pod-item .s { display:block; font-size:13px; color:#8E8E93; margi
     // Vista en prueba: arriba, lo que está viendo (a medias) y el recomendado
     // de la semana (uno fijo toda la semana, entre los que aún no ha visto);
     // después, por categorías.
-    if (document.documentElement.classList.contains('em-prueba')) {
+    var enPrueba = document.documentElement.classList.contains('em-prueba');
+    var qv = (window._podBusca || '').trim().toLowerCase(), catSel = window._podCat || '';
+    var catsAll = []; PODCASTS.forEach(function(p){ var k = catNorm(p.cat); if (catsAll.indexOf(k) === -1) catsAll.push(k); });
+    if (enPrueba) {
+      html += '<label class="v2-cap-busca v2-pod-busca"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>'
+        + '<input type="search" placeholder="Buscar video" aria-label="Buscar video" enterkeyhint="search" value="' + esc(window._podBusca || '') + '" oninput="window._podBusca=this.value;window.podRender();var i=document.querySelector(\'.v2-pod-busca input\');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}">'
+        + (qv ? '<button type="button" aria-label="Borrar búsqueda" onclick="window._podBusca=\'\';window.podRender();">✕</button>' : '') + '</label>'
+        + '<div class="v2-pod-filtros">' + ['' ].concat(catsAll).map(function(c){ return '<button type="button" class="' + ((c === catSel) ? 'on' : '') + '" onclick="window._podCat=\'' + esc(c) + '\';window.podRender();">' + (c ? esc(c) : 'Todos') + '</button>'; }).join('') + '</div>';
+    }
+    var coincideV = function(p){ if (catSel && catNorm(p.cat) !== catSel) return false; if (!qv) return true; return ((p.title || '') + ' ' + (p.show || '') + ' ' + (p.cat || '')).toLowerCase().indexOf(qv) !== -1; };
+    if (enPrueba && (qv || catSel)) {
+      var hits = PODCASTS.filter(coincideV);
+      html += hits.length ? '<div class="v2-pod-sec">' + (catSel ? esc(catSel) : 'Resultados') + '<span>' + hits.length + '</span></div><div class="v2-pod-est">' + hits.map(function(p){
+        var i = PODCASTS.indexOf(p), v = visto.indexOf(p.id) !== -1, en = !v && viendo.indexOf(p.id) !== -1;
+        return '<button type="button" class="v2-pod-item' + (v ? ' visto' : '') + '" onclick="podOpen(' + i + ')"><span class="arte">' + arte(p)
+          + (p.dur ? '<span class="dur">' + esc(p.dur) + '</span>' : '')
+          + (v ? '<span class="est">✓ Visto</span>' : en ? '<span class="est">A medias</span>' : p.nuevo ? '<span class="est">Nuevo</span>' : '')
+          + '</span><b>' + esc(p.title) + '</b><span class="s">' + esc([p.show, p.dur].filter(Boolean).join(' · ')) + '</span></button>';
+      }).join('') + '</div>' : '<div class="v2-cap-nada">Nada con «' + esc(qv) + '» en los videos.</div>';
+      list.innerHTML = html; return;
+    }
+    if (enPrueba) {
       var aMediasL = PODCASTS.filter(function(p){ return viendo.indexOf(p.id) !== -1 && visto.indexOf(p.id) === -1; });
       if (aMediasL.length) {
         html += '<div class="v2-pod-sec">Estás viendo</div><div class="v2-pod-pila">'
