@@ -10027,6 +10027,9 @@ html.em-l25.em-prueba .em-velo-barra { display:block; position:fixed; left:0; ri
   -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
   -webkit-mask-image:linear-gradient(0deg, #000 0%, #000 30%, transparent 100%); mask-image:linear-gradient(0deg, #000 0%, #000 30%, transparent 100%); }
 html.em-l25.em-prueba body.locked .em-velo-barra, html.em-l25.em-prueba body.em-pod-fs .em-velo-barra { display:none; }
+/* Con el iframe a toda la altura, lo último de cada pantalla deja sitio para la barra de la app. */
+html.em-l25.em-prueba body { padding-bottom:calc(104px + env(safe-area-inset-bottom, 0px)) !important; }
+html.em-l25.em-prueba .v2-lec { padding-bottom:calc(104px + env(safe-area-inset-bottom, 0px)) !important; }
 /* Lote 28 (solo Mauro): curva «C + luz», igual que en la app: ola asimétrica
    con filo de luz y reflejo suave arriba. La app manda el alto (36 px). */
 html.em-l25.em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 36px));
