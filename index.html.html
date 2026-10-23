@@ -10027,14 +10027,18 @@ html.em-l25.em-prueba .em-velo-barra { display:block; position:fixed; left:0; ri
   -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
   -webkit-mask-image:linear-gradient(0deg, #000 0%, #000 30%, transparent 100%); mask-image:linear-gradient(0deg, #000 0%, #000 30%, transparent 100%); }
 html.em-l25.em-prueba body.locked .em-velo-barra, html.em-l25.em-prueba body.em-pod-fs .em-velo-barra { display:none; }
+/* El mismo margen a los bordes que Dash, Entreno y Alimentación (20 px; las
+   pantallas del centro traían 16). */
+html.em-l25.em-prueba .sub-area, html.em-l25.em-prueba .content-area, html.em-l25.em-prueba .hub-area, html.em-l25.em-prueba .qs-area, html.em-l25.em-prueba .progm-page { padding-left:20px !important; padding-right:20px !important; }
 /* Con el iframe a toda la altura, lo último de cada pantalla deja sitio para la barra de la app. */
 html.em-l25.em-prueba body { padding-bottom:calc(104px + env(safe-area-inset-bottom, 0px)) !important; }
 html.em-l25.em-prueba .v2-lec { padding-bottom:calc(104px + env(safe-area-inset-bottom, 0px)) !important; }
 /* Lote 28 (solo Mauro): curva «C + luz», igual que en la app: ola asimétrica
    con filo de luz y reflejo suave arriba. La app manda el alto (36 px). */
 html.em-l25.em-prueba .v2-cab-banda { height:var(--em-banda-prueba, calc(env(safe-area-inset-top, 0px) + 36px));
-  -webkit-mask-image:radial-gradient(ellipse 75% 26px at 36% 100%, transparent 98%, #000 100%); mask-image:radial-gradient(ellipse 75% 26px at 36% 100%, transparent 98%, #000 100%);
-  background:radial-gradient(ellipse 75% 29.5px at 36% 100%, rgba(255,255,255,.85) 96%, rgba(255,255,255,0) 100%), linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,.08) 55%, rgba(255,255,255,0) 100%), linear-gradient(180deg, #F2A66B 0%, #F2A66B 100%); }
+  /* Curva A: centro al 24 %, filo de luz suave y reflejo arriba, sin sombra ni contorno (igual que la app). */
+  -webkit-mask-image:radial-gradient(ellipse 72% 28px at 24% 100%, transparent 98%, #000 100%); mask-image:radial-gradient(ellipse 72% 28px at 24% 100%, transparent 98%, #000 100%);
+  background:radial-gradient(ellipse 72% 32px at 24% 100%, rgba(255,255,255,0) 82%, rgba(255,255,255,.9) 88%, rgba(255,255,255,0) 100%), linear-gradient(180deg, rgba(255,255,255,.40) 0%, rgba(255,255,255,.12) 50%, rgba(255,255,255,0) 100%), linear-gradient(180deg, #F2A66B 0%, #F2A66B 100%); }
 .em-prueba .v2-cab-banda { left:calc(50% - 50vw); right:auto; width:100vw; }
 /* Sin rebote: la franja se queda pegada arriba y, si un teléfono viejo
    rebota igual, sigue hacia arriba con su color (nunca se ve un hueco). */
