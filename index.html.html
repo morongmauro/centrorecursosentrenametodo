@@ -17800,6 +17800,31 @@ html.em-v2 .v2-pod-item .s { display:block; font-size:13px; color:#8E8E93; margi
   try { window.podRender(); } catch (e) {}
 })();
 </script>
+<script>
+/* 6 nov · títulos un poco más delgados (igual que en la app): los títulos
+   de 15 px o más que van en 700–800 quedan en 600. No cambian los números,
+   los botones ni el texto chico. Solo en la visual nueva (html.em-prueba). */
+(function () {
+  if (!('MutationObserver' in window)) return;
+  var NUM = /^[\d\s.,/%:+\-–·]+$/;
+  function uno(el) {
+    if (!document.documentElement.classList.contains('em-prueba')) return;
+    if (el.style.getPropertyPriority('font-weight') === 'important' && el.style.getPropertyValue('font-weight') === '600') return;
+    var t = false; for (var i = 0; i < el.childNodes.length; i++) { var n = el.childNodes[i]; if (n.nodeType === 3 && n.textContent.trim().length > 1) { t = true; break; } }
+    if (!t || el.closest('button, [role="button"], input, textarea, select, svg')) return;
+    var cs = getComputedStyle(el);
+    if (parseFloat(cs.fontSize) < 15 || Number(cs.fontWeight) < 650 || NUM.test(el.textContent.trim())) return;
+    el.style.setProperty('font-weight', '600', 'important');
+  }
+  function todo(r) { if (!r || r.nodeType !== 1) return; uno(r); var l = r.querySelectorAll('*'); for (var i = 0; i < l.length; i++) uno(l[i]); }
+  var pend = [], prog = false;
+  function correr() { prog = false; var l = pend; pend = []; l.forEach(function (n) { if (n.isConnected) todo(n); }); }
+  function pedir(n) { pend.push(n); if (!prog) { prog = true; Promise.resolve().then(correr); } }
+  new MutationObserver(function (ms) { ms.forEach(function (m) { if (m.type === 'childList') m.addedNodes.forEach(function (n) { if (n.nodeType === 1) pedir(n); }); else pedir(m.target); }); })
+    .observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+  if (document.body) pedir(document.body); else document.addEventListener('DOMContentLoaded', function () { pedir(document.body); });
+})();
+</script>
 </body>
 
 </html>
