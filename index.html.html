@@ -11680,6 +11680,7 @@ html.em-v2 #s-onboarding .hub-back-link { display: none !important; }
 <script src="capsulas/manifest.js"></script>
 <script src="capsulas/capsulas.js"></script>
 <script src="capsulas/historias.js"></script>
+<script src="capsulas/profundidad.js"></script>
 <script src="capsulas/portadas.js"></script>
 <script src="podcast/podcasts.js"></script>
 
@@ -17218,6 +17219,9 @@ html.em-v2 .v2-lista-fila:first-child { border-top:0; }
 html.em-v2 .v2-lista-fila:active { background:rgba(0,0,0,.035); }
 html.em-v2 .v2-lista-fila .ico { width:52px; height:52px; border-radius:14px; background:var(--ac-bg); display:grid; place-items:center; flex:none; overflow:hidden; }
 html.em-v2 .v2-lista-fila .ico svg { width:42px; height:42px; }
+html.em-v2 .v2-lista-fila .ico:has(.cap-foto) { width:64px; height:64px; border-radius:16px; background:#F3E3D3; }
+html.em-v2 .cap-foto { display:block; width:100%; height:100%; object-fit:cover; border-radius:inherit; }
+html.em-v2 .con-arte .arte:has(.cap-foto) { border-radius:14px; overflow:hidden; }
 html.em-v2 .v2-lista-fila .txt { flex:1; min-width:0; display:block; }
 html.em-v2 .v2-lista-fila .t { display:block; font-size:16px; font-weight:700; letter-spacing:-.01em; line-height:1.2; }
 html.em-v2 .v2-lista-fila .s { display:block; font-size:13px; color:#6E6E73; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -17307,13 +17311,62 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
    su número clave; «Cómo lo aplicas» con checks; la regla en negro con su
    segunda mitad en amarillo; las fuentes y los botones al final. ── */
 .v2-lec { position:fixed; inset:0; z-index:10050; display:none; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
-  background:#EDECE5; color:#1D1D1F; font-family:'ECM Sans', -apple-system, system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+  background:#F7F6F2; color:#1D1D1F; font-family:'ECM Sans', -apple-system, system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
 .v2-lec.abierta { display:block; animation:v2l-entra .26s ease-out both; }
 @keyframes v2l-entra { from { opacity:0 } to { opacity:1 } }
 .v2-lec .hoja { max-width:560px; margin:0 auto; padding:0 20px calc(28px + env(safe-area-inset-bottom, 0px)); }
 .v2-lec .barra { position:sticky; top:0; z-index:2; margin:0 -20px; padding:calc(10px + env(safe-area-inset-top, 0px)) 20px 10px;
-  background:linear-gradient(180deg, #EDECE5 70%, rgba(237,236,229,0)); }
-.v2-lec .volver { border:0; background:transparent; padding:6px 0; font:inherit; font-size:16px; font-weight:700; color:var(--tinta); cursor:pointer; }
+  background:linear-gradient(180deg, #F7F6F2 72%, rgba(247,246,242,0)); display:flex; align-items:center; gap:12px; }
+.v2-lec .volver { border:0; background:#fff; padding:8px 14px; border-radius:99px; box-shadow:0 1px 0 rgba(0,0,0,.05), 0 4px 12px rgba(0,0,0,.05); font:inherit; font-size:15px; font-weight:700; color:#1D1D1F; cursor:pointer; flex:none; }
+.v2-lec .prog { flex:1; height:4px; border-radius:99px; background:#E9E3D9; overflow:hidden; }
+.v2-lec .prog i { display:block; height:100%; width:0; background:var(--tinta); border-radius:99px; transition:width .12s linear; }
+.v2-lec .sec .k { font-size:12.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--tinta); margin-bottom:6px; }
+.v2-lec .sec.suave { background:#FBEFE4; }
+.v2-lec .sec.logro { background:#fff; border:1.5px solid #F2CDAE; }
+.v2-lec .chk { margin:2px 0 0; padding:0; list-style:none; display:grid; gap:8px; }
+.v2-lec .chk li { position:relative; padding-left:30px; font-size:16px; line-height:1.42; font-weight:600; }
+.v2-lec .chk li::before { content:''; position:absolute; left:0; top:1px; width:20px; height:20px; border-radius:99px; background:var(--tinta); }
+.v2-lec .chk li::after { content:''; position:absolute; left:6px; top:6px; width:8px; height:4.5px; border-left:2px solid #fff; border-bottom:2px solid #fff; transform:rotate(-45deg); }
+.v2-lec .cita { font-size:17px !important; font-style:italic; color:#1D1D1F !important; font-weight:600; margin-top:2px !important; }
+.v2-lec .sec p.rico b { color:#1D1D1F; font-weight:800; }
+.v2-lec .comp { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; }
+.v2-lec .comp > div { background:#F4F2EE; border-radius:14px; padding:12px; }
+.v2-lec .comp > div.fuerte { background:#1D1D1F; color:#fff; }
+.v2-lec .comp b { display:block; font-size:15px; font-weight:800; }
+.v2-lec .comp span { display:block; font-size:13.5px; line-height:1.35; margin-top:4px; color:#6E6E73; }
+.v2-lec .comp .fuerte span { color:rgba(255,255,255,.8); }
+.v2-lec .tuyo { margin-top:14px; background:#FBEFE4; border-radius:16px; padding:14px; }
+.v2-lec .tuyo .k { margin-bottom:8px; }
+.v2-lec .tuyo .peso { display:inline-flex; align-items:center; gap:8px; background:#fff; border-radius:99px; padding:6px 8px 6px 14px; font-size:14.5px; font-weight:700; }
+.v2-lec .tuyo .peso input { width:64px; border:0; outline:0; background:#F7F6F2; border-radius:99px; padding:6px 10px; font:inherit; font-size:16px; font-weight:800; text-align:center; color:#1D1D1F; }
+.v2-lec .tuyo .big { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px; margin-top:10px; }
+.v2-lec .tuyo .big b { font-size:34px; font-weight:850; letter-spacing:-.03em; color:var(--tinta); line-height:1.05; }
+.v2-lec .tuyo .big span { font-size:14.5px; font-weight:650; color:#3A3A3C; }
+.v2-lec .tuyo .pista { font-size:13.5px; color:#8A6A52; margin-top:6px; }
+.v2-lec .comida { display:grid; gap:6px; margin-top:4px; }
+.v2-lec .comida div { display:flex; justify-content:space-between; gap:10px; background:#F4F2EE; border-radius:12px; padding:10px 12px; font-size:15.5px; color:#6E6E73; font-weight:600; }
+.v2-lec .comida div b { color:#1D1D1F; font-weight:750; }
+.v2-lec .sec p.pie { font-size:14px; color:#6E6E73; }
+.v2-lec .mito { display:flex; gap:10px; align-items:baseline; font-size:16px; line-height:1.45; margin-top:8px; }
+.v2-lec .mito .no, .v2-lec .mito .si { flex:none; font-size:11.5px; font-weight:800; letter-spacing:.03em; text-transform:uppercase; border-radius:99px; padding:3px 8px; }
+.v2-lec .mito .no { background:#F1ECE6; color:#8A8A8E; } .v2-lec .mito .si { background:var(--tinta); color:#fff; }
+.v2-lec .mito s { color:#8A8A8E; } .v2-lec .mito span:last-child { color:#1D1D1F; font-weight:600; }
+.v2-lec .ops { display:grid; gap:8px; margin-top:12px; }
+.v2-lec .ops button { text-align:left; border:1.5px solid #E9E3D9; background:#fff; border-radius:14px; padding:12px 14px; font:inherit; font-size:15.5px; font-weight:650; color:#1D1D1F; cursor:pointer; }
+.v2-lec .ops button.ok { border-color:#46965A; background:#EEF6F0; }
+.v2-lec .ops button.mal { border-color:#D9A79A; background:#FBF0EC; color:#8A8A8E; }
+.v2-lec .sec p.por { color:#1D1D1F; }
+.v2-lec .pregunta textarea { width:100%; box-sizing:border-box; margin-top:12px; border:0; border-radius:14px; padding:12px 14px; font:inherit; font-size:16px; line-height:1.4; background:#fff; color:#1D1D1F; resize:vertical; outline:0; box-shadow:inset 0 0 0 1.5px #F2CDAE; }
+.v2-lec .pregunta .enviar { margin-top:10px; width:100%; border:0; border-radius:99px; padding:13px 16px; background:#1D1D1F; color:#fff; font:inherit; font-size:15.5px; font-weight:750; cursor:pointer; }
+.v2-lec .pregunta .enviar:disabled { opacity:.6; }
+.v2-lec .sec p.enviado { color:#2F6E3E; font-weight:650; }
+.v2-lec .sec p.estado { color:#B5561A; font-size:14px; }
+.v2-lec .sigue { display:block; width:100%; text-align:left; border:0; font:inherit; color:#1D1D1F; cursor:pointer; }
+.v2-lec .sigue .fila { display:flex; align-items:center; gap:12px; }
+.v2-lec .sigue img { width:56px; height:56px; border-radius:14px; object-fit:cover; flex:none; background:#F3E3D3; }
+.v2-lec .sigue .fila > span { flex:1; min-width:0; } .v2-lec .sigue b { display:block; font-size:16.5px; font-weight:800; line-height:1.25; }
+.v2-lec .sigue .fila > span > span { display:block; font-size:13.5px; color:#6E6E73; margin-top:2px; }
+.v2-lec .sigue .chev { width:9px; height:9px; border-right:2px solid #A1A1A6; border-top:2px solid #A1A1A6; transform:rotate(45deg); flex:none; margin-right:4px; }
 .v2-lec .cat { font-size:14px; font-weight:700; color:var(--tinta); margin-top:8px; }
 .v2-lec h1 { font-size:32px; font-weight:800; letter-spacing:-.025em; line-height:1.06; margin:4px 0 6px; }
 .v2-lec .meta { font-size:14px; color:#6E6E73; }
@@ -17330,8 +17383,9 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
 .v2-lec .pasos li { font-size:16px; line-height:1.45; color:#3A3A3C; padding-left:14px; border-left:3px solid var(--suave); }
 .v2-lec .pasos b { display:block; color:#1D1D1F; font-weight:800; }
 .v2-lec .ap { margin:6px 0 0; padding:0; list-style:none; }
-.v2-lec .ap li { position:relative; padding-left:28px; font-size:16px; line-height:1.45; margin-top:10px; }
-.v2-lec .ap li::before { content:''; position:absolute; left:3px; top:6px; width:13px; height:7px; border-left:2.5px solid #46965A; border-bottom:2.5px solid #46965A; transform:rotate(-45deg); }
+.v2-lec .ap { counter-reset:ap; }
+.v2-lec .ap li { position:relative; padding-left:34px; font-size:16px; line-height:1.45; margin-top:12px; counter-increment:ap; }
+.v2-lec .ap li::before { content:counter(ap); position:absolute; left:0; top:0; width:23px; height:23px; border-radius:99px; background:#FBEFE4; color:var(--tinta); font-size:13px; font-weight:850; display:grid; place-items:center; }
 .v2-lec .filas { display:grid; gap:6px; margin-top:10px; }
 .v2-lec .filas div { display:flex; justify-content:space-between; gap:10px; background:#F4F2EE; border-radius:12px; padding:10px 12px; font-size:15.5px; }
 .v2-lec .filas b { font-weight:750; } .v2-lec .filas span { color:#6E6E73; font-weight:600; text-align:right; }
@@ -17385,6 +17439,17 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     'Nutrición': ['#5CAE72', '#22663A', '#22663A'],
     'Bienestar general': ['#E2A43A', '#9A6410', '#7A4E0A']
   };
+  // Dentro de Aprendizaje todo va en su naranja (el azul es de Entrenamiento
+  // y el verde de Alimentación: aquí confundían de sección).
+  var NARANJA = ['#F2A66B', '#C9672B', '#B5561A'];
+  Object.keys(TEMA).forEach(function(k){ TEMA[k] = NARANJA; });
+  var X = window.CAPSULAS_PROFUNDIDAD || {};
+  // **así** → negrita (lo demás, escapado).
+  var rico = function(s){ return esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'); };
+  // Tu peso, para calcular tu número (solo en este teléfono).
+  var PESO_KEY = 'em_peso_kg';
+  var leerPeso = function(){ try { var v = parseFloat(localStorage.getItem(PESO_KEY)); return v > 25 && v < 300 ? v : null; } catch (e) { return null; } };
+  var fmtNum = function(v, dec){ return Number(v).toLocaleString('es-CO', { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 }); };
   var tema = function(c){ return TEMA[catNorm(c.cat)] || TEMA['Bienestar general']; };
   var esc = function(s){ return capEsc(String(s == null ? '' : s)); };
   // La pregunta rápida (quiz en historias.js) no se muestra: Mauro no aprobó las preguntas.
@@ -17444,7 +17509,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     'Bienestar general': [['#E2A43A', '#9A6410'], ['#EE8434', '#9C430C'], ['#6A727C', '#33383F'], ['#C98A22', '#7A4E0A']]
   };
   // El color de cada tema (el de su módulo en la app).
-  var ACENTO_TEMA = { 'Entrenamiento': '#3C7BD6', 'Nutrición': '#46965A', 'Bienestar general': '#EE8434' };
+  var ACENTO_TEMA = { 'Entrenamiento': '#C9672B', 'Nutrición': '#C9672B', 'Bienestar general': '#C9672B' };
   var tono = function(c, k){ var l = TONOS[catNorm(c.cat)] || TONOS['Bienestar general']; return l[k % l.length]; };
   // Dónde quedó cada cápsula (solo en este teléfono): para «Sigue leyendo».
   var POS_KEY = 'em_v2_hist_pos';
@@ -17571,7 +17636,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     h.pantallas.forEach(junta);
     return txt.join(' ').split(/\s+/).length;
   }
-  function seccion(s, t){
+  function seccion(s, t, extra){
     var out = '<div class="sec" data-sec>' + (s.k ? '<h2>' + esc(s.k) + '</h2>' : '');
     if (s.n) out += '<div class="n"><b>' + esc(s.n) + '</b>' + (s.nl ? '<span>' + esc(s.nl) + '</span>' : '') + '</div>';
     if (s.h) out += '<p class="lead">' + esc(s.h) + '</p>';
@@ -17594,28 +17659,124 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
       return '<div' + (x.fuerte ? ' class="fuerte"' : '') + ' style="flex:' + x.v + '">' + (x.v >= 8 ? x.v + ' %' : '') + '</div>'; }).join('') + '</div>'
       + '<div class="seg-pie">' + s.segmentos.map(function(x){ return '<span style="flex:' + x.v + '">' + esc(x.t) + '</span>'; }).join('') + '</div>';
     if (s.p) out += '<p>' + esc(s.p) + '</p>';
-    return out + '</div>';
+    return out + (extra || '') + '</div>';
+  }
+  // Las piezas de la capa de coach (capsulas/profundidad.js).
+  function tuyoHTML(T){
+    var peso = leerPeso();
+    var num = peso ? fmtNum(T.f[0] * peso, T.dec) + '–' + fmtNum(T.f[1] * peso, T.dec) : '—';
+    return '<div class="tuyo" data-tuyo="' + T.f[0] + ',' + T.f[1] + ',' + (T.dec || 0) + '"><div class="k">Tu número</div>'
+      + '<label class="peso"><span>Tu peso</span><input type="number" inputmode="decimal" min="25" max="300" step="0.5" placeholder="kg" value="' + (peso || '') + '" aria-label="Tu peso en kilos"><span>kg</span></label>'
+      + '<div class="big"><b>' + num + '</b><span>' + esc(T.u) + '</span></div>'
+      + (peso ? '' : '<div class="pista">Escribe tu peso y te digo tu número.</div>') + '</div>';
+  }
+  function tarjeta(clase, k, cuerpo){ return '<div class="sec ' + clase + '" data-sec>' + (k ? '<div class="k">' + esc(k) + '</div>' : '') + cuerpo + '</div>'; }
+  function cierreConcepto(x){
+    var out = '';
+    if (x.criterio) out += tarjeta('suave', 'Criterio de coach', '<p class="rico">' + rico(x.criterio) + '</p>');
+    if (x.mito) out += tarjeta('', 'Error común', '<div class="mito"><span class="no">Se cree</span><s>' + esc(x.mito.cree) + '</s></div><div class="mito"><span class="si">En realidad</span><span>' + esc(x.mito.real) + '</span></div>');
+    if (x.hoy) out += tarjeta('suave', 'Hazlo hoy · 2 minutos', '<p class="lead">' + esc(x.hoy.t) + '</p><p>' + esc(x.hoy.p) + '</p>');
+    return out;
   }
   function lectura(c){
-    var h = H[c.id], t = tema(c), P = h.pantallas, i0 = 0;
-    var deTema = CAPSULAS.filter(function(x){ return catNorm(x.cat) === catNorm(c.cat); }), num = deTema.indexOf(c) + 1;
-    var out = '<div class="hoja"><div class="barra"><button type="button" class="volver">‹ Cápsulas</button></div>'
+    var h = H[c.id], x = X[c.id] || {}, t = tema(c), P = h.pantallas, i0 = 0;
+    var deTema = CAPSULAS.filter(function(y){ return catNorm(y.cat) === catNorm(c.cat); }), num = deTema.indexOf(c) + 1;
+    var out = '<div class="hoja"><div class="barra"><button type="button" class="volver">‹ Lecturas</button><div class="prog"><i></i></div></div>'
       + '<div class="cat">' + esc(catNorm(c.cat)) + (num ? ' · cápsula ' + num : '') + '</div><h1>' + esc(c.title) + '</h1><div class="meta">' + esc(meta(c)) + '</div>';
+    // 1 · Para qué te sirve.
+    if (x.logro) out += tarjeta('logro', 'Al terminar vas a poder', '<ul class="chk">' + x.logro.map(function(l){ return '<li>' + esc(l) + '</li>'; }).join('') + '</ul>');
+    if (x.tesuena) out += tarjeta('suave', '¿Te suena?', '<p class="cita">' + esc(x.tesuena.cita) + '</p><p>' + esc(x.tesuena.p) + '</p>');
     if (P[0] && P[0].k === 'La idea') {
       i0 = 1;
-      out += '<div class="idea">' + (P[0].n ? '<div class="n"><b>' + esc(P[0].n) + '</b>' + (P[0].nl ? '<span>' + esc(P[0].nl) + '</span>' : '') + '</div>' : '')
-        + (P[0].h ? esc(P[0].h) : '') + (P[0].p ? '<span>' + esc(P[0].p) + '</span>' : '') + '</div>';
+      var I = P[0];
+      out += tarjeta('idea-c', 'La idea', (I.n ? '<div class="n"><b>' + esc(I.n) + '</b>' + (I.nl ? '<span>' + esc(I.nl) + '</span>' : '') + '</div>' : '')
+        + (I.h ? '<p class="lead">' + esc(I.h) + '</p>' : '')
+        + (x.comp ? '<div class="comp">' + x.comp.map(function(z){ return '<div' + (z.fuerte ? ' class="fuerte"' : '') + '><b>' + esc(z.t) + '</b><span>' + esc(z.v) + '</span></div>'; }).join('') + '</div>' : '')
+        + (I.p ? '<p>' + esc(I.p) + '</p>' : '') + (x.compPie ? '<p>' + esc(x.compPie) + '</p>' : ''));
     }
-    var regla = null;
-    P.slice(i0).forEach(function(s){
+    // 2 · El concepto (con tu número cuando aplica) · 3 · de entender a hacer.
+    var regla = null, cerrado = false;
+    P.forEach(function(s, i){
+      if (i < i0) return;
       if (s.regla) { regla = s; return; }
-      if (s.lista) { out += '<div class="sec" data-sec><h2>' + esc(s.k || 'Cómo lo aplicas') + '</h2><ul class="ap">' + s.lista.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>'; return; }
-      out += seccion(s, t);
+      if (s.lista) {
+        if (!cerrado) { out += cierreConcepto(x); cerrado = true; }
+        out += '<div class="sec" data-sec><div class="k">Esta semana</div><h2>' + esc(s.k && s.k !== 'Cómo lo aplicas' ? s.k : 'Cómo lo aplicas') + '</h2><ol class="ap">' + s.lista.map(function(l){ return '<li>' + esc(l) + '</li>'; }).join('') + '</ol></div>';
+        return;
+      }
+      var extra = x.tuyo && x.tuyo[i] ? tuyoHTML(x.tuyo[i]) : '';
+      out += seccion(s, t, extra);
+      if (x.comida && x.comida.en === i) out += tarjeta('', x.comida.t, '<div class="comida">' + x.comida.items.map(function(z){ return '<div><b>' + esc(z.t) + '</b>' + esc(z.d) + '</div>'; }).join('') + '</div>' + (x.comida.pie ? '<p class="pie">' + esc(x.comida.pie) + '</p>' : ''));
     });
-    if (regla) out += '<div class="regla" data-fin>' + esc(regla.regla[0]) + '<span>' + esc(regla.regla[1]) + '</span></div>'
-      + (regla.fuente ? '<div class="fuente">Fuentes: ' + esc(regla.fuente) + '</div>' : '');
+    if (!cerrado) out += cierreConcepto(x);
+    // 4 · Que quede: el caso, la pregunta de tu coach, la regla y la siguiente.
+    if (x.caso) out += tarjeta('caso', 'Comprueba que te quedó', '<p class="lead">' + esc(x.caso.q) + '</p><div class="ops">' + x.caso.op.map(function(o, k){ return '<button type="button" data-op="' + k + '">' + esc(o) + '</button>'; }).join('') + '</div><p class="por" hidden>' + esc(x.caso.por) + '</p>');
+    if (x.pregunta) {
+      var ya = respuestaGuardada(c.id);
+      out += tarjeta('suave pregunta', 'Tu coach te pregunta', '<p class="lead">' + esc(x.pregunta.replace(/^(¿?)(.)/, function(m, q, l){ return q + l.toUpperCase(); })) + '</p>'
+        + (ya ? '<p class="enviado">Le respondiste: «' + esc(ya) + '»</p>' : '<textarea rows="3" maxlength="600" placeholder="Escribe tu respuesta…"></textarea><button type="button" class="enviar">Enviar a mi coach</button><p class="estado" hidden></p>'));
+    }
+    if (regla) out += '<div class="regla" data-fin>' + esc(regla.regla[0]) + '<span>' + esc(regla.regla[1]) + '</span></div>';
+    var sig = x.sigue && CAPSULAS.find(function(y){ return y.id === x.sigue; });
+    if (sig) out += '<button type="button" class="sec sigue" data-sigue="' + esc(sig.id) + '"><div class="k">Sigue con</div><span class="fila"><img src="capsulas/portadas/' + esc(sig.id) + '.jpg" alt="" loading="lazy"><span><b>' + esc(sig.title) + '</b><span>' + esc(catNorm(sig.cat)) + ' · ' + esc(meta(sig).replace(' de lectura', '')) + '</span></span><i class="chev"></i></span></button>';
+    if (regla && regla.fuente) out += '<div class="fuente">Fuentes: ' + esc(regla.fuente) + '</div>';
     var leida = capGetRead().indexOf(c.id) !== -1;
     return out + '<div class="botones"><button type="button" class="listo">' + (leida ? 'Listo' : 'Marcar como leída') + '</button></div></div>';
+  }
+  // La respuesta que ya mandó (solo en este teléfono), para no pedírsela dos veces.
+  var RESP_KEY = 'em_cap_respuestas';
+  function respuestaGuardada(id){ try { return (JSON.parse(localStorage.getItem(RESP_KEY) || '{}') || {})[id] || null; } catch (e) { return null; } }
+  function guardarRespuesta(id, txt){ try { var m = JSON.parse(localStorage.getItem(RESP_KEY) || '{}') || {}; m[id] = txt; localStorage.setItem(RESP_KEY, JSON.stringify(m)); } catch (e) {} }
+  function nombreCliente(){
+    var n = '';
+    try { n = (JSON.parse(localStorage.getItem('em_client') || 'null') || {}).name || ''; } catch (e) {}
+    if (!n) try { n = new URLSearchParams(location.search).get('mt_name') || ''; } catch (e) {}
+    return n;
+  }
+  // Lo interactivo de la lectura: tu peso, el caso, la respuesta y la siguiente.
+  function activar(c){
+    var x = X[c.id] || {};
+    caja.querySelectorAll('.tuyo input').forEach(function(inp){
+      inp.addEventListener('input', function(){
+        var v = parseFloat(String(inp.value).replace(',', '.'));
+        try { if (v > 25 && v < 300) localStorage.setItem(PESO_KEY, String(v)); } catch (e) {}
+        caja.querySelectorAll('.tuyo').forEach(function(T){
+          var d = T.getAttribute('data-tuyo').split(',').map(Number), b = T.querySelector('.big b'), pi = T.querySelector('.pista'), otra = T.querySelector('input');
+          if (otra !== inp) otra.value = inp.value;
+          b.textContent = v > 25 && v < 300 ? fmtNum(d[0] * v, d[2]) + '–' + fmtNum(d[1] * v, d[2]) : '—';
+          if (pi) pi.hidden = v > 25 && v < 300;
+        });
+      });
+    });
+    var caso = caja.querySelector('.caso');
+    if (caso && x.caso) caso.querySelectorAll('.ops button').forEach(function(bt){
+      bt.addEventListener('click', function(){
+        var k = +bt.getAttribute('data-op');
+        caso.querySelectorAll('.ops button').forEach(function(o){ o.classList.remove('mal'); if (+o.getAttribute('data-op') === x.caso.ok) o.classList.add('ok'); });
+        if (k !== x.caso.ok) bt.classList.add('mal');
+        var por = caso.querySelector('.por'), r = x.caso.por.replace(/^Exacto[:.]\s*/, ''); r = r.charAt(0).toUpperCase() + r.slice(1);
+        por.hidden = false; por.innerHTML = k === x.caso.ok ? '<b>Exacto.</b> ' + esc(r) : '<b>Era «' + esc(x.caso.op[x.caso.ok]) + '».</b> ' + esc(r);
+      });
+    });
+    var pr = caja.querySelector('.pregunta .enviar');
+    if (pr) pr.addEventListener('click', function(){
+      var ta = caja.querySelector('.pregunta textarea'), est = caja.querySelector('.pregunta .estado'), txt = String(ta.value || '').trim();
+      if (!txt) { ta.focus(); return; }
+      pr.disabled = true; pr.textContent = 'Enviando…';
+      var base = (typeof MT_AUTH_URL !== 'undefined' && MT_AUTH_URL) ? MT_AUTH_URL.replace(/\/+$/, '') : '';
+      fetch(base + '/api/authorize', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accion: 'capsula_respuesta', name: nombreCliente(), capsula_id: c.id, capsula_titulo: c.title, pregunta: x.pregunta, texto: txt }) })
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(j){
+          if (j && j.ok) {
+            guardarRespuesta(c.id, txt);
+            ta.remove(); pr.remove(); est.hidden = false; est.className = 'enviado'; est.textContent = 'Enviado. Tu coach ya lo tiene.';
+          } else { pr.disabled = false; pr.textContent = 'Enviar a mi coach'; est.hidden = false; est.textContent = 'No se pudo enviar. Inténtalo de nuevo en un momento.'; }
+        })
+        .catch(function(){ pr.disabled = false; pr.textContent = 'Enviar a mi coach'; est.hidden = false; est.textContent = 'Sin conexión. Inténtalo de nuevo en un momento.'; });
+    });
+    var sg = caja.querySelector('[data-sigue]');
+    if (sg) sg.addEventListener('click', function(){ var k = CAPSULAS.findIndex(function(y){ return y.id === sg.getAttribute('data-sigue'); }); if (k >= 0) window.capOpen(k); });
   }
 
   // ── El visor ──
@@ -17630,6 +17791,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     // Dónde va (para «Sigue leyendo»): el % de la página recorrido.
     var t0 = null;
     caja.addEventListener('scroll', function(){
+      var pb = caja.querySelector('.prog i'); if (pb) { var mx = caja.scrollHeight - caja.clientHeight; pb.style.width = (mx > 0 ? Math.min(100, Math.round(caja.scrollTop / mx * 100)) : 0) + '%'; }
       if (!actual) return; clearTimeout(t0);
       t0 = setTimeout(function(){ if (!actual) return; var max = caja.scrollHeight - caja.clientHeight; var pc = max > 0 ? Math.round(caja.scrollTop / max * 100) : 0; guardarPos(actual.id, pc >= 98 ? 0 : pc); }, 250);
     }, { passive: true });
@@ -17655,6 +17817,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     caja.classList.add('abierta');
     document.body.style.overflow = 'hidden';
     caja.querySelector('.volver').addEventListener('click', cerrar);
+    activar(c);
     caja.querySelector('.listo').addEventListener('click', function(){ try { capMarkRead(c.id); } catch (e) {} guardarPos(c.id, 0); cerrar(); });
     // Al llegar a la regla queda leída (y viaja al coach por el mismo canal).
     var fin = caja.querySelector('[data-fin]') || caja.querySelector('.botones');

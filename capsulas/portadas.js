@@ -257,3 +257,16 @@
     return op && op.claro ? claro(t, op.acento || AM) : sinBrillo(t);
   };
 })();
+
+// Portadas nuevas (fotos de bodegón en crema y durazno): reemplazan al dibujo
+// en la lista, el estante y la de la semana. Sin foto, queda el dibujo.
+(function () {
+  var FOTOS = ['ent-01-capacidades', 'ent-02-crece-musculo', 'ent-03-lenguaje-rutina', 'ent-04-subir-peso', 'ent-05-orden-sesion',
+    'ent-06-entiende-rutina', 'nut-07-cada-macro', 'nut-08-grasa-y-musculo', 'nut-09-comer-sin-pesar', 'bie-10-dormir-mejor', 'bie-11-muevete-fuera'];
+  var dibujo = window.CAP_PORTADA;
+  window.CAP_PORTADA = function (id, u, op) {
+    if (FOTOS.indexOf(id) !== -1) return '<img class="cap-foto" src="capsulas/portadas/' + id + '.jpg" alt="" loading="lazy" decoding="async">';
+    return dibujo ? dibujo(id, u, op) : '';
+  };
+  FOTOS.forEach(function (id) { if (window.CAP_PORTADAS && !window.CAP_PORTADAS[id]) window.CAP_PORTADAS[id] = function () { return ''; }; });
+})();
