@@ -17367,6 +17367,101 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
 .v2-lec .sigue .fila > span { flex:1; min-width:0; } .v2-lec .sigue b { display:block; font-size:16.5px; font-weight:800; line-height:1.25; }
 .v2-lec .sigue .fila > span > span { display:block; font-size:13.5px; color:#6E6E73; margin-top:2px; }
 .v2-lec .sigue .chev { width:9px; height:9px; border-right:2px solid #A1A1A6; border-top:2px solid #A1A1A6; transform:rotate(45deg); flex:none; margin-right:4px; }
+/* ── Cápsula v3: revista con foto + 4 capítulos de color (Para qué amarillo ·
+   Entiende azul · Aplica verde · Comprueba naranja). Sin cajas: tipografía
+   grande y números protagonistas; cada macro con su color. ── */
+.v2-lec .hoja.v3 { padding-top:0; }
+.v2-lec .v3 .k { font-size:12px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
+.v2-lec .v3 .hero { position:relative; margin:0 -20px; height:clamp(240px, 70vw, 330px); }
+.v2-lec .v3 .hero img { width:100%; height:100%; object-fit:cover; display:block; background:#F3E3D3; }
+.v2-lec .v3 .hero::after { content:''; position:absolute; left:0; right:0; bottom:0; height:110px; background:linear-gradient(180deg, rgba(247,246,242,0), #F7F6F2); pointer-events:none; }
+.v2-lec .v3 .volver, .v2-lec .v3 .volver-f { border:0; background:#fff; padding:8px 14px; border-radius:99px; box-shadow:0 4px 12px rgba(0,0,0,.08); font:inherit; font-size:14.5px; font-weight:700; color:#1D1D1F; cursor:pointer; flex:none; }
+.v2-lec .v3 .hero .volver { position:absolute; z-index:2; left:16px; top:calc(12px + env(safe-area-inset-top, 0px)); }
+.v2-lec .v3 .cat { position:relative; margin-top:-18px; font-size:13.5px; font-weight:700; color:#6E6E73; }
+.v2-lec .v3 h1 { font-size:36px; font-weight:850; letter-spacing:-.035em; line-height:1.02; margin:6px 0 8px; }
+.v2-lec .v3 .sub { font-size:16.5px; color:#4A4A4E; line-height:1.4; }
+.v2-lec .v3 .steps { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:5px; }
+.v2-lec .v3 .steps button { border:0; border-radius:12px; padding:7px 2px 6px; background:#fff; color:#8A8A8E; font:inherit; font-size:11.5px; font-weight:800; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:background .2s, color .2s; }
+.v2-lec .v3 .steps b { display:block; font-size:15px; line-height:1.15; }
+.v2-lec .v3 .steps button.on { background:var(--pc); color:var(--pf); }
+.v2-lec .v3 .steps button.ya { background:var(--ps); color:var(--pt); }
+.v2-lec .v3 .pasos-ini { margin-top:16px; }
+.v2-lec .v3 .tope { position:sticky; top:0; height:0; z-index:5; margin:0 -20px; }
+.v2-lec .v3 .tope-in { padding:calc(10px + env(safe-area-inset-top, 0px)) 20px 14px; background:linear-gradient(180deg, #F7F6F2 84%, rgba(247,246,242,0)); opacity:0; transform:translateY(-12px); pointer-events:none; transition:opacity .2s, transform .2s; }
+.v2-lec .v3 .tope.pegada .tope-in { opacity:1; transform:none; pointer-events:auto; }
+.v2-lec .v3 .tope .fila { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.v2-lec .v3 .tope .fila .t { font-size:14px; font-weight:750; color:#6E6E73; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.v2-lec .v3 .capi { display:flex; align-items:center; gap:12px; margin-top:38px; padding-bottom:12px; border-bottom:3px solid var(--pc); scroll-margin-top:130px; }
+.v2-lec .v3 .capi i { font-style:normal; flex:none; width:40px; height:40px; border-radius:99px; background:var(--pc); color:var(--pf); display:grid; place-items:center; font-size:18px; font-weight:850; }
+.v2-lec .v3 .capi span { display:block; font-size:12px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--pt); }
+.v2-lec .v3 .capi h2 { font-size:24px; font-weight:850; letter-spacing:-.025em; line-height:1.08; margin:0; }
+/* 1 · Para qué */
+.v2-lec .v3 .logro3 { list-style:none; margin:14px 0 0; padding:0; }
+.v2-lec .v3 .logro3 li { display:flex; gap:12px; align-items:flex-start; font-size:17px; font-weight:650; line-height:1.38; margin-top:12px; }
+.v2-lec .v3 .logro3 li b { flex:none; width:26px; height:26px; border-radius:99px; background:#FFF3CC; position:relative; }
+.v2-lec .v3 .logro3 li b::after { content:''; position:absolute; left:8px; top:8px; width:9px; height:5px; border-left:2.2px solid #8A6400; border-bottom:2.2px solid #8A6400; transform:rotate(-45deg); }
+.v2-lec .v3 .cita3 { margin-top:24px; padding:2px 0 2px 16px; border-left:4px solid #F2C94C; }
+.v2-lec .v3 .cita3 .k { color:#8A6400; margin-bottom:6px; }
+.v2-lec .v3 .cita3 q { quotes:none; display:block; font-size:22px; font-weight:750; letter-spacing:-.015em; line-height:1.26; }
+.v2-lec .v3 .cita3 p, .v2-lec .v3 .idea3 p, .v2-lec .v3 .tema p { font-size:16px; line-height:1.52; color:#3A3A3C; margin:8px 0 0; }
+/* 2 · Entiende */
+.v2-lec .v3 .idea3 { margin-top:18px; } .v2-lec .v3 .idea3 .k { color:#6E6E73; }
+.v2-lec .v3 .idea3 .st { font-size:25px !important; font-weight:850; letter-spacing:-.03em; line-height:1.15 !important; color:#1D1D1F !important; margin-top:6px !important; }
+.v2-lec .v3 .comp { margin-top:14px; } .v2-lec .v3 .comp > div { background:#fff; border-radius:18px; }
+.v2-lec .v3 .comp > div.fuerte { background:#1D1D1F; }
+.v2-lec .v3 .tema { margin-top:30px; }
+.v2-lec .v3 .tema .rot { display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--mt); }
+.v2-lec .v3 .tema .rot i { width:9px; height:9px; border-radius:99px; background:var(--mc); }
+.v2-lec .v3 .tema h3 { font-size:21px; font-weight:800; letter-spacing:-.02em; line-height:1.2; margin:5px 0 0; }
+.v2-lec .v3 .tema .sec { background:none; border-radius:0; padding:0; margin:0; }
+.v2-lec .v3 .n { margin:8px 0 2px; flex-wrap:wrap; gap:4px 10px; }
+.v2-lec .v3 .n b { font-size:40px; letter-spacing:-.04em; color:var(--mc, #3C7BD6); }
+.v2-lec .v3 .tema[style*="F2C94C"] .n b { color:#C99A12; }
+.v2-lec .v3 .idea3 .n b { color:#3C7BD6; }
+.v2-lec .v3 .tema .sec p.lead { color:#1D1D1F; font-weight:700; }
+.v2-lec .v3 .tema .filas div, .v2-lec .v3 .tema .cols > div:not(.fuerte), .v2-lec .v3 .tema .escala span:not(.si), .v2-lec .v3 .tema .seg div:not(.fuerte) { background:#fff; }
+.v2-lec .v3 .tema .bars .bb { background:#E6E1D8; }
+.v2-lec .v3 .tema .pasos li { border-left-color:var(--mc); }
+.v2-lec .v3 .tuyo { margin:16px -20px 0; border-radius:0; background:var(--mc); color:var(--mf); padding:16px 20px 18px; }
+.v2-lec .v3 .tuyo .k { color:var(--mf); opacity:.85; margin-bottom:4px; }
+.v2-lec .v3 .tuyo .big { margin-top:2px; } .v2-lec .v3 .tuyo .big b { font-size:42px; color:var(--mf); } .v2-lec .v3 .tuyo .big span { color:var(--mf); opacity:.92; }
+.v2-lec .v3 .tuyo .peso { background:rgba(255,255,255,.22); color:var(--mf); padding:5px 6px 5px 12px; margin-top:10px; }
+.v2-lec .v3 .tuyo .peso input { background:#fff; }
+.v2-lec .v3 .tuyo .pista { color:var(--mf); opacity:.85; }
+.v2-lec .v3 .comida-c { margin-top:16px; background:#fff; border-radius:20px; padding:16px; }
+.v2-lec .v3 .comida-c .k { color:var(--mt); margin-bottom:8px; }
+.v2-lec .v3 .crit3 { margin-top:30px; background:#1D1D1F; color:#fff; border-radius:22px; padding:18px; }
+.v2-lec .v3 .crit3 .k { color:#F2C94C; } .v2-lec .v3 .crit3 p { font-size:16px; line-height:1.52; color:rgba(255,255,255,.86); margin:8px 0 0; } .v2-lec .v3 .crit3 b { color:#F2C94C; font-weight:800; }
+.v2-lec .v3 .mito3 { margin-top:22px; } .v2-lec .v3 .mito3 .k { color:#6E6E73; }
+.v2-lec .v3 .mito3 .cree { margin-top:8px; display:flex; gap:10px; align-items:baseline; font-size:17px; } .v2-lec .v3 .mito3 .cree s { color:#9A9AA0; font-weight:700; }
+.v2-lec .v3 .mito3 span { flex:none; font-size:11px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; border-radius:99px; padding:3px 8px; background:#ECE8E1; color:#8A8A8E; }
+.v2-lec .v3 .mito3 .real { margin-top:10px; background:#fff; border-radius:18px; padding:14px 16px; }
+.v2-lec .v3 .mito3 .real span { background:#1D1D1F; color:#fff; } .v2-lec .v3 .mito3 .real p { font-size:18px; font-weight:750; line-height:1.32; margin:8px 0 0; color:#1D1D1F; }
+/* 3 · Aplica */
+.v2-lec .v3 .hoy3 { margin-top:16px; background:#46965A; color:#fff; border-radius:22px; padding:18px; }
+.v2-lec .v3 .hoy3 .k { color:rgba(255,255,255,.85); } .v2-lec .v3 .hoy3 p.l { font-size:19px; font-weight:800; line-height:1.28; margin:6px 0 0; } .v2-lec .v3 .hoy3 p { font-size:15.5px; line-height:1.45; color:rgba(255,255,255,.92); margin:6px 0 0; }
+.v2-lec .v3 .hoy3 .hecho { margin-top:14px; border:0; border-radius:99px; background:#fff; color:#2E6B3E; font:inherit; font-size:14.5px; font-weight:800; padding:10px 16px; cursor:pointer; }
+.v2-lec .v3 .hoy3 .hecho.si { background:rgba(255,255,255,.2); color:#fff; }
+.v2-lec .v3 .sem3 { margin-top:22px; } .v2-lec .v3 .sem3 .cab { display:flex; justify-content:space-between; align-items:flex-end; gap:10px; }
+.v2-lec .v3 .sem3 .k { color:#2E6B3E; } .v2-lec .v3 .sem3 h3 { font-size:20px; font-weight:800; letter-spacing:-.02em; margin:3px 0 0; }
+.v2-lec .v3 .sem3 .cont { flex:none; font-size:13px; font-weight:800; color:#2E6B3E; background:#E4F1E7; border-radius:99px; padding:4px 10px; }
+.v2-lec .v3 .todo { list-style:none; margin:8px 0 0; padding:0; }
+.v2-lec .v3 .todo li { display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-top:1px solid #E6E1D8; font-size:16px; line-height:1.42; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.v2-lec .v3 .todo li:first-child { border-top:0; }
+.v2-lec .v3 .todo li i { flex:none; width:24px; height:24px; border-radius:8px; border:2px solid #B9D3BF; background:#fff; position:relative; margin-top:1px; }
+.v2-lec .v3 .todo li.si i { background:#46965A; border-color:#46965A; }
+.v2-lec .v3 .todo li.si i::after { content:''; position:absolute; left:6px; top:5px; width:9px; height:5px; border-left:2px solid #fff; border-bottom:2px solid #fff; transform:rotate(-45deg); }
+.v2-lec .v3 .todo li.si span { color:#8A8A8E; text-decoration:line-through; text-decoration-color:#C9C9CC; }
+/* 4 · Comprueba */
+.v2-lec .v3 .caso { margin-top:16px; } .v2-lec .v3 .caso p.lead { font-size:18px; font-weight:750; line-height:1.32; margin:0; color:#1D1D1F; }
+.v2-lec .v3 .ops button { border:0; background:#fff; } .v2-lec .v3 .ops button.ok { background:#46965A; color:#fff; } .v2-lec .v3 .ops button.mal { background:#FBF1EC; color:#A1A1A6; }
+.v2-lec .v3 .caso p.por { font-size:16px; line-height:1.5; color:#1D1D1F; margin:10px 0 0; }
+.v2-lec .v3 .pregunta { margin-top:22px; background:#FCE8D8; border-radius:22px; padding:18px; }
+.v2-lec .v3 .pregunta .k { color:#B5561A; } .v2-lec .v3 .pregunta p.lead { font-size:18px; font-weight:750; line-height:1.32; margin:6px 0 0; color:#1D1D1F; }
+.v2-lec .v3 .pregunta p.enviado { color:#2F6E3E; font-weight:650; margin:10px 0 0; font-size:15.5px; } .v2-lec .v3 .pregunta p.estado { color:#B5561A; font-size:14px; margin:8px 0 0; }
+.v2-lec .v3 .regla { margin-top:22px; }
+.v2-lec .v3 .sigue { margin-top:14px; background:#fff; border-radius:20px; padding:16px; }
+.v2-lec .v3 .sigue .k { color:#B5561A; margin-bottom:8px; }
 .v2-lec .cat { font-size:14px; font-weight:700; color:var(--tinta); margin-top:8px; }
 .v2-lec h1 { font-size:32px; font-weight:800; letter-spacing:-.025em; line-height:1.06; margin:4px 0 6px; }
 .v2-lec .meta { font-size:14px; color:#6E6E73; }
@@ -17671,57 +17766,133 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
       + (peso ? '' : '<div class="pista">Escribe tu peso y te digo tu número.</div>') + '</div>';
   }
   function tarjeta(clase, k, cuerpo){ return '<div class="sec ' + clase + '" data-sec>' + (k ? '<div class="k">' + esc(k) + '</div>' : '') + cuerpo + '</div>'; }
-  function cierreConcepto(x){
-    var out = '';
-    if (x.criterio) out += tarjeta('suave', 'Criterio de coach', '<p class="rico">' + rico(x.criterio) + '</p>');
-    if (x.mito) out += tarjeta('', 'Error común', '<div class="mito"><span class="no">Se cree</span><s>' + esc(x.mito.cree) + '</s></div><div class="mito"><span class="si">En realidad</span><span>' + esc(x.mito.real) + '</span></div>');
-    if (x.hoy) out += tarjeta('suave', 'Hazlo hoy · 2 minutos', '<p class="lead">' + esc(x.hoy.t) + '</p><p>' + esc(x.hoy.p) + '</p>');
-    return out;
+  // ── Los 4 capítulos (igual orden y color en todas las cápsulas) ──
+  // [nombre corto, título, color, suave, texto sobre suave, texto sobre color]
+  var PILARES = [
+    ['Para qué', 'Para qué te sirve', '#F2C94C', '#FFF3CC', '#8A6400', '#1F1F1F'],
+    ['Entiende', 'Entiende cómo funciona', '#3C7BD6', '#E7EFFB', '#24579F', '#FFFFFF'],
+    ['Aplica', 'De entender a hacer', '#46965A', '#E4F1E7', '#2E6B3E', '#FFFFFF'],
+    ['Comprueba', 'Comprueba que te quedó', '#EE8434', '#FCE8D8', '#B5561A', '#FFFFFF']
+  ];
+  var pilarVars = function(k){ var p = PILARES[k]; return '--pc:' + p[2] + ';--ps:' + p[3] + ';--pt:' + p[4] + ';--pf:' + p[5]; };
+  function apertura(k){
+    return '<div class="capi" data-capi="' + k + '" style="' + pilarVars(k) + '"><i>' + (k + 1) + '</i><div><span>Capítulo ' + (k + 1) + '</span><h2>' + PILARES[k][1] + '</h2></div></div>';
   }
+  function pasosHTML(){
+    return '<div class="steps">' + PILARES.map(function(p, k){ return '<button type="button" data-paso="' + k + '" style="' + pilarVars(k) + '"><b>' + (k + 1) + '</b>' + p[0] + '</button>'; }).join('') + '</div>';
+  }
+  // Cada macro con su color: proteína azul, grasa amarilla, carbohidrato verde.
+  function macro(k){
+    var s = String(k || '').toLowerCase();
+    if (/^prote/.test(s)) return { c: '#3C7BD6', f: '#FFFFFF', t: '#24579F' };
+    if (/^grasa/.test(s)) return { c: '#F2C94C', f: '#1F1F1F', t: '#8A6400' };
+    if (/^carbo/.test(s)) return { c: '#46965A', f: '#FFFFFF', t: '#2E6B3E' };
+    return null;
+  }
+  var mayus = function(s){ return String(s).replace(/^(¿?)(.)/, function(m, q, l){ return q + l.toUpperCase(); }); };
+  // Un tema del capítulo 2, estilo revista: rótulo, título, número grande y,
+  // cuando aplica, la franja de «Tu número» a lo ancho.
+  function tema3(s, t, x, i){
+    var partes = s.k ? s.k.split(' · ') : [], m = macro(s.k) || { c: '#3C7BD6', f: '#FFFFFF', t: '#24579F' };
+    var out = '<div class="tema" style="--mc:' + m.c + ';--mf:' + m.f + ';--mt:' + m.t + '">';
+    if (partes.length > 1) out += '<div class="rot"><i></i>' + esc(partes[0]) + '</div><h3>' + esc(mayus(partes.slice(1).join(' · '))) + '</h3>';
+    else if (s.k) out += '<h3>' + esc(s.k) + '</h3>';
+    // Los dibujos del capítulo 2 van en su azul.
+    out += seccion(Object.assign({}, s, { k: null }), ['#9CC0F0', '#3C7BD6', '#24579F'], '');
+    if (x.tuyo && x.tuyo[i]) out += tuyoHTML(x.tuyo[i]);
+    if (x.comida && x.comida.en === i) out += '<div class="comida-c"><div class="k">' + esc(x.comida.t) + '</div><div class="comida">' + x.comida.items.map(function(z){ return '<div><b>' + esc(z.t) + '</b>' + esc(z.d) + '</div>'; }).join('') + '</div>' + (x.comida.pie ? '<p class="pie">' + esc(x.comida.pie) + '</p>' : '') + '</div>';
+    return out + '</div>';
+  }
+  // Lo hecho en «Aplica» (solo en este teléfono).
+  var APL_KEY = 'em_cap_aplica';
+  function aplicaDe(id){ try { var m = JSON.parse(localStorage.getItem(APL_KEY) || '{}') || {}; return m[id] || { hoy: false, l: [] }; } catch (e) { return { hoy: false, l: [] }; } }
+  function aplicaGuardar(id, v){ try { var m = JSON.parse(localStorage.getItem(APL_KEY) || '{}') || {}; m[id] = v; localStorage.setItem(APL_KEY, JSON.stringify(m)); } catch (e) {} }
   function lectura(c){
     var h = H[c.id], x = X[c.id] || {}, t = tema(c), P = h.pantallas, i0 = 0;
     var deTema = CAPSULAS.filter(function(y){ return catNorm(y.cat) === catNorm(c.cat); }), num = deTema.indexOf(c) + 1;
-    var out = '<div class="hoja"><div class="barra"><button type="button" class="volver">‹ Lecturas</button><div class="prog"><i></i></div></div>'
-      + '<div class="cat">' + esc(catNorm(c.cat)) + (num ? ' · cápsula ' + num : '') + '</div><h1>' + esc(c.title) + '</h1><div class="meta">' + esc(meta(c)) + '</div>';
+    var hecho = aplicaDe(c.id);
+    var out = '<div class="hoja v3">'
+      // La barra que queda fija al bajar (aparece al pasar los capítulos de arriba).
+      + '<div class="tope"><div class="tope-in"><div class="fila"><button type="button" class="volver-f">‹ Lecturas</button><span class="t">' + esc(c.title) + '</span></div>' + pasosHTML() + '</div></div>'
+      + '<div class="hero"><img src="capsulas/portadas/' + esc(c.id) + '.jpg" alt=""><button type="button" class="volver">‹ Lecturas</button></div>'
+      + '<div class="cat">' + esc(catNorm(c.cat)) + (num ? ' · cápsula ' + num : '') + ' · ' + esc(meta(c).replace(' de lectura', '')) + '</div>'
+      + '<h1>' + esc(c.title) + '</h1>' + (h.sub ? '<div class="sub">' + esc(h.sub) + '</div>' : '')
+      + '<div class="pasos-ini">' + pasosHTML() + '</div>';
     // 1 · Para qué te sirve.
-    if (x.logro) out += tarjeta('logro', 'Al terminar vas a poder', '<ul class="chk">' + x.logro.map(function(l){ return '<li>' + esc(l) + '</li>'; }).join('') + '</ul>');
-    if (x.tesuena) out += tarjeta('suave', '¿Te suena?', '<p class="cita">' + esc(x.tesuena.cita) + '</p><p>' + esc(x.tesuena.p) + '</p>');
+    out += apertura(0);
+    if (x.logro) out += '<ul class="logro3">' + x.logro.map(function(l){ return '<li><b></b>' + esc(l) + '</li>'; }).join('') + '</ul>';
+    if (x.tesuena) out += '<div class="cita3"><div class="k">¿Te suena?</div><q>' + esc(x.tesuena.cita) + '</q><p>' + esc(x.tesuena.p) + '</p></div>';
+    // 2 · Entiende cómo funciona.
+    out += apertura(1);
     if (P[0] && P[0].k === 'La idea') {
       i0 = 1;
       var I = P[0];
-      out += tarjeta('idea-c', 'La idea', (I.n ? '<div class="n"><b>' + esc(I.n) + '</b>' + (I.nl ? '<span>' + esc(I.nl) + '</span>' : '') + '</div>' : '')
-        + (I.h ? '<p class="lead">' + esc(I.h) + '</p>' : '')
+      out += '<div class="idea3"><div class="k">La idea</div>' + (I.h ? '<p class="st">' + esc(I.h) + '</p>' : '')
+        + (I.n ? '<div class="n"><b>' + esc(I.n) + '</b>' + (I.nl ? '<span>' + esc(I.nl) + '</span>' : '') + '</div>' : '')
         + (x.comp ? '<div class="comp">' + x.comp.map(function(z){ return '<div' + (z.fuerte ? ' class="fuerte"' : '') + '><b>' + esc(z.t) + '</b><span>' + esc(z.v) + '</span></div>'; }).join('') + '</div>' : '')
-        + (I.p ? '<p>' + esc(I.p) + '</p>' : '') + (x.compPie ? '<p>' + esc(x.compPie) + '</p>' : ''));
+        + (I.p ? '<p>' + esc(I.p) + '</p>' : '') + (x.compPie ? '<p>' + esc(x.compPie) + '</p>' : '') + '</div>';
     }
-    // 2 · El concepto (con tu número cuando aplica) · 3 · de entender a hacer.
-    var regla = null, cerrado = false;
+    var regla = null, lista = null;
     P.forEach(function(s, i){
       if (i < i0) return;
       if (s.regla) { regla = s; return; }
-      if (s.lista) {
-        if (!cerrado) { out += cierreConcepto(x); cerrado = true; }
-        out += '<div class="sec" data-sec><div class="k">Esta semana</div><h2>' + esc(s.k && s.k !== 'Cómo lo aplicas' ? s.k : 'Cómo lo aplicas') + '</h2><ol class="ap">' + s.lista.map(function(l){ return '<li>' + esc(l) + '</li>'; }).join('') + '</ol></div>';
-        return;
-      }
-      var extra = x.tuyo && x.tuyo[i] ? tuyoHTML(x.tuyo[i]) : '';
-      out += seccion(s, t, extra);
-      if (x.comida && x.comida.en === i) out += tarjeta('', x.comida.t, '<div class="comida">' + x.comida.items.map(function(z){ return '<div><b>' + esc(z.t) + '</b>' + esc(z.d) + '</div>'; }).join('') + '</div>' + (x.comida.pie ? '<p class="pie">' + esc(x.comida.pie) + '</p>' : ''));
+      if (s.lista) { lista = s; return; }
+      out += tema3(s, t, x, i);
     });
-    if (!cerrado) out += cierreConcepto(x);
-    // 4 · Que quede: el caso, la pregunta de tu coach, la regla y la siguiente.
-    if (x.caso) out += tarjeta('caso', 'Comprueba que te quedó', '<p class="lead">' + esc(x.caso.q) + '</p><div class="ops">' + x.caso.op.map(function(o, k){ return '<button type="button" data-op="' + k + '">' + esc(o) + '</button>'; }).join('') + '</div><p class="por" hidden>' + esc(x.caso.por) + '</p>');
+    if (x.criterio) out += '<div class="crit3"><div class="k">Criterio de coach</div><p>' + rico(x.criterio) + '</p></div>';
+    if (x.mito) out += '<div class="mito3"><div class="k">Error común</div><div class="cree"><span>Se cree</span><s>' + esc(x.mito.cree) + '</s></div><div class="real"><span>En realidad</span><p>' + esc(x.mito.real) + '</p></div></div>';
+    // 3 · De entender a hacer.
+    if (x.hoy || lista) {
+      out += apertura(2);
+      if (x.hoy) out += '<div class="hoy3"><div class="k">Hazlo hoy · 2 minutos</div><p class="l">' + esc(x.hoy.t) + '</p><p>' + esc(x.hoy.p) + '</p><button type="button" class="hecho' + (hecho.hoy ? ' si' : '') + '">' + (hecho.hoy ? '✓ Revisado' : 'Ya lo revisé') + '</button></div>';
+      if (lista) out += '<div class="sem3"><div class="cab"><div><div class="k">Esta semana</div><h3>' + esc(lista.k || 'Cómo lo aplicas') + '</h3></div><span class="cont">' + hecho.l.length + ' de ' + lista.lista.length + '</span></div><ul class="todo">'
+        + lista.lista.map(function(l, k){ return '<li data-i="' + k + '"' + (hecho.l.indexOf(k) !== -1 ? ' class="si"' : '') + '><i></i><span>' + esc(l) + '</span></li>'; }).join('') + '</ul></div>';
+    }
+    // 4 · Comprueba que te quedó.
+    out += apertura(3);
+    if (x.caso) out += '<div class="caso"><p class="lead">' + esc(x.caso.q) + '</p><div class="ops">' + x.caso.op.map(function(o, k){ return '<button type="button" data-op="' + k + '">' + esc(o) + '</button>'; }).join('') + '</div><p class="por" hidden>' + esc(x.caso.por) + '</p></div>';
     if (x.pregunta) {
       var ya = respuestaGuardada(c.id);
-      out += tarjeta('suave pregunta', 'Tu coach te pregunta', '<p class="lead">' + esc(x.pregunta.replace(/^(¿?)(.)/, function(m, q, l){ return q + l.toUpperCase(); })) + '</p>'
-        + (ya ? '<p class="enviado">Le respondiste: «' + esc(ya) + '»</p>' : '<textarea rows="3" maxlength="600" placeholder="Escribe tu respuesta…"></textarea><button type="button" class="enviar">Enviar a mi coach</button><p class="estado" hidden></p>'));
+      out += '<div class="pregunta"><div class="k">Tu coach te pregunta</div><p class="lead">' + esc(mayus(x.pregunta)) + '</p>'
+        + (ya ? '<p class="enviado">Le respondiste: «' + esc(ya) + '»</p>' : '<textarea rows="3" maxlength="600" placeholder="Escribe tu respuesta…"></textarea><button type="button" class="enviar">Enviar a mi coach</button><p class="estado" hidden></p>') + '</div>';
     }
     if (regla) out += '<div class="regla" data-fin>' + esc(regla.regla[0]) + '<span>' + esc(regla.regla[1]) + '</span></div>';
     var sig = x.sigue && CAPSULAS.find(function(y){ return y.id === x.sigue; });
-    if (sig) out += '<button type="button" class="sec sigue" data-sigue="' + esc(sig.id) + '"><div class="k">Sigue con</div><span class="fila"><img src="capsulas/portadas/' + esc(sig.id) + '.jpg" alt="" loading="lazy"><span><b>' + esc(sig.title) + '</b><span>' + esc(catNorm(sig.cat)) + ' · ' + esc(meta(sig).replace(' de lectura', '')) + '</span></span><i class="chev"></i></span></button>';
+    if (sig) out += '<button type="button" class="sigue" data-sigue="' + esc(sig.id) + '"><div class="k">Sigue con</div><span class="fila"><img src="capsulas/portadas/' + esc(sig.id) + '.jpg" alt="" loading="lazy"><span><b>' + esc(sig.title) + '</b><span>' + esc(catNorm(sig.cat)) + ' · ' + esc(meta(sig).replace(' de lectura', '')) + '</span></span><i class="chev"></i></span></button>';
     if (regla && regla.fuente) out += '<div class="fuente">Fuentes: ' + esc(regla.fuente) + '</div>';
     var leida = capGetRead().indexOf(c.id) !== -1;
     return out + '<div class="botones"><button type="button" class="listo">' + (leida ? 'Listo' : 'Marcar como leída') + '</button></div></div>';
+  }
+  // Los capítulos: cuál va leyendo (barra de arriba), saltar a uno, y la barra
+  // fija que aparece al bajar. También «Ya lo revisé» y lo de esta semana.
+  function activarCapitulos(c){
+    var caps = [].slice.call(caja.querySelectorAll('[data-capi]')), tope = caja.querySelector('.tope'), ini = caja.querySelector('.pasos-ini');
+    var botones = [].slice.call(caja.querySelectorAll('[data-paso]'));
+    var marcar = function(){
+      var alto = 132, cur = 0;
+      caps.forEach(function(el){ if (el.getBoundingClientRect().top <= alto + 40) cur = +el.getAttribute('data-capi'); });
+      if (caja.scrollTop + caja.clientHeight >= caja.scrollHeight - 4) cur = 3;
+      botones.forEach(function(b){ var k = +b.getAttribute('data-paso'); b.classList.toggle('on', k === cur); b.classList.toggle('ya', k < cur); b.querySelector('b').textContent = k < cur ? '✓' : String(k + 1); });
+      if (tope && ini) tope.classList.toggle('pegada', ini.getBoundingClientRect().bottom < 8);
+    };
+    caja._capitulos = marcar;
+    botones.forEach(function(b){ b.addEventListener('click', function(){
+      var el = caja.querySelector('[data-capi="' + b.getAttribute('data-paso') + '"]');
+      if (el) caja.scrollTo({ top: Math.max(0, caja.scrollTop + el.getBoundingClientRect().top - 124), behavior: 'smooth' });
+    }); });
+    var vf = caja.querySelector('.volver-f'); if (vf) vf.addEventListener('click', cerrar);
+    var hoy = caja.querySelector('.hoy3 .hecho');
+    if (hoy) hoy.addEventListener('click', function(){
+      var v = aplicaDe(c.id); v.hoy = !v.hoy; aplicaGuardar(c.id, v);
+      hoy.classList.toggle('si', v.hoy); hoy.textContent = v.hoy ? '✓ Revisado' : 'Ya lo revisé';
+    });
+    caja.querySelectorAll('.sem3 .todo li').forEach(function(li){ li.addEventListener('click', function(){
+      var v = aplicaDe(c.id), k = +li.getAttribute('data-i'), p = v.l.indexOf(k);
+      if (p === -1) v.l.push(k); else v.l.splice(p, 1);
+      aplicaGuardar(c.id, v); li.classList.toggle('si', p === -1);
+      var ct = caja.querySelector('.sem3 .cont'); if (ct) ct.textContent = v.l.length + ' de ' + caja.querySelectorAll('.sem3 .todo li').length;
+    }); });
+    marcar();
   }
   // La respuesta que ya mandó (solo en este teléfono), para no pedírsela dos veces.
   var RESP_KEY = 'em_cap_respuestas';
@@ -17791,6 +17962,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     // Dónde va (para «Sigue leyendo»): el % de la página recorrido.
     var t0 = null;
     caja.addEventListener('scroll', function(){
+      if (caja._capitulos) caja._capitulos();
       var pb = caja.querySelector('.prog i'); if (pb) { var mx = caja.scrollHeight - caja.clientHeight; pb.style.width = (mx > 0 ? Math.min(100, Math.round(caja.scrollTop / mx * 100)) : 0) + '%'; }
       if (!actual) return; clearTimeout(t0);
       t0 = setTimeout(function(){ if (!actual) return; var max = caja.scrollHeight - caja.clientHeight; var pc = max > 0 ? Math.round(caja.scrollTop / max * 100) : 0; guardarPos(actual.id, pc >= 98 ? 0 : pc); }, 250);
@@ -17799,6 +17971,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
   }
   function cerrar(){
     if (!caja) return;
+    caja._capitulos = null;
     caja.classList.remove('abierta');
     document.body.style.overflow = '';
     if (mirador) { mirador.disconnect(); mirador = null; }
@@ -17818,6 +17991,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     document.body.style.overflow = 'hidden';
     caja.querySelector('.volver').addEventListener('click', cerrar);
     activar(c);
+    activarCapitulos(c);
     caja.querySelector('.listo').addEventListener('click', function(){ try { capMarkRead(c.id); } catch (e) {} guardarPos(c.id, 0); cerrar(); });
     // Al llegar a la regla queda leída (y viaja al coach por el mismo canal).
     var fin = caja.querySelector('[data-fin]') || caja.querySelector('.botones');
@@ -17828,7 +18002,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     // Retoma donde quedó (si no la terminó).
     var p0 = leerPos()[c.id] || 0;
     caja.scrollTop = 0;
-    if (p0 > 0 && p0 < 98) requestAnimationFrame(function(){ caja.scrollTop = Math.round((caja.scrollHeight - caja.clientHeight) * p0 / 100); });
+    if (p0 > 0 && p0 < 98) requestAnimationFrame(function(){ caja.scrollTop = Math.round((caja.scrollHeight - caja.clientHeight) * p0 / 100); if (caja._capitulos) caja._capitulos(); });
   };
   try { if (document.getElementById('cap-gal')) capRender(); } catch (e) {}
 })();
