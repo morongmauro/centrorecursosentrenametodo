@@ -265,7 +265,7 @@
     'ent-06-entiende-rutina', 'nut-07-cada-macro', 'nut-08-grasa-y-musculo', 'nut-09-comer-sin-pesar', 'bie-10-dormir-mejor', 'bie-11-muevete-fuera'];
   var dibujo = window.CAP_PORTADA;
   window.CAP_PORTADA = function (id, u, op) {
-    if (FOTOS.indexOf(id) !== -1) return '<img class="cap-foto" src="capsulas/portadas/' + id + '.jpg" alt="" loading="lazy" decoding="async">';
+    if (FOTOS.indexOf(id) !== -1) return '<img class="cap-foto" src="capsulas/portadas/mini/' + id + '.jpg" alt="" loading="lazy" decoding="async">';
     return dibujo ? dibujo(id, u, op) : '';
   };
   FOTOS.forEach(function (id) { if (window.CAP_PORTADAS && !window.CAP_PORTADAS[id]) window.CAP_PORTADAS[id] = function () { return ''; }; });

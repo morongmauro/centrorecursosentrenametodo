@@ -17858,7 +17858,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     }
     if (regla) out += '<div class="regla" data-fin>' + esc(regla.regla[0]) + '<span>' + esc(regla.regla[1]) + '</span></div>';
     var sig = x.sigue && CAPSULAS.find(function(y){ return y.id === x.sigue; });
-    if (sig) out += '<button type="button" class="sigue" data-sigue="' + esc(sig.id) + '"><div class="k">Sigue con</div><span class="fila"><img src="capsulas/portadas/' + esc(sig.id) + '.jpg" alt="" loading="lazy"><span><b>' + esc(sig.title) + '</b><span>' + esc(catNorm(sig.cat)) + ' · ' + esc(meta(sig).replace(' de lectura', '')) + '</span></span><i class="chev"></i></span></button>';
+    if (sig) out += '<button type="button" class="sigue" data-sigue="' + esc(sig.id) + '"><div class="k">Sigue con</div><span class="fila"><img src="capsulas/portadas/mini/' + esc(sig.id) + '.jpg" alt="" loading="lazy"><span><b>' + esc(sig.title) + '</b><span>' + esc(catNorm(sig.cat)) + ' · ' + esc(meta(sig).replace(' de lectura', '')) + '</span></span><i class="chev"></i></span></button>';
     if (regla && regla.fuente) out += '<div class="fuente">Fuentes: ' + esc(regla.fuente) + '</div>';
     var leida = capGetRead().indexOf(c.id) !== -1;
     return out + '<div class="botones"><button type="button" class="listo">' + (leida ? 'Listo' : 'Marcar como leída') + '</button></div></div>';
