@@ -11681,7 +11681,7 @@ html.em-v2 #s-onboarding .hub-back-link { display: none !important; }
 <script src="capsulas/capsulas.js"></script>
 <script src="capsulas/historias.js"></script>
 <script src="capsulas/profundidad.js"></script>
-<script src="capsulas/portadas.js"></script>
+<script src="capsulas/portadas.js?v=20261116"></script>
 <script src="podcast/podcasts.js"></script>
 
 <script>
@@ -17212,25 +17212,24 @@ html.em-v2 .v2-pod-filtros button { flex:none; border:0; border-radius:999px; pa
 html.em-v2 .v2-pod-filtros button.on { background:#1F1F1F; color:#fff; box-shadow:0 6px 16px rgba(31,31,31,.22), 0 1px 2px rgba(31,31,31,.10); }
 html.em-v2 .v2-cap-busca button { border:0; background:rgba(118,118,128,.24); color:#1F1F1F; width:22px; height:22px; border-radius:99px; font:inherit; font-size:12px; cursor:pointer; }
 html.em-v2 .v2-cap-nada { margin-top:18px; font-size:15px; color:#6E6E73; }
-/* Cápsulas como lista agrupada (opción A): bloque blanco por tema, fila por cápsula. */
-html.em-v2 .v2-lista { background:#fff; border-radius:22px; box-shadow:0 1px 2px rgba(20,20,30,.04), 0 8px 22px rgba(20,30,60,.07); overflow:hidden; }
-html.em-v2 .v2-lista-fila { display:flex; align-items:center; gap:12px; width:100%; padding:11px 14px; border:0; border-top:1px solid rgba(0,0,0,.06); background:transparent; font:inherit; text-align:left; cursor:pointer; color:#1F1F1F; -webkit-tap-highlight-color:transparent; }
-html.em-v2 .v2-lista-fila:first-child { border-top:0; }
-html.em-v2 .v2-lista-fila:active { background:rgba(0,0,0,.035); }
-html.em-v2 .v2-lista-fila .ico { width:52px; height:52px; border-radius:14px; background:var(--ac-bg); display:grid; place-items:center; flex:none; overflow:hidden; }
-html.em-v2 .v2-lista-fila .ico svg { width:42px; height:42px; }
-html.em-v2 .v2-lista-fila .ico:has(.cap-foto) { width:64px; height:64px; border-radius:16px; background:#F3E3D3; }
+/* Cápsulas como tarjetas, igual que las recetas: la foto ocupa todo el alto
+   a la izquierda; a la derecha el título, la frase y una línea con el tiempo.
+   Leída: una etiqueta «Leída» (la foto no se apaga). La tarjeta entera se toca. */
+html.em-v2 .v2-lista { display:flex; flex-direction:column; gap:12px; }
+html.em-v2 .v2-lista-fila { display:flex; align-items:stretch; gap:0; width:100%; min-height:118px; padding:0; border:0; border-radius:22px; overflow:hidden; background:#fff; box-shadow:0 1px 2px rgba(20,20,30,.04), 0 8px 22px rgba(20,30,60,.07); font:inherit; text-align:left; cursor:pointer; color:#1F1F1F; -webkit-tap-highlight-color:transparent; transition:transform .15s ease; }
+html.em-v2 .v2-lista-fila:active { transform:scale(.985); }
+html.em-v2 .v2-lista-fila .ico { width:112px; flex:none; background:var(--ac-bg); display:grid; place-items:center; overflow:hidden; }
+html.em-v2 .v2-lista-fila .ico svg { width:56px; height:56px; }
+html.em-v2 .v2-lista-fila .ico:has(.cap-foto) { background:#F3E3D3; }
 html.em-v2 .cap-foto { display:block; width:100%; height:100%; object-fit:cover; border-radius:inherit; }
 html.em-v2 .con-arte .arte:has(.cap-foto) { border-radius:14px; overflow:hidden; }
-html.em-v2 .v2-lista-fila .txt { flex:1; min-width:0; display:block; }
-html.em-v2 .v2-lista-fila .t { display:block; font-size:16px; font-weight:700; letter-spacing:-.01em; line-height:1.2; }
-html.em-v2 .v2-lista-fila .s { display:block; font-size:13px; color:#6E6E73; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-html.em-v2 .v2-lista-fila .m { font-size:12.5px; color:#8E8E93; flex:none; display:flex; align-items:center; gap:8px; }
-html.em-v2 .v2-lista-fila .chev { width:8px; height:8px; border-right:2px solid #C7C7CC; border-bottom:2px solid #C7C7CC; transform:rotate(-45deg); margin-right:2px; }
-html.em-v2 .v2-lista-fila .nueva { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--ac); margin-right:7px; vertical-align:2px; }
-html.em-v2 .v2-lista-fila.vista .t { color:#6E6E73; font-weight:600; }
-html.em-v2 .v2-lista-fila.vista .ico { opacity:.55; }
-html.em-v2 .v2-lista-fila.vista .m { color:var(--ac); font-weight:700; }
+html.em-v2 .v2-lista-fila .txt { flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; padding:14px 16px; }
+html.em-v2 .v2-lista-fila .t { display:block; font-size:17px; font-weight:750; letter-spacing:-.015em; line-height:1.2; }
+html.em-v2 .v2-lista-fila .s { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; font-size:13.5px; color:#6E6E73; margin-top:3px; line-height:1.35; }
+html.em-v2 .v2-lista-fila .m { display:flex; align-items:center; gap:8px; margin-top:8px; font-size:13px; color:#8E8E93; font-weight:600; }
+html.em-v2 .v2-lista-fila .etq { display:inline-flex; align-items:center; gap:4px; border-radius:999px; padding:3px 9px; font-size:12px; font-weight:800; }
+html.em-v2 .v2-lista-fila .etq.leida { background:#E6F2E9; color:#2F7F45; }
+html.em-v2 .v2-lista-fila .etq.nueva { background:#FDEBDD; color:#B5561A; }
 html.em-v2 .v2-cap-dest { position:relative; display:block; width:100%; height:188px; border:0; border-radius:24px; color:#fff; text-align:left; cursor:pointer; overflow:hidden; font:inherit;
   box-shadow:0 14px 30px rgba(120,60,20,.18); -webkit-tap-highlight-color:transparent; transition:transform .15s ease; }
 html.em-v2 .v2-cap-dest:active, html.em-v2 .v2-estante .v2-hcard:active, html.em-v2 .v2-cap-media:active { transform:scale(.97); }
@@ -17456,6 +17455,23 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
 .v2-lec .v3 .caso { margin-top:16px; } .v2-lec .v3 .caso p.lead { font-size:18px; font-weight:750; line-height:1.32; margin:0; color:#1D1D1F; }
 .v2-lec .v3 .ops button { border:0; background:#fff; } .v2-lec .v3 .ops button.ok { background:#46965A; color:#fff; } .v2-lec .v3 .ops button.mal { background:#FBF1EC; color:#A1A1A6; }
 .v2-lec .v3 .caso p.por { font-size:16px; line-height:1.5; color:#1D1D1F; margin:10px 0 0; }
+/* QUÉ SE TOCA Y QUÉ NO (una sola regla): lo que se toca tiene forma de botón
+   (borde, sombra, círculo para elegir); lo que se lee va SIN caja. Antes la
+   tabla de dosis usaba las mismas cajas blancas que las respuestas del quiz.
+   Línea vertical = solo para una cita («¿Te suena?»); línea horizontal =
+   separa capítulos y filas de una tabla. */
+.v2-lec .v3 .tema .filas { gap:0; margin-top:8px; }
+.v2-lec .v3 .tema .filas div { background:transparent; border-radius:0; padding:12px 2px; border-bottom:1px solid rgba(29,29,31,.10); }
+.v2-lec .v3 .tema .filas div:last-child { border-bottom:0; }
+.v2-lec .v3 .tema .filas span { color:#1D1D1F; font-weight:750; }
+.v2-lec .v3 .tema .pasos li { border-left:0; padding-left:0; }
+.v2-lec .v3 .tema .pasos b { display:flex; align-items:center; gap:8px; }
+.v2-lec .v3 .tema .pasos b::before { content:''; width:8px; height:8px; border-radius:50%; background:var(--mc, #3C7BD6); flex:none; }
+.v2-lec .v3 .ops button { display:flex; align-items:center; gap:12px; border:1.5px solid #DDD6CA; background:#fff; box-shadow:0 2px 6px rgba(20,20,30,.06); }
+.v2-lec .v3 .ops button::before { content:''; width:20px; height:20px; border-radius:50%; border:2px solid #C9C2B6; flex:none; box-sizing:border-box; }
+.v2-lec .v3 .ops button.ok { border-color:#46965A; } .v2-lec .v3 .ops button.ok::before { border-color:#fff; background:#fff; box-shadow:inset 0 0 0 4px #46965A; }
+.v2-lec .v3 .ops button.mal { border-color:#F0E2DA; box-shadow:none; }
+.v2-lec .v3 .caso .ops::before { content:'Toca una respuesta'; font-size:12.5px; font-weight:700; color:#8A8A8E; margin-bottom:-2px; }
 .v2-lec .v3 .pregunta { margin-top:22px; background:#FCE8D8; border-radius:22px; padding:18px; }
 .v2-lec .v3 .pregunta .k { color:#B5561A; } .v2-lec .v3 .pregunta p.lead { font-size:18px; font-weight:750; line-height:1.32; margin:6px 0 0; color:#1D1D1F; }
 .v2-lec .v3 .pregunta p.enviado { color:#2F6E3E; font-weight:650; margin:10px 0 0; font-size:15.5px; } .v2-lec .v3 .pregunta p.estado { color:#B5561A; font-size:14px; margin:8px 0 0; }
@@ -17675,8 +17691,8 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
         var t = meta(c).replace(' de lectura', '');
         return '<button type="button" class="v2-lista-fila' + (vista ? ' vista' : '') + '" data-historia="' + esc(c.id) + '" onclick="capOpen(' + i + ')" style="--ac:' + ac + ';--ac-bg:' + hexA(ac, .11) + '">'
           + '<span class="ico">' + arte + '</span>'
-          + '<span class="txt"><span class="t">' + (!vista && c.nuevo ? '<i class="nueva" aria-label="Nueva"></i>' : '') + esc(c.title) + '</span>' + (sub ? '<span class="s">' + esc(sub) + '</span>' : '') + '</span>'
-          + '<span class="m">' + (vista ? '✓' : esc(t)) + '<i class="chev"></i></span></button>';
+          + '<span class="txt"><span class="t">' + esc(c.title) + '</span>' + (sub ? '<span class="s">' + esc(sub) + '</span>' : '')
+          + '<span class="m">' + esc(t) + (vista ? '<span class="etq leida" data-leida>✓ Leída</span>' : c.nuevo ? '<span class="etq nueva">Nueva</span>' : '') + '</span></span></button>';
       }).join('') + '</div>';
     });
     gal.innerHTML = html;
@@ -17814,7 +17830,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     var out = '<div class="hoja v3">'
       // La barra que queda fija al bajar (aparece al pasar los capítulos de arriba).
       + '<div class="tope"><div class="tope-in"><div class="fila"><button type="button" class="volver-f">‹ Lecturas</button><span class="t">' + esc(c.title) + '</span></div>' + pasosHTML() + '</div></div>'
-      + '<div class="hero"><img src="capsulas/portadas/' + esc(c.id) + '.jpg" alt=""><button type="button" class="volver">‹ Lecturas</button></div>'
+      + '<div class="hero"><img src="capsulas/portadas/' + esc(c.id) + '.jpg?v=20261116" alt=""><button type="button" class="volver">‹ Lecturas</button></div>'
       + '<div class="cat">' + esc(catNorm(c.cat)) + (num ? ' · cápsula ' + num : '') + ' · ' + esc(meta(c).replace(' de lectura', '')) + '</div>'
       + '<h1>' + esc(c.title) + '</h1>' + (h.sub ? '<div class="sub">' + esc(h.sub) + '</div>' : '')
       + '<div class="pasos-ini">' + pasosHTML() + '</div>';
@@ -17858,7 +17874,7 @@ html.em-v2[data-v2lect] #cap-hint { display:none !important; }
     }
     if (regla) out += '<div class="regla" data-fin>' + esc(regla.regla[0]) + '<span>' + esc(regla.regla[1]) + '</span></div>';
     var sig = x.sigue && CAPSULAS.find(function(y){ return y.id === x.sigue; });
-    if (sig) out += '<button type="button" class="sigue" data-sigue="' + esc(sig.id) + '"><div class="k">Sigue con</div><span class="fila"><img src="capsulas/portadas/mini/' + esc(sig.id) + '.jpg" alt="" loading="lazy"><span><b>' + esc(sig.title) + '</b><span>' + esc(catNorm(sig.cat)) + ' · ' + esc(meta(sig).replace(' de lectura', '')) + '</span></span><i class="chev"></i></span></button>';
+    if (sig) out += '<button type="button" class="sigue" data-sigue="' + esc(sig.id) + '"><div class="k">Sigue con</div><span class="fila"><img src="capsulas/portadas/mini/' + esc(sig.id) + '.jpg?v=20261116" alt="" loading="lazy"><span><b>' + esc(sig.title) + '</b><span>' + esc(catNorm(sig.cat)) + ' · ' + esc(meta(sig).replace(' de lectura', '')) + '</span></span><i class="chev"></i></span></button>';
     if (regla && regla.fuente) out += '<div class="fuente">Fuentes: ' + esc(regla.fuente) + '</div>';
     var leida = capGetRead().indexOf(c.id) !== -1;
     return out + '<div class="botones"><button type="button" class="listo">' + (leida ? 'Listo' : 'Marcar como leída') + '</button></div></div>';

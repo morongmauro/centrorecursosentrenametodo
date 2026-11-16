@@ -46,6 +46,7 @@ ok('está TODO el texto de cada cápsula', faltan.length === 0, faltan.join(' ||
 ok('nada se sale de lo ancho', anchas.length === 0, anchas.join(', '));
 ok('al llegar al final queda leída', noLeidas.length === 0, noLeidas.join(', '));
 const m = await p.evaluate(() => [...document.querySelectorAll('#cap-gal .m, .v2-cap-dest-pie span')].map(e => e.textContent).slice(0, 3));
-ok('la lista dice los minutos de lectura (no «pantallas»)', m.length && m.every(t => /min de lectura/.test(t)), m.join(' / '));
+ok('la lista dice los minutos de lectura (no «pantallas») y las leídas, «Leída»', m.length && m.every(t => /\d+ min/.test(t)) && m.every(t => /Leída/.test(t)), m.join(' / '));
+ok('lo leído no se apaga (la foto con su color)', await p.evaluate(() => [...document.querySelectorAll('#cap-gal .v2-lista-fila.vista .ico')].every(e => getComputedStyle(e).opacity === '1')));
 ok('sin errores', err.length === 0, err.join(' | '));
 console.log(mal ? `${mal} MAL` : 'todo bien'); await b.close(); srv.close();
