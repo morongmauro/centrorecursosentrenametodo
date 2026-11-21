@@ -17013,13 +17013,13 @@ document.addEventListener('keydown', function(e){
     var d = document.createElement('div');
     d.className = 'v2-lect';
     d.innerHTML = modo === 'videos'
-      ? '<div class="v2-cab" data-v2-cab="videos"><div class="v2-cab-et">VIDEOS</div>'
+      ? '<div class="v2-cab" data-v2-cab="videos"><div class="v2-cab-et">Videos</div>'
         + '<h1 class="v2-cab-h">Dale play<br><span>y aprende escuchando.</span></h1>'
         + '<p class="v2-cab-sub">Los episodios que te recomiendo, para ver o escuchar cuando quieras.' + (nPod ? ' ' + nPod + ' en total.' : '') + '</p></div>'
       : '<div class="v2-cab curva con-aro" data-v2-cab="lecturas">'
         + '<div class="v2-cab-manchas" aria-hidden="true"><i></i><i></i><i></i></div><div class="v2-cab-banda" aria-hidden="true"></div>'
         + '<div class="v2-cab-ilus">' + aroVisto() + '</div>'
-        + '<div class="v2-cab-txt"><div class="v2-cab-et">LECTURAS</div>'
+        + '<div class="v2-cab-txt"><div class="v2-cab-et">Lecturas</div>'
         + '<h1 class="v2-cab-h">Entiende por qué,<br><span>y aplica mejor.</span></h1></div></div>'
         + '<div class="v2-lect-tabs" role="tablist">'
         + '<button type="button" role="tab" data-l="s-capsulas" class="' + (activa === 's-capsulas' ? 'is-on' : '') + '" aria-selected="' + (activa === 's-capsulas') + '"><b>Cápsulas</b><span>' + (nCap ? nCap + ' temas cortos' : 'Temas cortos') + '</span></button>'
@@ -18054,6 +18054,17 @@ html.em-v2 .v2-pod-item .est { position:absolute; left:8px; top:8px; font-size:1
 html.em-v2 .v2-pod-item.visto .arte { opacity:.72; }
 html.em-v2 .v2-pod-item b { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; font-size:15px; font-weight:800; color:#1F1F1F; line-height:1.22; margin-top:9px; }
 html.em-v2 .v2-pod-item .s { display:block; font-size:13px; color:#8E8E93; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* ── Títulos de Aprendizaje como los del resto de la app (21 nov) ──
+   Misma letra (ECM Sans), mismo tamaño y mismo grosor que Dash, Entreno y
+   Comida: el título grande de arriba entre 20 y 24 px en 700 (antes 23–30 px
+   en 800), la etiqueta de arriba en minúscula como «Martes 29», los títulos
+   de sección («Entrenamiento», «Nutrición») en 22 px y 700 (antes 21 y 800),
+   y los títulos de tarjeta en 700 (antes 750–800). */
+html.em-v2 .v2-cab-h, html.em-v2 .v2-cab.curva .v2-cab-h, html.em-v2 .v2-cab.curva.con-aro .v2-cab-h { font-size:clamp(20px, 5.5vw, 24px) !important; font-weight:700 !important; letter-spacing:-0.03em !important; line-height:1.08 !important; }
+html.em-v2 .v2-cab-et { font-size:12px; font-weight:700; letter-spacing:0.01em; color:#6B6B6B; text-transform:none; }
+html.em-v2 .v2-cap-sec, html.em-v2 .v2-pod-sec { font-size:22px !important; font-weight:700 !important; letter-spacing:-0.02em !important; }
+html.em-v2 .screen .t, html.em-v2 .screen [class*="v2-pod"] b, html.em-v2 .screen [class*="v2-pod"] h3 { font-weight:700 !important; }
 </style>
 <script>
 (function(){
@@ -18176,6 +18187,31 @@ html.em-v2 .v2-pod-item .s { display:block; font-size:13px; color:#8E8E93; margi
   new MutationObserver(function (ms) { ms.forEach(function (m) { if (m.type === 'childList') m.addedNodes.forEach(function (n) { if (n.nodeType === 1) pedir(n); }); else pedir(m.target); }); })
     .observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
   if (document.body) pedir(document.body); else document.addEventListener('DOMContentLoaded', function () { pedir(document.body); });
+})();
+</script>
+
+<script>
+// Mismo grosor de títulos que la app (titulosDelgados.js de la app): en la
+// visual nueva, todo título de 17 px o más va en 700 y el texto destacado de
+// 15–16 px en 600. Lo que aparece después (al cambiar de pestaña o abrir una
+// lectura) se ajusta al momento, antes de pintarse.
+(function () {
+  if (!document.documentElement.classList.contains('em-v2') || typeof MutationObserver === 'undefined') return;
+  var NUM = /^[\d\s.,/%:+\-–·]+$/;
+  function tieneTexto(el) { for (var i = 0; i < el.childNodes.length; i++) { var n = el.childNodes[i]; if (n.nodeType === 3 && n.textContent.trim().length > 1) return true; } return false; }
+  function uno(el) {
+    if (!el || el.nodeType !== 1 || !tieneTexto(el) || el.closest('button, [role="button"], input, textarea, select, svg')) return;
+    var cs = getComputedStyle(el), t = parseFloat(cs.fontSize), w = Number(cs.fontWeight);
+    if (t < 15 || w < 650 || NUM.test(el.textContent.trim())) return;
+    var g = t >= 17 ? '700' : '600';
+    if (el.style.getPropertyValue('font-weight') !== g) el.style.setProperty('font-weight', g, 'important');
+  }
+  function todo(r) { if (!r || r.nodeType !== 1) return; uno(r); r.querySelectorAll('*').forEach(uno); }
+  var pend = new Set(), prog = false;
+  function correr() { prog = false; var l = Array.from(pend); pend.clear(); l.forEach(function (n) { if (n.isConnected) todo(n); }); }
+  new MutationObserver(function (ms) { ms.forEach(function (m) { if (m.type === 'childList') m.addedNodes.forEach(function (n) { if (n.nodeType === 1) pend.add(n); }); else if (m.target.nodeType === 1) pend.add(m.target); }); if (!prog) { prog = true; queueMicrotask(correr); } })
+    .observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+  todo(document.body);
 })();
 </script>
 </body>
